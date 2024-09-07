@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./styles/homepage/homepage.css";
 // import components
 import { Navbar } from "./components/navbar/Navbar";
-import { Footer } from "./components/footer/footer";
+import { Footer } from "./components/footer/Footer";
 // import assets
 import introVideo from "./assets/koivideo.mp4";
 import feature1 from "./assets/feature1.png";

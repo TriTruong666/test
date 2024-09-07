@@ -1,0 +1,54 @@
+@import "../../global/global.scss";
+$fade-white: rgba(255, 255, 255, .7);
+
+@media only screen and (max-width: 1537px) {
+    .navbar-container {
+        position: fixed;
+        width: 100%;
+        height: 88px;
+        background: $main-color;
+        display: flex;
+        padding: 0 60px;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 10;
+
+        .navbar-main {
+            display: flex;
+            align-items: center;
+            column-gap: 60px;
+
+            img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+            }
+
+            a {
+                color: $second-color;
+                font-size: 0.8rem;
+                font-family: $main-font;
+            }
+        }
+
+        .navbar-second {
+            display: flex;
+            column-gap: 40px;
+            align-items: center;
+
+            a {
+                color: $second-color;
+                font-size: 0.8rem;
+                font-family: $main-font;
+            }
+
+            a:nth-child(2) {
+                padding: 10px 25px;
+                background: $second-color;
+                color: black;
+                font-weight: 700;
+                border-radius: 20px;
+            }
+        }
+    }
+}

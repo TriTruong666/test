@@ -9,12 +9,12 @@ export const Navbar = () => {
     <div className="navbar-container">
       <div className="navbar-main">
         <img src={logo} alt="" />
-        <a href="#about">What is Izumiya?</a>
-        <Link to="shop">Shop</Link>
-        <a href="#solution">Solutions</a>
+        <Link to="/#about">What Is Izumiya?</Link>
+        <Link to="/shop">Shop</Link>
+        <Link to="/#solution">Solutions</Link>
         <a href="">About</a>
         <a href="">Contact</a>
-        <a href="">Blog</a>
+        <Link to="/blog">Blog</Link>
       </div>
       <div className="navbar-second">
         <Link to="/login">Login</Link>

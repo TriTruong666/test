@@ -106,7 +106,7 @@ export const Homepage = () => {
                 looking to prevent disease or boost immunity, our products are
                 tailored to meet the specific needs of koi.
               </p>
-              <Link to="/shop/cate1">Explore Now</Link>
+              <Link to="/shop">Explore Now</Link>
             </div>
             <div className="shop-intro-item-list">
               <strong>Best Health Products</strong>
@@ -141,7 +141,7 @@ export const Homepage = () => {
                 of products ensures that your pond remains a clean, safe, and
                 thriving environment for your koi.
               </p>
-              <Link to="/shop/cate2">Explore Now</Link>
+              <Link to="/shop">Explore Now</Link>
             </div>
             <div className="shop-intro-item-list">
               <strong>Best Water Products</strong>

@@ -6,6 +6,9 @@ import { LoginPage } from "../pages/auth/LoginPage";
 import { SignupPage } from "../pages/auth/SignupPage";
 import { ForgetPage } from "../pages/auth/ForgetPage";
 import { Shop } from "../pages/public/Shop";
+import { Blog } from "../pages/public/Blog";
+import { BlogDetail } from "../pages/public/BlogDetail";
+import { ProductDetail } from "../pages/public/ProductDetail";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +29,18 @@ const router = createBrowserRouter([
   {
     path: "/shop",
     element: <Shop />,
+  },
+  {
+    path: "/blog",
+    element: <Blog />,
+  },
+  {
+    path: "/blogdetail",
+    element: <BlogDetail />,
+  },
+  {
+    path: "/productdetail",
+    element: <ProductDetail />,
   },
 ]);
 export default router;

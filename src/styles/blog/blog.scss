@@ -1,0 +1,42 @@
+@import "../global/global.scss";
+
+@media only screen and (max-width: 1537px) {
+    .blog-container {
+        position: relative;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+
+        .blog {
+            margin-top: 88px;
+            display: flex;
+            flex-direction: column;
+
+            .blog-header {
+                position: relative;
+                width: 100%;
+                padding: 80px 0;
+                background: $main-color;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                row-gap: 10px;
+                // border-bottom: 1px solid rgba(255, 255, 255, .2);
+
+                strong {
+                    color: white;
+                    font-size: 30px;
+                    font-family: $main-font;
+                }
+
+                p {
+                    color: $fade-white;
+                    font-size: 0.85rem;
+                    font-weight: 400;
+                    font-family: $main-font;
+                }
+            }
+        }
+    }
+}

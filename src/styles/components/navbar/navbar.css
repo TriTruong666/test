@@ -76,4 +76,39 @@ select option {
     font-weight: 700;
     border-radius: 20px;
   }
+  .shopnav-container {
+    width: 350px;
+    height: 100%;
+  }
+  .shopnav-container .shopnav {
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  .shopnav-container .shopnav .shopnav-item {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+  }
+  .shopnav-container .shopnav .shopnav-item strong {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: "Roboto Mono", monospace;
+  }
+  .shopnav-container .shopnav .shopnav-item .shopnav-item-link {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .shopnav-container .shopnav .shopnav-item .shopnav-item-link a {
+    padding: 8px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 0.8rem;
+  }
 }/*# sourceMappingURL=navbar.css.map */

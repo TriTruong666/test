@@ -9,6 +9,8 @@ import { Shop } from "../pages/public/Shop";
 import { Blog } from "../pages/public/Blog";
 import { BlogDetail } from "../pages/public/BlogDetail";
 import { ProductDetail } from "../pages/public/ProductDetail";
+import { Cart } from "../pages/public/Cart";
+import { Checkout } from "../pages/public/Checkout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
   {
     path: "/productdetail",
     element: <ProductDetail />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
   },
 ]);
 export default router;

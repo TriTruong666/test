@@ -32,7 +32,7 @@ export const Shoplist = () => {
           </div>
         );
       })}
-      <div className="shop-item">
+      {/* <div className="shop-item">
         <img src={productImg} alt="" />
         <Link to="/productdetail">Koi Diet</Link>
         <p>$25.00</p>
@@ -67,7 +67,7 @@ export const Shoplist = () => {
           <button>Buy now</button>
           <button>Add to cart </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

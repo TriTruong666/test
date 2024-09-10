@@ -17,10 +17,15 @@ export const Navbar = () => {
         <Link to="/blog">Blog</Link>
       </div>
       <div className="navbar-second">
+        <i className="bx bxs-cart"></i>
         <i className="bx bx-cart"></i>
         <Link to="/login">Login</Link>
         <Link to="/signup">Sign Up</Link>
       </div>
+      {/* <div className="navbar-third">
+        <strong>Truong Hoang Tri</strong>
+        <i className="bx bx-chevron-down"></i>
+      </div> */}
     </div>
   );
 };

@@ -64,17 +64,44 @@ select option {
          column-gap: 40px;
     align-items: center;
   }
+  .navbar-container .navbar-second i {
+    font-size: 22px;
+    color: #BCAB6F;
+  }
   .navbar-container .navbar-second a {
     color: #BCAB6F;
     font-size: 0.8rem;
     font-family: "Roboto Mono", monospace;
   }
-  .navbar-container .navbar-second a:nth-child(2) {
+  .navbar-container .navbar-second a:nth-child(4) {
     padding: 10px 25px;
     background: #BCAB6F;
     color: black;
     font-weight: 700;
     border-radius: 20px;
+  }
+  .navbar-container .navbar-third {
+    display: flex;
+    align-items: center;
+    -moz-column-gap: 10px;
+         column-gap: 10px;
+    padding: 5px 10px 5px 20px;
+    background: #BCAB6F;
+    border-radius: 15px;
+  }
+  .navbar-container .navbar-third i:nth-child(1) {
+    font-size: 18px;
+    color: white;
+  }
+  .navbar-container .navbar-third i:nth-child(2) {
+    font-size: 26px;
+    color: black;
+  }
+  .navbar-container .navbar-third strong {
+    font-size: 0.9rem;
+    color: black;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 400;
   }
   .shopnav-container {
     width: 350px;
@@ -163,5 +190,20 @@ select option {
     font-family: "Roboto Mono", monospace;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.85rem;
+  }
+  .setting-nav-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    background: rgba(0, 0, 0, 0.7);
+    overflow-y: hidden;
+    justify-content: end;
+  }
+  .setting-nav-container .setting-nav {
+    width: 400px;
+    height: 100%;
+    border: 1px solid lime;
   }
 }/*# sourceMappingURL=navbar.css.map */

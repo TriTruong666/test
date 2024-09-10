@@ -5,6 +5,7 @@ import "./styles/homepage/homepage.css";
 // import components
 import { Navbar } from "./components/navbar/Navbar";
 import { Footer } from "./components/footer/Footer";
+import { Settingnav } from "./components/navbar/Settingnav";
 // import assets
 import introVideo from "./assets/koivideo.mp4";
 import feature1 from "./assets/feature1.png";
@@ -18,6 +19,7 @@ export const Homepage = () => {
   return (
     <div className="homepage-container" id="about">
       <Navbar />
+      {/* <Settingnav /> */}
       <div className="homepage-intro">
         <video src={introVideo} autoPlay loop muted>
           <source type="video/mp4" />

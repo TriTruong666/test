@@ -17,6 +17,7 @@ export const Navbar = () => {
         <Link to="/blog">Blog</Link>
       </div>
       <div className="navbar-second">
+        <i className="bx bx-cart"></i>
         <Link to="/login">Login</Link>
         <Link to="/signup">Sign Up</Link>
       </div>

@@ -7,20 +7,29 @@ import coverImg from "../../assets/logincover2.jpg";
 import logo from "../../assets/logo.png";
 // import components
 import { LoginSuccess } from "../../components/modal/LoginSuccess";
+// selector redux
+import { useSelector } from "react-redux";
+// dispatch redux
+import { useDispatch } from "react-redux";
+// import slices
+import { toggleLoginModal } from "../../redux/slices/modal/modal";
 export const LoginPage = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // redux state
+  const loginModalStatus = useSelector((state) => state.loginModal.loginModal.isToggleModal); 
   // state
   const [visiblePass, setVisiblePass] = useState(false);
-  const [testLogin, setTestLogin] = useState(false);
   // handlefunc
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
-  const handleTestLogin = () => {
-    setTestLogin(true);
-  };
+  const handleToggleModal = () => {
+    dispatch(toggleLoginModal());
+  }
   return (
     <div className="cover">
-      {testLogin && <LoginSuccess />}
+      {loginModalStatus && <LoginSuccess />}
       <img src={coverImg} alt="" />
       <div className="login-container">
         <div className="login-main">
@@ -73,7 +82,7 @@ export const LoginPage = () => {
           <div className="or">
             <p>or</p>
           </div>
-          <div className="oauth" onClick={handleTestLogin}>
+          <div className="oauth" onClick={handleToggleModal}>
             <i className="bx bxl-google"></i>
             <p>Login with Google</p>
           </div>

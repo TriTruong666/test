@@ -1,0 +1,82 @@
+@import "../../global/global.scss";
+
+
+@media only screen and (max-width: 1537px) {
+    .pond-list {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid rgba(0, 0, 0, .2);
+
+        a {
+            display: flex;
+            // align-items: center;
+            padding: 15px 40px;
+            column-gap: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            cursor: pointer;
+            transition: .4s;
+
+            img {
+                width: 75px;
+                height: 75px;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+            .pond-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                div {
+                    display: flex;
+                    column-gap: 30px;
+                    align-items: center;
+
+                    strong {
+                        font-size: 0.9rem;
+                        color: black;
+                    }
+
+                    p {
+                        font-size: 0.7rem;
+                        color: $fade-black;
+                        font-weight: 400 !important;
+                    }
+                }
+
+                p {
+                    font-size: 0.8rem;
+                    color: black;
+                    font-weight: 600;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                    color: green;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        a.active {
+            background: $fade-black;
+
+            .pond-info {
+                div {
+                    strong {
+                        color: white;
+                    }
+
+                    p {
+                        color: $fade-white;
+                    }
+                }
+
+                p {
+                    color: white;
+                }
+            }
+        }
+    }
+}

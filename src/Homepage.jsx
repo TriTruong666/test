@@ -19,7 +19,7 @@ export const Homepage = () => {
   return (
     <div className="homepage-container" id="about">
       <Navbar />
-      {/* <Settingnav /> */}
+      <Settingnav />
       <div className="homepage-intro">
         <video src={introVideo} autoPlay loop muted>
           <source type="video/mp4" />

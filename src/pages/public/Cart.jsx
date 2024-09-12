@@ -5,6 +5,7 @@ import "../../styles/cart/cart.css";
 // import components
 import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
+import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
 export const Cart = () => {
@@ -13,6 +14,7 @@ export const Cart = () => {
   return (
     <div className="cart-container">
       <Navbar />
+      <Settingnav />
       <div className="cart">
         <div className="cart-main">
           <div className="cart-item">

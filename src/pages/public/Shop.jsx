@@ -6,11 +6,12 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
 import { Shopnav } from "../../components/navbar/Shopnav";
 import { Shoplist } from "../../components/shop/Shoplist";
-// import assets
+import { Settingnav } from "../../components/navbar/Settingnav";
 export const Shop = () => {
   return (
     <div className="shop-container">
       <Navbar />
+      <Settingnav />
       <div className="shop">
         <div className="shop-header">
           <strong>IZUMIYA SHOP</strong>

@@ -30,20 +30,19 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  ::-webkit-scrollbar {
-    width: 0;
-  }
   .homepage-container {
     position: relative;
     width: 100vw;
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
   }
   .homepage-container .homepage-intro {
     width: 100%;
     height: 700px;
     margin-top: 88px;
     position: relative;
+    overflow-y: hidden;
   }
   .homepage-container .homepage-intro video {
     width: 100%;

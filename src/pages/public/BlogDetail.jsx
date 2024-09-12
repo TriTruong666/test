@@ -4,12 +4,14 @@ import "../../styles/blogdetail/blogdetail.css";
 // import components
 import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
+import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import blogImg from "../../assets/blogheader.jpg";
 export const BlogDetail = () => {
   return (
     <div className="blog-detail-container">
       <Navbar />
+      <Settingnav />
       <div className="blog-detail">
         <div className="blog-detail-header">
           <strong>

@@ -52,6 +52,7 @@ select option {
     height: 80px;
     -o-object-fit: cover;
        object-fit: cover;
+    cursor: pointer;
   }
   .navbar-container .navbar-main a {
     color: #BCAB6F;
@@ -198,12 +199,175 @@ select option {
     z-index: 20;
     display: flex;
     background: rgba(0, 0, 0, 0.7);
-    overflow-y: hidden;
+    overflow: hidden;
     justify-content: end;
   }
   .setting-nav-container .setting-nav {
-    width: 400px;
+    position: relative;
+    width: 300px;
     height: 100%;
-    border: 1px solid lime;
+    overflow-y: hidden;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 25px;
+    transition: 0.5s;
+    left: 0;
+  }
+  .setting-nav-container .setting-nav .setting-nav-header {
+    display: flex;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+    align-items: center;
+  }
+  .setting-nav-container .setting-nav .setting-nav-header i {
+    color: white;
+    font-size: 32px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-header div strong {
+    font-size: 0.85rem;
+    color: white;
+  }
+  .setting-nav-container .setting-nav .setting-nav-header div p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .setting-nav-container .setting-nav .setting-nav-list {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .setting-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+    border-radius: 10px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .setting-item i {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .setting-item p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .close {
+    margin-top: 30px;
+    justify-self: end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    -moz-column-gap: 5px;
+         column-gap: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .close i,
+  .setting-nav-container .setting-nav .setting-nav-list .close p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .close i {
+    font-size: 22px;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .close p {
+    font-size: 0.9rem;
+  }
+  .setting-nav-container .setting-nav .setting-nav-list .setting-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .setting-nav-container-close {
+    display: none;
+  }
+  .dashnav-container {
+    width: 220px;
+    height: 100vh;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .dashnav-container .dashnav {
+    display: flex;
+    flex-direction: column;
+  }
+  .dashnav-container .dashnav .dashnav-header {
+    display: flex;
+    align-items: center;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .dashnav-container .dashnav .dashnav-header img {
+    width: 20px;
+    height: 20px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 50%;
+  }
+  .dashnav-container .dashnav .dashnav-header strong {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .dashnav-container .dashnav ::-webkit-scrollbar {
+    width: 0;
+  }
+  .dashnav-container .dashnav .dashnav-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item .dashnav-list-item-header {
+    padding: 0 20px;
+    margin-bottom: 10px;
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item .dashnav-list-item-header p {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    -moz-column-gap: 10px;
+         column-gap: 10px;
+    transition: 0.4s;
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a i {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 400;
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a p {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 400;
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a.active {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a.active i,
+  .dashnav-container .dashnav .dashnav-list .dashnav-list-item a.active p {
+    color: white;
+  }
+  .dashnav-container .dashnav .dashnav-list .logout {
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: black;
+    font-weight: 600;
+    font-size: 0.75rem;
   }
 }/*# sourceMappingURL=navbar.css.map */

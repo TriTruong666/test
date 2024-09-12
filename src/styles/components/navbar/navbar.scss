@@ -21,6 +21,7 @@
                 width: 80px;
                 height: 80px;
                 object-fit: cover;
+                cursor: pointer;
             }
 
             a {
@@ -190,13 +191,204 @@
         z-index: 20;
         display: flex;
         background: rgba(0, 0, 0, .7);
-        overflow-y: hidden;
+        overflow: hidden;
         justify-content: end;
 
         .setting-nav {
-            width: 400px;
+            position: relative;
+            width: 300px;
             height: 100%;
-            border: $border-test;
+            overflow-y: hidden;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 25px;
+            transition: .5s;
+            left: 0;
+
+            .setting-nav-header {
+                display: flex;
+                column-gap: 15px;
+                align-items: center;
+
+                i {
+                    color: white;
+                    font-size: 32px;
+                }
+
+                div {
+                    strong {
+                        font-size: 0.85rem;
+                        color: white;
+                    }
+
+                    p {
+                        font-size: 0.75rem;
+                        color: $fade-white;
+                    }
+                }
+            }
+
+            .setting-nav-list {
+                margin-top: 50px;
+                display: flex;
+                flex-direction: column;
+                row-gap: 30px;
+
+                .setting-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 15px;
+                    column-gap: 20px;
+                    border-radius: 10px;
+
+                    i {
+                        color: $fade-white;
+                        font-size: 18px;
+                    }
+
+                    p {
+                        color: $fade-white;
+                        font-size: 0.9rem;
+                        font-weight: 600;
+                    }
+                }
+
+                .close {
+                    margin-top: 30px;
+                    justify-self: end;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 10px 20px;
+                    column-gap: 5px;
+                    border: 1px solid rgba(255, 255, 255, .2);
+                    border-radius: 10px;
+
+                    i,
+                    p {
+                        color: $fade-white;
+                    }
+
+                    i {
+                        font-size: 22px;
+
+                    }
+
+                    p {
+                        font-size: 0.9rem;
+                    }
+                }
+
+                .setting-item:hover {
+                    background: rgba(255, 255, 255, .1);
+                }
+            }
+        }
+    }
+
+    .setting-nav-container-close {
+        display: none;
+    }
+
+    .dashnav-container {
+        width: 220px;
+        height: 100vh;
+        border-right: 1px solid rgba(0, 0, 0, .2);
+
+        .dashnav {
+            display: flex;
+            flex-direction: column;
+
+            .dashnav-header {
+                display: flex;
+                align-items: center;
+                column-gap: 15px;
+                padding: 25px 20px;
+                border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+                strong {
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                }
+            }
+
+            ::-webkit-scrollbar {
+                width: 0;
+            }
+
+            .dashnav-list {
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+
+                .dashnav-list-item {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px 0;
+                    border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+                    .dashnav-list-item-header {
+                        padding: 0 20px;
+                        margin-bottom: 10px;
+
+                        p {
+                            font-weight: 400;
+                            font-size: 0.75rem;
+                            color: $fade-black;
+                        }
+                    }
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        padding: 15px 20px;
+                        column-gap: 10px;
+                        transition: .4s;
+
+                        i {
+                            font-size: 14px;
+                            color: $fade-black;
+                            font-weight: 400;
+                        }
+
+                        p {
+                            font-size: 0.75rem;
+                            color: $fade-black;
+                            font-weight: 400;
+                        }
+                    }
+
+                    a:hover {
+                        background: rgba(0, 0, 0, .1);
+                    }
+
+                    a.active {
+                        background: $fade-black;
+
+                        i,
+                        p {
+                            color: white;
+                        }
+                    }
+                }
+
+                .logout {
+                    padding: 15px 20px;
+                    text-align: center;
+                    border-bottom: 1px solid rgba(0, 0, 0, .1);
+                    color: black;
+                    font-weight: 600;
+                    font-size: 0.75rem
+                }
+            }
         }
     }
 }

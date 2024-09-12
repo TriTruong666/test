@@ -4,6 +4,7 @@ import "../../styles/productdetail/productdetail.css";
 // import components
 import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
+import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
 
@@ -11,6 +12,7 @@ export const ProductDetail = () => {
   return (
     <div className="product-detail-container">
       <Navbar />
+      <Settingnav />
       <div className="product-detail">
         <div className="product-detail-main">
           <img src={koiproduct} alt="" />

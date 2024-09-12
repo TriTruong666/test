@@ -1,0 +1,50 @@
+@import "../../global/global.scss";
+
+@media only screen and (max-width: 1537px) {
+    .pond-detail-container {
+        width: calc(100% - 42.5% - 220px);
+        display: flex;
+        flex-direction: column;
+
+        .pond-detail-header {
+
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+
+            strong {
+                font-size: 1.1rem;
+            }
+
+            div {
+                display: flex;
+                align-items: center;
+                column-gap: 20px;
+
+                i {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .pond-detail-link {
+            display: flex;
+            padding: 20px 40px 0 40px;
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            column-gap: 60px;
+
+            a {
+                text-align: center;
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding-bottom: 10px;
+                color: rgba(0, 0, 0, .6);
+            }
+
+            a.active {
+                border-bottom: 2px solid black;
+                color: black;
+            }
+        }
+    }
+}

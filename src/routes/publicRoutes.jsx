@@ -1,5 +1,4 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
 // import pages
 import { Homepage } from "../Homepage";
 import { LoginPage } from "../pages/auth/LoginPage";
@@ -11,7 +10,7 @@ import { BlogDetail } from "../pages/public/BlogDetail";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
-const router = createBrowserRouter([
+export const publicRoutes = [
   {
     path: "/",
     element: <Homepage />,
@@ -52,5 +51,4 @@ const router = createBrowserRouter([
     path: "/checkout",
     element: <Checkout />,
   },
-]);
-export default router;
+];

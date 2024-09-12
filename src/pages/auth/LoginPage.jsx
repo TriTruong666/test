@@ -1,5 +1,5 @@
 import { useState, React } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
@@ -14,10 +14,14 @@ import { useDispatch } from "react-redux";
 // import slices
 import { toggleLoginModal } from "../../redux/slices/modal/modal";
 export const LoginPage = () => {
+  // navigate
+  const navigate = useNavigate();
   // dispatch
   const dispatch = useDispatch();
   // redux state
-  const loginModalStatus = useSelector((state) => state.loginModal.loginModal.isToggleModal); 
+  const loginModalStatus = useSelector(
+    (state) => state.loginModal.loginModal.isToggleModal
+  );
   // state
   const [visiblePass, setVisiblePass] = useState(false);
   // handlefunc
@@ -26,7 +30,7 @@ export const LoginPage = () => {
   };
   const handleToggleModal = () => {
     dispatch(toggleLoginModal());
-  }
+  };
   return (
     <div className="cover">
       {loginModalStatus && <LoginSuccess />}
@@ -34,7 +38,7 @@ export const LoginPage = () => {
       <div className="login-container">
         <div className="login-main">
           <div className="login-header">
-            <img src={logo} alt="" />
+            <img src={logo} alt="" onClick={() => navigate("/")} />
             <div>
               <strong>Welcome Back</strong>
               <p>Enter your credentials to access your account</p>

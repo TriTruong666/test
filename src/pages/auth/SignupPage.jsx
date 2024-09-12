@@ -1,11 +1,13 @@
 import { useState, React } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
 export const SignupPage = () => {
+  // navigate
+  const navigate = useNavigate();
   // state
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRepass, setVisibleRepass] = useState(false);
@@ -19,7 +21,7 @@ export const SignupPage = () => {
   return (
     <div className="signup-container">
       <div className="signup-main">
-        <img src={logo} alt="" />
+        <img src={logo} alt="" onClick={() => navigate("/")} />
         <div className="signup-main-header">
           <strong>Get Started Now</strong>
           <p>Let's create an account to access our features</p>

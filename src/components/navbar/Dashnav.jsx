@@ -13,6 +13,7 @@ export const Dashnav = () => {
           <strong>Izumiya Koi</strong>
         </div>
         <div className="dashnav-list">
+          {/* member */}
           <div className="dashnav-list-item">
             <div className="dashnav-list-item-header">
               <p>Menu</p>

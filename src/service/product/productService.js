@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getAllProduct = async (data) =>{
+export const getAllProduct = async () =>{
     try{
         const url = `https://reqres.in/api/unknown`;
         const res = await axios.get(url);

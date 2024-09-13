@@ -2,11 +2,17 @@
 
 
 @media only screen and (max-width: 1537px) {
+    ::-webkit-scrollbar{
+        width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
     .pond-list {
         display: flex;
         flex-direction: column;
         border-top: 1px solid rgba(0, 0, 0, .2);
-
+        overflow-y: auto;
         a {
             display: flex;
             // align-items: center;

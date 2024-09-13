@@ -30,11 +30,14 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
   .pond-info-container {
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    padding: 25px 40px;
-    overflow-y: auto;
+    padding: 20px 40px;
   }
   .pond-info-container .pond-info-image {
     padding: 20px 0;

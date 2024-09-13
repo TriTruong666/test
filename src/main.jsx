@@ -11,8 +11,8 @@ import store from "./redux/store";
 const cilent = new QueryClient({});
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <QueryClientProvider cilent={cilent}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    {/* <QueryClientProvider cilent={cilent}> */}
+    <RouterProvider router={router} />
+    {/* </QueryClientProvider> */}
   </Provider>
 );

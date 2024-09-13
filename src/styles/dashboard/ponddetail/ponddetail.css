@@ -31,7 +31,7 @@ select option {
 
 @media only screen and (max-width: 1537px) {
   .pond-detail-container {
-    width: calc(57.5% - 220px);
+    width: calc(60% - 220px);
     display: flex;
     flex-direction: column;
     overflow-y: hidden;

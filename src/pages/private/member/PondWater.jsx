@@ -11,7 +11,7 @@ export const PondWater = () => {
           <p>View detail all parameters of water quality</p>
         </div>
         <div className="update-water">
-          <i className="bx bx-plus"></i>
+          <i className="bx bxs-edit-alt"></i>
           <p>Update water quality</p>
         </div>
       </div>

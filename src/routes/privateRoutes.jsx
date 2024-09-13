@@ -5,6 +5,7 @@ import { PondManage } from "../pages/private/member/PondManage";
 import { PondDetail } from "../pages/private/member/PondDetail";
 import { PondInfo } from "../pages/private/member/PondInfo";
 import { PondWater } from "../pages/private/member/PondWater";
+import { KoiManage } from "../pages/private/member/KoiManage";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
@@ -25,6 +26,10 @@ export const privateRoutes = [
           {
             path: "/dashboard/mypond/detail/water",
             element: <PondWater />,
+          },
+          {
+            path: "/dashboard/mypond/detail/kois",
+            element: <KoiManage />,
           },
         ],
       },

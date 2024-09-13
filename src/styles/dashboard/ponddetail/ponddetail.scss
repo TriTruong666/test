@@ -2,10 +2,11 @@
 
 @media only screen and (max-width: 1537px) {
     .pond-detail-container {
-        width: calc(100% - 42.5% - 220px);
+        width: calc(100% - 40% - 220px);
         display: flex;
         flex-direction: column;
         overflow-y: hidden;
+
         .pond-detail-header {
             padding: 25px 40px;
             display: flex;

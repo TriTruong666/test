@@ -5,12 +5,14 @@ import "../../../styles/dashboard/pondmanage/pondmanage.css";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { PondList } from "../../../components/pond/PondList";
+import { AddPond } from "../../../components/modal/AddPond";
 // import assets
 import image from "../../../assets/logincover.jpg";
 export const PondManage = () => {
   return (
     <div className="pondmanage-container">
       <Dashnav />
+      <AddPond />
       {/*  */}
       <div className="pondmanage">
         <div className="pondmanage-header">

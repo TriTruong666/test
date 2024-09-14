@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 // import styles
 import "../../../styles/dashboard/pondmanage/pondmanage.css";
@@ -8,11 +8,25 @@ import { PondList } from "../../../components/pond/PondList";
 import { AddPond } from "../../../components/modal/AddPond";
 // import assets
 import image from "../../../assets/logincover.jpg";
+// import selector
+import { useSelector, useDispatch } from "react-redux";
+// import slices
+import { toggleAddPondModal } from "../../../redux/slices/modal/modal";
 export const PondManage = () => {
+  // selector
+  const isToggleAddPondModal = useSelector(
+    (state) => state.modal.addPondModal.isToggleModal
+  );
+  // dispatch
+  const dispatch = useDispatch();
+  // handle func
+  const handleToggleAddPondModal = () => {
+    dispatch(toggleAddPondModal());
+  };
   return (
     <div className="pondmanage-container">
       <Dashnav />
-      <AddPond />
+      {isToggleAddPondModal && <AddPond />}
       {/*  */}
       <div className="pondmanage">
         <div className="pondmanage-header">
@@ -32,7 +46,7 @@ export const PondManage = () => {
             </select>
             <i className="bx bx-chevron-down"></i>
           </div>
-          <div className="add">
+          <div className="add" onClick={handleToggleAddPondModal}>
             <i className="bx bx-plus"></i>
             <p>Create new pond</p>
           </div>

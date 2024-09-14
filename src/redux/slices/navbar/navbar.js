@@ -1,7 +1,7 @@
 import { createSlice, combineReducers } from "@reduxjs/toolkit";
 
 const settingNavSlice = createSlice({
-  name: "SettingNav",
+  name: "settingNav",
   initialState: { isToggleNav: false },
   reducers: {
     toggleSettingNav: (state) => {
@@ -14,8 +14,8 @@ const settingNavSlice = createSlice({
 export const { toggleSettingNav } = settingNavSlice.actions;
 
 // Combine reducers
-const navbarReducer = combineReducers({
+const NavbarReducer = combineReducers({
   settingNav: settingNavSlice.reducer,
 });
 
-export default navbarReducer;
+export default NavbarReducer;

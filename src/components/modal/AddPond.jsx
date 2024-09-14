@@ -2,9 +2,15 @@ import { useState } from "react";
 // import styles
 import "../../styles/components/modal/modal.css";
 import FileResizer from "react-image-file-resizer";
+// import slices
+import { toggleAddPondModal } from "../../redux/slices/modal/modal";
+// import dispatch
+import { useDispatch } from "react-redux";
 export const AddPond = () => {
+  // state
   const [previewImage, setPreviewImage] = useState(null);
-
+  // dispatch
+  const dispatch = useDispatch();
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -26,12 +32,15 @@ export const AddPond = () => {
   const removeChooseImage = () => {
     setPreviewImage(null);
   };
+  const handleToggleAddPondModal = () => {
+    dispatch(toggleAddPondModal());
+  };
   return (
     <div className="add-pond-container">
       <div className="add-pond-modal">
         <div className="add-pond-header">
           <strong>Create A Pond</strong>
-          <i className="bx bx-x"></i>
+          <i className="bx bx-x" onClick={handleToggleAddPondModal}></i>
         </div>
         <form action="" autoComplete="off" className="add-pond-detail">
           <div className="input-image">
@@ -88,7 +97,7 @@ export const AddPond = () => {
           </div>
           <input type="text" id="temp" placeholder="Temparature (℃  )" />
           <div className="submit">
-            <button>Cancel</button>
+            <button onClick={handleToggleAddPondModal}>Cancel</button>
             <button>Create confirm</button>
           </div>
         </form>

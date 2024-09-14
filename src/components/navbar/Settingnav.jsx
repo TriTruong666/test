@@ -13,7 +13,7 @@ export const Settingnav = () => {
   const dispatch = useDispatch();
   // selector
   const isToggleSettingnav = useSelector(
-    (state) => state.settingNav.settingNav.isToggleNav
+    (state) => state.navbar.settingNav.isToggleNav
   );
   // handle func
   const handleToggleSettingnav = () => {

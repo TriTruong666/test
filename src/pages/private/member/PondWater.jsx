@@ -1,8 +1,17 @@
 import React from "react";
 // import styles
 import "../../../styles/dashboard/pondwater/pondwater.css";
-// import assets
+// import redux
+import { useDispatch } from "react-redux";
+// import slices
+import { toggleUpdateWaterModal } from "../../../redux/slices/modal/modal";
 export const PondWater = () => {
+  // import dispatch
+  const dispatch = useDispatch();
+  // handle func
+  const handleToggleUpdateWaterModal = () => {
+    dispatch(toggleUpdateWaterModal());
+  };
   return (
     <div className="pond-water-container">
       <div className="pond-water-header">
@@ -10,7 +19,7 @@ export const PondWater = () => {
           <strong>Water quality</strong>
           <p>View detail all parameters of water quality</p>
         </div>
-        <div className="update-water">
+        <div className="update-water" onClick={handleToggleUpdateWaterModal}>
           <i className="bx bxs-edit-alt"></i>
           <p>Update water quality</p>
         </div>

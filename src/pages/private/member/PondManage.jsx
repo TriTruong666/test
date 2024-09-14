@@ -6,6 +6,9 @@ import "../../../styles/dashboard/pondmanage/pondmanage.css";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { PondList } from "../../../components/pond/PondList";
 import { AddPond } from "../../../components/modal/AddPond";
+import { UpdatePond } from "../../../components/modal/UpdatePond";
+import { UpdateWater } from "../../../components/modal/UpdateWater";
+import { AddKoi } from "../../../components/modal/AddKoi";
 // import assets
 import image from "../../../assets/logincover.jpg";
 // import selector
@@ -17,6 +20,12 @@ export const PondManage = () => {
   const isToggleAddPondModal = useSelector(
     (state) => state.modal.addPondModal.isToggleModal
   );
+  const isToggleUpdatePondModal = useSelector(
+    (state) => state.modal.updatePondModal.isToggleModal
+  );
+  const isToggleUpdateWaterModal = useSelector(
+    (state) => state.modal.updateWaterModal.isToggleModal
+  );
   // dispatch
   const dispatch = useDispatch();
   // handle func
@@ -26,6 +35,9 @@ export const PondManage = () => {
   return (
     <div className="pondmanage-container">
       <Dashnav />
+      <AddKoi />
+      {isToggleUpdateWaterModal && <UpdateWater />}
+      {isToggleUpdatePondModal && <UpdatePond />}
       {isToggleAddPondModal && <AddPond />}
       {/*  */}
       <div className="pondmanage">

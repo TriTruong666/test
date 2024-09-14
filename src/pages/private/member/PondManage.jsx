@@ -26,6 +26,9 @@ export const PondManage = () => {
   const isToggleUpdateWaterModal = useSelector(
     (state) => state.modal.updateWaterModal.isToggleModal
   );
+  const isToggleAddKoiModal = useSelector(
+    (state) => state.modal.addKoiModal.isToggleModal
+  );
   // dispatch
   const dispatch = useDispatch();
   // handle func
@@ -35,7 +38,7 @@ export const PondManage = () => {
   return (
     <div className="pondmanage-container">
       <Dashnav />
-      <AddKoi />
+      {isToggleAddKoiModal && <AddKoi />}
       {isToggleUpdateWaterModal && <UpdateWater />}
       {isToggleUpdatePondModal && <UpdatePond />}
       {isToggleAddPondModal && <AddPond />}

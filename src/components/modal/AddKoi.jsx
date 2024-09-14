@@ -3,10 +3,17 @@ import FileResizer from "react-image-file-resizer";
 import ReactFlagsSelect from "react-flags-select";
 // import styles
 import "../../styles/components/modal/modal.css";
+// import redux
+import { useDispatch } from "react-redux";
+// import slices
+import { toggleAddKoiModal } from "../../redux/slices/modal/modal";
+
 export const AddKoi = () => {
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
+  //   dispatch
+  const dispatch = useDispatch();
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -28,6 +35,9 @@ export const AddKoi = () => {
   const removeChooseImage = () => {
     setPreviewImage(null);
   };
+  const handleToggleAddKoiModal = () => {
+    dispatch(toggleAddKoiModal());
+  };
   //   useEffect(() => {
   //     console.log("Selected country code:", selectedFlag);
   //   }, [selectedFlag]);
@@ -36,7 +46,7 @@ export const AddKoi = () => {
       <div className="add-koi-modal">
         <div className="add-koi-header">
           <strong>Add A Koi</strong>
-          <i className="bx bx-x"></i>
+          <i className="bx bx-x" onClick={handleToggleAddKoiModal}></i>
         </div>
         <form action="" className="add-koi-form">
           <div className="input-image">
@@ -61,36 +71,46 @@ export const AddKoi = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <div className="input-two-fields">
-            <input type="text" placeholder="Koi name" />
-            <select name="" id="">
-              <option value="">Male</option>
-              <option value="">Female</option>
-            </select>
-          </div>
+          <input type="text" id="koiname" placeholder="Koi name" />
           <div className="input-two-fields">
             <input type="text" placeholder="Size (cm)" />
             <input type="text" placeholder="Weight (kg)" />
           </div>
-          <div className="input-two-fields">
-            <select name="" id="">
-              <option value="">Type</option>
-              <option value="Kohaku">Kohaku</option>
-              <option value="Sanke">Sanke</option>
-              <option value="Showa">Showa</option>
-              <option value="Tancho">Tancho</option>
-              <option value="Asagi">Asagi</option>
-              <option value="Shusui">Shusui</option>
-              <option value="Utsurimono">Utsurimono</option>
-              <option value="Bekko">Bekko</option>
-              <option value="Goshiki">Goshiki</option>
-              <option value="Koromo">Koromo</option>
-            </select>
-            <ReactFlagsSelect
-              selected={selectedFlag}
-              onSelect={(code) => setSelectedFlag(code)}
-              className="menu-flags"
-            />
+          <div className="select-two-fields">
+            <div className="select">
+              <select name="" id="">
+                <option value="">Type</option>
+                <option value="Kohaku">Kohaku</option>
+                <option value="Sanke">Sanke</option>
+                <option value="Showa">Showa</option>
+                <option value="Tancho">Tancho</option>
+                <option value="Asagi">Asagi</option>
+                <option value="Shusui">Shusui</option>
+                <option value="Utsurimono">Utsurimono</option>
+                <option value="Bekko">Bekko</option>
+                <option value="Goshiki">Goshiki</option>
+                <option value="Koromo">Koromo</option>
+              </select>
+              <i className="bx bxs-chevron-down"></i>
+            </div>
+            <div className="select">
+              <select name="" id="">
+                <option value="">Gender</option>
+                <option value="">Male</option>
+                <option value="">Female</option>
+              </select>
+              <i className="bx bxs-chevron-down"></i>
+            </div>
+          </div>
+          <ReactFlagsSelect
+            selected={selectedFlag}
+            onSelect={(code) => setSelectedFlag(code)}
+            placeholder="Select origin"
+            className="menu-flags"
+          />
+          <div className="submit">
+            <button onClick={handleToggleAddKoiModal}>Cancel</button>
+            <button>Create confirm</button>
           </div>
         </form>
       </div>

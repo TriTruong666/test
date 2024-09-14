@@ -70,7 +70,7 @@
 
         .add-pond-modal {
             width: 800px;
-            height: 650px;
+            max-height: 700px;
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -258,7 +258,7 @@
 
         .update-pond-modal {
             width: 800px;
-            height: 650px;
+            max-height: 700px;
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -391,7 +391,7 @@
 
         .update-water-modal {
             width: 800px;
-            // height: 650px;
+            max-height: 700px;
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -484,7 +484,7 @@
 
         .add-koi-modal {
             width: 800px;
-            height: 650px;
+            max-height: 700px;
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -576,18 +576,71 @@
                         font-size: 0.8rem;
                         border-radius: 10px;
                     }
+                }
 
-                    select {
+                .select-two-fields {
+                    display: flex;
+                    column-gap: 20px;
+
+                    .select {
                         width: 50%;
-                        padding: 12px 25px;
+                        position: relative;
                         border: 1px solid rgba(0, 0, 0, .2);
-                        color: black;
-                        font-size: 0.8rem;
                         border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+
+                        select {
+                            width: 100%;
+                            padding: 12px 25px;
+                            color: black;
+                        }
+
+                        i {
+                            left: 90%;
+                            font-size: 20px;
+                            position: absolute;
+                            z-index: 18;
+                        }
+                    }
+                }
+
+                .menu-flags {
+                    border-radius: 10px;
+
+                    button {
+                        font-size: 13px !important;
+                    }
+                }
+
+                #koiname {
+                    padding: 12px 25px;
+                    border: 1px solid rgba(0, 0, 0, .2);
+                    color: black;
+                    font-size: 0.8rem;
+                    border-radius: 10px;
+                }
+
+                .submit {
+                    display: flex;
+                    justify-content: end;
+                    column-gap: 15px;
+
+
+                    button:nth-child(1) {
+                        padding: 10px 40px;
+                        border: 2px solid rgba(0, 0, 0, .2);
+                        color: black;
+                        border-radius: 15px;
+                        font-weight: 600;
                     }
 
-                    .menu-flags {
-                        width: 50%;
+                    button:nth-child(2) {
+                        padding: 10px 50px;
+                        background: #4b87e0;
+                        font-weight: 600;
+                        border-radius: 15px;
+                        color: white;
                     }
                 }
             }

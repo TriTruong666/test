@@ -93,7 +93,7 @@ select option {
   }
   .add-pond-container .add-pond-modal {
     width: 800px;
-    height: 650px;
+    max-height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
@@ -267,7 +267,7 @@ select option {
   }
   .update-pond-container .update-pond-modal {
     width: 800px;
-    height: 650px;
+    max-height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
@@ -386,6 +386,7 @@ select option {
   }
   .update-water-container .update-water-modal {
     width: 800px;
+    max-height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
@@ -470,7 +471,7 @@ select option {
   }
   .add-koi-container .add-koi-modal {
     width: 800px;
-    height: 650px;
+    max-height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
@@ -556,15 +557,61 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .input-two-fields select {
+  .add-koi-container .add-koi-modal .add-koi-form .select-two-fields {
+    display: flex;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select {
     width: 50%;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select select {
+    width: 100%;
+    padding: 12px 25px;
+    color: black;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select i {
+    left: 90%;
+    font-size: 20px;
+    position: absolute;
+    z-index: 18;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .menu-flags {
+    border-radius: 10px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .menu-flags button {
+    font-size: 13px !important;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form #koiname {
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .input-two-fields .menu-flags {
-    width: 50%;
+  .add-koi-container .add-koi-modal .add-koi-form .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
   }
 }/*# sourceMappingURL=modal.css.map */

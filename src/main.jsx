@@ -8,11 +8,8 @@ import router from "./routes/combineRoutes";
 import "./styles/global/global.css";
 // import redux
 import store from "./redux/store";
-const cilent = new QueryClient({});
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    {/* <QueryClientProvider cilent={cilent}> */}
     <RouterProvider router={router} />
-    {/* </QueryClientProvider> */}
   </Provider>
 );

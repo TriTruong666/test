@@ -234,4 +234,24 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
+  .add-pond-container .add-pond-modal .add-pond-water .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-water .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+  }
+  .add-pond-container .add-pond-modal .add-pond-water .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+  }
 }/*# sourceMappingURL=modal.css.map */

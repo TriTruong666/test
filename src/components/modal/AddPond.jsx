@@ -87,6 +87,10 @@ export const AddPond = () => {
             <input type="text" placeholder="pH" />
           </div>
           <input type="text" id="temp" placeholder="Temparature (℃  )" />
+          <div className="submit">
+            <button>Cancel</button>
+            <button>Create confirm</button>
+          </div>
         </form>
       </div>
     </div>

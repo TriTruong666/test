@@ -20,7 +20,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   // redux state
   const loginModalStatus = useSelector(
-    (state) => state.loginModal.loginModal.isToggleModal
+    (state) => state.modal.loginModal.isToggleModal
   );
   // state
   const [visiblePass, setVisiblePass] = useState(false);

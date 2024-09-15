@@ -614,4 +614,127 @@ select option {
     border-radius: 15px;
     color: white;
   }
+  .koi-detail-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    justify-content: end;
+  }
+  .koi-detail-container .koi-detail-modal {
+    width: 500px;
+    height: 100%;
+    max-height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    overflow-y: auto;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-header strong {
+    font-size: 1.2rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-header i {
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info img {
+    margin: 30px 0;
+    width: 300px;
+    height: 200px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    align-self: center;
+    border-radius: 15px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-info-header div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-info-header div strong {
+    font-size: 1.05rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-info-header div p {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-info-header span {
+    text-decoration: underline;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-main {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-main .koi-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-main .koi-info strong {
+    font-size: 0.85rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-main .koi-info p {
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-info .koi-detail-main .koi-info p {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation {
+    margin-top: 25px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .koi-recommendation-header {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .koi-recommendation-header strong {
+    font-size: 1.05rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .koi-recommendation-header p {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food {
+    display: flex;
+    justify-content: space-between;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food strong {
+    font-size: 0.85rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food p {
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food p {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation span {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.8);
+  }
 }/*# sourceMappingURL=modal.css.map */

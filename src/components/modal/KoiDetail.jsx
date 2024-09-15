@@ -1,11 +1,14 @@
 import React from "react";
 // import styles
 import "../../styles/components/modal/modal.css";
+// import components
+import { KoiHistory } from "./KoiHistory";
 // import assets
 import image from "../../assets/logincover2.jpg";
 export const KoiDetail = () => {
   return (
     <div className="koi-detail-container">
+      <KoiHistory />
       <div className="koi-detail-modal">
         <div className="koi-detail-header">
           <strong>Koi Detail #1233</strong>

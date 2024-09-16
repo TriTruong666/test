@@ -5,14 +5,34 @@ import "../../styles/components/modal/modal.css";
 import { KoiHistory } from "./KoiHistory";
 // import assets
 import image from "../../assets/logincover2.jpg";
+// import redux
+import { useSelector, useDispatch } from "react-redux";
+// import slices
+import {
+  toggleKoiHistoryOn,
+  toggleDetailKoiModal,
+} from "../../redux/slices/modal/modal";
 export const KoiDetail = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // selector
+  const isToggleKoiHistory = useSelector(
+    (state) => state.modal.koiHistoryModal.isToggleModal
+  );
+  // handle func
+  const handeToggleKoiHistoryModalOn = () => {
+    dispatch(toggleKoiHistoryOn());
+  };
+  const handleToggleKoiDetailModal = () => {
+    dispatch(toggleDetailKoiModal());
+  };
   return (
     <div className="koi-detail-container">
-      <KoiHistory />
+      {isToggleKoiHistory && <KoiHistory />}
       <div className="koi-detail-modal">
         <div className="koi-detail-header">
           <strong>Koi Detail #1233</strong>
-          <i className="bx bx-x"></i>
+          <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
         </div>
         <div className="koi-detail-info">
           <img src={image} alt="" />
@@ -21,7 +41,9 @@ export const KoiDetail = () => {
               <strong>Koi Infomation</strong>
               <p>View all infomation of your koi</p>
             </div>
-            <span>View info history</span>
+            <span onClick={handeToggleKoiHistoryModalOn}>
+              View info history
+            </span>
           </div>
           <div className="koi-detail-main">
             <div className="koi-info">

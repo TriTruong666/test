@@ -72,6 +72,30 @@ const DelKoiModalSlice = createSlice({
     },
   },
 });
+const DetailKoiModalSlice = createSlice({
+  name: "detailKoiModal",
+  initialState: { isToggleModal: false },
+  reducers: {
+    toggleDetailKoiModal: (state) => {
+      state.isToggleModal = !state.isToggleModal;
+    },
+  },
+});
+const KoiHistoryModalSlice = createSlice({
+  name: "koiHistoryModal",
+  initialState: { isToggleModal: false },
+  reducers: {
+    toggleKoiHistoryModal: (state) => {
+      state.isToggleModal = !state.isToggleModal;
+    },
+    toggleKoiHistoryOn: (state) => {
+      state.isToggleModal = true;
+    },
+    toggleKoiHistoryOff: (state) => {
+      state.isToggleModal = false;
+    },
+  },
+});
 // Export the action
 export const { toggleLoginModal } = LoginModalSlice.actions;
 export const { toggleAddPondModal } = AddPondModalSlice.actions;
@@ -81,6 +105,10 @@ export const { toggleUpdateWaterModal } = UpdateWaterModalSlice.actions;
 export const { toggleAddKoiModal } = AddKoiModalSlice.actions;
 export const { toggleUpdateKoiModal } = UpdateKoiModalSlice.actions;
 export const { toggleDelKoiModal } = DelKoiModalSlice.actions;
+export const { toggleDetailKoiModal } = DetailKoiModalSlice.actions;
+export const { toggleKoiHistoryModal } = KoiHistoryModalSlice.actions;
+export const { toggleKoiHistoryOn } = KoiHistoryModalSlice.actions;
+export const { toggleKoiHistoryOff } = KoiHistoryModalSlice.actions;
 
 // Combine reducers
 const ModalReducer = combineReducers({
@@ -92,6 +120,8 @@ const ModalReducer = combineReducers({
   addKoiModal: AddKoiModalSlice.reducer,
   updateKoiModal: UpdateKoiModalSlice.reducer,
   delKoiModal: DelKoiModalSlice.reducer,
+  detailKoiModal: DetailKoiModalSlice.reducer,
+  koiHistoryModal: KoiHistoryModalSlice.reducer,
 });
 
 export default ModalReducer;

@@ -3,12 +3,22 @@ import React from "react";
 import "../../styles/components/modal/modal.css";
 // import chart
 import { LineGraph } from "../../chart/Line";
+// import slices
+import { toggleKoiHistoryModal } from "../../redux/slices/modal/modal";
+// import redux
+import { useDispatch } from "react-redux";
 export const KoiHistory = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // handle func
+  const handleToggleKoiHistoryModal = () => {
+    dispatch(toggleKoiHistoryModal());
+  };
   return (
     <div className="koi-history-modal">
       <div className="koi-history-header">
         <strong>Koi History #1233</strong>
-        <i className="bx bx-x"></i>
+        <i className="bx bx-x" onClick={handleToggleKoiHistoryModal}></i>
       </div>
       <div className="koi-history-chart">
         <LineGraph />

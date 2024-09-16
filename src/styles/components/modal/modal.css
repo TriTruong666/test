@@ -760,6 +760,9 @@ select option {
     font-size: 28px;
     cursor: pointer;
   }
+  .koi-detail-container .koi-history-modal .koi-history-chart {
+    margin: 30px 0 10px 0;
+  }
   .koi-detail-container .koi-history-modal .koi-history-main {
     display: flex;
     flex-direction: column;

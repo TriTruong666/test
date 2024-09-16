@@ -6,12 +6,16 @@ import "../../../styles/dashboard/ponddetail/ponddetail.css";
 import { useDispatch } from "react-redux";
 // import slices
 import { toggleUpdatePondModal } from "../../../redux/slices/modal/modal";
+import { toggleDelPondModal } from "../../../redux/slices/modal/modal";
 export const PondDetail = () => {
   // dispatch
   const dispatch = useDispatch();
   // handle func
   const handleToggleUpdatePondModal = () => {
     dispatch(toggleUpdatePondModal());
+  };
+  const handleToggleDelPondModal = () => {
+    dispatch(toggleDelPondModal());
   };
   return (
     <div className="pond-detail-container">
@@ -22,7 +26,7 @@ export const PondDetail = () => {
             className="bx bx-edit-alt"
             onClick={handleToggleUpdatePondModal}
           ></i>
-          <i className="bx bx-trash-alt"></i>
+          <i className="bx bx-trash-alt" onClick={handleToggleDelPondModal}></i>
         </div>
       </div>
       <div className="pond-detail-link">

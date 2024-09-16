@@ -10,6 +10,7 @@ import { UpdatePond } from "../../../components/modal/UpdatePond";
 import { UpdateWater } from "../../../components/modal/UpdateWater";
 import { AddKoi } from "../../../components/modal/AddKoi";
 import { KoiDetail } from "../../../components/modal/KoiDetail";
+import { DelPond } from "../../../components/modal/DelPond";
 // import assets
 import image from "../../../assets/logincover.jpg";
 // import selector
@@ -33,6 +34,9 @@ export const PondManage = () => {
   const isToggleKoiDetailModal = useSelector(
     (state) => state.modal.detailKoiModal.isToggleModal
   );
+  const isToggleDelPondModal = useSelector(
+    (state) => state.modal.delPondModal.isToggleModal
+  );
   // dispatch
   const dispatch = useDispatch();
   // handle func
@@ -42,6 +46,7 @@ export const PondManage = () => {
   return (
     <div className="pondmanage-container">
       <Dashnav />
+      {isToggleDelPondModal && <DelPond />}
       {isToggleKoiDetailModal && <KoiDetail />}
       {isToggleAddKoiModal && <AddKoi />}
       {isToggleUpdateWaterModal && <UpdateWater />}

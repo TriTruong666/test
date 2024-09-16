@@ -813,4 +813,57 @@ select option {
   .koi-detail-container .koi-history-modal .koi-history-main .history tbody tr td {
     font-size: 0.75rem;
   }
+  .del-pond-containter {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .del-pond-containter .del-pond-modal {
+    width: 500px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .del-pond-containter .del-pond-modal .del-pond-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .del-pond-containter .del-pond-modal .del-pond-header strong {
+    font-size: 1.3rem;
+  }
+  .del-pond-containter .del-pond-modal .del-pond-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .del-pond-containter .del-pond-modal .del-pond-main {
+    margin: 30px 0;
+  }
+  .del-pond-containter .del-pond-modal .del-pond-main p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .del-pond-containter .del-pond-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .del-pond-containter .del-pond-modal .submit button:nth-child(1) {
+    width: 100%;
+    padding: 10px 50px;
+    background: red;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+  }
 }/*# sourceMappingURL=modal.css.map */

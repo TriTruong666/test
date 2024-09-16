@@ -89,6 +89,7 @@ export const KoiDetail = () => {
                 temperature.
               </span>
             </div>
+            <div className="utils"></div>
           </div>
         </div>
       </div>

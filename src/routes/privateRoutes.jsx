@@ -8,6 +8,8 @@ import { PondWater } from "../pages/private/member/PondWater";
 import { KoiManage } from "../pages/private/member/KoiManage";
 import { OrderManage } from "../pages/private/member/OrderManage";
 import { MyOrderDetail } from "../pages/private/member/MyOrderDetail";
+import { BlogManage } from "../pages/private/member/BlogManage";
+import { BlogDetail } from "../pages/private/member/BlogDetail";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
@@ -44,6 +46,16 @@ export const privateRoutes = [
       {
         path: "/dashboard/myorder/detail",
         element: <MyOrderDetail />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard/myblog",
+    element: <BlogManage />,
+    children: [
+      {
+        path: "/dashboard/myblog/review",
+        element: <BlogDetail />,
       },
     ],
   },

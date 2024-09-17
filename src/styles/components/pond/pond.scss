@@ -68,24 +68,8 @@
             }
         }
 
-        a.active {
-            background: $fade-black;
-
-            .pond-info {
-                div {
-                    strong {
-                        color: white;
-                    }
-
-                    p {
-                        color: $fade-white;
-                    }
-                }
-
-                p {
-                    color: white;
-                }
-            }
+        a:hover {
+            background: rgba(0, 0, 0, 0.049);
         }
     }
 }

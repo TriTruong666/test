@@ -44,6 +44,7 @@ select option {
     cursor: pointer;
     justify-content: space-between;
     row-gap: 5px;
+    transition: 0.4s;
   }
   .myorder-list a div {
     display: flex;
@@ -65,5 +66,8 @@ select option {
   .myorder-list a span {
     font-weight: 600;
     color: rgb(13, 173, 13);
+  }
+  .myorder-list a:hover {
+    background: rgba(0, 0, 0, 0.049);
   }
 }/*# sourceMappingURL=myorder.css.map */

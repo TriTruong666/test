@@ -30,65 +30,30 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  .pond-list {
+  .my-blog-list {
     display: flex;
     flex-direction: column;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
-  .pond-list a {
-    display: flex;
-    padding: 15px 40px;
-    -moz-column-gap: 15px;
-         column-gap: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: 0.4s;
-  }
-  .pond-list a img {
-    width: 75px;
-    height: 75px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    border-radius: 10px;
-  }
-  .pond-list a .pond-info {
+  .my-blog-list a {
     display: flex;
     flex-direction: column;
+    padding: 10px 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
     justify-content: space-between;
+    row-gap: 5px;
+    transition: 0.4s;
   }
-  .pond-list a .pond-info div {
-    display: flex;
-    -moz-column-gap: 30px;
-         column-gap: 30px;
-    align-items: center;
-  }
-  .pond-list a .pond-info div strong {
-    font-size: 0.9rem;
+  .my-blog-list a strong {
     color: black;
   }
-  .pond-list a .pond-info div p {
-    font-size: 0.7rem;
-    color: rgba(0, 0, 0, 0.9);
-    font-weight: 400 !important;
+  .my-blog-list a p {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.75rem;
   }
-  .pond-list a .pond-info p {
-    font-size: 0.8rem;
-    color: black;
-    font-weight: 600;
-  }
-  .pond-list a .pond-info span {
-    font-size: 0.9rem;
-    color: green;
-    font-weight: 600;
-  }
-  .pond-list a:hover {
+  .my-blog-list a:hover {
     background: rgba(0, 0, 0, 0.049);
   }
-}/*# sourceMappingURL=pond.css.map */
+}/*# sourceMappingURL=myblog.css.map */

@@ -1,7 +1,7 @@
 @import "../../global/global.scss";
 
 @media only screen and (max-width: 1537px) {
-    .myorder-list {
+    .my-blog-list {
         display: flex;
         flex-direction: column;
         border-top: 1px solid rgba(0, 0, 0, .2);
@@ -17,29 +17,13 @@
             row-gap: 5px;
             transition: .4s;
 
-            div {
-                display: flex;
-                column-gap: 30px;
-                align-items: center;
-
-                strong {
-                    color: black;
-                    font-size: 1rem;
-                }
-
-                p {
-                    font-size: 0.7rem;
-                }
-            }
-
-            p {
-                font-size: 0.9rem;
+            strong {
                 color: black;
             }
 
-            span {
-                font-weight: 600;
-                color: rgb(13, 173, 13);
+            p {
+                color: rgba(0, 0, 0, .8);
+                font-size: 0.75rem;
             }
         }
 

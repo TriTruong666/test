@@ -99,6 +99,15 @@ const KoiHistoryModalSlice = createSlice({
     },
   },
 });
+const CancelMyOrderModalSlice = createSlice({
+  name: "cancelMyOrderModal",
+  initialState: { isToggleModal: false },
+  reducers: {
+    toggleCancelMyOrderModal: (state) => {
+      state.isToggleModal = !state.isToggleModal;
+    },
+  },
+});
 // Export the action
 export const { toggleLoginModal } = LoginModalSlice.actions;
 export const { toggleAddPondModal } = AddPondModalSlice.actions;
@@ -113,6 +122,8 @@ export const { toggleDetailKoiModalOff } = DetailKoiModalSlice.actions;
 export const { toggleKoiHistoryModal } = KoiHistoryModalSlice.actions;
 export const { toggleKoiHistoryOn } = KoiHistoryModalSlice.actions;
 export const { toggleKoiHistoryOff } = KoiHistoryModalSlice.actions;
+export const { toggleCancelMyOrderModal } = CancelMyOrderModalSlice.actions;
+
 
 // Combine reducers
 const ModalReducer = combineReducers({
@@ -126,6 +137,7 @@ const ModalReducer = combineReducers({
   delKoiModal: DelKoiModalSlice.reducer,
   detailKoiModal: DetailKoiModalSlice.reducer,
   koiHistoryModal: KoiHistoryModalSlice.reducer,
+  cancelMyOrderModal: CancelMyOrderModalSlice.reducer,
 });
 
 export default ModalReducer;

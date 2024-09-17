@@ -6,6 +6,8 @@ import { PondDetail } from "../pages/private/member/PondDetail";
 import { PondInfo } from "../pages/private/member/PondInfo";
 import { PondWater } from "../pages/private/member/PondWater";
 import { KoiManage } from "../pages/private/member/KoiManage";
+import { OrderManage } from "../pages/private/member/OrderManage";
+import { MyOrderDetail } from "../pages/private/member/MyOrderDetail";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
@@ -32,6 +34,16 @@ export const privateRoutes = [
             element: <KoiManage />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: "/dashboard/myorder",
+    element: <OrderManage />,
+    children: [
+      {
+        path: "/dashboard/myorder/detail",
+        element: <MyOrderDetail />,
       },
     ],
   },

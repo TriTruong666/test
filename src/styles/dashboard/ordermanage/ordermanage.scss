@@ -1,24 +1,21 @@
 @import "../../global/global.scss";
 
-.pondmanage-container {
-    overflow-y: hidden;
-}
-
 @media only screen and (max-width: 1537px) {
-    .pondmanage-container {
+    .order-manage-container {
         width: 100vw;
         max-height: 100vh;
         position: relative;
         display: flex;
+        overflow-y: hidden;
 
-        .pondmanage {
+        .order-manage {
             border-right: 1px solid rgba(0, 0, 0, .2);
             width: 40%;
             height: 100vh;
             display: flex;
             flex-direction: column;
 
-            .pondmanage-header {
+            .order-manage-header {
                 padding: 25px 40px;
 
                 strong {
@@ -27,12 +24,12 @@
                 }
             }
 
-            .pondmanage-utils {
+            .order-manage-utils {
                 display: flex;
                 padding: 20px 40px;
                 justify-content: space-between;
 
-                .search-pond {
+                .search-order {
                     display: flex;
                     padding: 5px 10px;
                     align-items: center;
@@ -56,6 +53,7 @@
                 }
 
                 .filter {
+                    width: 200px;
                     display: flex;
                     align-items: center;
                     background: rgba(0, 0, 0, .1);
@@ -75,38 +73,17 @@
                     }
 
                     i {
-                        left: 82%;
+                        left: 88%;
                         font-weight: 100;
                         font-size: 18px;
                         position: absolute;
                         z-index: -1;
                     }
                 }
-
-                .add {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 5px 20px;
-                    column-gap: 5px;
-                    background: #4B87E0;
-                    border-radius: 10px;
-                    cursor: pointer;
-
-                    i {
-                        color: white;
-                        font-size: 18px;
-                    }
-
-                    p {
-                        color: white;
-                        font-size: 0.7rem;
-                    }
-                }
             }
         }
 
-        .pondmanage-empty {
+        .my-order-empty {
             width: calc(100% - 42.5% - 220px);
             height: 100vh;
             display: flex;

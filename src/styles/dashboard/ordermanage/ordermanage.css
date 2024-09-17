@@ -29,37 +29,34 @@ select option {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.pondmanage-container {
-  overflow-y: hidden;
-}
-
 @media only screen and (max-width: 1537px) {
-  .pondmanage-container {
+  .order-manage-container {
     width: 100vw;
     max-height: 100vh;
     position: relative;
     display: flex;
+    overflow-y: hidden;
   }
-  .pondmanage-container .pondmanage {
+  .order-manage-container .order-manage {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     width: 40%;
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
-  .pondmanage-container .pondmanage .pondmanage-header {
+  .order-manage-container .order-manage .order-manage-header {
     padding: 25px 40px;
   }
-  .pondmanage-container .pondmanage .pondmanage-header strong {
+  .order-manage-container .order-manage .order-manage-header strong {
     font-size: 1.1rem;
     font-weight: 700;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils {
+  .order-manage-container .order-manage .order-manage-utils {
     display: flex;
     padding: 20px 40px;
     justify-content: space-between;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .search-pond {
+  .order-manage-container .order-manage .order-manage-utils .search-order {
     display: flex;
     padding: 5px 10px;
     align-items: center;
@@ -68,64 +65,46 @@ select option {
          column-gap: 10px;
     border-radius: 10px;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .search-pond i {
+  .order-manage-container .order-manage .order-manage-utils .search-order i {
     font-size: 0.85rem;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .search-pond ::-moz-placeholder {
+  .order-manage-container .order-manage .order-manage-utils .search-order ::-moz-placeholder {
     font-size: 0.7rem;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .search-pond ::placeholder {
+  .order-manage-container .order-manage .order-manage-utils .search-order ::placeholder {
     font-size: 0.7rem;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .search-pond input {
+  .order-manage-container .order-manage .order-manage-utils .search-order input {
     width: 170px;
     font-size: 0.7rem;
     color: rgba(0, 0, 0, 0.9);
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .filter {
+  .order-manage-container .order-manage .order-manage-utils .filter {
+    width: 200px;
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     position: relative;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .filter select {
+  .order-manage-container .order-manage .order-manage-utils .filter select {
     font-size: 0.7rem;
     width: 100%;
     padding: 5px 15px;
     color: black;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .filter select option {
+  .order-manage-container .order-manage .order-manage-utils .filter select option {
     background: white;
     color: black;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .filter i {
-    left: 82%;
+  .order-manage-container .order-manage .order-manage-utils .filter i {
+    left: 88%;
     font-weight: 100;
     font-size: 18px;
     position: absolute;
     z-index: -1;
   }
-  .pondmanage-container .pondmanage .pondmanage-utils .add {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 20px;
-    -moz-column-gap: 5px;
-         column-gap: 5px;
-    background: #4B87E0;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  .pondmanage-container .pondmanage .pondmanage-utils .add i {
-    color: white;
-    font-size: 18px;
-  }
-  .pondmanage-container .pondmanage .pondmanage-utils .add p {
-    color: white;
-    font-size: 0.7rem;
-  }
-  .pondmanage-container .pondmanage-empty {
+  .order-manage-container .my-order-empty {
     width: calc(57.5% - 220px);
     height: 100vh;
     display: flex;
@@ -134,13 +113,13 @@ select option {
     justify-content: center;
     row-gap: 15px;
   }
-  .pondmanage-container .pondmanage-empty strong {
+  .order-manage-container .my-order-empty strong {
     font-size: 1.5rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.9);
   }
-  .pondmanage-container .pondmanage-empty p {
+  .order-manage-container .my-order-empty p {
     font-size: 0.85rem;
     font-weight: 400;
   }
-}/*# sourceMappingURL=pondmanage.css.map */
+}/*# sourceMappingURL=ordermanage.css.map */

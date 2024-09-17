@@ -74,7 +74,7 @@ export const Dashnav = () => {
               <p>Product</p>
             </NavLink>
             <NavLink
-              to="/dashboard/ordermanage"
+              to="/dashboard/admin/order"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <i className="bx bx-shopping-bag"></i>

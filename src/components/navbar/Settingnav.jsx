@@ -36,7 +36,7 @@ export const Settingnav = () => {
           </div>
         </div>
         <div className="setting-nav-list">
-          <Link to="" className="setting-item">
+          <Link to="/dashboard/admin/order" className="setting-item">
             <i className="bx bxs-dashboard"></i>
             <p>Admin Dashboard</p>
           </Link>

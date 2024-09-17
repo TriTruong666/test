@@ -52,6 +52,7 @@ select option {
   }
   .pond-detail-container .pond-detail-header div i {
     font-size: 20px;
+    cursor: pointer;
   }
   .pond-detail-container .pond-detail-link {
     display: flex;

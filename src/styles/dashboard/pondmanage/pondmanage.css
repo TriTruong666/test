@@ -115,6 +115,7 @@ select option {
          column-gap: 5px;
     background: #4B87E0;
     border-radius: 10px;
+    cursor: pointer;
   }
   .pondmanage-container .pondmanage .pondmanage-utils .add i {
     color: white;

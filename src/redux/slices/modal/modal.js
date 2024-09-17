@@ -79,6 +79,9 @@ const DetailKoiModalSlice = createSlice({
     toggleDetailKoiModal: (state) => {
       state.isToggleModal = !state.isToggleModal;
     },
+    toggleDetailKoiModalOff: (state) => {
+      state.isToggleModal = false;
+    }
   },
 });
 const KoiHistoryModalSlice = createSlice({
@@ -106,6 +109,7 @@ export const { toggleAddKoiModal } = AddKoiModalSlice.actions;
 export const { toggleUpdateKoiModal } = UpdateKoiModalSlice.actions;
 export const { toggleDelKoiModal } = DelKoiModalSlice.actions;
 export const { toggleDetailKoiModal } = DetailKoiModalSlice.actions;
+export const { toggleDetailKoiModalOff } = DetailKoiModalSlice.actions;
 export const { toggleKoiHistoryModal } = KoiHistoryModalSlice.actions;
 export const { toggleKoiHistoryOn } = KoiHistoryModalSlice.actions;
 export const { toggleKoiHistoryOff } = KoiHistoryModalSlice.actions;

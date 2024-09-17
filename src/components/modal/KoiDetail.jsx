@@ -11,6 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   toggleKoiHistoryOn,
   toggleDetailKoiModal,
+  toggleDetailKoiModalOff,
+  toggleDelKoiModal,
+  toggleUpdateKoiModal,
 } from "../../redux/slices/modal/modal";
 export const KoiDetail = () => {
   // dispatch
@@ -25,6 +28,14 @@ export const KoiDetail = () => {
   };
   const handleToggleKoiDetailModal = () => {
     dispatch(toggleDetailKoiModal());
+  };
+  const handleToggleDelKoiModal = () => {
+    dispatch(toggleDelKoiModal());
+    dispatch(toggleDetailKoiModalOff());
+  };
+  const handleToggleUpdateKoiModal = () => {
+    dispatch(toggleUpdateKoiModal());
+    dispatch(toggleDetailKoiModalOff());
   };
   return (
     <div className="koi-detail-container">
@@ -89,7 +100,10 @@ export const KoiDetail = () => {
                 temperature.
               </span>
             </div>
-            <div className="utils"></div>
+            <div className="utils">
+              <button onClick={handleToggleUpdateKoiModal}>Update</button>
+              <button onClick={handleToggleDelKoiModal}>Delete</button>
+            </div>
           </div>
         </div>
       </div>

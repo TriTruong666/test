@@ -67,6 +67,7 @@ select option {
     -moz-column-gap: 10px;
          column-gap: 10px;
     border-radius: 10px;
+    cursor: pointer;
   }
   .koimamange-container .koimanage-header .add-koi p {
     font-size: 0.7rem;

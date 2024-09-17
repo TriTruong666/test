@@ -64,6 +64,7 @@ select option {
     -moz-column-gap: 10px;
          column-gap: 10px;
     border-radius: 10px;
+    cursor: pointer;
   }
   .pond-water-container .pond-water-header .update-water p {
     font-size: 0.7rem;

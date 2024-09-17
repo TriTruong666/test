@@ -1,9 +1,29 @@
-import React from "react";
+import { useEffect, useState } from "react";
 // import styles
 import "../../../styles/dashboard/setting/setting.css";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
 export const UserSetting = () => {
+  // state
+  const [isToggleChangePass, setIsToggleChangePass] = useState(false);
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  // handle func
+  useEffect(() => {
+    if (!isToggleChangePass) {
+      setNewPass("");
+      setConfirmPass("");
+    }
+  }, [isToggleChangePass]);
+
+  // handle func
+  const handleToggleChangePassTrue = () => {
+    setIsToggleChangePass(true);
+  };
+
+  const handleToggleChangePassFalse = () => {
+    setIsToggleChangePass(false);
+  };
   return (
     <div className="user-setting-container">
       <Dashnav />
@@ -48,23 +68,46 @@ export const UserSetting = () => {
               <strong>Security Setting</strong>
               <p>You can change your sensitive infomation</p>
             </div>
-            <button>Enable change password</button>
+            {isToggleChangePass ? (
+              <span id="disable" onClick={handleToggleChangePassFalse}>
+                Disable change password
+              </span>
+            ) : (
+              <span id="enable" onClick={handleToggleChangePassTrue}>
+                Enable change password
+              </span>
+            )}
           </div>
 
           <div className="item">
             <label htmlFor="recent">Recent password</label>
-            <input type="text" id="recent" placeholder="Your recent password" />
+            <input
+              type="password"
+              id="recent"
+              placeholder="Your recent password"
+              disabled
+            />
           </div>
           <div className="item">
             <label htmlFor="newpass">New password</label>
-            <input type="text" id="newpass" placeholder="Enter new password" />
+            <input
+              type="password"
+              id="newpass"
+              placeholder="Enter new password"
+              onChange={(e) => setNewPass(e.target.value)}
+              value={newPass}
+              disabled={!isToggleChangePass}
+            />
           </div>
           <div className="item">
             <label htmlFor="confirm">Confirm password</label>
             <input
-              type="text"
+              type="password"
               id="confirm"
               placeholder="Enter confirm password"
+              onChange={(e) => setConfirmPass(e.target.value)}
+              value={confirmPass}
+              disabled={!isToggleChangePass}
             />
           </div>
           <button id="submit">Change Password</button>

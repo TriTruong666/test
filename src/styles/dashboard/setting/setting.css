@@ -81,6 +81,7 @@ select option {
     color: rgba(0, 0, 0, 0.7);
   }
   .user-setting-container .user-setting .profile-form .item input {
+    color: rgba(0, 0, 0, 0.8);
     padding: 10px 25px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -121,9 +122,17 @@ select option {
     font-size: 0.8rem;
     color: rgba(0, 0, 0, 0.7);
   }
-  .user-setting-container .user-setting .security-form .header button {
+  .user-setting-container .user-setting .security-form .header #enable {
     padding: 8px 20px !important;
     background: red !important;
+    font-size: 0.75rem !important;
+    border-radius: 15px !important;
+    color: white !important;
+    cursor: pointer !important;
+  }
+  .user-setting-container .user-setting .security-form .header #disable {
+    padding: 8px 20px !important;
+    background: black !important;
     font-size: 0.75rem !important;
     border-radius: 15px !important;
     color: white !important;
@@ -140,6 +149,7 @@ select option {
     color: rgba(0, 0, 0, 0.7);
   }
   .user-setting-container .user-setting .security-form .item input {
+    color: rgba(0, 0, 0, 0.8);
     padding: 10px 25px;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);

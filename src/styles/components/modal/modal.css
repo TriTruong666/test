@@ -246,6 +246,7 @@ select option {
     color: black;
     border-radius: 15px;
     font-weight: 600;
+    cursor: pointer;
   }
   .add-pond-container .add-pond-modal .add-pond-water .submit button:nth-child(2) {
     padding: 10px 50px;
@@ -253,6 +254,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .update-pond-container {
     position: fixed;
@@ -365,6 +367,7 @@ select option {
     color: black;
     border-radius: 15px;
     font-weight: 600;
+    cursor: pointer;
   }
   .update-pond-container .update-pond-modal .update-pond-form .submit button:nth-child(2) {
     padding: 10px 50px;
@@ -372,6 +375,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .update-water-container {
     position: fixed;
@@ -450,6 +454,7 @@ select option {
     color: black;
     border-radius: 15px;
     font-weight: 600;
+    cursor: pointer;
   }
   .update-water-container .update-water-modal .update-water-form .submit button:nth-child(2) {
     padding: 10px 50px;
@@ -457,6 +462,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .add-koi-container {
     position: fixed;
@@ -606,6 +612,7 @@ select option {
     color: black;
     border-radius: 15px;
     font-weight: 600;
+    cursor: pointer;
   }
   .add-koi-container .add-koi-modal .add-koi-form .submit button:nth-child(2) {
     padding: 10px 50px;
@@ -613,6 +620,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .update-koi-container {
     position: fixed;
@@ -762,6 +770,7 @@ select option {
     color: black;
     border-radius: 15px;
     font-weight: 600;
+    cursor: pointer;
   }
   .update-koi-container .update-koi-modal .update-koi-form .submit button:nth-child(2) {
     padding: 10px 50px;
@@ -769,6 +778,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .koi-detail-container {
     position: fixed;
@@ -910,11 +920,13 @@ select option {
     padding: 10px 30px;
     background: #4b87e0;
     color: white;
+    cursor: pointer;
   }
   .koi-detail-container .koi-detail-modal .koi-detail-recommendation .utils button:nth-child(2) {
     padding: 10px 40px;
     background: red;
     color: white;
+    cursor: pointer;
   }
   .koi-detail-container .koi-history-modal {
     width: 500px;
@@ -1044,6 +1056,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .del-koi-containter {
     position: fixed;
@@ -1097,6 +1110,7 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
   .cancel-order-containter {
     position: fixed;
@@ -1150,5 +1164,6 @@ select option {
     font-weight: 600;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
   }
 }/*# sourceMappingURL=modal.css.map */

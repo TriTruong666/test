@@ -58,6 +58,7 @@
                     }
 
                     input {
+                        color: rgba(0, 0, 0, .8);
                         padding: 10px 25px;
                         border-radius: 10px;
                         border: 1px solid rgba(0, 0, 0, .2);
@@ -106,9 +107,18 @@
                         }
                     }
 
-                    button {
+                    #enable {
                         padding: 8px 20px !important;
                         background: red !important;
+                        font-size: 0.75rem !important;
+                        border-radius: 15px !important;
+                        color: white !important;
+                        cursor: pointer !important;
+                    }
+
+                    #disable {
+                        padding: 8px 20px !important;
+                        background: black !important;
                         font-size: 0.75rem !important;
                         border-radius: 15px !important;
                         color: white !important;
@@ -128,6 +138,7 @@
                     }
 
                     input {
+                        color: rgba(0, 0, 0, .8);
                         padding: 10px 25px;
                         border-radius: 10px;
                         border: 1px solid rgba(0, 0, 0, .2);

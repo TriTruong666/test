@@ -48,11 +48,11 @@ export const Settingnav = () => {
             <i className="bx bxs-dashboard"></i>
             <p>Workspace</p>
           </Link>
-          <Link to="" className="setting-item">
+          <Link to="/dashboard/setting" className="setting-item">
             <i className="bx bxs-cog"></i>
             <p>Your Profile</p>
           </Link>
-          <Link to="" className="setting-item">
+          <Link to="/dashboard/myorder" className="setting-item">
             <i className="bx bxs-package"></i>
             <p>Your Orders</p>
           </Link>

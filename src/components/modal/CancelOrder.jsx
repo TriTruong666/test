@@ -23,7 +23,7 @@ export const CancelOrder = () => {
           <p>Are you sure to cancel order #1214?</p>
         </div>
         <div className="submit">
-          <button>Cancel This Order</button>
+          <button>Cancel this order</button>
         </div>
       </div>
     </div>

@@ -1098,4 +1098,57 @@ select option {
     border-radius: 15px;
     color: white;
   }
+  .cancel-order-containter {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .cancel-order-containter .cancel-order-modal {
+    width: 500px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .cancel-order-containter .cancel-order-modal .cancel-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cancel-order-containter .cancel-order-modal .cancel-order-header strong {
+    font-size: 1.3rem;
+  }
+  .cancel-order-containter .cancel-order-modal .cancel-order-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .cancel-order-containter .cancel-order-modal .cancel-order-main {
+    margin: 30px 0;
+  }
+  .cancel-order-containter .cancel-order-modal .cancel-order-main p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .cancel-order-containter .cancel-order-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .cancel-order-containter .cancel-order-modal .submit button:nth-child(1) {
+    width: 100%;
+    padding: 10px 50px;
+    background: red;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+  }
 }/*# sourceMappingURL=modal.css.map */

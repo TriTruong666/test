@@ -1,7 +1,17 @@
 import React from "react";
 // import styles
 import "../../../styles/dashboard/myorderdetail/myorderdetail.css";
+// import slices
+import { toggleCancelMyOrderModal } from "../../../redux/slices/modal/modal";
+// import redux
+import { useDispatch } from "react-redux";
 export const MyOrderDetail = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // handle func
+  const handleToggleCancelMyOrderModal = () => {
+    dispatch(toggleCancelMyOrderModal());
+  };
   return (
     <div className="my-order-detail-container">
       <div className="my-order-detail-header">
@@ -67,7 +77,9 @@ export const MyOrderDetail = () => {
             </div>
           </div>
         </div>
-        <button className="cancel">Cancel this order</button>
+        <button className="cancel" onClick={handleToggleCancelMyOrderModal}>
+          Cancel this order
+        </button>
       </div>
     </div>
   );

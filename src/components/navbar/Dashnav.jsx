@@ -48,7 +48,7 @@ export const Dashnav = () => {
             </NavLink>
           </div>
           {/* section admin */}
-          {/* <div className="dashnav-list-item">
+          <div className="dashnav-list-item">
             <div className="dashnav-list-item-header">
               <p>Admin</p>
             </div>
@@ -94,7 +94,7 @@ export const Dashnav = () => {
               <i className="bx bx-user-plus"></i>
               <p>Recuitment</p>
             </NavLink>
-          </div> */}
+          </div>
           {/* section tool */}
           <div className="dashnav-list-item">
             <div className="dashnav-list-item-header">

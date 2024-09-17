@@ -11,6 +11,7 @@ import { MyOrderDetail } from "../pages/private/member/MyOrderDetail";
 import { BlogManage } from "../pages/private/member/BlogManage";
 import { BlogDetail } from "../pages/private/member/BlogDetail";
 import { UserSetting } from "../pages/private/both/UserSetting";
+import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
@@ -63,5 +64,9 @@ export const privateRoutes = [
   {
     path: "/dashboard/setting",
     element: <UserSetting />,
+  },
+  {
+    path: "/dashboard/admin/order",
+    element: <AdminOrderManage />,
   },
 ];

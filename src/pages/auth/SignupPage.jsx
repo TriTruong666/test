@@ -1,16 +1,35 @@
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
+// import service
+import * as AccountService from "../../service/account/AccountService";
 export const SignupPage = () => {
   // navigate
   const navigate = useNavigate();
   // state
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleRepass, setVisibleRepass] = useState(false);
+  const [signupData, setSignupData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
+  // mutation
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: AccountService.signupService,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["signup"],
+      });
+      navigate("/login");
+    },
+  });
   // handlefunc
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
@@ -18,6 +37,25 @@ export const SignupPage = () => {
   const handleVisibleRepass = () => {
     setVisibleRepass(!visibleRepass);
   };
+  const handleOnChangeForm = (e) => {
+    setSignupData({
+      ...signupData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // handle submit form
+  const handleSubmitForm = async (e) => {
+    try {
+      e.preventDefault();
+      mutation.mutateAsync(signupData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // test useEffect
+  useEffect(() => {
+    console.log(signupData);
+  }, [signupData]);
   return (
     <div className="signup-container">
       <div className="signup-main">
@@ -33,30 +71,48 @@ export const SignupPage = () => {
         <div className="or">
           <p>or</p>
         </div>
-        <form action="" autoComplete="off" className="signup-form">
+        <form
+          action=""
+          onSubmit={handleSubmitForm}
+          autoComplete="off"
+          className="signup-form"
+        >
           <div className="input-item">
             <label htmlFor="fullname">Fullname</label>
             <div>
-              <input type="text" id="fullname" placeholder="Your full name" />
-            </div>
-          </div>
-          <div className="input-item">
-            <label htmlFor="username">Username</label>
-            <div>
               <input
                 type="text"
-                id="username"
-                placeholder="Enter your username"
+                id="fullname"
+                name="fullname"
+                placeholder="Your full name"
+                required
+                onChange={handleOnChangeForm}
               />
             </div>
           </div>
           <div className="input-item">
-            <label htmlFor="pass">Password</label>
+            <label htmlFor="email">Email</label>
+            <div>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                onChange={handleOnChangeForm}
+              />
+            </div>
+          </div>
+          <div className="input-item">
+            <label htmlFor="password">Password</label>
             <div>
               <input
                 type={visiblePass ? "text" : "password"}
-                id="pass"
+                id="password"
+                name="password"
                 placeholder="Enter your password"
+                required
+                onChange={handleOnChangeForm}
               />
               {visiblePass ? (
                 <span
@@ -81,6 +137,7 @@ export const SignupPage = () => {
               <input
                 type={visibleRepass ? "text" : "password"}
                 id="repass"
+                name="repass"
                 placeholder="Confirm password again"
               />
               {visibleRepass ? (

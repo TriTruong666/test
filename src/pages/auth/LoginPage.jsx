@@ -1,5 +1,6 @@
 import { useState, React } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
@@ -46,21 +47,23 @@ export const LoginPage = () => {
           </div>
           <form action="" className="login-form" autoComplete="off">
             <div className="input-item">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <div>
                 <input
                   type="text"
-                  id="username"
-                  placeholder="Enter your username"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
                 />
               </div>
             </div>
             <div className="input-item">
-              <label htmlFor="pass">Password</label>
+              <label htmlFor="password">Password</label>
               <div>
                 <input
                   type={visiblePass ? "text" : "password"}
-                  id="pass"
+                  id="password"
+                  name="password"
                   placeholder="Enter your password"
                 />
                 {visiblePass ? (

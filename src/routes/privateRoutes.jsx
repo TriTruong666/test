@@ -12,6 +12,7 @@ import { BlogManage } from "../pages/private/member/BlogManage";
 import { BlogDetail } from "../pages/private/member/BlogDetail";
 import { UserSetting } from "../pages/private/both/UserSetting";
 import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
+import { AdminAccountManage } from "../pages/private/admin/AdminAccountManage";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
@@ -68,5 +69,9 @@ export const privateRoutes = [
   {
     path: "/dashboard/admin/order",
     element: <AdminOrderManage />,
+  },
+  {
+    path: "/dashboard/admin/account",
+    element: <AdminAccountManage />,
   },
 ];

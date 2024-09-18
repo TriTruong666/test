@@ -60,7 +60,7 @@ export const Dashnav = () => {
               <p>Summary</p>
             </NavLink>
             <NavLink
-              to="/dashboard/account"
+              to="/dashboard/admin/account"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <i className="bx bx-cylinder"></i>

@@ -383,8 +383,13 @@ $fade-white: rgba(255, 255, 255, .7);
                     }
                 }
 
+                .fail {
+                    font-size: 0.7rem;
+                    color: rgb(243, 74, 74);
+                }
+
                 input[type="submit"] {
-                    margin-top: 15px;
+                    margin-top: 5px;
                     padding: 10px 0;
                     font-size: 0.8rem;
                     background: rgba(0, 0, 0, .7);

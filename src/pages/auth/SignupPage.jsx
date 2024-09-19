@@ -18,16 +18,21 @@ export const SignupPage = () => {
     fullname: "",
     email: "",
     password: "",
+    repass: "",
   });
+  const [validPass, setValidPass] = useState(null);
+  const [validEmail, setValidEmail] = useState(null);
+  const [requiredField, setRequiredField] = useState(null);
+  const [responseData, setResponseData] = useState(null);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: AccountService.signupService,
-    onSuccess: () => {
+    onSuccess: (responseData) => {
+      setResponseData(responseData);
       queryClient.invalidateQueries({
         queryKey: ["signup"],
       });
-      navigate("/login");
     },
   });
   // handlefunc
@@ -38,24 +43,54 @@ export const SignupPage = () => {
     setVisibleRepass(!visibleRepass);
   };
   const handleOnChangeForm = (e) => {
+    const { name, value } = e.target;
     setSignupData({
       ...signupData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
+  // valiation pattern
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   // handle submit form
   const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    // empty validation
+    if (
+      !signupData.fullname ||
+      !signupData.email ||
+      !signupData.password ||
+      !signupData.repass
+    ) {
+      setRequiredField("All fields are required");
+      return;
+    } else {
+      setRequiredField(null);
+    }
+    // email pattern validation
+    if (!emailPattern.test(signupData.email)) {
+      setValidEmail("Invalid, email should be: example@gmail.com");
+      return;
+    } else {
+      setValidEmail(null);
+    }
+    // password validation
+    if (signupData.password !== signupData.repass) {
+      setValidPass("Password and Confirm Password must be the same");
+      return;
+    } else {
+      setValidPass(null);
+    }
     try {
-      e.preventDefault();
-      mutation.mutateAsync(signupData);
+      await mutation.mutateAsync(signupData);
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }
   };
   // test useEffect
   useEffect(() => {
-    console.log(signupData);
-  }, [signupData]);
+    console.log(responseData);
+  }, [responseData]);
   return (
     <div className="signup-container">
       <div className="signup-main">
@@ -85,7 +120,6 @@ export const SignupPage = () => {
                 id="fullname"
                 name="fullname"
                 placeholder="Your full name"
-                required
                 onChange={handleOnChangeForm}
               />
             </div>
@@ -98,7 +132,6 @@ export const SignupPage = () => {
                 id="email"
                 name="email"
                 placeholder="Enter your email"
-                required
                 onChange={handleOnChangeForm}
               />
             </div>
@@ -111,7 +144,6 @@ export const SignupPage = () => {
                 id="password"
                 name="password"
                 placeholder="Enter your password"
-                required
                 onChange={handleOnChangeForm}
               />
               {visiblePass ? (
@@ -139,6 +171,7 @@ export const SignupPage = () => {
                 id="repass"
                 name="repass"
                 placeholder="Confirm password again"
+                onChange={handleOnChangeForm}
               />
               {visibleRepass ? (
                 <span
@@ -157,6 +190,10 @@ export const SignupPage = () => {
               )}
             </div>
           </div>
+          {responseData && <p className="fail">{responseData.message}</p>}
+          {validPass && <p className="fail">{validPass}</p>}
+          {requiredField && <p className="fail">{requiredField}</p>}
+          {validEmail && <p className="fail">{validEmail}</p>}
           <input type="submit" value="Create New Account" />
         </form>
         <div className="login-link">

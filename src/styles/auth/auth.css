@@ -371,8 +371,12 @@ select option {
     font-size: 18px;
     color: rgba(255, 255, 255, 0.7);
   }
+  .signup-container .signup-main .signup-form .fail {
+    font-size: 0.7rem;
+    color: rgb(243, 74, 74);
+  }
   .signup-container .signup-main .signup-form input[type=submit] {
-    margin-top: 15px;
+    margin-top: 5px;
     padding: 10px 0;
     font-size: 0.8rem;
     background: rgba(0, 0, 0, 0.7);

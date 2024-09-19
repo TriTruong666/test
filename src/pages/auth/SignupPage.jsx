@@ -20,6 +20,7 @@ export const SignupPage = () => {
     password: "",
     repass: "",
   });
+  const [existedEmail, setExistedEmail] = useState(null);
   const [validPass, setValidPass] = useState(null);
   const [validEmail, setValidEmail] = useState(null);
   const [requiredField, setRequiredField] = useState(null);
@@ -82,7 +83,12 @@ export const SignupPage = () => {
     }
     try {
       await mutation.mutateAsync(signupData);
-      navigate("/login");
+      if (responseData && responseData.code === 400) {
+        setExistedEmail("This email have existed, please try another one");
+      } else {
+        setExistedEmail(null);
+        navigate("/login");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -190,7 +196,7 @@ export const SignupPage = () => {
               )}
             </div>
           </div>
-          {responseData && <p className="fail">{responseData.message}</p>}
+          {existedEmail && <p className="fail">{existedEmail}</p>}
           {validPass && <p className="fail">{validPass}</p>}
           {requiredField && <p className="fail">{requiredField}</p>}
           {validEmail && <p className="fail">{validEmail}</p>}

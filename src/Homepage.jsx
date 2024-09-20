@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "./styles/homepage/homepage.css";
 // import components
@@ -15,7 +16,31 @@ import shopheader1 from "./assets/shopheader1.jpg";
 import shopheader2 from "./assets/shopheader2.jpg";
 import koiproduct from "./assets/koiproduct.png";
 import group from "./assets/group.png";
+// import service
+import * as AccountService from "./service/account/AccountService";
 export const Homepage = () => {
+  // mutation
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: AccountService.verifyToken,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["verify"],
+      });
+    },
+  });
+  // handle func
+  const token = localStorage.getItem("token");
+  const handleVerifyToken = async () => {
+    await mutation.mutateAsync(token);
+  };
+  useEffect(() => {
+    try {
+      handleVerifyToken();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <div className="homepage-container" id="about">
       <Navbar />

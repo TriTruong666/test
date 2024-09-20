@@ -22,24 +22,25 @@ export const loginService = async (userData) => {
         "Content-Type": "application/json",
       },
     });
-    localStorage.setItem("token",  res.data.result.token);
+    localStorage.setItem("token", res.data.result.token);
     return res.data;
   } catch (err) {
     return err.response.data;
   }
 };
 
-export const verifyToken = async() => {
- try {
-  const token = localStorage.getItem("token");
-  const api = " http://localhost:8080/auth/introspect";
-  const res = await axios.post(api, token, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  return res.data;
- } catch (error) {
-  console.log(error)
- }
-}
+export const verifyToken = async (token) => {
+  try {
+    const api = " http://localhost:8080/auth/introspect";
+    const res = await axios.post(api, token, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

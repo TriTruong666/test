@@ -22,10 +22,24 @@ export const loginService = async (userData) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
+    localStorage.setItem("token",  res.data.result.token);
     return res.data;
   } catch (err) {
-    console.log(err.response.data);
     return err.response.data;
   }
 };
+
+export const verifyToken = async() => {
+ try {
+  const token = localStorage.getItem("token");
+  const api = " http://localhost:8080/auth/introspect";
+  const res = await axios.post(api, token, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  return res.data;
+ } catch (error) {
+  console.log(error)
+ }
+}

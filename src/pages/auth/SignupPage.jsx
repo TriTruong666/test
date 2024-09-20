@@ -7,7 +7,7 @@ import "../../styles/auth/auth.css";
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
 // import components
-import { LoginSuccess } from "../../components/modal/LoginSuccess";
+import { ModalSuccess } from "../../components/modal/ModalSuccess";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 // import redux
@@ -45,15 +45,22 @@ export const SignupPage = () => {
     mutationFn: AccountService.signupService,
     onSuccess: (responseData) => {
       setResponseData(responseData);
+      if (responseData && responseData.code === 400) {
+        setExistedEmail("This email have existed, please try another one");
+      } else {
+        setExistedEmail(null);
+        dispatch(toggleLoginModal());
+        setTimeout(() => {
+          navigate("/login");
+          dispatch(toggleLoginModal());
+        }, 1500);
+      }
       queryClient.invalidateQueries({
         queryKey: ["signup"],
       });
     },
   });
   // handlefunc
-  const handleToggleModal = () => {
-    dispatch(toggleLoginModal());
-  };
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
@@ -91,6 +98,13 @@ export const SignupPage = () => {
     } else {
       setValidEmail(null);
     }
+    // valid number of pass
+    if (signupData.password.length < 9) {
+      setNumberOfPass("Password must be at least 8 characters");
+      return;
+    } else {
+      setNumberOfPass(null);
+    }
     // password validation
     if (signupData.password !== signupData.repass) {
       setValidPass("Password and Confirm Password must be the same");
@@ -100,13 +114,6 @@ export const SignupPage = () => {
     }
     try {
       await mutation.mutateAsync(signupData);
-      setTimeout(() => {
-        if (responseData && responseData.code === 400) {
-          setExistedEmail("This email have existed, please try another one");
-        } else {
-          setExistedEmail(null);
-        }
-      }, 1000);
     } catch (error) {
       console.error(error);
     }
@@ -117,7 +124,7 @@ export const SignupPage = () => {
   }, [responseData]);
   return (
     <div className="signup-container">
-      {isToggleSignupSuccess && <LoginSuccess />}
+      {isToggleSignupSuccess && <ModalSuccess />}
       <div className="signup-main">
         <img src={logo} alt="" onClick={() => navigate("/")} />
         <div className="signup-main-header">
@@ -219,7 +226,12 @@ export const SignupPage = () => {
           {validPass && <p className="fail">{validPass}</p>}
           {requiredField && <p className="fail">{requiredField}</p>}
           {validEmail && <p className="fail">{validEmail}</p>}
-          <input type="submit" value="Create New Account" />
+          {numberOfPass && <p className="fail">{numberOfPass}</p>}
+          <input
+            type="submit"
+            value="Create New Account"
+            disabled={mutation.isPending}
+          />
         </form>
         <div className="login-link">
           <p>Already have an account?</p>

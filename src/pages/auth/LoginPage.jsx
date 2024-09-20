@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
@@ -6,32 +6,34 @@ import "../../styles/auth/auth.css";
 // import assets
 import coverImg from "../../assets/logincover2.jpg";
 import logo from "../../assets/logo.png";
-// import components
-// import { LoginSuccess } from "../../components/modal/LoginSuccess";
-// selector redux
-// import { useSelector } from "react-redux";
-// dispatch redux
-import { useDispatch } from "react-redux";
-// import slices
-import { toggleLoginModal } from "../../redux/slices/modal/modal";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 export const LoginPage = () => {
   // navigate
   const navigate = useNavigate();
-  // dispatch
-  const dispatch = useDispatch();
   // state
   const [visiblePass, setVisiblePass] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+  const [responseData, setResponseData] = useState(null);
+  const [validEmail, setValidEmail] = useState(null);
+  const [wrongPassEmail, setWrongPassEmail] = useState(null);
+  const [requiredField, setRequiredField] = useState(null);
+
   // mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationFn: AccountService.loginService,
-    onSuccess: () => {
+    onSuccess: (responseData) => {
+      setResponseData(responseData);
+      if (responseData && responseData.code === 400) {
+        setWrongPassEmail("Wrong email or password");
+      } else {
+        setWrongPassEmail(null);
+        navigate("/");
+      }
       queryCilent.invalidateQueries({
         queryKey: ["login"],
       });
@@ -45,8 +47,24 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
+  // valiation pattern
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    // empty validation
+    if (!loginData.email || !loginData.password) {
+      setRequiredField("All fields are required");
+      return;
+    } else {
+      setRequiredField(null);
+    }
+    // email pattern validation
+    if (!emailPattern.test(loginData.email)) {
+      setValidEmail("Invalid, email should be: example@gmail.com");
+      return;
+    } else {
+      setValidEmail(null);
+    }
     try {
       await mutation.mutateAsync(loginData);
     } catch (error) {
@@ -57,8 +75,8 @@ export const LoginPage = () => {
     setVisiblePass(!visiblePass);
   };
   useEffect(() => {
-    console.log(loginData);
-  }, [loginData]);
+    console.log(responseData);
+  }, [responseData]);
   return (
     <div className="cover">
       {/* {loginModalStatus && <LoginSuccess />} */}
@@ -117,6 +135,9 @@ export const LoginPage = () => {
                 )}
               </div>
             </div>
+            {requiredField && <p className="fail">{requiredField}</p>}
+            {validEmail && <p className="fail">{validEmail}</p>}
+            {wrongPassEmail && <p className="fail">{wrongPassEmail}</p>}
             <Link to="/forget">Forget password?</Link>
             <input type="submit" value="Login To Izumiya" />
           </form>

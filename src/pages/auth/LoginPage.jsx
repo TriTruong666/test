@@ -1,40 +1,67 @@
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
 import coverImg from "../../assets/logincover2.jpg";
 import logo from "../../assets/logo.png";
 // import components
-import { LoginSuccess } from "../../components/modal/LoginSuccess";
+// import { LoginSuccess } from "../../components/modal/LoginSuccess";
 // selector redux
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // dispatch redux
 import { useDispatch } from "react-redux";
 // import slices
 import { toggleLoginModal } from "../../redux/slices/modal/modal";
+// import service
+import * as AccountService from "../../service/account/AccountService";
 export const LoginPage = () => {
   // navigate
   const navigate = useNavigate();
   // dispatch
   const dispatch = useDispatch();
-  // redux state
-  const loginModalStatus = useSelector(
-    (state) => state.modal.loginModal.isToggleModal
-  );
   // state
   const [visiblePass, setVisiblePass] = useState(false);
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+  // mutation
+  const queryCilent = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: AccountService.loginService,
+    onSuccess: () => {
+      queryCilent.invalidateQueries({
+        queryKey: ["login"],
+      });
+    },
+  });
   // handlefunc
+  const handleOnChangeForm = (e) => {
+    const { name, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+  };
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      await mutation.mutateAsync(loginData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
-  const handleToggleModal = () => {
-    dispatch(toggleLoginModal());
-  };
+  useEffect(() => {
+    console.log(loginData);
+  }, [loginData]);
   return (
     <div className="cover">
-      {loginModalStatus && <LoginSuccess />}
+      {/* {loginModalStatus && <LoginSuccess />} */}
       <img src={coverImg} alt="" />
       <div className="login-container">
         <div className="login-main">
@@ -45,7 +72,12 @@ export const LoginPage = () => {
               <p>Enter your credentials to access your account</p>
             </div>
           </div>
-          <form action="" className="login-form" autoComplete="off">
+          <form
+            action=""
+            onSubmit={handleSubmitForm}
+            className="login-form"
+            autoComplete="off"
+          >
             <div className="input-item">
               <label htmlFor="email">Email</label>
               <div>
@@ -54,6 +86,7 @@ export const LoginPage = () => {
                   id="email"
                   name="email"
                   placeholder="Enter your email"
+                  onChange={handleOnChangeForm}
                 />
               </div>
             </div>
@@ -65,6 +98,7 @@ export const LoginPage = () => {
                   id="password"
                   name="password"
                   placeholder="Enter your password"
+                  onChange={handleOnChangeForm}
                 />
                 {visiblePass ? (
                   <span
@@ -89,7 +123,7 @@ export const LoginPage = () => {
           <div className="or">
             <p>or</p>
           </div>
-          <div className="oauth" onClick={handleToggleModal}>
+          <div className="oauth">
             <i className="bx bxl-google"></i>
             <p>Login with Google</p>
           </div>

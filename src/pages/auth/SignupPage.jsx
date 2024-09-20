@@ -6,10 +6,22 @@ import "../../styles/auth/auth.css";
 // import assets
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
+// import components
+import { LoginSuccess } from "../../components/modal/LoginSuccess";
 // import service
 import * as AccountService from "../../service/account/AccountService";
+// import redux
+import { useDispatch, useSelector } from "react-redux";
+// import slices
+import { toggleLoginModal } from "../../redux/slices/modal/modal";
 export const SignupPage = () => {
-  // navigate
+  // selector
+  const isToggleSignupSuccess = useSelector(
+    (state) => state.modal.loginModal.isToggleModal
+  );
+  // dispatch
+  const dispatch = useDispatch();
+  // navigation
   const navigate = useNavigate();
   // state
   const [visiblePass, setVisiblePass] = useState(false);
@@ -25,6 +37,8 @@ export const SignupPage = () => {
   const [validEmail, setValidEmail] = useState(null);
   const [requiredField, setRequiredField] = useState(null);
   const [responseData, setResponseData] = useState(null);
+  const [numberOfPass, setNumberOfPass] = useState(null);
+
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -37,6 +51,9 @@ export const SignupPage = () => {
     },
   });
   // handlefunc
+  const handleToggleModal = () => {
+    dispatch(toggleLoginModal());
+  };
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
@@ -83,12 +100,13 @@ export const SignupPage = () => {
     }
     try {
       await mutation.mutateAsync(signupData);
-      if (responseData && responseData.code === 400) {
-        setExistedEmail("This email have existed, please try another one");
-      } else {
-        setExistedEmail(null);
-        navigate("/login");
-      }
+      setTimeout(() => {
+        if (responseData && responseData.code === 400) {
+          setExistedEmail("This email have existed, please try another one");
+        } else {
+          setExistedEmail(null);
+        }
+      }, 1000);
     } catch (error) {
       console.error(error);
     }
@@ -99,6 +117,7 @@ export const SignupPage = () => {
   }, [responseData]);
   return (
     <div className="signup-container">
+      {isToggleSignupSuccess && <LoginSuccess />}
       <div className="signup-main">
         <img src={logo} alt="" onClick={() => navigate("/")} />
         <div className="signup-main-header">

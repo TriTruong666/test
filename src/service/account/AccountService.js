@@ -25,6 +25,7 @@ export const loginService = async (userData) => {
     console.log(res.data);
     return res.data;
   } catch (err) {
-    console.error(err);
+    console.log(err.response.data);
+    return err.response.data;
   }
 };

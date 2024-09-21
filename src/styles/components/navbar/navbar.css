@@ -74,7 +74,7 @@ select option {
     font-size: 0.8rem;
     font-family: "Roboto Mono", monospace;
   }
-  .navbar-container .navbar-second a:nth-child(4) {
+  .navbar-container .navbar-second a:nth-child(3) {
     padding: 10px 25px;
     background: #BCAB6F;
     color: black;
@@ -84,21 +84,27 @@ select option {
   .navbar-container .navbar-third {
     display: flex;
     align-items: center;
+    -moz-column-gap: 30px;
+         column-gap: 30px;
+  }
+  .navbar-container .navbar-third i {
+    font-size: 22px;
+    color: #BCAB6F;
+  }
+  .navbar-container .navbar-third .info {
+    background: #BCAB6F;
+    border-radius: 15px;
+    align-items: center;
     -moz-column-gap: 10px;
          column-gap: 10px;
     padding: 5px 10px 5px 20px;
-    background: #BCAB6F;
-    border-radius: 15px;
+    display: flex;
   }
-  .navbar-container .navbar-third i:nth-child(1) {
-    font-size: 18px;
-    color: white;
-  }
-  .navbar-container .navbar-third i:nth-child(2) {
+  .navbar-container .navbar-third .info i:nth-child(2) {
     font-size: 26px;
     color: black;
   }
-  .navbar-container .navbar-third strong {
+  .navbar-container .navbar-third .info strong {
     font-size: 0.9rem;
     color: black;
     font-family: "Roboto Mono", monospace;

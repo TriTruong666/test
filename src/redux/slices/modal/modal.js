@@ -1,10 +1,10 @@
 import { createSlice, combineReducers } from "@reduxjs/toolkit";
 
-const LoginModalSlice = createSlice({
-  name: "loginModal",
+const SuccessModalSlice = createSlice({
+  name: "successModal",
   initialState: { isToggleModal: false },
   reducers: {
-    toggleLoginModal: (state) => {
+    toggleSuccessModal: (state) => {
       state.isToggleModal = !state.isToggleModal;
     },
   },
@@ -81,7 +81,7 @@ const DetailKoiModalSlice = createSlice({
     },
     toggleDetailKoiModalOff: (state) => {
       state.isToggleModal = false;
-    }
+    },
   },
 });
 const KoiHistoryModalSlice = createSlice({
@@ -109,7 +109,7 @@ const CancelMyOrderModalSlice = createSlice({
   },
 });
 // Export the action
-export const { toggleLoginModal } = LoginModalSlice.actions;
+export const { toggleSuccessModal } = SuccessModalSlice.actions;
 export const { toggleAddPondModal } = AddPondModalSlice.actions;
 export const { toggleUpdatePondModal } = UpdatePondModalSlice.actions;
 export const { toggleDelPondModal } = DelPondModalSlice.actions;
@@ -124,10 +124,9 @@ export const { toggleKoiHistoryOn } = KoiHistoryModalSlice.actions;
 export const { toggleKoiHistoryOff } = KoiHistoryModalSlice.actions;
 export const { toggleCancelMyOrderModal } = CancelMyOrderModalSlice.actions;
 
-
 // Combine reducers
 const ModalReducer = combineReducers({
-  loginModal: LoginModalSlice.reducer,
+  successModal: SuccessModalSlice.reducer,
   addPondModal: AddPondModalSlice.reducer,
   updatePondModal: UpdatePondModalSlice.reducer,
   delPondModal: DelPondModalSlice.reducer,

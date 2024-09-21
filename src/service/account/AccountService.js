@@ -23,6 +23,7 @@ export const loginService = async (userData) => {
       },
     });
     localStorage.setItem("token", res.data.result.token);
+    localStorage.setItem("user", JSON.stringify(res.data.result.user));
     return res.data;
   } catch (err) {
     return err.response.data;
@@ -38,7 +39,22 @@ export const verifyToken = async (token) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logoutService = async (token) => {
+  try {
+    const api = "http://localhost:8080/auth/logout";
+    const res = await axios.post(api, token, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     return res.data;
   } catch (error) {
     console.log(error);

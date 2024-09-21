@@ -47,7 +47,7 @@
                 font-family: $main-font;
             }
 
-            a:nth-child(4) {
+            a:nth-child(3) {
                 padding: 10px 25px;
                 background: $second-color;
                 color: black;
@@ -59,26 +59,32 @@
         .navbar-third {
             display: flex;
             align-items: center;
-            column-gap: 10px;
-            padding: 5px 10px 5px 20px;
-            background: $second-color;
-            border-radius: 15px;
+            column-gap: 30px;
 
-            i:nth-child(1) {
-                font-size: 18px;
-                color: white;
+            i {
+                font-size: 22px;
+                color: $second-color;
             }
 
-            i:nth-child(2) {
-                font-size: 26px;
-                color: black;
-            }
+            .info {
+                background: $second-color;
+                border-radius: 15px;
+                align-items: center;
+                column-gap: 10px;
+                padding: 5px 10px 5px 20px;
+                display: flex;
 
-            strong {
-                font-size: 0.9rem;
-                color: black;
-                font-family: $main-font;
-                font-weight: 400;
+                i:nth-child(2) {
+                    font-size: 26px;
+                    color: black;
+                }
+
+                strong {
+                    font-size: 0.9rem;
+                    color: black;
+                    font-family: $main-font;
+                    font-weight: 400;
+                }
             }
         }
     }

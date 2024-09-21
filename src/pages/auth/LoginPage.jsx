@@ -1,14 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
 // import styles
 import "../../styles/auth/auth.css";
+// import components
+import { ModalSuccess } from "../../components/modal/ModalSuccess";
 // import assets
 import coverImg from "../../assets/logincover2.jpg";
 import logo from "../../assets/logo.png";
 // import service
 import * as AccountService from "../../service/account/AccountService";
+// import slices
+import { toggleSuccessModal } from "../../redux/slices/modal/modal";
 export const LoginPage = () => {
+  // selector
+  const isToggleLoginSuccess = useSelector(
+    (state) => state.modal.successModal.isToggleModal
+  );
+  // dispatch
+  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   // state
@@ -32,7 +43,11 @@ export const LoginPage = () => {
         setWrongPassEmail("Wrong email or password");
       } else {
         setWrongPassEmail(null);
-        navigate("/");
+        dispatch(toggleSuccessModal());
+        setTimeout(() => {
+          dispatch(toggleSuccessModal());
+          navigate("/");
+        }, 1500);
       }
       queryCilent.invalidateQueries({
         queryKey: ["login"],
@@ -79,7 +94,12 @@ export const LoginPage = () => {
   }, [responseData]);
   return (
     <div className="cover">
-      {/* {loginModalStatus && <LoginSuccess />} */}
+      {isToggleLoginSuccess && (
+        <ModalSuccess
+          title="Login Success"
+          message="Welcome back, now system will redirect you to homepage"
+        />
+      )}
       <img src={coverImg} alt="" />
       <div className="login-container">
         <div className="login-main">

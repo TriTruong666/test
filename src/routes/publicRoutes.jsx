@@ -10,6 +10,7 @@ import { BlogDetail } from "../pages/public/BlogDetail";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
+import LoggedWrapper from "./LoggedWrapper";
 export const publicRoutes = [
   {
     path: "/",
@@ -17,15 +18,27 @@ export const publicRoutes = [
   },
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <LoggedWrapper>
+        <LoginPage />
+      </LoggedWrapper>
+    ),
   },
   {
     path: "/signup",
-    element: <SignupPage />,
+    element: (
+      <LoggedWrapper>
+        <SignupPage />
+      </LoggedWrapper>
+    ),
   },
   {
     path: "/forget",
-    element: <ForgetPage />,
+    element: (
+      <LoggedWrapper>
+        <ForgetPage />
+      </LoggedWrapper>
+    ),
   },
   {
     path: "/shop",

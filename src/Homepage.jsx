@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
@@ -19,6 +19,8 @@ import group from "./assets/group.png";
 // import service
 import * as AccountService from "./service/account/AccountService";
 export const Homepage = () => {
+  // state
+  const [isAuth, setIsAuth] = useState(false);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -31,10 +33,19 @@ export const Homepage = () => {
   });
   // handle func
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const handleVerifyToken = async () => {
     await mutation.mutateAsync(token);
   };
+  const handleSetIsAuth = () => {
+    if (!token && !user) {
+      setIsAuth(false);
+    } else {
+      setIsAuth(true);
+    }
+  };
   useEffect(() => {
+    handleSetIsAuth();
     try {
       handleVerifyToken();
     } catch (error) {
@@ -44,7 +55,7 @@ export const Homepage = () => {
   return (
     <div className="homepage-container" id="about">
       <Navbar />
-      <Settingnav />
+      {isAuth && <Settingnav />}
       <div className="homepage-intro">
         <video src={introVideo} autoPlay loop muted>
           <source type="video/mp4" />

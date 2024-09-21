@@ -13,11 +13,11 @@ import * as AccountService from "../../service/account/AccountService";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 // import slices
-import { toggleLoginModal } from "../../redux/slices/modal/modal";
+import { toggleSuccessModal } from "../../redux/slices/modal/modal";
 export const SignupPage = () => {
   // selector
   const isToggleSignupSuccess = useSelector(
-    (state) => state.modal.loginModal.isToggleModal
+    (state) => state.modal.successModal.isToggleModal
   );
   // dispatch
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const SignupPage = () => {
         setExistedEmail("This email have existed, please try another one");
       } else {
         setExistedEmail(null);
-        dispatch(toggleLoginModal());
+        dispatch(toggleSuccessModal());
         setTimeout(() => {
           navigate("/login");
           dispatch(toggleLoginModal());
@@ -119,12 +119,14 @@ export const SignupPage = () => {
     }
   };
   // test useEffect
-  useEffect(() => {
-    console.log(responseData);
-  }, [responseData]);
   return (
     <div className="signup-container">
-      {isToggleSignupSuccess && <ModalSuccess />}
+      {isToggleSignupSuccess && (
+        <ModalSuccess
+          title="Create Success"
+          message="Thanks for joining Izumiya Koi"
+        />
+      )}
       <div className="signup-main">
         <img src={logo} alt="" onClick={() => navigate("/")} />
         <div className="signup-main-header">

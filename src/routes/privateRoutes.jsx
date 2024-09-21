@@ -13,30 +13,55 @@ import { BlogDetail } from "../pages/private/member/BlogDetail";
 import { UserSetting } from "../pages/private/both/UserSetting";
 import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
 import { AdminAccountManage } from "../pages/private/admin/AdminAccountManage";
+import AuthWrapper from "./AuthWrapper";
 export const privateRoutes = [
   {
     path: "/dashboard/home",
-    element: <HomeMember />,
+    element: (
+      <AuthWrapper allowedRoles={["USER"]}>
+        <HomeMember />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/dashboard/mypond",
-    element: <PondManage />,
+    element: (
+      <AuthWrapper allowedRoles={["USER"]}>
+        <PondManage />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: "/dashboard/mypond/detail",
-        element: <PondDetail />,
+        element: (
+          <AuthWrapper allowedRoles={["USER"]}>
+            <PondDetail />
+          </AuthWrapper>
+        ),
         children: [
           {
             path: "/dashboard/mypond/detail/info",
-            element: <PondInfo />,
+            element: (
+              <AuthWrapper allowedRoles={["USER"]}>
+                <PondInfo />
+              </AuthWrapper>
+            ),
           },
           {
             path: "/dashboard/mypond/detail/water",
-            element: <PondWater />,
+            element: (
+              <AuthWrapper allowedRoles={["USER"]}>
+                <PondWater />
+              </AuthWrapper>
+            ),
           },
           {
             path: "/dashboard/mypond/detail/kois",
-            element: <KoiManage />,
+            element: (
+              <AuthWrapper allowedRoles={["USER"]}>
+                <KoiManage />
+              </AuthWrapper>
+            ),
           },
         ],
       },
@@ -44,34 +69,62 @@ export const privateRoutes = [
   },
   {
     path: "/dashboard/myorder",
-    element: <OrderManage />,
+    element: (
+      <AuthWrapper allowedRoles={["USER"]}>
+        <OrderManage />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: "/dashboard/myorder/detail",
-        element: <MyOrderDetail />,
+        element: (
+          <AuthWrapper allowedRoles={["USER"]}>
+            <MyOrderDetail />
+          </AuthWrapper>
+        ),
       },
     ],
   },
   {
     path: "/dashboard/myblog",
-    element: <BlogManage />,
+    element: (
+      <AuthWrapper allowedRoles={["USER"]}>
+        <BlogManage />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: "/dashboard/myblog/review",
-        element: <BlogDetail />,
+        element: (
+          <AuthWrapper allowedRoles={["USER"]}>
+            <BlogDetail />
+          </AuthWrapper>
+        ),
       },
     ],
   },
   {
     path: "/dashboard/setting",
-    element: <UserSetting />,
+    element: (
+      <AuthWrapper allowedRoles={["USER", "ADMIN"]}>
+        <UserSetting />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/dashboard/admin/order",
-    element: <AdminOrderManage />,
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <AdminOrderManage />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/dashboard/admin/account",
-    element: <AdminAccountManage />,
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <AdminAccountManage />
+      </AuthWrapper>
+    ),
   },
 ];

@@ -15,17 +15,17 @@
 
         .modal {
             width: 400px;
-            height: 350px;
+            max-height: 700px;
             background: white;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            padding: 20px 30px;
+            padding: 40px 50px;
             align-items: center;
             row-gap: 10px;
 
             i {
-                margin-top: 30px;
+                // margin-top: 30px;
                 font-size: 100px;
                 color: rgb(25, 202, 25);
             }
@@ -41,18 +41,6 @@
                 font-size: 0.8rem;
                 font-weight: 400;
                 color: rgba(0, 0, 0, .7);
-            }
-
-            a {
-                margin-top: 15px;
-                width: 100%;
-                text-align: center;
-                padding: 10px;
-                border: 1px solid rgba(0, 0, 0, .1);
-                color: rgba(0, 0, 0, .7);
-                font-weight: 600;
-                font-size: 0.85rem;
-                border-radius: 15px;
             }
         }
     }

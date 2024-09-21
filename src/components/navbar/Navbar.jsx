@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/components/navbar/navbar.css";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 // import slices
 import { toggleSettingNav } from "../../redux/slices/navbar/navbar";
 export const Navbar = () => {
+  const [isAuth, setIsAuth] = useState(false);
   // navigate
   const navigate = useNavigate();
   // dispatch
@@ -17,6 +18,18 @@ export const Navbar = () => {
   const handleToggleSettingnav = () => {
     dispatch(toggleSettingNav());
   };
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const handleSetIsAuth = () => {
+    if (!token && !user) {
+      setIsAuth(false);
+    } else {
+      setIsAuth(true);
+    }
+  };
+  useEffect(() => {
+    handleSetIsAuth();
+  }, []);
   return (
     <div className="navbar-container">
       <div className="navbar-main">
@@ -28,18 +41,21 @@ export const Navbar = () => {
         <a href="">Contact</a>
         <Link to="/blog">Blog</Link>
       </div>
-      {/* before login */}
-      {/* <div className="navbar-second">
-        <i className="bx bxs-cart"></i>
-        <i className="bx bx-cart"></i>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
-      </div> */}
-      {/* afterlogin */}
-      <div className="navbar-third" onClick={handleToggleSettingnav}>
-        <strong>Truong Hoang Tri</strong>
-        <i className="bx bx-chevron-down"></i>
-      </div>
+      {isAuth ? (
+        <div className="navbar-third" onClick={handleToggleSettingnav}>
+          <i className="bx bx-cart"></i>
+          <div className="info">
+            <strong>{user.fullname}</strong>
+            <i className="bx bx-chevron-down"></i>
+          </div>
+        </div>
+      ) : (
+        <div className="navbar-second">
+          <i className="bx bx-cart"></i>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+        </div>
+      )}
     </div>
   );
 };

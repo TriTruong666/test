@@ -1,15 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 // import styles
 import "../../../styles/dashboard/myblogdetail/myblogdetail.css";
+// import components
+
 // import assets
 import image from "../../../assets/blogheader.jpg";
+// import slices
+import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
 export const BlogDetail = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  const handleToggleUpdatePondModal = () => {
+    dispatch(toggleUpdateBlogModal());
+  };
   return (
     <div className="my-blog-detail-container">
       <div className="my-blog-detail-header">
         <strong>My Blog Detail #123124</strong>
         <div>
-          <i className="bx bx-edit-alt"></i>
+          <i
+            className="bx bx-edit-alt"
+            onClick={handleToggleUpdatePondModal}
+          ></i>
           <i className="bx bx-trash-alt"></i>
         </div>
       </div>

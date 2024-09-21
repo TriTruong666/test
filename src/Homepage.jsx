@@ -30,6 +30,9 @@ export const Homepage = () => {
         queryKey: ["verify"],
       });
     },
+    onError: () => {
+      console.log("Fail to connect server");
+    },
   });
   // handle func
   const token = localStorage.getItem("token");
@@ -48,9 +51,7 @@ export const Homepage = () => {
     handleSetIsAuth();
     try {
       handleVerifyToken();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, []);
   return (
     <div className="homepage-container" id="about">
@@ -76,7 +77,7 @@ export const Homepage = () => {
             </p>
             <div className="other-link">
               <a href="">See More</a>
-              <Link to="/koimanage">Start Using Izumiya</Link>
+              <Link to="/dashboard/mypond">Start Using Izumiya</Link>
             </div>
           </div>
         </div>

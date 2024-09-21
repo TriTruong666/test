@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import styles
 import "../../styles/blog/blog.css";
 // import components
@@ -8,10 +8,25 @@ import { Bloglist } from "../../components/blog/Bloglist";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 export const Blog = () => {
+  // state
+  const [isAuth, setIsAuth] = useState(false);
+  // handle func
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const handleSetIsAuth = () => {
+    if (!token && !user) {
+      setIsAuth(false);
+    } else {
+      setIsAuth(true);
+    }
+  };
+  useEffect(() => {
+    handleSetIsAuth();
+  }, []);
   return (
     <div className="blog-container">
       <Navbar />
-      <Settingnav />
+      {isAuth && <Settingnav />}
       <div className="blog">
         <div className="blog-header">
           <strong>BLOGS</strong>

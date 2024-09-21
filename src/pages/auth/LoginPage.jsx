@@ -39,7 +39,7 @@ export const LoginPage = () => {
     mutationFn: AccountService.loginService,
     onSuccess: (responseData) => {
       setResponseData(responseData);
-      if (responseData && responseData.code === 400) {
+      if (responseData && responseData.code === "LOGIN_FAIL") {
         setWrongPassEmail("Wrong email or password");
       } else {
         setWrongPassEmail(null);
@@ -89,9 +89,6 @@ export const LoginPage = () => {
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
-  useEffect(() => {
-    console.log(responseData);
-  }, [responseData]);
   return (
     <div className="cover">
       {isToggleLoginSuccess && (

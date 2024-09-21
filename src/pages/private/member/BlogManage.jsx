@@ -1,14 +1,36 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 // import styles
 import "../../../styles/dashboard/myblog/myblog.css";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { MyBlogList } from "../../../components/myblog/MyBlogList";
+import { AddBlog } from "../../../components/modal/AddBlog";
+import { UpdateBlog } from "../../../components/modal/UpdateBlog";
+
+// import slices
+import { toggleAddBlogModal } from "../../../redux/slices/modal/modal";
 export const BlogManage = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  //   selector
+  const isToggleAddBlogModal = useSelector(
+    (state) => state.modal.addBlogModal.isToggleModal
+  );
+  const isToggleUpdateBlogModal = useSelector(
+    (state) => state.modal.updateBlogModal.isToggleModal
+  );
+  // handle func
+  const handleToggleAddPondModal = () => {
+    dispatch(toggleAddBlogModal());
+  };
+
   return (
     <div className="blog-manage-container">
       <Dashnav />
+      {isToggleUpdateBlogModal && <UpdateBlog />}
+      {isToggleAddBlogModal && <AddBlog />}
       <div className="blog-manage">
         <div className="blog-manage-header">
           <strong>My Blog</strong>
@@ -23,7 +45,7 @@ export const BlogManage = () => {
             </select>
             <i className="bx bx-chevron-down"></i>
           </div> */}
-          <div className="add">
+          <div className="add" onClick={handleToggleAddPondModal}>
             <i className="bx bx-plus"></i>
             <p>Create new blog</p>
           </div>

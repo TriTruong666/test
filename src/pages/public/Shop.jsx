@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import styles
 import "../../styles/shop/shop.css";
 // import components
@@ -8,10 +8,25 @@ import { Shopnav } from "../../components/navbar/Shopnav";
 import { Shoplist } from "../../components/shop/Shoplist";
 import { Settingnav } from "../../components/navbar/Settingnav";
 export const Shop = () => {
+  // state
+  const [isAuth, setIsAuth] = useState(false);
+  // handle func
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const handleSetIsAuth = () => {
+    if (!token && !user) {
+      setIsAuth(false);
+    } else {
+      setIsAuth(true);
+    }
+  };
+  useEffect(() => {
+    handleSetIsAuth();
+  }, []);
   return (
     <div className="shop-container">
       <Navbar />
-      <Settingnav />
+      {isAuth && <Settingnav />}
       <div className="shop">
         <div className="shop-header">
           <strong>IZUMIYA SHOP</strong>

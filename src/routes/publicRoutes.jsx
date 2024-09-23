@@ -10,7 +10,8 @@ import { BlogDetail } from "../pages/public/BlogDetail";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
-import LoggedWrapper from "./LoggedWrapper";
+import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
+import { LoggedWrapper, VerifyEmailWrapper } from "./LoggedWrapper";
 export const publicRoutes = [
   {
     path: "/",
@@ -30,6 +31,14 @@ export const publicRoutes = [
       <LoggedWrapper>
         <SignupPage />
       </LoggedWrapper>
+    ),
+  },
+  {
+    path: "/verify",
+    element: (
+      <VerifyEmailWrapper>
+        <EmailVerifyPage />
+      </VerifyEmailWrapper>
     ),
   },
   {

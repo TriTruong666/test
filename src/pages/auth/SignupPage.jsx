@@ -1,19 +1,18 @@
 import { useState, React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import SyncLoader from "react-spinners/SyncLoader";
 // import styles
 import "../../styles/auth/auth.css";
 // import assets
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
-// import components
-import { ModalSuccess } from "../../components/modal/ModalSuccess";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 // import slices
-import { toggleSuccessModal } from "../../redux/slices/modal/modal";
+import { setEmail } from "../../redux/slices/account/account";
 export const SignupPage = () => {
   // selector
   const isToggleSignupSuccess = useSelector(
@@ -38,22 +37,23 @@ export const SignupPage = () => {
   const [requiredField, setRequiredField] = useState(null);
   const [responseData, setResponseData] = useState(null);
   const [numberOfPass, setNumberOfPass] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(null);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: AccountService.signupService,
+    onMutate: () => {
+      setIsLoading(true);
+    },
     onSuccess: (responseData) => {
+      setIsLoading(false);
       setResponseData(responseData);
-      if (responseData && responseData.code === 400) {
+      if (responseData && responseData.code === "EMAIL_EXISTED") {
         setExistedEmail("This email have existed, please try another one");
       } else {
         setExistedEmail(null);
-        dispatch(toggleSuccessModal());
-        setTimeout(() => {
-          navigate("/login");
-          dispatch(toggleLoginModal());
-        }, 1500);
+        dispatch(setEmail(signupData.email));
+        navigate("/verify");
       }
       queryClient.invalidateQueries({
         queryKey: ["signup"],
@@ -118,14 +118,12 @@ export const SignupPage = () => {
       console.error(error);
     }
   };
-  // test useEffect
   return (
     <div className="signup-container">
-      {isToggleSignupSuccess && (
-        <ModalSuccess
-          title="Create Success"
-          message="Thanks for joining Izumiya Koi"
-        />
+      {isLoading && (
+        <div className="loading">
+          <SyncLoader color="#ffffff" size={20} />
+        </div>
       )}
       <div className="signup-main">
         <img src={logo} alt="" onClick={() => navigate("/")} />

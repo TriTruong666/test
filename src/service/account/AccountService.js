@@ -13,7 +13,20 @@ export const signupService = async (userData) => {
     return err.response.data;
   }
 };
-
+export const verifyEmail = async (userData) => {
+  try {
+    const api = "http://localhost:8080/auth/verify-email";
+    const res = await axios.post(api, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+};
 export const loginService = async (userData) => {
   try {
     const api = "http://localhost:8080/auth/sign-in";

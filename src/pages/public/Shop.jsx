@@ -8,7 +8,6 @@ import { Settingnav } from "../../components/navbar/Settingnav";
 import { Shopnav } from "../../components/navbar/Shopnav";
 import { Shoplist } from "../../components/shop/Shoplist";
 // import API call
-import { getAllProduct } from "../../service/product/productService";
 
 export const Shop = () => {
   // state for authentication
@@ -16,6 +15,8 @@ export const Shop = () => {
 
   // state for product data
   const [products, setProducts] = useState([]);
+
+  const [error, setError] = useState(null);
 
   // handle func for authentication
   const token = localStorage.getItem("token");
@@ -30,14 +31,19 @@ export const Shop = () => {
   };
 
   // Fetch product data
-  const fetchProducts = async () => {
-    const productList = await getAllProduct();
-    setProducts(productList); // store the fetched data in the state
-  };
+  // const fetchProducts = async () => {
+  //   try {
+  //     const productList = await getAllProduct();
+  //     setProducts(productList); // store the fetched data in the state
+  //   } catch (error) {
+  //     setError("Failed to fetch products. Please try again later.");
+  //     console.error("Error fetching products:", error);
+  //   }
+  // };
 
   useEffect(() => {
     handleSetIsAuth();
-    fetchProducts(); // fetch products when component mounts
+    // fetchProducts(); // fetch products when component mounts
   }, []);
 
   return (
@@ -68,7 +74,11 @@ export const Shop = () => {
           </div>
           <div className="shop-main-list">
             <Shopnav />
-            <Shoplist products={products} /> 
+            {error ? (
+              <p className="error-message">{error}</p>
+            ) : (
+              <Shoplist products={products} />
+            )}
           </div>
         </div>
       </div>

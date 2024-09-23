@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-
 export const getAllProduct = async () => {
   try {
     // Retrieve the token from localStorage
@@ -16,7 +14,7 @@ export const getAllProduct = async () => {
       },
     });
     console.log(response.data)
-    return response.data;
+    return response.data.result
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;

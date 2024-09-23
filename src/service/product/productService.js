@@ -1,12 +1,22 @@
-import axios from "axios";
+import axios from 'axios';
+export const getAllProduct = async () => {
+  try {
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem("token");
 
-export const getAllProduct = async () =>{
-    try{
-        const url = `https://reqres.in/api/unknown`;
-        const res = await axios.get(url);
-        return res.data;
+    // If token doesn't exist
+    if (!token) {
+      throw new Error('No authentication token found');
     }
-    catch(err) {
-        console.error(err);
-    }
-}
+    const response = await axios.get('http://localhost:8080/product/list', {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token to Authorization header
+      },
+    });
+    console.log(response.data)
+    return response.data.result
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
+  }
+};

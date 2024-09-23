@@ -30,56 +30,32 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  .admin-order-container {
+  .admin-blog-container {
     width: 100vw;
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: hidden;
   }
-  .admin-order-container .admin-order {
+  .admin-blog-container .admin-blog {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     width: 40%;
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
-  .admin-order-container .admin-order .admin-order-header {
+  .admin-blog-container .admin-blog .admin-blog-header {
     padding: 25px 40px;
   }
-  .admin-order-container .admin-order .admin-order-header strong {
+  .admin-blog-container .admin-blog .admin-blog-header strong {
     font-size: 1.1rem;
     font-weight: 700;
   }
-  .admin-order-container .admin-order .admin-order-utils {
+  .admin-blog-container .admin-blog .admin-blog-utils {
     display: flex;
     padding: 20px 40px;
     justify-content: space-between;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order {
-    display: flex;
-    padding: 5px 10px;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -moz-column-gap: 10px;
-         column-gap: 10px;
-    border-radius: 10px;
-  }
-  .admin-order-container .admin-order .admin-order-utils .search-order i {
-    font-size: 0.85rem;
-  }
-  .admin-order-container .admin-order .admin-order-utils .search-order ::-moz-placeholder {
-    font-size: 0.7rem;
-  }
-  .admin-order-container .admin-order .admin-order-utils .search-order ::placeholder {
-    font-size: 0.7rem;
-  }
-  .admin-order-container .admin-order .admin-order-utils .search-order input {
-    width: 170px;
-    font-size: 0.7rem;
-    color: rgba(0, 0, 0, 0.9);
-  }
-  .admin-order-container .admin-order .admin-order-utils .filter {
+  .admin-blog-container .admin-blog .admin-blog-utils .filter {
     width: 200px;
     display: flex;
     align-items: center;
@@ -87,24 +63,43 @@ select option {
     border-radius: 10px;
     position: relative;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter select {
+  .admin-blog-container .admin-blog .admin-blog-utils .filter select {
     font-size: 0.7rem;
     width: 100%;
     padding: 5px 15px;
     color: black;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter select option {
+  .admin-blog-container .admin-blog .admin-blog-utils .filter select option {
     background: white;
     color: black;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter i {
+  .admin-blog-container .admin-blog .admin-blog-utils .filter i {
     left: 88%;
     font-weight: 100;
     font-size: 18px;
     position: absolute;
     z-index: -1;
   }
-  .admin-order-container .admin-order-empty {
+  .admin-blog-container .admin-blog .admin-blog-utils .add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    -moz-column-gap: 5px;
+         column-gap: 5px;
+    background: #4B87E0;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .add i {
+    color: white;
+    font-size: 18px;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .add p {
+    color: white;
+    font-size: 0.7rem;
+  }
+  .admin-blog-container .admin-blog-empty {
     width: calc(57.5% - 220px);
     height: 100vh;
     display: flex;
@@ -113,13 +108,13 @@ select option {
     justify-content: center;
     row-gap: 15px;
   }
-  .admin-order-container .admin-order-empty strong {
+  .admin-blog-container .admin-blog-empty strong {
     font-size: 1.5rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.9);
   }
-  .admin-order-container .admin-order-empty p {
+  .admin-blog-container .admin-blog-empty p {
     font-size: 0.85rem;
     font-weight: 400;
   }
-}/*# sourceMappingURL=adminorder.css.map */
+}/*# sourceMappingURL=adminblog.css.map */

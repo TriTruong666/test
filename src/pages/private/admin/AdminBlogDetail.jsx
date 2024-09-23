@@ -1,32 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 // import styles
-import "../../../styles/dashboard/myblogdetail/myblogdetail.css";
-// import components
-
+import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
 // import assets
 import image from "../../../assets/blogheader.jpg";
-// import slices
-import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
-export const BlogDetail = () => {
-  // dispatch
-  const dispatch = useDispatch();
-  const handleToggleUpdateBlogModal = () => {
-    dispatch(toggleUpdateBlogModal());
-  };
+export const AdminBlogDetail = () => {
   return (
-    <div className="my-blog-detail-container">
-      <div className="my-blog-detail-header">
+    <div className="admin-blog-detail-container">
+      <div className="admin-blog-detail-header">
         <strong>My Blog Detail #123124</strong>
         <div>
-          <i
-            className="bx bx-edit-alt"
-            onClick={handleToggleUpdateBlogModal}
-          ></i>
+          <i className="bx bx-edit-alt"></i>
           <i className="bx bx-trash-alt"></i>
         </div>
       </div>
-      <div className="my-blog-preview-main">
+      <div className="admin-blog-preview-main">
         <div className="header">
           <strong>Preview</strong>
           <p>What user see when they visit your blog</p>

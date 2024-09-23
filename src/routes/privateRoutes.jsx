@@ -13,6 +13,10 @@ import { BlogDetail } from "../pages/private/member/BlogDetail";
 import { UserSetting } from "../pages/private/both/UserSetting";
 import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
 import { AdminAccountManage } from "../pages/private/admin/AdminAccountManage";
+import { AdminProductManage } from "../pages/private/admin/AdminProductManage";
+import { AdminOrderDetail } from "../pages/private/admin/AdminOrderDetail";
+import { AdminBlogManage } from "../pages/private/admin/AdminBlogManage";
+import { AdminBlogDetail } from "../pages/private/admin/AdminBlogDetail";
 import AuthWrapper from "./AuthWrapper";
 export const privateRoutes = [
   {
@@ -118,6 +122,16 @@ export const privateRoutes = [
         <AdminOrderManage />
       </AuthWrapper>
     ),
+    children: [
+      {
+        path: "/dashboard/admin/order/detail",
+        element: (
+          <AuthWrapper allowedRoles={["ADMIN"]}>
+            <AdminOrderDetail />
+          </AuthWrapper>
+        ),
+      },
+    ],
   },
   {
     path: "/dashboard/admin/account",
@@ -126,5 +140,31 @@ export const privateRoutes = [
         <AdminAccountManage />
       </AuthWrapper>
     ),
+  },
+  {
+    path: "/dashboard/admin/product",
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <AdminProductManage />
+      </AuthWrapper>
+    ),
+  },
+  {
+    path: "/dashboard/admin/blog",
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <AdminBlogManage />
+      </AuthWrapper>
+    ),
+    children: [
+      {
+        path: "/dashboard/admin/blog/detail",
+        element: (
+          <AuthWrapper allowedRoles={["ADMIN"]}>
+            <AdminBlogDetail />
+          </AuthWrapper>
+        ),
+      },
+    ],
   },
 ];

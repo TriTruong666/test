@@ -80,9 +80,9 @@ export const Settingnav = () => {
           <i className="bx bxs-user-circle"></i>
           <div>
             <strong>
-              {user.fullname} ({user.role})
+              {user.fullname || "Guest"} ({user.role || "Guest"})
             </strong>
-            <p>{user.email}</p>
+            <p>{user.email || "null"}</p>
           </div>
         </div>
         <div className="setting-nav-list">

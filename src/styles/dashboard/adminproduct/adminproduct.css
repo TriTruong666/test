@@ -30,33 +30,34 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  .admin-order-container {
+  .admin-product-container {
     width: 100vw;
     max-height: 100vh;
     position: relative;
     display: flex;
     overflow-y: hidden;
   }
-  .admin-order-container .admin-order {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    width: 40%;
+  .admin-product-container .admin-product {
+    width: calc(100% - 220px);
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
-  .admin-order-container .admin-order .admin-order-header {
+  .admin-product-container .admin-product .admin-product-header {
     padding: 25px 40px;
   }
-  .admin-order-container .admin-order .admin-order-header strong {
+  .admin-product-container .admin-product .admin-product-header strong {
     font-size: 1.1rem;
     font-weight: 700;
   }
-  .admin-order-container .admin-order .admin-order-utils {
+  .admin-product-container .admin-product .admin-product-utils {
     display: flex;
     padding: 20px 40px;
-    justify-content: space-between;
+    -moz-column-gap: 30px;
+         column-gap: 30px;
+    justify-content: end;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order {
+  .admin-product-container .admin-product .admin-product-utils .search-product {
     display: flex;
     padding: 5px 10px;
     align-items: center;
@@ -65,61 +66,61 @@ select option {
          column-gap: 10px;
     border-radius: 10px;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order i {
+  .admin-product-container .admin-product .admin-product-utils .search-product i {
     font-size: 0.85rem;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order ::-moz-placeholder {
+  .admin-product-container .admin-product .admin-product-utils .search-product ::-moz-placeholder {
     font-size: 0.7rem;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order ::placeholder {
+  .admin-product-container .admin-product .admin-product-utils .search-product ::placeholder {
     font-size: 0.7rem;
   }
-  .admin-order-container .admin-order .admin-order-utils .search-order input {
+  .admin-product-container .admin-product .admin-product-utils .search-product input {
     width: 170px;
     font-size: 0.7rem;
     color: rgba(0, 0, 0, 0.9);
   }
-  .admin-order-container .admin-order .admin-order-utils .filter {
-    width: 200px;
+  .admin-product-container .admin-product .admin-product-utils .filter {
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     position: relative;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter select {
+  .admin-product-container .admin-product .admin-product-utils .filter select {
     font-size: 0.7rem;
     width: 100%;
     padding: 5px 15px;
     color: black;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter select option {
+  .admin-product-container .admin-product .admin-product-utils .filter select option {
     background: white;
     color: black;
   }
-  .admin-order-container .admin-order .admin-order-utils .filter i {
-    left: 88%;
+  .admin-product-container .admin-product .admin-product-utils .filter i {
+    left: 82%;
     font-weight: 100;
     font-size: 18px;
     position: absolute;
     z-index: -1;
   }
-  .admin-order-container .admin-order-empty {
-    width: calc(57.5% - 220px);
-    height: 100vh;
+  .admin-product-container .admin-product .admin-product-utils .add {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: 15px;
+    padding: 5px 20px;
+    -moz-column-gap: 5px;
+         column-gap: 5px;
+    background: #4B87E0;
+    border-radius: 10px;
+    cursor: pointer;
   }
-  .admin-order-container .admin-order-empty strong {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.9);
+  .admin-product-container .admin-product .admin-product-utils .add i {
+    color: white;
+    font-size: 18px;
   }
-  .admin-order-container .admin-order-empty p {
-    font-size: 0.85rem;
-    font-weight: 400;
+  .admin-product-container .admin-product .admin-product-utils .add p {
+    color: white;
+    font-size: 0.7rem;
   }
-}/*# sourceMappingURL=adminorder.css.map */
+}/*# sourceMappingURL=adminproduct.css.map */

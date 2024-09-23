@@ -1,21 +1,20 @@
 @import "../../global/global.scss";
 
 @media only screen and (max-width: 1537px) {
-    .admin-order-container {
+    .admin-product-container {
         width: 100vw;
         max-height: 100vh;
         position: relative;
         display: flex;
         overflow-y: hidden;
 
-        .admin-order {
-            border-right: 1px solid rgba(0, 0, 0, .2);
-            width: 40%;
+        .admin-product {
+            width: calc(100% - 220px);
             height: 100vh;
             display: flex;
             flex-direction: column;
 
-            .admin-order-header {
+            .admin-product-header {
                 padding: 25px 40px;
 
                 strong {
@@ -24,12 +23,14 @@
                 }
             }
 
-            .admin-order-utils {
+            .admin-product-utils {
                 display: flex;
                 padding: 20px 40px;
-                justify-content: space-between;
+                // justify-content: space-between;
+                column-gap: 30px;
+                justify-content: end;
 
-                .search-order {
+                .search-product {
                     display: flex;
                     padding: 5px 10px;
                     align-items: center;
@@ -53,7 +54,6 @@
                 }
 
                 .filter {
-                    width: 200px;
                     display: flex;
                     align-items: center;
                     background: rgba(0, 0, 0, .1);
@@ -73,34 +73,34 @@
                     }
 
                     i {
-                        left: 88%;
+                        left: 82%;
                         font-weight: 100;
                         font-size: 18px;
                         position: absolute;
                         z-index: -1;
                     }
                 }
-            }
-        }
 
-        .admin-order-empty {
-            width: calc(100% - 42.5% - 220px);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            row-gap: 15px;
+                .add {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 5px 20px;
+                    column-gap: 5px;
+                    background: #4B87E0;
+                    border-radius: 10px;
+                    cursor: pointer;
 
-            strong {
-                font-size: 1.5rem;
-                font-weight: 500;
-                color: $fade-black;
-            }
+                    i {
+                        color: white;
+                        font-size: 18px;
+                    }
 
-            p {
-                font-size: 0.85rem;
-                font-weight: 400;
+                    p {
+                        color: white;
+                        font-size: 0.7rem;
+                    }
+                }
             }
         }
     }

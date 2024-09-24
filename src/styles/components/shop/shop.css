@@ -31,12 +31,28 @@ select option {
 
 @media only screen and (max-width: 1537px) {
   .shoplist-container {
+    position: relative;
     width: calc(100% - 350px);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
   }
-  .shoplist-container .shop-item {
+  .shoplist-container .loading {
+    width: 100%;
+    height: 700px;
+    grid-column: 1/span 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .shoplist-container .shoplist {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .shoplist-container .shoplist .shop-item {
     width: 100%;
     height: 600px;
     display: flex;
@@ -47,39 +63,39 @@ select option {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     justify-content: space-between;
   }
-  .shoplist-container .shop-item img {
+  .shoplist-container .shoplist .shop-item img {
     width: 250px;
     height: 400px;
     -o-object-fit: cover;
        object-fit: cover;
   }
-  .shoplist-container .shop-item a {
+  .shoplist-container .shoplist .shop-item a {
     font-size: 1rem;
     font-family: "Roboto Mono", monospace;
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
   }
-  .shoplist-container .shop-item p {
+  .shoplist-container .shoplist .shop-item p {
     font-size: 0.9rem;
     color: white;
     font-family: "Roboto Mono", monospace;
   }
-  .shoplist-container .shop-item div {
+  .shoplist-container .shoplist .shop-item div {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .shoplist-container .shop-item div button {
+  .shoplist-container .shoplist .shop-item div button {
     padding: 7px 30px;
     border-radius: 10px;
   }
-  .shoplist-container .shop-item div button:nth-child(1) {
+  .shoplist-container .shoplist .shop-item div button:nth-child(1) {
     background: #BCAB6F;
     color: black;
     font-weight: 700;
     font-family: "Roboto Mono", monospace;
   }
-  .shoplist-container .shop-item div button:nth-child(2) {
+  .shoplist-container .shoplist .shop-item div button:nth-child(2) {
     border: 2px solid rgba(255, 255, 255, 0.2);
     font-weight: 700;
   }

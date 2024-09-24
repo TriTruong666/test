@@ -16,7 +16,7 @@ export const Shoplist = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: ProductService.getAllProduct,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -35,30 +35,24 @@ export const Shoplist = () => {
   return (
     <div className="shoplist-container">
       {isLoadingPage ? (
-        <ClipLoader color="#ffffff" size={50} />
-      ) : (
-        products.map((product) => (
-          <div className="shop-item" key={product.productId}>
-            <img src={product.image} alt="image" />
-            <Link to="/productdetail">{product.productName}</Link>
-            <p>${product.unitPrice}</p>
-            <div>
-              <button>Buy now</button>
-              <button>Add to cart</button>
-            </div>
-          </div>
-        ))
-      )}
-      {/* Static products can be rendered here if needed */}
-      {/* <div className="shop-item">
-        <img src={productImg} alt="" />
-        <Link to="/productdetail">Koi Diet</Link>
-        <p>$25.00</p>
-        <div>
-          <button>Buy now</button>
-          <button>Add to cart </button>
+        <div className="loading">
+          <ClipLoader color="#ffffff" size={50} />
         </div>
-      </div> */}
+      ) : (
+        <div className="shoplist">
+          {products.map((product) => (
+            <div className="shop-item" key={product.productId}>
+              <img src={product.image} alt="image" />
+              <Link to="/productdetail">{product.productName}</Link>
+              <p>${product.unitPrice}</p>
+              <div>
+                <button>Buy now</button>
+                <button>Add to cart</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

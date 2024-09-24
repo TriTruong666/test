@@ -48,10 +48,13 @@ export const Homepage = () => {
     }
   };
   useEffect(() => {
+    document.title = "Izumiya Koi";
     handleSetIsAuth();
     try {
       handleVerifyToken();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   return (
     <div className="homepage-container" id="about">

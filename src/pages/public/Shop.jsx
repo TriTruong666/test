@@ -10,15 +10,10 @@ import { Shoplist } from "../../components/shop/Shoplist";
 // import API call
 
 export const Shop = () => {
-  // state for authentication
+  // state
   const [isAuth, setIsAuth] = useState(false);
 
-  // state for product data
-  const [products, setProducts] = useState([]);
-
-  const [error, setError] = useState(null);
-
-  // handle func for authentication
+  // handle func
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -29,21 +24,8 @@ export const Shop = () => {
       setIsAuth(true);
     }
   };
-
-  // Fetch product data
-  // const fetchProducts = async () => {
-  //   try {
-  //     const productList = await getAllProduct();
-  //     setProducts(productList); // store the fetched data in the state
-  //   } catch (error) {
-  //     setError("Failed to fetch products. Please try again later.");
-  //     console.error("Error fetching products:", error);
-  //   }
-  // };
-
   useEffect(() => {
     handleSetIsAuth();
-    // fetchProducts(); // fetch products when component mounts
   }, []);
 
   return (
@@ -54,7 +36,8 @@ export const Shop = () => {
         <div className="shop-header">
           <strong>IZUMIYA SHOP</strong>
           <p>
-            You will find all of the best products for your koi from our suppliers.
+            You will find all of the best products for your koi from our
+            suppliers.
           </p>
         </div>
         <div className="shop-main">
@@ -74,11 +57,7 @@ export const Shop = () => {
           </div>
           <div className="shop-main-list">
             <Shopnav />
-            {error ? (
-              <p className="error-message">{error}</p>
-            ) : (
-              <Shoplist products={products} />
-            )}
+            <Shoplist />
           </div>
         </div>
       </div>

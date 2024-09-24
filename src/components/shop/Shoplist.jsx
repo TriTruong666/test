@@ -20,7 +20,7 @@ export const Shoplist = () => {
   });
 
   useEffect(() => {
-    if (isLoading || isFetching) {
+    if (isFetching) {
       setIsLoadingPage(true);
       setTimeout(() => {
         setIsLoadingPage(false);

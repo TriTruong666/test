@@ -11,7 +11,10 @@ import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
 import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
+import { NotFound } from "../pages/public/NotFound";
+import { Unauthorize } from "../pages/public/Unauthorize";
 import { LoggedWrapper, VerifyEmailWrapper } from "./LoggedWrapper";
+import { elements } from "chart.js";
 export const publicRoutes = [
   {
     path: "/",
@@ -72,5 +75,13 @@ export const publicRoutes = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+  {
+    path: "/not-authorized",
+    element: <Unauthorize />,
   },
 ];

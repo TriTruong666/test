@@ -43,7 +43,9 @@ export const Shoplist = () => {
           {products.map((product) => (
             <div className="shop-item" key={product.productId}>
               <img src={product.image} alt="image" />
-              <Link to="/productdetail">{product.productName}</Link>
+              <Link to={`/productdetail/${product.productId}`}>
+                {product.productName}
+              </Link>
               <p>${product.unitPrice}</p>
               <div>
                 <button>Buy now</button>

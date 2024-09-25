@@ -13,7 +13,6 @@ import { Checkout } from "../pages/public/Checkout";
 import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
 import { NotFound } from "../pages/public/NotFound";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { Exercise } from "../pages/Exercise";
 import { LoggedWrapper, VerifyEmailWrapper } from "./LoggedWrapper";
 export const publicRoutes = [
   {
@@ -65,7 +64,7 @@ export const publicRoutes = [
     element: <BlogDetail />,
   },
   {
-    path: "/productdetail",
+    path: "/productdetail/:productId",
     element: <ProductDetail />,
   },
   {
@@ -83,9 +82,5 @@ export const publicRoutes = [
   {
     path: "/not-authorized",
     element: <Unauthorize />,
-  },
-  {
-    path: "/exercise",
-    element: <Exercise />,
   },
 ];

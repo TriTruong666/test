@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/productdetail/productdetail.css";
 // import components
@@ -7,25 +10,37 @@ import { Footer } from "../../components/footer/Footer";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
-
+// convert to plain text
+const stripHtmlTags = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
 export const ProductDetail = () => {
+  const { productId } = useParams();
+  const numericProductId = parseInt(productId);
+  const {
+    data: product = {},
+    isLoading,
+    isError,
+    isFetching,
+  } = useQuery({
+    queryKey: ["productDetail", numericProductId],
+    queryFn: () => ProductService.detailProductService(numericProductId),
+    refetchOnWindowFocus: false,
+  });
+  const plainTextDescription = stripHtmlTags(product.description);
   return (
     <div className="product-detail-container">
       <Navbar />
       <Settingnav />
       <div className="product-detail">
         <div className="product-detail-main">
-          <img src={koiproduct} alt="" />
+          <img src={product.image} alt="" />
           <div className="product-detail-content">
             <small>Koi Food</small>
-            <h2>Mazuri Koi Diet</h2>
-            <strong>$25.00</strong>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo
-              aperiam ratione sint suscipit sit debitis omnis tenetur dolorem
-              vitae perferendis, eum porro libero optio, adipisci obcaecati.
-              Doloribus maxime esse nam?
-            </p>
+            <h2>{product.productName}</h2>
+            <strong>${product.unitPrice}</strong>
+            <p>{plainTextDescription}</p>
             <div>
               <button>BUY PRODUCT</button>
               <button>ADD TO CART</button>

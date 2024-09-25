@@ -13,6 +13,21 @@ export const signupService = async (userData) => {
     return err.response.data;
   }
 };
+export const getUserListAdmin = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/users";
+    const res = await axios.get(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data.result;
+  } catch (error) {
+    return err.response.data;
+  }
+};
 export const getMyUserInfo = async () => {
   const token = localStorage.getItem("token");
   try {

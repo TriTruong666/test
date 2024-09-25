@@ -68,6 +68,13 @@ select option {
   .product-list-table thead tr th:nth-child(6) {
     text-align: start;
   }
+  .product-list-table tbody .loading {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .product-list-table tbody tr {
     display: grid;
     grid-template-columns: repeat(12, 1fr);

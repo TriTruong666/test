@@ -46,7 +46,7 @@ export const AddProduct = () => {
     categoryId: "",
     status: true,
   });
-
+  const [invalidNumber, setInvalidNumber] = useState(null);
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -133,13 +133,14 @@ export const AddProduct = () => {
         ...submitData,
         [name]: "",
       });
-      // number validation
+      setInvalidNumber("Please input invalid number");
       return;
     }
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
+    setInvalidNumber(null);
   };
   const handleInputFloat = (e) => {
     const { name, value } = e.target;
@@ -148,13 +149,14 @@ export const AddProduct = () => {
         ...submitData,
         [name]: "",
       });
-      // number validation
+      setInvalidNumber("Please input invalid number");
       return;
     }
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
+    setInvalidNumber(null);
   };
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -252,6 +254,7 @@ export const AddProduct = () => {
               onChange={handleInputNumber}
             />
           </div>
+          {invalidNumber && <p className="invalid">{invalidNumber}</p>}
           <CKEditor
             editor={ClassicEditor}
             config={{

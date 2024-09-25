@@ -1432,7 +1432,7 @@ select option {
   .add-product-container .add-product-modal .add-product-detail {
     display: flex;
     flex-direction: column;
-    row-gap: 35px;
+    row-gap: 20px;
   }
   .add-product-container .add-product-modal .add-product-detail .input-image {
     position: relative;
@@ -1508,6 +1508,10 @@ select option {
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .invalid {
+    color: red;
+    font-size: 0.75rem;
   }
   .add-product-container .add-product-modal .add-product-detail .input-two-fields {
     display: flex;

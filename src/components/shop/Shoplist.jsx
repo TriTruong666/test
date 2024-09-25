@@ -15,16 +15,14 @@ export const Shoplist = () => {
     isFetching,
   } = useQuery({
     queryKey: ["products"],
-    queryFn: ProductService.getAllProduct,
+    queryFn: ProductService.getAllProductShop,
     refetchOnWindowFocus: false,
   });
-
   useEffect(() => {
     if (isFetching) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 1500);
+    } else {
+      setIsLoadingPage(false);
     }
   }, [isLoading, isFetching]);
 

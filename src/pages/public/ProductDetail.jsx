@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import * as ProductService from "../../service/product/productService";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/productdetail/productdetail.css";
 // import components
@@ -16,6 +17,8 @@ const stripHtmlTags = (html) => {
   return doc.body.textContent || "";
 };
 export const ProductDetail = () => {
+  // state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const { productId } = useParams();
   const numericProductId = parseInt(productId);
   const {
@@ -29,23 +32,39 @@ export const ProductDetail = () => {
     refetchOnWindowFocus: false,
   });
   const plainTextDescription = stripHtmlTags(product.description);
+  useEffect(() => {
+    document.title = product.productName;
+    if (isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+  }, [isFetching]);
   return (
     <div className="product-detail-container">
       <Navbar />
       <Settingnav />
       <div className="product-detail">
         <div className="product-detail-main">
-          <img src={product.image} alt="" />
-          <div className="product-detail-content">
-            <small>Koi Food</small>
-            <h2>{product.productName}</h2>
-            <strong>${product.unitPrice}</strong>
-            <p>{plainTextDescription}</p>
-            <div>
-              <button>BUY PRODUCT</button>
-              <button>ADD TO CART</button>
+          {isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#ffffff" size={50} />
             </div>
-          </div>
+          ) : (
+            <>
+              <img src={product.image} alt="" />
+              <div className="product-detail-content">
+                <small>{product.category && product.category.cateName}</small>
+                <h2>{product.productName}</h2>
+                <strong>${product.unitPrice}</strong>
+                <p>{plainTextDescription}</p>
+                <div>
+                  <button>BUY PRODUCT</button>
+                  <button>ADD TO CART</button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div className="product-detail-related">
           <strong>Explore Related Products</strong>

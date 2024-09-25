@@ -1,8 +1,22 @@
 import axios from "axios";
-export const getAllProduct = async () => {
+export const getAllProductShop = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/product/shop", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export const getAllProductAdmin = async () => {
+  const token = localStorage.getItem("token");
   try {
     const response = await axios.get("http://localhost:8080/product/list", {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -33,10 +47,8 @@ export const detailProductService = async (productId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data.result);
     return res.data.result;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 };

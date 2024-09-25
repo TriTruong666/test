@@ -42,9 +42,9 @@ export const Navbar = () => {
         <Link to="/blog">Blog</Link>
       </div>
       {isAuth ? (
-        <div className="navbar-third" onClick={handleToggleSettingnav}>
-          <i className="bx bx-cart"></i>
-          <div className="info">
+        <div className="navbar-third">
+          <i className="bx bx-cart" onClick={() => navigate("/cart")}></i>
+          <div className="info" onClick={handleToggleSettingnav}>
             <strong>{user.fullname}</strong>
             <i className="bx bx-chevron-down"></i>
           </div>

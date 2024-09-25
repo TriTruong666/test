@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import styles
 import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AccountList } from "../../../components/account/AccountList";
 export const AdminAccountManage = () => {
+  useEffect(() => {
+    document.title = "Admin Dashboard";
+  }, []);
   return (
     <div className="admin-account-container">
       <Dashnav />

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import styles
 import "../../styles/cart/cart.css";
@@ -11,6 +11,9 @@ import koiproduct from "../../assets/koiproduct.png";
 export const Cart = () => {
   // state
   const [quantity, setQuantity] = useState(4);
+  useEffect(() => {
+    document.title = "Cart";
+  });
   return (
     <div className="cart-container">
       <Navbar />

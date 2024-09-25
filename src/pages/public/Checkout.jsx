@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 // import styles
 import "../../styles/checkout/checkout.css";
@@ -7,6 +7,9 @@ import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
 export const Checkout = () => {
+  useEffect(() => {
+    document.title = "Checkout";
+  });
   return (
     <div className="checkout-container">
       <Checkoutnav />

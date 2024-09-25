@@ -28,8 +28,9 @@ export const UserSetting = () => {
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
+      setTimeout(() => {
+        setIsLoadingPage(false);
+      }, 2000);
     }
     if (!isToggleChangePass) {
       setNewPass("");
@@ -71,7 +72,7 @@ export const UserSetting = () => {
                   type="text"
                   id="email"
                   disabled
-                  defaultValue={myInfo.email}
+                  defaultValue={myInfo && myInfo.email}
                   placeholder="Enter your email"
                 />
               </div>
@@ -80,7 +81,7 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="fullname"
-                  defaultValue={myInfo.fullname}
+                  defaultValue={myInfo && myInfo.fullname}
                   placeholder="Enter your full name"
                 />
               </div>
@@ -89,7 +90,7 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="phone"
-                  defaultValue={myInfo.phone}
+                  defaultValue={myInfo && myInfo.phone}
                   placeholder="Enter your phone number"
                 />
               </div>
@@ -98,7 +99,7 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="address"
-                  defaultValue={myInfo.address}
+                  defaultValue={myInfo && myInfo.address}
                   placeholder="Enter your address"
                 />
               </div>

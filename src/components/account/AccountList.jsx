@@ -17,13 +17,15 @@ export const AccountList = () => {
   } = useQuery({
     queryKey: ["accounts"],
     queryFn: AccountService.getUserListAdmin,
+    refetchOnWindowFocus: false,
   });
   // handle func
   useEffect(() => {
-    if (isLoading || isFetching) {
+    if (isFetching || isLoading) {
       setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
+      setTimeout(() => {
+        setIsLoadingPage(false);
+      }, 2000);
     }
   }, [isLoading, isFetching]);
   return (

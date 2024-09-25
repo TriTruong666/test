@@ -20,13 +20,14 @@ export const ProductList = () => {
   } = useQuery({
     queryKey: ["productList"],
     queryFn: ProductService.getAllProductAdmin,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
   useEffect(() => {
-    if (isLoading || isRefetching || isFetching) {
+    if (isFetching || isLoading) {
       setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
+      setTimeout(() => {
+        setIsLoadingPage(false);
+      }, 2000);
     }
   }, [isFetching, isRefetching, isLoading]);
   return (

@@ -82,6 +82,7 @@ export const AddBlog = () => {
       });
       setTimeout(() => {
         dispatch(toggleAddBlogModal());
+        location.reload();
       }, 1500);
       queryCilent.invalidateQueries({
         queryKey: ["blog"],

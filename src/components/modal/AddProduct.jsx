@@ -108,6 +108,7 @@ export const AddProduct = () => {
         });
         setTimeout(() => {
           dispatch(toggleAddProductModal());
+          location.reload();
         }, 1500);
       }
       queryCilent.invalidateQueries({

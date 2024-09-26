@@ -1,8 +1,10 @@
 import axios from "axios";
 export const getAllBlog = async () => {
+  const token = localStorage.getItem("token");
   try {
     const response = await axios.get("http://localhost:8080/blog/list", {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -12,7 +14,7 @@ export const getAllBlog = async () => {
   }
 };
 
-export const createProductService = async (blogData) => {
+export const createBlogService = async (blogData) => {
   const token = localStorage.getItem("token");
   try {
     const api = "http://localhost:8080/blog/create";

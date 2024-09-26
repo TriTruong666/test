@@ -1,22 +1,22 @@
 import React from "react";
 // import pages
+import { AdminAccountManage } from "../pages/private/admin/AdminAccountManage";
+import { AdminBlogDetail } from "../pages/private/admin/AdminBlogDetail";
+import { AdminBlogManage } from "../pages/private/admin/AdminBlogManage";
+import { AdminOrderDetail } from "../pages/private/admin/AdminOrderDetail";
+import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
+import { AdminProductManage } from "../pages/private/admin/AdminProductManage";
+import { UserSetting } from "../pages/private/both/UserSetting";
+import { BlogDetail } from "../pages/private/member/BlogDetail";
+import { BlogManage } from "../pages/private/member/BlogManage";
 import { HomeMember } from "../pages/private/member/HomeMember";
-import { PondManage } from "../pages/private/member/PondManage";
+import { KoiManage } from "../pages/private/member/KoiManage";
+import { MyOrderDetail } from "../pages/private/member/MyOrderDetail";
+import { OrderManage } from "../pages/private/member/OrderManage";
 import { PondDetail } from "../pages/private/member/PondDetail";
 import { PondInfo } from "../pages/private/member/PondInfo";
+import { PondManage } from "../pages/private/member/PondManage";
 import { PondWater } from "../pages/private/member/PondWater";
-import { KoiManage } from "../pages/private/member/KoiManage";
-import { OrderManage } from "../pages/private/member/OrderManage";
-import { MyOrderDetail } from "../pages/private/member/MyOrderDetail";
-import { BlogManage } from "../pages/private/member/BlogManage";
-import { BlogDetail } from "../pages/private/member/BlogDetail";
-import { UserSetting } from "../pages/private/both/UserSetting";
-import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
-import { AdminAccountManage } from "../pages/private/admin/AdminAccountManage";
-import { AdminProductManage } from "../pages/private/admin/AdminProductManage";
-import { AdminOrderDetail } from "../pages/private/admin/AdminOrderDetail";
-import { AdminBlogManage } from "../pages/private/admin/AdminBlogManage";
-import { AdminBlogDetail } from "../pages/private/admin/AdminBlogDetail";
 import AuthWrapper from "./AuthWrapper";
 export const privateRoutes = [
   {
@@ -158,7 +158,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/admin/blog/detail",
+        path: "/dashboard/admin/blog/detail/:blogId",
         element: (
           <AuthWrapper allowedRoles={["ADMIN"]}>
             <AdminBlogDetail />

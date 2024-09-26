@@ -16,16 +16,31 @@ export const getAllBlog = async () => {
 
 export const createBlogService = async (blogData) => {
   const token = localStorage.getItem("token");
+  const userId = "7015a1d7-c88c-47ba-9480-fc51be65317c"; 
+
+  
+  if (!userId) {
+    console.error("Error: User ID not found in localStorage.");
+    return { error: "User ID is missing" };
+  }
+
+  
+  const payload = { ...blogData, userId };
+
   try {
     const api = "http://localhost:8080/blog/create";
-    const res = await axios.post(api, blogData, {
+    console.log("Creating blog with data:", payload); // Logging payload
+    const res = await axios.post(api, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
+    console.log("Blog created successfully:", res.data); // Log success
     return res.data;
   } catch (error) {
-    return error.response.data;
+    console.error("Error creating blog:", error.response ? error.response.data : error); // Log error details
+    return error.response ? error.response.data : { error: "Network Error" };
   }
 };
 

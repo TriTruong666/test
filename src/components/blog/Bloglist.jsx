@@ -46,7 +46,7 @@ export const Bloglist = () => {
         <div className="blog-item" key={blog.blogId}>
         <img src={blog.image} alt="" />
         <small>{blog.createDate}</small>
-        <Link to="/blogdetail">
+        <Link to={`/blogdetail/${blog.blogId}`}>
          {blog.title}
         </Link>
         <p>

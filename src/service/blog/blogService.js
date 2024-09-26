@@ -44,3 +44,20 @@ export const editBlog = async (blogId, updatedBlogData) => {
     return error.response.data;
   }
 }; 
+
+
+export const detailBlogService = async (blogId) => {
+  try {
+    const api = `http://localhost:8080/blog/${blogId}`;
+    const res = await axios.get(api, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data)
+        return res.data.result;
+  } catch (error) {
+    console.log(error)
+    return error.response.data;
+  }
+};

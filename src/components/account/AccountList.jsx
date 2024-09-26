@@ -23,9 +23,8 @@ export const AccountList = () => {
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 2000);
+    } else {
+      setIsLoadingPage(false);
     }
   }, [isLoading, isFetching]);
   return (

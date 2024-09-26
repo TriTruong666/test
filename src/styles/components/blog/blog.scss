@@ -9,6 +9,15 @@
         row-gap: 40px;
         background: $main-color;
 
+        .loading {
+            width: 100vw;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 40px;
+        }
+
         .blog-item {
             display: flex;
             flex-direction: column;

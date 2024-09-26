@@ -43,8 +43,7 @@ export const editBlog = async (blogId, updatedBlogData) => {
   } catch (error) {
     return error.response.data;
   }
-}; 
-
+};
 
 export const detailBlogService = async (blogId) => {
   try {
@@ -54,10 +53,9 @@ export const detailBlogService = async (blogId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data)
-        return res.data.result;
+    return res.data.result;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return error.response.data;
   }
 };

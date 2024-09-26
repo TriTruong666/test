@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileResizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   ClassicEditor,
   Essentials,
@@ -26,11 +29,21 @@ import "ckeditor5/ckeditor5.css";
 import "../../styles/components/modal/modal.css";
 // import slices
 import { toggleAddBlogModal } from "../../redux/slices/modal/modal";
+// import service
+import * as BlogService from "../../service/blog/blogService";
 export const AddBlog = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.userId;
   // dispatch
   const dispatch = useDispatch();
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [submitData, setSubmitData] = useState({
+    title: "",
+    userId: userId,
+    image: "",
+    content: "",
+  });
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -42,27 +55,84 @@ export const AddBlog = () => {
       0,
       (uri) => {
         setPreviewImage(uri);
+        setSubmitData({
+          ...submitData,
+          image: uri,
+        });
       },
       "base64",
       250,
       250
     );
   };
+  // mutation
+  const queryCilent = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: BlogService.createBlogService,
+    onSuccess: (responseData) => {
+      toast.success("Create successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(() => {
+        dispatch(toggleAddBlogModal());
+      }, 1500);
+      queryCilent.invalidateQueries({
+        queryKey: ["blog"],
+      });
+    },
+  });
   //   handle func
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+  };
   const removeChooseImage = () => {
     setPreviewImage(null);
   };
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddBlogModal());
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!submitData.content || !submitData.title || !submitData.image) {
+      toast.error("All fields are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+      await mutation.mutateAsync(submitData);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    console.log(submitData);
+  }, [submitData]);
   return (
     <div className="add-blog-container">
+      <ToastContainer />
       <div className="add-blog-modal">
         <div className="add-blog-header">
           <strong>Add Blog</strong>
           <i className="bx bx-x" onClick={handleToggleAddPondModal}></i>
         </div>
-        <form action="" className="add-blog-form">
+        <form action="" onSubmit={handleSubmit} className="add-blog-form">
           <div className="input-image">
             <i className="bx bx-trash-alt" onClick={removeChooseImage}></i>
 
@@ -85,7 +155,13 @@ export const AddBlog = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input type="text" name="blog-title" placeholder="Enter blog title" />
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter blog title"
+            onChange={handleOnChange}
+          />
           <CKEditor
             editor={ClassicEditor}
             config={{
@@ -144,7 +220,10 @@ export const AddBlog = () => {
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
-              console.log({ event, editor, data });
+              setSubmitData({
+                ...submitData,
+                content: data,
+              });
             }}
           />
           <div className="submit">

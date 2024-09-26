@@ -39,6 +39,14 @@ select option {
     row-gap: 40px;
     background: #131313;
   }
+  .bloglist-container .loading {
+    width: 100vw;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 40px;
+  }
   .bloglist-container .blog-item {
     display: flex;
     flex-direction: column;

@@ -60,7 +60,7 @@ export const publicRoutes = [
     element: <Blog />,
   },
   {
-    path: "/blogdetail",
+    path: "/blogdetail/:blogId",
     element: <BlogDetail />,
   },
   {

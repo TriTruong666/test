@@ -48,6 +48,8 @@ export const AdminBlogList = () => {
               <strong>{blog.title}</strong>
               <p>{blog.createDate}</p>
             </Link>
+
+            
           ))}
         </>
       )}

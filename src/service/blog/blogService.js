@@ -68,6 +68,7 @@ export const detailBlogService = async (blogId) => {
         "Content-Type": "application/json",
       },
     });
+    console.log(res.data.result)
     return res.data.result;
   } catch (error) {
     console.log(error);

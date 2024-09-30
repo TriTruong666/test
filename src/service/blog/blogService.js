@@ -75,12 +75,6 @@ export const detailBlogService = async (blogId) => {
   }
 };
 
-/**
- * Deletes a blog post by its ID.
- *
- * @param {int} blogId - The unique ID of the blog post to delete.
- * @returns {object} The response data from the API.
- */
 export const deleteBlogService = async (blogId) => {
   try {
     const api = `http://localhost:8080/blog/delete/${blogId}`;

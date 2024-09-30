@@ -1,10 +1,9 @@
 import axios from "axios";
 export const getAllBlog = async () => {
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
   try {
     const response = await axios.get("http://localhost:8080/blog/list", {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });

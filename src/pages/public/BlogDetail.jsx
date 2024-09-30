@@ -13,7 +13,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import * as BlogService from "../../service/blog/blogService";
 
 const stripHtmlTags = (html) => {
-  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
   const doc = new DOMParser().parseFromString(html, "text/html");
   const elements = doc.body.querySelectorAll("*");
 
@@ -60,7 +60,9 @@ export const BlogDetail = () => {
             <div className="blog-detail-header">
               <strong>{blog && blog.title}</strong>
               <p>
-                {blog && blog.createDate} - By {blog && blog.fullname}
+                {new Date(blog && blog.createDate).toLocaleDateString() ||
+                  "Date not available"}{" "}
+                - by {blog && blog.fullname}
               </p>
             </div>
             <img src={blog && blog.image} alt="" />

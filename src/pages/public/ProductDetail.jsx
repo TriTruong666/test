@@ -33,11 +33,11 @@ export const ProductDetail = () => {
   });
   const plainTextDescription = stripHtmlTags(product.description);
   useEffect(() => {
-    document.title = product.productName;
     if (isFetching) {
       setIsLoadingPage(true);
     } else {
       setIsLoadingPage(false);
+      document.title = product && product.productName;
     }
   }, [isFetching]);
   return (

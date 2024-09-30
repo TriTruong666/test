@@ -12,7 +12,7 @@ import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
 // import service
 import * as BlogService from "../../../service/blog/blogService";
 const stripHtmlTags = (html) => {
-  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
   const doc = new DOMParser().parseFromString(html, "text/html");
   const elements = doc.body.querySelectorAll("*");
 

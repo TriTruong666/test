@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import * as BlogService from "../../../service/blog/blogService";
 import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
 const stripHtmlTags = (html) => {
-  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
   const doc = new DOMParser().parseFromString(html, "text/html");
   const elements = doc.body.querySelectorAll("*");
 

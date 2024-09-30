@@ -22,6 +22,9 @@
             display: flex;
             flex-direction: column;
             row-gap: 15px;
+            max-height: 500px;
+            height: 500px;
+            overflow: hidden;
 
             img {
                 width: 100%;
@@ -50,8 +53,13 @@
             p {
                 font-size: 0.8rem;
                 color: $fade-white;
-                line-height: 1.8;
+                line-height: 1.9;
                 font-weight: 300;
+                max-height: 100px; // You can adjust this value based on your design
+                overflow: hidden; // Prevent overflow
+                overflow-wrap: break-word; // Allow wrapping
+                word-wrap: break-word; // Older browsers support
+                text-overflow: ellipsis; // Optionally show ellipsis if you use width restrictions
             }
 
             span {

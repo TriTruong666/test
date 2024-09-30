@@ -51,6 +51,9 @@ select option {
     display: flex;
     flex-direction: column;
     row-gap: 15px;
+    max-height: 500px;
+    height: 500px;
+    overflow: hidden;
   }
   .bloglist-container .blog-item img {
     width: 100%;
@@ -76,8 +79,13 @@ select option {
   .bloglist-container .blog-item p {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
-    line-height: 1.8;
+    line-height: 1.9;
     font-weight: 300;
+    max-height: 100px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
   }
   .bloglist-container .blog-item span {
     font-size: 0.75rem;

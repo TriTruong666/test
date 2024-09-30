@@ -10,6 +10,7 @@ import * as ProductService from "../../service/product/productService";
 export const ProductList = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [emptyList, setEmptyList] = useState(null);
   // query
   const {
     data: products = [],
@@ -25,9 +26,13 @@ export const ProductList = () => {
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 2000);
+    } else {
+      setIsLoadingPage(false);
+    }
+    if (products.length === 0) {
+      setEmptyList("Product list is empty");
+    } else {
+      setEmptyList(null);
     }
   }, [isFetching, isRefetching, isLoading]);
   return (
@@ -50,6 +55,11 @@ export const ProductList = () => {
           </div>
         ) : (
           <>
+            {emptyList && (
+              <div className="empty-list">
+                <p>{emptyList}</p>
+              </div>
+            )}
             {products.map((product) => (
               <tr key={product.productId}>
                 <td>{product.productId}</td>

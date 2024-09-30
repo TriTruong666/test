@@ -337,6 +337,9 @@ select option {
          column-gap: 20px;
     padding: 20px 0;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    max-height: 102px;
+    height: 102px;
+    overflow: hidden;
   }
   .homepage-container .blog-intro .blog-list .blog-item i {
     font-size: 60px;
@@ -357,11 +360,10 @@ select option {
   .homepage-container .blog-intro .blog-list .blog-item div p {
     max-height: 36px;
     font-size: 0.75rem;
-    /* Prevent text from wrapping to the next line */
     overflow: hidden;
-    /* Hide the overflowed text */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     text-overflow: ellipsis;
-    /* Show ellipsis (...) when text overflows */
   }
   .homepage-container .about-intro {
     width: 100%;

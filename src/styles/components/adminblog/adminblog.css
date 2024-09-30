@@ -45,8 +45,17 @@ select option {
     justify-content: space-between;
     row-gap: 5px;
     transition: 0.4s;
+    color: black;
   }
-  .admin-blog-list a strong {
+  .admin-blog-list a div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .admin-blog-list a div span {
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .admin-blog-list a div strong {
     color: black;
   }
   .admin-blog-list a p {

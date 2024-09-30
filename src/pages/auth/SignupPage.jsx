@@ -53,7 +53,7 @@ export const SignupPage = () => {
       } else {
         setExistedEmail(null);
         dispatch(setEmail(signupData.email));
-        navigate("/verify");
+        navigate("/verify-signup");
       }
       queryClient.invalidateQueries({
         queryKey: ["signup"],

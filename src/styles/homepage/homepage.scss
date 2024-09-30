@@ -355,6 +355,9 @@ $fade-white: rgba(255, 255, 255, .7);
                     column-gap: 20px;
                     padding: 20px 0;
                     border-bottom: 2px solid rgba(255, 255, 255, .2);
+                    max-height: 102px;
+                    height: 102px;
+                    overflow: hidden;
 
                     i {
                         font-size: 60px;
@@ -378,12 +381,10 @@ $fade-white: rgba(255, 255, 255, .7);
                         p {
                             max-height: 36px;
                             font-size: 0.75rem;
-                            // white-space: nowrap;
-                            /* Prevent text from wrapping to the next line */
-                            overflow: hidden;
-                            /* Hide the overflowed text */
-                            text-overflow: ellipsis;
-                            /* Show ellipsis (...) when text overflows */
+                            overflow: hidden; // Prevent overflow
+                            overflow-wrap: break-word; // Allow wrapping
+                            word-wrap: break-word; // Older browsers support
+                            text-overflow: ellipsis; // Optionally show ellipsis if you use width restrictions
                         }
                     }
                 }

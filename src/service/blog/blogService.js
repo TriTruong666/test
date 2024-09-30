@@ -13,42 +13,36 @@ export const getAllBlog = async () => {
     return error.response.data;
   }
 };
-
-export const createBlogService = async (blogData) => {
+export const getUserBlogs = async (userId) => {
   const token = localStorage.getItem("token");
-  const userId = "7015a1d7-c88c-47ba-9480-fc51be65317c"; 
-
-  
-  if (!userId) {
-    console.error("Error: User ID not found in localStorage.");
-    return { error: "User ID is missing" };
-  }
-
-  
-  const payload = { ...blogData, userId };
-
   try {
-    const api = "http://localhost:8080/blog/create";
-    console.log("Creating blog with data:", payload); // Logging payload
-    const res = await axios.post(api, payload, {
+    const api = `http://localhost:8080/blog/user/${userId}`;
+    const response = await axios.get(api, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    console.log("Blog created successfully:", res.data); // Log success
-    return res.data;
+    return response.data.result;
   } catch (error) {
-    console.error("Error creating blog:", error.response ? error.response.data : error); // Log error details
-    return error.response ? error.response.data : { error: "Network Error" };
+    return error.response.data;
   }
 };
-/**
- * Edit an existing blog post.
- * @param {string} blogId - The unique ID of the blog post to edit.
- * @param {object} updatedBlogData - The updated blog post data.
- * @returns {Promise<object>} - The response data from the API.
- */
+export const createBlogService = async (blogData) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/blog/create";
+    const res = await axios.post(api, blogData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data.result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 export const editBlog = async (blogId, updatedBlogData) => {
   const token = localStorage.getItem("token");
   try {
@@ -73,22 +67,13 @@ export const detailBlogService = async (blogId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data.result)
+    console.log(res.data.result);
     return res.data.result;
   } catch (error) {
     console.log(error);
     return error.response.data;
   }
 };
-
-
-
-/**
- * Deletes a blog post by its ID.
- *
- * @param {int} blogId - The unique ID of the blog post to delete.
- * @returns {object} The response data from the API.
- */
 export const deleteBlogService = async (blogId) => {
   try {
     const api = `http://localhost:8080/blog/delete/${blogId}`;
@@ -97,14 +82,10 @@ export const deleteBlogService = async (blogId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data.result)
+    console.log(res.data.result);
     return res.data.result;
   } catch (error) {
     console.log(error);
     return error.response.data;
   }
 };
-
-
-
-

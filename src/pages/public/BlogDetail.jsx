@@ -13,13 +13,21 @@ import ClipLoader from "react-spinners/ClipLoader";
 import * as BlogService from "../../service/blog/blogService";
 
 const stripHtmlTags = (html) => {
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
   const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
+  const elements = doc.body.querySelectorAll("*");
+
+  elements.forEach((el) => {
+    if (!allowedTags.includes(el.tagName.toLowerCase())) {
+      // Replace unwanted tags with their content
+      el.replaceWith(...el.childNodes);
+    }
+  });
+  return doc.body.innerHTML;
 };
 export const BlogDetail = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const { blogId } = useParams();
-  //const numericBlogId = parseInt(blogId);
   const {
     data: blog,
     isLoading,
@@ -66,7 +74,11 @@ export const BlogDetail = () => {
                 </div>
               </div>
               <div className="blog-detail-content">
-                <p>{blog && blog.content}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: blog && stripHtmlTags(blog.content),
+                  }}
+                />
               </div>
             </div>
           </>

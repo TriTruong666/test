@@ -468,6 +468,16 @@ select option {
   height: 100vh;
   overflow-y: hidden;
 }
+.cover .loading {
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .cover .forget-container {
   width: 100%;
   height: 100%;
@@ -481,7 +491,6 @@ select option {
 }
 .cover .forget-container .forget-main {
   width: 600px;
-  height: 310px;
   display: flex;
   flex-direction: column;
   background: #131313;
@@ -519,6 +528,7 @@ select option {
   display: flex;
   flex-direction: column;
   padding: 0 40px;
+  row-gap: 10px;
 }
 .cover .forget-container .forget-main .forget-form ::-moz-placeholder {
   font-size: 0.7rem;
@@ -533,8 +543,13 @@ select option {
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   font-size: 0.7rem;
 }
+.cover .forget-container .forget-main .forget-form .error {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: rgb(243, 74, 74);
+}
 .cover .forget-container .forget-main .forget-form input[type=submit] {
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 12px 0;
   font-size: 0.8rem;
   background: rgba(0, 0, 0, 0.7);
@@ -561,6 +576,127 @@ select option {
   align-items: center;
 }
 .cover .forget-container .forget-right p {
+  font-size: 18px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.7);
+}
+.cover .reset-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  padding: 60px 95px;
+  display: flex;
+  -moz-column-gap: 50px;
+       column-gap: 50px;
+  justify-content: space-between;
+}
+.cover .reset-container .reset-main {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  background: #131313;
+  border-radius: 15px;
+  padding: 40px 15px;
+  row-gap: 10px;
+  align-self: center;
+}
+.cover .reset-container .reset-main .reset-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  row-gap: 10px;
+}
+.cover .reset-container .reset-main .reset-header div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+.cover .reset-container .reset-main .reset-header div strong {
+  font-family: "Roboto Mono", monospace;
+  color: #BCAB6F;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.cover .reset-container .reset-main .reset-header div p {
+  color: #BCAB6F;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+.cover .reset-container .reset-main .reset-form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 40px;
+  row-gap: 20px;
+}
+.cover .reset-container .reset-main .reset-form .input-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.cover .reset-container .reset-main .reset-form .input-item label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+.cover .reset-container .reset-main .reset-form .input-item div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.cover .reset-container .reset-main .reset-form .input-item div ::-moz-placeholder {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+.cover .reset-container .reset-main .reset-form .input-item div ::placeholder {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+.cover .reset-container .reset-main .reset-form .input-item div input {
+  width: 100%;
+  padding: 8px 15px;
+  font-size: 0.7rem;
+}
+.cover .reset-container .reset-main .reset-form .input-item div span {
+  position: absolute;
+  left: 93%;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.cover .reset-container .reset-main .reset-form input[type=submit] {
+  margin-top: 10px;
+  padding: 12px 0;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #BCAB6F;
+  font-family: "Roboto Mono", monospace;
+  transition: 0.4s;
+}
+.cover .reset-container .reset-main .reset-form input[type=submit]:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: black;
+}
+.cover .reset-container .reset-main .error {
+  padding: 0 40px;
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: rgb(243, 74, 74);
+  text-align: center;
+}
+.cover .reset-container .reset-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.cover .reset-container .reset-right p {
   font-size: 18px;
   font-weight: 200;
   color: rgba(255, 255, 255, 0.7);

@@ -44,9 +44,51 @@ export const getMyUserInfo = async () => {
     return err.response.data;
   }
 };
-export const verifyEmail = async (userData) => {
+export const verifyEmailSignup = async (userData) => {
   try {
-    const api = "http://localhost:8080/auth/verify-email";
+    const api = "http://localhost:8080/auth/verify-sign-up";
+    const res = await axios.post(api, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+};
+export const forgetPassService = async (userData) => {
+  try {
+    const api = "http://localhost:8080/users/forgot-password";
+    const res = await axios.post(api, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+};
+export const verifyForgetPass = async (userData) => {
+  try {
+    const api = "http://localhost:8080/auth/verify-reset-password";
+    const res = await axios.post(api, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data;
+  }
+};
+export const resetPasswordService = async (userData) => {
+  try {
+    const api = "http://localhost:8080/users/reset-password";
     const res = await axios.post(api, userData, {
       headers: {
         "Content-Type": "application/json",

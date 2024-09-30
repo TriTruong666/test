@@ -10,8 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 // import slices
-import { toggleSuccessModal } from "../../redux/slices/modal/modal";
-export const EmailVerifyPage = () => {
+import { setOtp } from "../../redux/slices/account/account";
+export const VerifyForgetPage = () => {
   // navigate
   const navigate = useNavigate();
   // dispatch
@@ -31,7 +31,7 @@ export const EmailVerifyPage = () => {
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: AccountService.verifyEmailSignup,
+    mutationFn: AccountService.verifyForgetPass,
     onMutate: () => {
       setInvalidId(null);
     },
@@ -40,14 +40,11 @@ export const EmailVerifyPage = () => {
         setInvalidId("Invalid OTP, please try again");
       } else {
         setInvalidId(null);
-        dispatch(toggleSuccessModal());
-        setTimeout(() => {
-          dispatch(toggleSuccessModal());
-          navigate("/login");
-        }, 2000);
+        dispatch(setOtp(submitData.otp));
+        navigate("/reset-password");
       }
       queryClient.invalidateQueries({
-        queryKey: ["verify-email"],
+        queryKey: ["verify-password"],
       });
     },
   });

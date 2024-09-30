@@ -16,9 +16,20 @@
             justify-content: space-between;
             row-gap: 5px;
             transition: .4s;
+            color: black;
 
-            strong {
-                color: black;
+            div {
+                display: flex;
+                justify-content: space-between;
+
+                span {
+                    font-size: 0.7rem;
+                    color: rgba(0, 0, 0, .7);
+                }
+
+                strong {
+                    color: black;
+                }
             }
 
             p {

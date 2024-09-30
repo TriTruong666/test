@@ -11,9 +11,16 @@ import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
 import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
+import { VerifyForgetPage } from "../pages/auth/VerifyForgetPage";
+import { ResetPass } from "../pages/auth/ResetPass";
 import { NotFound } from "../pages/public/NotFound";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { LoggedWrapper, VerifyEmailWrapper } from "./LoggedWrapper";
+import {
+  LoggedWrapper,
+  VerifyEmailSignupWrapper,
+  VerifyEmailForgetWrapper,
+  ResetPassWrapper,
+} from "./LoggedWrapper";
 export const publicRoutes = [
   {
     path: "/",
@@ -36,11 +43,11 @@ export const publicRoutes = [
     ),
   },
   {
-    path: "/verify",
+    path: "/verify-signup",
     element: (
-      <VerifyEmailWrapper>
+      <VerifyEmailSignupWrapper>
         <EmailVerifyPage />
-      </VerifyEmailWrapper>
+      </VerifyEmailSignupWrapper>
     ),
   },
   {
@@ -49,6 +56,22 @@ export const publicRoutes = [
       <LoggedWrapper>
         <ForgetPage />
       </LoggedWrapper>
+    ),
+  },
+  {
+    path: "/verify-forget-pass",
+    element: (
+      <VerifyEmailForgetWrapper>
+        <VerifyForgetPage />
+      </VerifyEmailForgetWrapper>
+    ),
+  },
+  {
+    path: "/reset-password",
+    element: (
+      <ResetPassWrapper>
+        <ResetPass />
+      </ResetPassWrapper>
     ),
   },
   {

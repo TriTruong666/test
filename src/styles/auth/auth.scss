@@ -496,6 +496,17 @@ $fade-white: rgba(255, 255, 255, .7);
     height: 100vh;
     overflow-y: hidden;
 
+    .loading {
+        width: 100vw;
+        height: 100vh;
+        z-index: 20;
+        position: fixed;
+        background: rgba(0, 0, 0, .7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .forget-container {
         width: 100%;
         height: 100%;
@@ -508,7 +519,7 @@ $fade-white: rgba(255, 255, 255, .7);
 
         .forget-main {
             width: 600px;
-            height: 310px;
+            // height: 310px;
             display: flex;
             flex-direction: column;
             background: $main-color;
@@ -553,6 +564,7 @@ $fade-white: rgba(255, 255, 255, .7);
                 display: flex;
                 flex-direction: column;
                 padding: 0 40px;
+                row-gap: 10px;
 
                 ::placeholder {
                     font-size: 0.7rem;
@@ -565,8 +577,14 @@ $fade-white: rgba(255, 255, 255, .7);
                     font-size: 0.7rem;
                 }
 
+                .error {
+                    margin-top: 10px;
+                    font-size: 0.7rem;
+                    color: rgb(243, 74, 74);
+                }
+
                 input[type="submit"] {
-                    margin-top: 30px;
+                    margin-top: 10px;
                     padding: 12px 0;
                     font-size: 0.8rem;
                     background: rgba(0, 0, 0, .7);
@@ -594,6 +612,147 @@ $fade-white: rgba(255, 255, 255, .7);
         }
 
         .forget-right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+
+            p {
+                font-size: 18px;
+                font-weight: 200;
+                color: $fade-white;
+            }
+        }
+    }
+
+    .reset-container {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+        padding: 60px 95px;
+        display: flex;
+        column-gap: 50px;
+        justify-content: space-between;
+
+        .reset-main {
+            width: 600px;
+            // height: 310px;
+            display: flex;
+            flex-direction: column;
+            background: $main-color;
+            border-radius: 15px;
+            padding: 40px 15px;
+            row-gap: 10px;
+            align-self: center;
+
+            .reset-header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 0 20px;
+                row-gap: 10px;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    row-gap: 10px;
+
+
+                    strong {
+                        font-family: $main-font;
+                        color: $second-color;
+                        font-size: 20px;
+
+                        letter-spacing: 1px;
+                    }
+
+                    p {
+                        color: $second-color;
+                        font-weight: 400;
+                        font-size: 0.75rem;
+
+                    }
+                }
+            }
+
+            .reset-form {
+                margin-top: 40px;
+                display: flex;
+                flex-direction: column;
+                padding: 0 40px;
+                row-gap: 20px;
+
+                .input-item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 10px;
+
+                    label {
+                        font-size: 0.7rem;
+                        color: $fade-white;
+                        font-weight: 600;
+                    }
+
+                    div {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        border: 1px solid rgba(255, 255, 255, .2);
+                        border-radius: 10px;
+
+                        ::placeholder {
+                            font-size: 0.7rem;
+                            color: rgba(255, 255, 255, .4);
+                        }
+
+                        input {
+                            width: 100%;
+                            padding: 8px 15px;
+                            font-size: 0.7rem;
+                        }
+
+                        span {
+                            position: absolute;
+                            left: 93%;
+                            font-size: 18px;
+                            color: $fade-white;
+                        }
+                    }
+                }
+
+
+
+                input[type="submit"] {
+                    margin-top: 10px;
+                    padding: 12px 0;
+                    font-size: 0.8rem;
+                    background: rgba(0, 0, 0, .7);
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-weight: 700;
+                    color: $second-color;
+                    font-family: $main-font;
+                    transition: .4s;
+                }
+
+                input[type="submit"]:hover {
+                    background: $fade-white;
+                    color: black;
+                }
+
+            }
+
+            .error {
+                padding: 0 40px;
+                margin-top: 10px;
+                font-size: 0.7rem;
+                color: rgb(243, 74, 74);
+                text-align: center;
+            }
+        }
+
+        .reset-right {
             width: 50%;
             display: flex;
             align-items: center;

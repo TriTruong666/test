@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 // import styles
 import "../../styles/components/adminblog/adminblog.css";
 
-
 // import API
 import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -33,8 +32,6 @@ export const AdminBlogList = () => {
     return <p>Error fetching blogs. Please try again later.</p>;
   }
 
-
-
   return (
     <div className="admin-blog-list">
       {isLoading || isLoadingPage ? (
@@ -44,12 +41,16 @@ export const AdminBlogList = () => {
       ) : (
         <>
           {blogs.map((blog) => (
-            <Link key={blog.blogId} to={`/dashboard/admin/blog/detail/${blog.blogId}`}>
-              <strong>{blog.title}</strong>
-              <p>{blog.createDate}</p>
+            <Link
+              key={blog.blogId}
+              to={`/dashboard/admin/blog/detail/${blog.blogId}`}
+            >
+              <div>
+                <strong>{blog.title}</strong>
+                <span>by {blog.fullname}</span>
+              </div>
+              <p>Create at {blog.createDate}</p>
             </Link>
-
-            
           ))}
         </>
       )}

@@ -98,7 +98,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/myblog/review",
+        path: "/dashboard/myblog/review/:blogId",
         element: (
           <AuthWrapper allowedRoles={["USER"]}>
             <BlogDetail />

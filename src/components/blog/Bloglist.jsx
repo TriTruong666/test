@@ -7,7 +7,20 @@ import "../../styles/components/blog/blog.css";
 // import API
 import { useQuery } from "@tanstack/react-query";
 import * as BlogService from "../../service/blog/blogService";
+// convert to plain text
+const stripHtmlTags = (html) => {
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const elements = doc.body.querySelectorAll("*");
 
+  elements.forEach((el) => {
+    if (!allowedTags.includes(el.tagName.toLowerCase())) {
+      // Replace unwanted tags with their content
+      el.replaceWith(...el.childNodes);
+    }
+  });
+  return doc.body.innerHTML;
+};
 export const Bloglist = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
@@ -46,9 +59,13 @@ export const Bloglist = () => {
           {blogs.map((blog) => (
             <div className="blog-item" key={blog.blogId}>
               <img src={blog.image} alt="" />
-              <small>{blog.createDate}</small>
+              <small>Created at {blog.createDate}</small>
               <Link to={`/blogdetail/${blog.blogId}`}>{blog.title}</Link>
-              <p>{blog.content}</p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: blog && stripHtmlTags(blog.content),
+                }}
+              ></p>
               <span>By {blog.fullname}</span>
             </div>
           ))}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 // import styles
 import "./styles/homepage/homepage.css";
 // import components
@@ -18,9 +18,33 @@ import koiproduct from "./assets/koiproduct.png";
 import group from "./assets/group.png";
 // import service
 import * as AccountService from "./service/account/AccountService";
+import * as BlogService from "./service/blog/blogService";
+const stripHtmlTags = (html) => {
+  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const elements = doc.body.querySelectorAll("*");
+
+  elements.forEach((el) => {
+    if (!allowedTags.includes(el.tagName.toLowerCase())) {
+      // Replace unwanted tags with their content
+      el.replaceWith(...el.childNodes);
+    }
+  });
+  return doc.body.innerHTML;
+};
 export const Homepage = () => {
   // state
   const [isAuth, setIsAuth] = useState(false);
+  // query
+  const {
+    data: blogs = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useQuery({
+    queryKey: ["last-blogs"],
+    queryFn: BlogService.getAllBlog,
+  });
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -212,70 +236,19 @@ export const Homepage = () => {
           <Link to="/blog">Explore Blogs</Link>
         </div>
         <div className="blog-list">
-          <div className="blog-item">
-            <i className="bx bx-spreadsheet"></i>
-            <div>
-              <strong>
-                Famous Japanese Temples, Shrines, and Koi Pond Gardens
-              </strong>
-              <p>
-                Japanese shrines and temples hold a significant place in the
-                cultural and historical tapestry of Japan. They serve as
-                sanctuaries of spirituality, cultural preservation, and natural
-                beauty. These sacred sites, steeped in centuries-old traditions,
-                offer a serene escape...
-              </p>
-            </div>
-          </div>
-          <div className="blog-item">
-            <i className="bx bx-spreadsheet"></i>
-            <div>
-              <strong>
-                Famous Japanese Temples, Shrines, and Koi Pond Gardens
-              </strong>
-              <p>
-                Japanese shrines and temples hold a significant place in the
-                cultural and historical tapestry of Japan. They serve as
-                sanctuaries of spirituality, cultural preservation, and natural
-                beauty. These sacred sites, steeped in centuries-old traditions,
-                offer a serene escape...
-              </p>
-            </div>
-          </div>
-          <div className="blog-item">
-            <i className="bx bx-spreadsheet"></i>
-            <div>
-              <strong>
-                Famous Japanese Temples, Shrines, and Koi Pond Gardens
-              </strong>
-              <p>
-                Japanese shrines and temples hold a significant place in the
-                cultural and historical tapestry of Japan. They serve as
-                sanctuaries of spirituality, cultural preservation, and natural
-                beauty. These sacred sites, steeped in centuries-old traditions,
-                offer a serene escape...
-              </p>
-            </div>
-          </div>
-          <div className="blog-item">
-            <i className="bx bx-spreadsheet"></i>
-            <div>
-              <strong>
-                Famous Japanese Temples, Shrines, and Koi Pond Gardens
-              </strong>
-              <p>
-                Japanese shrines and temples hold a significant place in the
-                cultural and historical tapestry of Japan. They serve as
-                sanctuaries of spirituality, cultural preservation, and natural
-                beauty. These sacred sites, steeped in centuries-old traditions,
-                offer a serene escape...Japanese shrines and temples hold a
-                significant place in the cultural and historical tapestry of
-                Japan. They serve as sanctuaries of spirituality, cultural
-                preservation, and natural beauty. These sacred sites, steeped in
-                centuries-old traditions, offer a serene escape...
-              </p>
-            </div>
-          </div>
+          {blogs.slice(0, 4).map((blog) => (
+            <Link to={`blogdetail/${blog.blogId}`} className="blog-item">
+              <i className="bx bx-spreadsheet"></i>
+              <div>
+                <strong>{blog && blog.title}</strong>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: blog && stripHtmlTags(blog.content),
+                  }}
+                ></p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
       <div className="about-intro">

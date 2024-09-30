@@ -1118,6 +1118,10 @@
         justify-content: center;
         padding: 30px 50px;
 
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
         .del-pond-modal {
             width: 500px;
             max-height: 700px;
@@ -1181,6 +1185,10 @@
         align-items: center;
         justify-content: center;
         padding: 30px 50px;
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
 
         .del-koi-modal {
             width: 500px;
@@ -1246,6 +1254,10 @@
         justify-content: center;
         padding: 30px 50px;
 
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
         .cancel-order-modal {
             width: 500px;
             max-height: 700px;
@@ -1308,6 +1320,10 @@
         align-items: center;
         justify-content: center;
         padding: 30px 50px;
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
 
         .add-blog-modal {
             width: 800px;
@@ -1450,6 +1466,10 @@
         align-items: center;
         justify-content: center;
         padding: 30px 50px;
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
 
         .update-blog-modal {
             width: 800px;

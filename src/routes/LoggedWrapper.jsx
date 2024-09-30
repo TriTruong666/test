@@ -10,10 +10,25 @@ export const LoggedWrapper = ({ children }) => {
   }
   return children;
 };
-export const VerifyEmailWrapper = ({ children }) => {
+export const VerifyEmailSignupWrapper = ({ children }) => {
   const email = useSelector((state) => state.account.email.email);
   if (!email) {
     return <Navigate to="/signup" />;
+  }
+  return children;
+};
+export const VerifyEmailForgetWrapper = ({ children }) => {
+  const email = useSelector((state) => state.account.email.email);
+  if (!email) {
+    return <Navigate to="/forget" />;
+  }
+  return children;
+};
+export const ResetPassWrapper = ({ children }) => {
+  const email = useSelector((state) => state.account.email.email);
+  const otp = useSelector((state) => state.account.otp.otp);
+  if (!email && !otp) {
+    return <Navigate to="/forget" />;
   }
   return children;
 };

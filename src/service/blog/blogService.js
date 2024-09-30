@@ -43,12 +43,7 @@ export const createBlogService = async (blogData) => {
     return error.response ? error.response.data : { error: "Network Error" };
   }
 };
-/**
- * Edit an existing blog post.
- * @param {string} blogId - The unique ID of the blog post to edit.
- * @param {object} updatedBlogData - The updated blog post data.
- * @returns {Promise<object>} - The response data from the API.
- */
+
 export const editBlog = async (blogId, updatedBlogData) => {
   const token = localStorage.getItem("token");
   try {
@@ -83,12 +78,7 @@ export const detailBlogService = async (blogId) => {
 
 
 
-/**
- * Deletes a blog post by its ID.
- *
- * @param {int} blogId - The unique ID of the blog post to delete.
- * @returns {object} The response data from the API.
- */
+
 export const deleteBlogService = async (blogId) => {
   try {
     const api = `http://localhost:8080/blog/delete/${blogId}`;

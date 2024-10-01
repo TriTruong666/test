@@ -15,8 +15,6 @@ export const createKoiService = async (koiData) => {
   }
 };
 
-
-
 export const detailKoiService = async (koiId) => {
   try {
     const api = `http://localhost:8080/koi/${koiId}`;
@@ -30,7 +28,6 @@ export const detailKoiService = async (koiId) => {
     return error.response.data;
   }
 };
-
 
 export const deleteKoiService = async (koiId) => {
   try {
@@ -46,7 +43,6 @@ export const deleteKoiService = async (koiId) => {
   }
 };
 
-
 export const updateKoiService = async (koiId) => {
   try {
     const api = `http://localhost:8080/koi/update/${koiId}`;
@@ -60,8 +56,3 @@ export const updateKoiService = async (koiId) => {
     return error.response.data;
   }
 };
-
-
-
-
-

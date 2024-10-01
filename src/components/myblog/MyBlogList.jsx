@@ -52,7 +52,7 @@ export const MyBlogList = () => {
           {blogs.map((blog) => (
             <>
               <Link
-                key={blog.blogId}
+                key={blog && blog.blogId}
                 to={`/dashboard/myblog/review/${blog.blogId}`}
               >
                 <strong>{blog && blog.title}</strong>

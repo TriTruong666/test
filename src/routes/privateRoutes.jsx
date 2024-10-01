@@ -44,7 +44,7 @@ export const privateRoutes = [
         ),
         children: [
           {
-            path: "/dashboard/mypond/detail/info",
+            path: "/dashboard/mypond/detail/info/:pondId",
             element: (
               <AuthWrapper allowedRoles={["USER"]}>
                 <PondInfo />
@@ -52,7 +52,7 @@ export const privateRoutes = [
             ),
           },
           {
-            path: "/dashboard/mypond/detail/water",
+            path: "/dashboard/mypond/detail/water/:pondId",
             element: (
               <AuthWrapper allowedRoles={["USER"]}>
                 <PondWater />
@@ -60,7 +60,7 @@ export const privateRoutes = [
             ),
           },
           {
-            path: "/dashboard/mypond/detail/kois",
+            path: "/dashboard/mypond/detail/kois/:pondId",
             element: (
               <AuthWrapper allowedRoles={["USER"]}>
                 <KoiManage />

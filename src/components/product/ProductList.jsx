@@ -24,15 +24,15 @@ export const ProductList = () => {
     refetchOnWindowFocus: false,
   });
   useEffect(() => {
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
     if (products.length === 0) {
       setEmptyList("Product list is empty");
     } else {
       setEmptyList(null);
+    }
+    if (isFetching || isLoading) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
     }
   }, [isFetching, isRefetching, isLoading]);
   return (

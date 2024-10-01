@@ -37,6 +37,13 @@ select option {
     padding: 20px 40px 100px 40px;
     scroll-behavior: smooth;
   }
+  .pond-water-container .loading {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .pond-water-container .pond-water-header {
     padding: 25px 0;
     display: flex;

@@ -68,6 +68,13 @@ select option {
     grid-column: 11/span 2;
     text-align: center;
   }
+  .koi-list-table tbody .loading {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .koi-list-table tbody tr {
     cursor: pointer;
     display: grid;
@@ -99,6 +106,7 @@ select option {
   }
   .koi-list-table tbody tr th:nth-child(1) div strong {
     font-size: 0.75rem;
+    text-align: start;
   }
   .koi-list-table tbody tr th:nth-child(1) div p {
     font-size: 0.6rem;

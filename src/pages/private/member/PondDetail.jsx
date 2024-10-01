@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 // import styles
 import "../../../styles/dashboard/ponddetail/ponddetail.css";
 // import dispatch
@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { toggleUpdatePondModal } from "../../../redux/slices/modal/modal";
 import { toggleDelPondModal } from "../../../redux/slices/modal/modal";
 export const PondDetail = () => {
+  // param
+  const { pondId } = useParams();
   // dispatch
   const dispatch = useDispatch();
   // handle func
@@ -20,7 +22,7 @@ export const PondDetail = () => {
   return (
     <div className="pond-detail-container">
       <div className="pond-detail-header">
-        <strong>Pond Detail #123124</strong>
+        <strong>Pond Detail #{pondId}</strong>
         <div>
           <i
             className="bx bx-edit-alt"
@@ -31,19 +33,19 @@ export const PondDetail = () => {
       </div>
       <div className="pond-detail-link">
         <NavLink
-          to="/dashboard/mypond/detail/info"
+          to={`/dashboard/mypond/detail/info/${pondId}`}
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           Infomation
         </NavLink>
         <NavLink
-          to="/dashboard/mypond/detail/water"
+          to={`/dashboard/mypond/detail/water/${pondId}`}
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           Water
         </NavLink>
         <NavLink
-          to="/dashboard/mypond/detail/kois"
+          to={`/dashboard/mypond/detail/kois/${pondId}`}
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           Kois

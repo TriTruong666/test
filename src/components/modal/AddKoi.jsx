@@ -1,17 +1,40 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import FileResizer from "react-image-file-resizer";
 import ReactFlagsSelect from "react-flags-select";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
 import { useDispatch } from "react-redux";
 // import slices
 import { toggleAddKoiModal } from "../../redux/slices/modal/modal";
-
+// import service
+import * as KoiService from "../../service/koi/koiService";
 export const AddKoi = () => {
+  // param
+  const { pondId } = useParams();
+  const countryNameMap = {
+    JP: "Japan",
+    CN: "China",
+    ID: "Indonesia",
+    TH: "Thailand",
+    VN: "Vietnam",
+    KR: "South Korea",
+  };
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
+  const [submitData, setSubmitData] = useState({
+    name: "",
+    image: "",
+    sex: "",
+    type: "",
+    origin: "",
+    pondId: pondId,
+  });
   //   dispatch
   const dispatch = useDispatch();
   //   file resizer
@@ -25,30 +48,107 @@ export const AddKoi = () => {
       0,
       (uri) => {
         setPreviewImage(uri);
+        setSubmitData({
+          ...submitData,
+          image: uri,
+        });
       },
       "base64",
       250,
       250
     );
   };
+  // mutation
+  const queryCilent = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: KoiService.createKoiService,
+    onSuccess: (responseData) => {
+      if (responseData && responseData.code === "200") {
+        toast.success("Create successfully", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          dispatch(toggleAddKoiModal());
+          location.reload();
+        }, 1500);
+      }
+      queryCilent.invalidateQueries({
+        queryKey: ["kois"],
+      });
+    },
+  });
   //   handle func
   const removeChooseImage = () => {
     setPreviewImage(null);
+    setSubmitData({
+      ...submitData,
+      image: "",
+    });
   };
   const handleToggleAddKoiModal = () => {
     dispatch(toggleAddKoiModal());
   };
-  //   useEffect(() => {
-  //     console.log("Selected country code:", selectedFlag);
-  //   }, [selectedFlag]);
+  const handleOnSelectFlag = (code) => {
+    setSelectedFlag(code);
+    setSubmitData((prevData) => ({
+      ...prevData,
+      origin: countryNameMap[code], // Set the origin field with the selected flag code
+    }));
+  };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      !submitData.image ||
+      !submitData.name ||
+      !submitData.origin ||
+      !submitData.pondId ||
+      !submitData.sex ||
+      !submitData.type
+    ) {
+      toast.error("All fields are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+      await mutation.mutateAsync(submitData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    console.log(submitData);
+  }, [submitData]);
   return (
     <div className="add-koi-container">
+      <ToastContainer />
       <div className="add-koi-modal">
         <div className="add-koi-header">
           <strong>Add A Koi</strong>
           <i className="bx bx-x" onClick={handleToggleAddKoiModal}></i>
         </div>
-        <form action="" className="add-koi-form">
+        <form action="" onSubmit={handleSubmit} className="add-koi-form">
           <div className="input-image">
             <i className="bx bx-trash-alt" onClick={removeChooseImage}></i>
 
@@ -71,14 +171,16 @@ export const AddKoi = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input type="text" id="koiname" placeholder="Koi name" />
-          <div className="input-two-fields">
-            <input type="text" placeholder="Size (cm)" />
-            <input type="text" placeholder="Weight (kg)" />
-          </div>
+          <input
+            type="text"
+            id="koiname"
+            placeholder="Koi name"
+            onChange={handleOnChange}
+            name="name"
+          />
           <div className="select-two-fields">
             <div className="select">
-              <select name="" id="">
+              <select name="type" onChange={handleOnChange} id="">
                 <option value="">Type</option>
                 <option value="Kohaku">Kohaku</option>
                 <option value="Sanke">Sanke</option>
@@ -94,17 +196,18 @@ export const AddKoi = () => {
               <i className="bx bxs-chevron-down"></i>
             </div>
             <div className="select">
-              <select name="" id="">
+              <select name="sex" onChange={handleOnChange} id="">
                 <option value="">Gender</option>
-                <option value="">Male</option>
-                <option value="">Female</option>
+                <option value="true">Male</option>
+                <option value="false">Female</option>
               </select>
               <i className="bx bxs-chevron-down"></i>
             </div>
           </div>
           <ReactFlagsSelect
             selected={selectedFlag}
-            onSelect={(code) => setSelectedFlag(code)}
+            onSelect={handleOnSelectFlag}
+            countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
             placeholder="Select origin"
             className="menu-flags"
           />

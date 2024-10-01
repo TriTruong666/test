@@ -1,46 +1,12 @@
 import axios from "axios";
 
-
-
-
-export const createPondService = async (pondData) => {
+export const createPondService = async (data) => {
   const token = localStorage.getItem("token");
   try {
     const api = "http://localhost:8080/pond/create";
-    const res = await axios.post(api, pondData, {
+    const res = await axios.post(api, data, {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-
-
-
-export const getAllPondService = async () => {
-  const token = localStorage.getItem("token");
-  try {
-    const response = await axios.get("http://localhost:8080/pond/list", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    return response.data.result;
-  } catch (error) {
-    return error.response.data;
-  }
-};
-
-export const getUserPondService = async (userId) =>{
-  try {
-    const api = `http://localhost:8080/user/${userId}`;
-    const res = await axios.get(api, {
-      headers: {
         "Content-Type": "application/json",
       },
     });
@@ -48,16 +14,33 @@ export const getUserPondService = async (userId) =>{
   } catch (error) {
     return error.response.data;
   }
-}
+};
 
+export const getUserPondService = async (userId) => {
+  const token = localStorage.getItem("token");
 
-
+  try {
+    const api = `http://localhost:8080/pond/user/${userId}`;
+    const res = await axios.get(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data.result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 
 export const detailPondService = async (pondId) => {
+  const token = localStorage.getItem("token");
+
   try {
     const api = `http://localhost:8080/pond/${pondId}`;
     const res = await axios.get(api, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -66,15 +49,15 @@ export const detailPondService = async (pondId) => {
     return error.response.data;
   }
 };
-
-
-
 
 export const deletePondService = async (pondId) => {
+  const token = localStorage.getItem("token");
+
   try {
     const api = `http://localhost:8080/pond/delete/${pondId}`;
-    const res = await axios.get(api, {
+    const res = await axios.delete(api, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -84,13 +67,13 @@ export const deletePondService = async (pondId) => {
   }
 };
 
-
-
-export const updatePondService = async (pondId) => {
+export const updatePondService = async (pondId, data) => {
+  const token = localStorage.getItem("token");
   try {
     const api = `http://localhost:8080/pond/update/${pondId}`;
-    const res = await axios.get(api, {
+    const res = await axios.put(api, data, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });

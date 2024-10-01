@@ -99,6 +99,10 @@ export const AddBlog = () => {
   };
   const removeChooseImage = () => {
     setPreviewImage(null);
+    setSubmitData({
+      ...submitData,
+      image: "",
+    });
   };
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddBlogModal());

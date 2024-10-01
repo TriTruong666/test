@@ -1,24 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/pond/pond.css";
 // import assets
 import image from "../../assets/logincover.jpg";
+// import service
+import * as PondService from "../../service/pond/pondService";
 export const PondList = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.userId;
+  // state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [emptyList, setEmptyList] = useState(null);
+  // query
+  const {
+    data: ponds = [],
+    isFetching,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["ponds", userId],
+    queryFn: () => PondService.getUserPondService(userId),
+    refetchOnWindowFocus: false,
+  });
+  useEffect(() => {
+    if (ponds.length === 0) {
+      setEmptyList("Pond list is empty");
+    } else {
+      setEmptyList(null);
+    }
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+  }, [isFetching, isLoading]);
   return (
     <div className="pond-list">
-      <Link to="/dashboard/mypond/detail/info">
-        <img src={image} alt="" />
-        <div className="pond-info">
-          <div>
-            <strong>Your Koi Pond Name</strong>
-            <p>10 x 25m</p>
-            <p>300.000L</p>
+      {isLoadingPage ? (
+        <>
+          <div className="loading">
+            <ClipLoader color="#000000" size={40} />
           </div>
-          <p>29 Kois</p>
-          <span>Status: Good</span>
-        </div>
-      </Link>
+        </>
+      ) : (
+        <>
+          {emptyList && (
+            <div className="empty-list">
+              <p>{emptyList}</p>
+            </div>
+          )}
+          {ponds.map((pond) => (
+            <Link
+              key={pond && pond.pondId}
+              to={`/dashboard/mypond/detail/info/${pond && pond.pondId}`}
+            >
+              <img src={pond && pond.image} alt="" />
+              <div className="pond-info">
+                <div>
+                  <strong>{pond && pond.pondName}</strong>
+                  <p>{pond && pond.size}m²</p>
+                  <p>
+                    {pond && Intl.NumberFormat("de-DE").format(pond.volume)}L
+                  </p>
+                </div>
+                <p>{(pond && pond.kois && pond.kois.length) || "0"} Kois</p>
+                <span>Status: Good</span>
+              </div>
+            </Link>
+          ))}
+        </>
+      )}
     </div>
   );
 };

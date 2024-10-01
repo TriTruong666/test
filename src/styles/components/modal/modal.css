@@ -79,9 +79,13 @@ select option {
     justify-content: center;
     padding: 30px 50px;
   }
+  .add-pond-container ::-webkit-scrollbar {
+    width: 0;
+  }
   .add-pond-container .add-pond-modal {
     width: 800px;
     max-height: 700px;
+    height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
@@ -102,9 +106,14 @@ select option {
   .add-pond-container .add-pond-modal .add-pond-detail {
     display: flex;
     flex-direction: column;
-    row-gap: 35px;
+    row-gap: 40px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image {
     position: relative;
     margin-top: 30px;
     width: 300px;
@@ -113,14 +122,14 @@ select option {
     align-self: center;
     border-radius: 15px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image .bx-trash-alt {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image .bx-trash-alt {
     position: absolute;
     left: 110%;
     font-size: 24px;
     color: red;
     cursor: pointer;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image label {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image label {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -129,37 +138,37 @@ select option {
     justify-content: center;
     row-gap: 10px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image label img {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image label img {
     width: 300px;
     height: 220px;
     -o-object-fit: cover;
        object-fit: cover;
     border-radius: 15px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image label i {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image label i {
     font-size: 40px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image label p {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image label p {
     font-size: 0.85rem;
     color: rgba(0, 0, 0, 0.9);
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-image input {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-image input {
     display: none;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-two-fields {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-two-fields ::-moz-placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::-moz-placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-two-fields ::placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .input-two-fields input {
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields input {
     width: 50%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -167,47 +176,46 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water {
-    margin-top: 30px;
+  .add-pond-container .add-pond-modal .add-pond-detail .water {
     display: flex;
     flex-direction: column;
-    row-gap: 25px;
+    row-gap: 30px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .header {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .header {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .header strong {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .header strong {
     font-size: 1.1rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .header p {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .header p {
     font-size: 0.75rem;
     color: rgba(0, 0, 0, 0.7);
   }
-  .add-pond-container .add-pond-modal .add-pond-water ::-moz-placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .water ::-moz-placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-water ::placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .water ::placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .input-two-fields {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .input-two-fields ::-moz-placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields ::-moz-placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .input-two-fields ::placeholder {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields ::placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .input-two-fields input {
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields input {
     width: 50%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -215,20 +223,20 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water #temp {
+  .add-pond-container .add-pond-modal .add-pond-detail .water #temp {
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .submit {
+  .add-pond-container .add-pond-modal .add-pond-detail .submit {
     display: flex;
     justify-content: end;
     -moz-column-gap: 15px;
          column-gap: 15px;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .submit button:nth-child(1) {
+  .add-pond-container .add-pond-modal .add-pond-detail .submit button:nth-child(1) {
     padding: 10px 40px;
     border: 2px solid rgba(0, 0, 0, 0.2);
     color: black;
@@ -236,7 +244,7 @@ select option {
     font-weight: 600;
     cursor: pointer;
   }
-  .add-pond-container .add-pond-modal .add-pond-water .submit button:nth-child(2) {
+  .add-pond-container .add-pond-modal .add-pond-detail .submit button:nth-child(2) {
     padding: 10px 50px;
     background: #4b87e0;
     font-weight: 600;

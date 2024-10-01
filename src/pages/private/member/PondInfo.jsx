@@ -1,44 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
+
 // import styles
 import "../../../styles/dashboard/pondinfo/pondinfo.css";
 // import assets
 import image from "../../../assets/logincover2.jpg";
+// import service
+import * as PondService from "../../../service/pond/pondService";
 export const PondInfo = () => {
+  // param
+  const { pondId } = useParams();
+  // state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
+  const {
+    data: pondInfo = {},
+    isLoading,
+    isError,
+    isFetching,
+  } = useQuery({
+    queryKey: ["pond-detail", pondId],
+    queryFn: () => PondService.detailPondService(pondId),
+    refetchOnWindowFocus: false,
+  });
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+  }, [isFetching, isLoading]);
   return (
     <div className="pond-info-container">
-      <div className="pond-info-image">
-        <img src={image} alt="" />
-      </div>
-      <div className="pond-info-header">
-        <strong>Pond infomation</strong>
-        <p>See detail about pond parameter</p>
-      </div>
-      <div className="pond-info-main">
-        <div className="info-item">
-          <strong>Name</strong>
-          <p>Your Koi Pond Name</p>
-        </div>
-        <div className="info-item">
-          <strong>Pump power</strong>
-          <p>200W</p>
-        </div>
-        <div className="info-item">
-          <strong>Size</strong>
-          <p>10 x 25m</p>
-        </div>
-        <div className="info-item">
-          <strong>Depth</strong>
-          <p>5m</p>
-        </div>
-        <div className="info-item">
-          <strong>Volumn</strong>
-          <p>300.000L</p>
-        </div>
-        <div className="info-item">
-          <strong>Veins</strong>
-          <p>8</p>
-        </div>
-      </div>
+      {isLoadingPage ? (
+        <>
+          <div className="loading">
+            <ClipLoader color="#000000" size={40} />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="pond-info-image">
+            <img src={pondInfo && pondInfo.image} alt="" />
+          </div>
+          <div className="pond-info-header">
+            <strong>Pond infomation</strong>
+            <p>See detail about pond infomation</p>
+          </div>
+          <div className="pond-info-main">
+            <div className="info-item">
+              <strong>Name</strong>
+              <p>{(pondInfo && pondInfo.pondName) || "null"}</p>
+            </div>
+            <div className="info-item">
+              <strong>Pump power</strong>
+              <p>{(pondInfo && pondInfo.pumpPower) || "null"}W</p>
+            </div>
+            <div className="info-item">
+              <strong>Size</strong>
+              <p>{(pondInfo && pondInfo.size) || "null"}m²</p>
+            </div>
+            <div className="info-item">
+              <strong>Depth</strong>
+              <p>{(pondInfo && pondInfo.depth) || "null"}m</p>
+            </div>
+            <div className="info-item">
+              <strong>Volumn</strong>
+              <p>
+                {(pondInfo &&
+                  Intl.NumberFormat("de-DE").format(pondInfo.volume)) ||
+                  "null"}
+                L
+              </p>
+            </div>
+            <div className="info-item">
+              <strong>Veins</strong>
+              <p>{(pondInfo && pondInfo.vein) || "null"} veins</p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

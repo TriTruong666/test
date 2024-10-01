@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../../styles/dashboard/pondwater/pondwater.css";
 // import redux
 import { useDispatch } from "react-redux";
 // import slices
 import { toggleUpdateWaterModal } from "../../../redux/slices/modal/modal";
+// import service
+import * as PondService from "../../../service/pond/pondService";
 export const PondWater = () => {
   // import dispatch
   const dispatch = useDispatch();
@@ -12,62 +17,119 @@ export const PondWater = () => {
   const handleToggleUpdateWaterModal = () => {
     dispatch(toggleUpdateWaterModal());
   };
+  // param
+  const { pondId } = useParams();
+  // state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
+  const {
+    data: pondInfo = {},
+    isLoading,
+    isError,
+    isFetching,
+  } = useQuery({
+    queryKey: ["pond-detail", pondId],
+    queryFn: () => PondService.detailPondService(pondId),
+    refetchOnWindowFocus: false,
+  });
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+  }, [isFetching, isLoading]);
   return (
     <div className="pond-water-container">
-      <div className="pond-water-header">
-        <div className="header">
-          <strong>Water quality</strong>
-          <p>View detail all parameters of water quality</p>
-        </div>
-        <div className="update-water" onClick={handleToggleUpdateWaterModal}>
-          <i className="bx bxs-edit-alt"></i>
-          <p>Update water quality</p>
-        </div>
-      </div>
-      <div className="pond-water-list">
-        <div className="pond-water-param">
-          <strong>Lastest update</strong>
-          <p>20/10/2024</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>O2</strong>
-          <p>5.0mg/L</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>NO2</strong>
-          <p>5.0mg/L</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>NO3</strong>
-          <p>5.0mg/L</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>NH3/NH4</strong>
-          <p>5.0mg/L</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>Temparature</strong>
-          <p>24℃</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>Salt</strong>
-          <p>0.1%</p>
-        </div>
-        <div className="pond-water-param">
-          <strong>pH</strong>
-          <p>6.9</p>
-        </div>
-      </div>
-      <div className="pond-water-recommendation-header">
-        <strong>Recommendation</strong>
-        <p>Let’s our system calculate ideal water parameter for your ponds</p>
-      </div>
-      <div className="pond-water-recommendation">
-        <div className="recommendation-param critical">
-          <strong>Salt (Critical)</strong>
-          <p>Less 0.1%</p>
-        </div>
-      </div>
+      {isLoadingPage ? (
+        <>
+          <div className="loading">
+            <ClipLoader color="#000000" size={40} />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="pond-water-header">
+            <div className="header">
+              <strong>Water quality</strong>
+              <p>View detail all parameters of water quality</p>
+            </div>
+            <div
+              className="update-water"
+              onClick={handleToggleUpdateWaterModal}
+            >
+              <i className="bx bxs-edit-alt"></i>
+              <p>Update water quality</p>
+            </div>
+          </div>
+          <div className="pond-water-list">
+            <div className="pond-water-param">
+              <strong>Lastest update</strong>
+              <p>
+                {new Date(
+                  pondInfo &&
+                    pondInfo.waterParam &&
+                    pondInfo.waterParam.createDate
+                ).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>O2</strong>
+              <p>
+                {pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2}
+                mg/L
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>NO2</strong>
+              <p>
+                {pondInfo && pondInfo.waterParam && pondInfo.waterParam.no2}
+                mg/L
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>NO3</strong>
+              <p>
+                {pondInfo && pondInfo.waterParam && pondInfo.waterParam.no3}
+                mg/L
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>NH3/NH4</strong>
+              <p>
+                {pondInfo && pondInfo.waterParam && pondInfo.waterParam.nh4}
+                mg/L
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>Temparature</strong>
+              <p>24℃</p>
+            </div>
+            <div className="pond-water-param">
+              <strong>Salt</strong>
+              <p>
+                {pondInfo && pondInfo.waterParam && pondInfo.waterParam.salt}%
+              </p>
+            </div>
+            <div className="pond-water-param">
+              <strong>pH</strong>
+              <p>{pondInfo && pondInfo.waterParam && pondInfo.waterParam.ph}</p>
+            </div>
+          </div>
+          <div className="pond-water-recommendation-header">
+            <strong>Recommendation</strong>
+            <p>
+              Let’s our system calculate ideal water parameter for your ponds
+            </p>
+          </div>
+          <div className="pond-water-recommendation">
+            <div className="recommendation-param critical">
+              <strong>Salt (Critical)</strong>
+              <p>Less 0.1%</p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

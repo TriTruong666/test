@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
 // import styles
 import "../../styles/auth/auth.css";
 // import components
@@ -89,6 +90,18 @@ export const LoginPage = () => {
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
+  // test
+  const oauthMutation = useMutation({
+    mutationKey: ["oauth"],
+    mutationFn: AccountService.oauthService,
+  });
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      const googleIdToken = credentialResponse.access_token;
+      console.log(googleIdToken);
+      console.log("Success");
+    },
+  });
   return (
     <div className="cover">
       {isToggleLoginSuccess && (
@@ -161,7 +174,7 @@ export const LoginPage = () => {
           <div className="or">
             <p>or</p>
           </div>
-          <div className="oauth">
+          <div className="oauth" onClick={handleGoogleLogin}>
             <i className="bx bxl-google"></i>
             <p>Login with Google</p>
           </div>

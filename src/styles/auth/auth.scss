@@ -161,6 +161,19 @@ $fade-white: rgba(255, 255, 255, .7);
                 }
             }
 
+            .custom-google-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 0;
+                margin: 0 40px;
+                border-radius: 10px;
+                cursor: pointer;
+                column-gap: 15px;
+                border: 1px solid rgba(255, 255, 255, .2);
+                transition: .4s;
+            }
+
             .oauth {
                 display: flex;
                 justify-content: center;

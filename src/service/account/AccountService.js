@@ -142,7 +142,7 @@ export const logoutService = async (token) => {
     localStorage.removeItem("user");
     return res.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 export const updateMyInfo = async (data) => {
@@ -155,9 +155,22 @@ export const updateMyInfo = async (data) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
     return res.data.result;
   } catch (error) {
-    console.log(error);
+    return error;
+  }
+};
+export const oauthService = async (googleToken) => {
+  try {
+    const api = "http://localhost:8080/auth/sign-in-by-google";
+    const res = await axios.post(api, googleToken, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    return error.response.data;
   }
 };

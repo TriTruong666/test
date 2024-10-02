@@ -38,7 +38,6 @@ export const getMyUserInfo = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
     return res.data.result;
   } catch (error) {
     return err.response.data;
@@ -142,6 +141,22 @@ export const logoutService = async (token) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateMyInfo = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/users/update-my-info";
+    const res = await axios.put(api, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data.result;
   } catch (error) {
     console.log(error);
   }

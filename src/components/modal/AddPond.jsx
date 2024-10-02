@@ -137,19 +137,35 @@ export const AddPond = () => {
     });
     setInvalidNumber(null);
   };
-  const handleInputNumberWater = (e) => {
+  const handleInputFloatPond = (e) => {
+    const { name, value } = e.target;
+    if (isNaN(value)) {
+      setSubmitPondData({
+        ...submitPondData,
+        [name]: "",
+      });
+      setInvalidNumber("Please input invalid number");
+      return;
+    }
+    setSubmitPondData({
+      ...submitPondData,
+      [name]: parseFloat(value),
+    });
+    setInvalidNumber(null);
+  };
+  const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
     if (isNaN(value)) {
       setSubmitWaterData({
         ...submitWaterData,
         [name]: "",
       });
-      setInvalidNumber("Please input invalid number");
+      setInvalidNumber("Please input a valid number");
       return;
     }
     setSubmitWaterData({
       ...submitWaterData,
-      [name]: parseInt(value),
+      [name]: parseFloat(value),
     });
     setInvalidNumber(null);
   };
@@ -246,21 +262,21 @@ export const AddPond = () => {
                 type="text"
                 placeholder="Pump power (W)"
                 name="pumpPower"
-                onChange={handleInputNumberPond}
+                onChange={handleInputFloatPond}
               />
             </div>
             <div className="input-two-fields">
               <input
                 type="text"
-                placeholder="Size (m)"
+                placeholder="Size (m²)"
                 name="size"
-                onChange={handleInputNumberPond}
+                onChange={handleInputFloatPond}
               />
               <input
                 type="text"
                 placeholder="Depth (m)"
                 name="depth"
-                onChange={handleInputNumberPond}
+                onChange={handleInputFloatPond}
               />
             </div>
             <div className="input-two-fields">
@@ -268,7 +284,7 @@ export const AddPond = () => {
                 type="text"
                 placeholder="Volumn (L)"
                 name="volume"
-                onChange={handleInputNumberPond}
+                onChange={handleInputFloatPond}
               />
               <input
                 type="text"
@@ -286,29 +302,29 @@ export const AddPond = () => {
             <div className="input-two-fields">
               <input
                 type="text"
-                placeholder="NO2 (mg/l)"
+                placeholder="NO2 (ppm)"
                 name="no2"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
               <input
                 type="text"
-                placeholder="NO3 (mg/l)"
+                placeholder="NO3 (ppm)"
                 name="no3"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
             </div>
             <div className="input-two-fields">
               <input
                 type="text"
-                placeholder="NH3/NH4 (mg/l)"
+                placeholder="NH3/NH4 (ppm)"
                 name="nh4"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
               <input
                 type="text"
-                placeholder="O2 (mg/l)"
+                placeholder="O2 (mg/L)"
                 name="o2"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
             </div>
             <div className="input-two-fields">
@@ -316,13 +332,13 @@ export const AddPond = () => {
                 type="text"
                 placeholder="Salt (%)"
                 name="salt"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
               <input
                 type="text"
                 placeholder="pH"
                 name="ph"
-                onChange={handleInputNumberWater}
+                onChange={handleInputFloatWater}
               />
             </div>
             <input
@@ -330,7 +346,7 @@ export const AddPond = () => {
               id="temp"
               placeholder="Temparature (℃  )"
               name="temperature"
-              onChange={handleInputNumberWater}
+              onChange={handleInputFloatWater}
             />
           </div>
           <div className="submit">

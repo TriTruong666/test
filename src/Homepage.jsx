@@ -237,7 +237,11 @@ export const Homepage = () => {
         </div>
         <div className="blog-list">
           {blogs.slice(0, 4).map((blog) => (
-            <Link to={`blogdetail/${blog.blogId}`} className="blog-item">
+            <Link
+              key={blog.blogId}
+              to={`blogdetail/${blog.blogId}`}
+              className="blog-item"
+            >
               <i className="bx bx-spreadsheet"></i>
               <div>
                 <strong>{blog && blog.title}</strong>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../../styles/dashboard/setting/setting.css";
 // import components
@@ -8,11 +10,6 @@ import { Dashnav } from "../../../components/navbar/Dashnav";
 // import service
 import * as AccountService from "../../../service/account/AccountService";
 export const UserSetting = () => {
-  // state
-  const [isToggleChangePass, setIsToggleChangePass] = useState(false);
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
   // query
   const {
     data: myInfo,
@@ -23,6 +20,43 @@ export const UserSetting = () => {
     queryKey: ["my-info"],
     queryFn: AccountService.getMyUserInfo,
     refetchOnWindowFocus: false,
+  });
+  // state
+  const [isToggleChangePass, setIsToggleChangePass] = useState(false);
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [submitData, setSubmitData] = useState({
+    fullname: myInfo && myInfo.fullname,
+    phone: myInfo && myInfo.phone,
+    address: myInfo && myInfo.address,
+  });
+
+  // mutation
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: AccountService.updateMyInfo,
+    onSuccess: (responseData) => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const updatedUser = { ...user, ...responseData };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      toast.success("Update Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
+      queryClient.invalidateQueries({
+        queryKey: ["update-info"],
+      });
+    },
   });
   // handle func
   useEffect(() => {
@@ -46,9 +80,25 @@ export const UserSetting = () => {
   const handleToggleChangePassFalse = () => {
     setIsToggleChangePass(false);
   };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+  };
+  const handleOnSubmitInfo = async (e) => {
+    e.preventDefault();
+    try {
+      await mutation.mutateAsync(submitData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="user-setting-container">
       <Dashnav />
+      <ToastContainer />
       <div className="user-setting">
         {isLoadingPage ? (
           <>
@@ -61,7 +111,12 @@ export const UserSetting = () => {
             <div className="setting-header">
               <strong>{myInfo && myInfo.fullname}'s setting</strong>
             </div>
-            <form action="" autoComplete="off" className="profile-form">
+            <form
+              action=""
+              onSubmit={handleOnSubmitInfo}
+              autoComplete="off"
+              className="profile-form"
+            >
               <div className="header">
                 <strong>Profile Setting</strong>
                 <p>You can customize your account infomation</p>
@@ -81,8 +136,10 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="fullname"
+                  name="fullname"
                   defaultValue={myInfo && myInfo.fullname}
                   placeholder="Enter your full name"
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="item">
@@ -90,8 +147,10 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="phone"
+                  name="phone"
                   defaultValue={myInfo && myInfo.phone}
                   placeholder="Enter your phone number"
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="item">
@@ -99,8 +158,10 @@ export const UserSetting = () => {
                 <input
                   type="text"
                   id="address"
+                  name="address"
                   defaultValue={myInfo && myInfo.address}
                   placeholder="Enter your address"
+                  onChange={handleOnChange}
                 />
               </div>
               <button>Update Infomation</button>

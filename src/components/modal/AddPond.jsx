@@ -169,23 +169,42 @@ export const AddPond = () => {
     });
     setInvalidNumber(null);
   };
+  useEffect(() => {
+    if (submitWaterData.pondId) {
+      waterMutation.mutateAsync(submitWaterData).catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [submitWaterData.pondId]);
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     if (
-      !submitPondData.depth ||
-      !submitPondData.image ||
-      !submitPondData.pondName ||
-      !submitPondData.pumpPower ||
-      !submitPondData.size ||
-      !submitPondData.vein ||
-      !submitPondData.volume ||
-      !submitWaterData.nh4 ||
-      !submitWaterData.no2 ||
-      !submitWaterData.no3 ||
-      !submitWaterData.o2 ||
-      !submitWaterData.ph ||
-      !submitWaterData.salt ||
-      !submitWaterData.temperature
+      submitPondData.depth === null ||
+      submitPondData.depth === undefined ||
+      submitPondData.image === "" ||
+      submitPondData.pondName === "" ||
+      submitPondData.pumpPower === null ||
+      submitPondData.pumpPower === undefined ||
+      submitPondData.size === null ||
+      submitPondData.size === undefined ||
+      submitPondData.vein === null ||
+      submitPondData.vein === undefined ||
+      submitPondData.volume === null ||
+      submitPondData.volume === undefined ||
+      submitWaterData.nh4 === null ||
+      submitWaterData.nh4 === undefined ||
+      submitWaterData.no2 === null ||
+      submitWaterData.no2 === undefined ||
+      submitWaterData.no3 === null ||
+      submitWaterData.no3 === undefined ||
+      submitWaterData.o2 === null ||
+      submitWaterData.o2 === undefined ||
+      submitWaterData.ph === null ||
+      submitWaterData.ph === undefined ||
+      submitWaterData.salt === null ||
+      submitWaterData.salt === undefined ||
+      submitWaterData.temperature === null ||
+      submitWaterData.temperature === undefined
     ) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -207,13 +226,7 @@ export const AddPond = () => {
       setIsSubmitting(false);
     }
   };
-  useEffect(() => {
-    if (submitWaterData.pondId) {
-      waterMutation.mutateAsync(submitWaterData).catch((error) => {
-        console.error(error);
-      });
-    }
-  }, [submitWaterData.pondId]);
+
   return (
     <div className="add-pond-container">
       <ToastContainer />

@@ -2,8 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useDispatch } from "react-redux";
+// import service
 import * as BlogService from "../../../service/blog/blogService";
+// import styles
 import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
+// import slices
+import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -18,7 +23,11 @@ const stripHtmlTags = (html) => {
   return doc.body.innerHTML;
 };
 export const AdminBlogDetail = () => {
+  // dispatch
+  const dispatch = useDispatch();
+  // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isNotFoundBlog, setIsNotFoundBlog] = useState(false);
   const { blogId } = useParams();
 
   const {
@@ -31,19 +40,24 @@ export const AdminBlogDetail = () => {
     queryFn: () => BlogService.detailBlogService(blogId),
     refetchOnWindowFocus: false,
   });
-
+  // handle func
+  const handleToggleUpdateBlogModal = () => {
+    dispatch(toggleUpdateBlogModal());
+  };
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
       setTimeout(() => {
         setIsLoadingPage(false);
       }, 1500);
+    } else {
+      if (blog && blog.code === "BLOG_NOT_FOUND") {
+        setIsNotFoundBlog(true);
+      } else {
+        setIsNotFoundBlog(false);
+      }
     }
-  }, [isFetching, isLoading]);
-
-  if (isError) {
-    return <p>Error loading blog details. Please try again later.</p>;
-  }
+  }, [isFetching, isLoading, blog]);
 
   return (
     <div className="admin-blog-detail-container">
@@ -55,52 +69,68 @@ export const AdminBlogDetail = () => {
         </>
       ) : (
         <>
-          <div className="admin-blog-detail-header">
-            <strong>Blog #{blog.blogId || "N/A"} </strong>
-            <div>
-              <i className="bx bx-edit-alt"></i>
-              <i className="bx bx-trash-alt"></i>
-            </div>
-          </div>
-          <div className="admin-blog-preview-main">
-            <div className="header">
-              <strong>Preview</strong>
-              <p>What users see when they visit your blog</p>
-            </div>
-            <div className="main">
-              <div className="header">
-                <strong>{blog.title || "Untitled Blog"}</strong>
-                <p>
-                  {new Date(blog.createDate).toLocaleDateString() ||
-                    "Date not available"}
-                </p>
+          {isNotFoundBlog ? (
+            <>
+              <div className="not-found">
+                <h2>Blog is not found</h2>
+                <p>Please check ID of blog or it had been delete !</p>
               </div>
-              {blog.image ? (
-                <img src={blog.image} alt={blog.title || "Blog Image"} />
-              ) : (
-                <p>No image available</p>
-              )}
-              <div className="blog-detail-main">
-                <div className="share">
-                  <strong>Share Article</strong>
-                  <div>
-                    <i className="bx bx-link-alt"></i>
-                    <i className="bx bxl-facebook-circle"></i>
-                    <i className="bx bxl-instagram-alt"></i>
+            </>
+          ) : (
+            <>
+              <div className="admin-blog-detail-header">
+                <strong>Blog #{blog.blogId || "N/A"} </strong>
+                <div>
+                  <i
+                    className="bx bx-edit-alt"
+                    onClick={handleToggleUpdateBlogModal}
+                  ></i>
+                  <i className="bx bx-trash-alt"></i>
+                </div>
+              </div>
+              <div className="admin-blog-preview-main">
+                <div className="header">
+                  <strong>Preview</strong>
+                  <p>What users see when they visit your blog</p>
+                </div>
+                <div className="main">
+                  <div className="header">
+                    <strong>{blog.title || "Untitled Blog"}</strong>
+                    <p>
+                      {new Date(blog.createDate).toLocaleDateString() ||
+                        "Date not available"}
+                    </p>
+                  </div>
+                  {blog.image ? (
+                    <img src={blog.image} alt={blog.title || "Blog Image"} />
+                  ) : (
+                    <p>No image available</p>
+                  )}
+                  <div className="blog-detail-main">
+                    <div className="share">
+                      <strong>Share Article</strong>
+                      <div>
+                        <i className="bx bx-link-alt"></i>
+                        <i className="bx bxl-facebook-circle"></i>
+                        <i className="bx bxl-instagram-alt"></i>
+                      </div>
+                    </div>
+                    <div className="blog-detail-content">
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            blog &&
+                            stripHtmlTags(
+                              blog.content || "No content available"
+                            ),
+                        }}
+                      ></p>
+                    </div>
                   </div>
                 </div>
-                <div className="blog-detail-content">
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        blog &&
-                        stripHtmlTags(blog.content || "No content available"),
-                    }}
-                  ></p>
-                </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
         </>
       )}
     </div>

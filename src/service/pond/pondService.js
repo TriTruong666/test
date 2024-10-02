@@ -61,7 +61,7 @@ export const deletePondService = async (pondId) => {
         "Content-Type": "application/json",
       },
     });
-    return res.data.result;
+    return res.data;
   } catch (error) {
     return error.response.data;
   }
@@ -77,8 +77,9 @@ export const updatePondService = async (pondId, data) => {
         "Content-Type": "application/json",
       },
     });
-    return res.data.result;
+    return res.data;
   } catch (error) {
+    console.log(error);
     return error.response.data;
   }
 };

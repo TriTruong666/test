@@ -42,7 +42,7 @@ export const createBlogService = async (blogData) => {
     return error.response.data;
   }
 };
-export const editBlog = async (blogId, updatedBlogData) => {
+export const updateBlogService = async (blogId, updatedBlogData) => {
   const token = localStorage.getItem("token");
   try {
     const api = `http://localhost:8080/blog/update/${blogId}`;
@@ -66,26 +66,24 @@ export const detailBlogService = async (blogId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data.result);
     return res.data.result;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 };
 
 export const deleteBlogService = async (blogId) => {
+  const token = localStorage.getItem("token");
   try {
     const api = `http://localhost:8080/blog/delete/${blogId}`;
     const res = await axios.delete(api, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data.result);
-    return res.data.result;
+    return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 };

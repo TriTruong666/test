@@ -8,7 +8,10 @@ import * as BlogService from "../../../service/blog/blogService";
 // import styles
 import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
 // import slices
-import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
+import {
+  toggleUpdateBlogModal,
+  toggleDeleteBlogModal,
+} from "../../../redux/slices/modal/modal";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -23,6 +26,8 @@ const stripHtmlTags = (html) => {
   return doc.body.innerHTML;
 };
 export const AdminBlogDetail = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const ownUserId = user.userId;
   // dispatch
   const dispatch = useDispatch();
   // state
@@ -39,23 +44,25 @@ export const AdminBlogDetail = () => {
     queryKey: ["blogDetail", blogId],
     queryFn: () => BlogService.detailBlogService(blogId),
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
   // handle func
   const handleToggleUpdateBlogModal = () => {
     dispatch(toggleUpdateBlogModal());
   };
+  const handleToggleDelBlogModal = () => {
+    dispatch(toggleDeleteBlogModal());
+  };
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 1500);
     } else {
-      if (blog && blog.code === "BLOG_NOT_FOUND") {
-        setIsNotFoundBlog(true);
-      } else {
-        setIsNotFoundBlog(false);
-      }
+      setIsLoadingPage(false);
+    }
+    if (blog && blog.code === "BLOG_NOT_FOUND") {
+      setIsNotFoundBlog(true);
+    } else {
+      setIsNotFoundBlog(false);
     }
   }, [isFetching, isLoading, blog]);
 
@@ -81,11 +88,20 @@ export const AdminBlogDetail = () => {
               <div className="admin-blog-detail-header">
                 <strong>Blog #{blog.blogId || "N/A"} </strong>
                 <div>
+                  {blog.userId === ownUserId ? (
+                    <>
+                      <i
+                        className="bx bx-edit-alt"
+                        onClick={handleToggleUpdateBlogModal}
+                      ></i>
+                    </>
+                  ) : (
+                    ""
+                  )}
                   <i
-                    className="bx bx-edit-alt"
-                    onClick={handleToggleUpdateBlogModal}
+                    className="bx bx-trash-alt"
+                    onClick={handleToggleDelBlogModal}
                   ></i>
-                  <i className="bx bx-trash-alt"></i>
                 </div>
               </div>
               <div className="admin-blog-preview-main">

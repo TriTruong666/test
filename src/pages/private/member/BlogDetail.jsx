@@ -8,7 +8,10 @@ import "../../../styles/dashboard/myblogdetail/myblogdetail.css";
 // import assets
 import image from "../../../assets/blogheader.jpg";
 // import slices
-import { toggleUpdateBlogModal } from "../../../redux/slices/modal/modal";
+import {
+  toggleUpdateBlogModal,
+  toggleDeleteBlogModal,
+} from "../../../redux/slices/modal/modal";
 // import service
 import * as BlogService from "../../../service/blog/blogService";
 const stripHtmlTags = (html) => {
@@ -35,6 +38,9 @@ export const BlogDetail = () => {
   const handleToggleUpdateBlogModal = () => {
     dispatch(toggleUpdateBlogModal());
   };
+  const handleToggleDelBlogModal = () => {
+    dispatch(toggleDeleteBlogModal());
+  };
   // query
   const {
     data: blog = {},
@@ -44,20 +50,18 @@ export const BlogDetail = () => {
   } = useQuery({
     queryKey: ["blogDetail", blogId],
     queryFn: () => BlogService.detailBlogService(blogId),
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 1500);
     } else {
-      if (blog && blog.code === "BLOG_NOT_FOUND") {
-        setIsNotFoundBlog(true);
-      } else {
-        setIsNotFoundBlog(false);
-      }
+      setIsLoadingPage(false);
+    }
+    if (blog && blog.code === "BLOG_NOT_FOUND") {
+      setIsNotFoundBlog(true);
+    } else {
+      setIsNotFoundBlog(false);
     }
   }, [isFetching, isLoading, blog]);
   return (
@@ -86,7 +90,10 @@ export const BlogDetail = () => {
                     className="bx bx-edit-alt"
                     onClick={handleToggleUpdateBlogModal}
                   ></i>
-                  <i className="bx bx-trash-alt"></i>
+                  <i
+                    className="bx bx-trash-alt"
+                    onClick={handleToggleDelBlogModal}
+                  ></i>
                 </div>
               </div>
               <div className="my-blog-preview-main">

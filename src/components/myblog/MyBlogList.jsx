@@ -29,7 +29,7 @@ export const MyBlogList = () => {
       setIsLoadingPage(false);
     }
     if (blogs.length === 0) {
-      setEmptyList("Product list is empty");
+      setEmptyList("Your blog list is empty");
     } else {
       setEmptyList(null);
     }
@@ -38,7 +38,7 @@ export const MyBlogList = () => {
     <div className="my-blog-list">
       {emptyList && (
         <div className="empty-list">
-          <p>Your blogs is empty</p>
+          <p>{emptyList}</p>
         </div>
       )}
       {isLoadingPage ? (

@@ -32,6 +32,7 @@ export const createProductService = async (productData) => {
     const res = await axios.post(api, productData, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     return res.data;
@@ -49,6 +50,23 @@ export const detailProductService = async (productId) => {
     });
     return res.data.result;
   } catch (error) {
+    return error.response.data;
+  }
+};
+export const updateProductService = async (productId, data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/product/update/${productId}`;
+    const res = await axios.put(api, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
     return error.response.data;
   }
 };

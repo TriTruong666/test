@@ -2,26 +2,26 @@ import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
 import { useDispatch } from "react-redux";
 // import slices
-import { toggleDelPondModal } from "../../redux/slices/modal/modal";
+import { toggleDeleteBlogModal } from "../../redux/slices/modal/modal";
 // import service
-import * as PondService from "../../service/pond/pondService";
-export const DelPond = () => {
-  // navigation
-  const navigate = useNavigate();
+import * as BlogService from "../../service/blog/blogService";
+export const DelBlog = () => {
   // param
-  const { pondId } = useParams();
+  const { blogId } = useParams();
+  // navigate
+  const navigate = useNavigate();
   // dispatch
   const dispatch = useDispatch();
   // mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
-    mutationFn: PondService.deletePondService,
+    mutationKey: ["del-blog", blogId],
+    mutationFn: BlogService.deleteBlogService,
     onSuccess: () => {
       toast.success("Delete successfully", {
         position: "top-right",
@@ -34,40 +34,35 @@ export const DelPond = () => {
         theme: "dark",
       });
       setTimeout(() => {
-        dispatch(toggleDelPondModal());
-        navigate("/dashboard/mypond/");
         location.reload();
       }, 1500);
-      queryCilent.invalidateQueries({
-        queryKey: ["delete-pond"],
-      });
     },
   });
-  // handle func
-  const handleToggleDelPondModal = () => {
-    dispatch(toggleDelPondModal());
+  //   handle func
+  const handleToggleDelBlogModal = () => {
+    dispatch(toggleDeleteBlogModal());
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await mutation.mutateAsync(pondId);
+      await mutation.mutateAsync(blogId);
     } catch (error) {
       console.error(error);
     }
   };
   return (
-    <div className="del-pond-containter">
+    <div className="del-blog-containter">
       <ToastContainer />
-      <div className="del-pond-modal">
-        <div className="del-pond-header">
-          <strong>Delete Pond</strong>
-          <i className="bx bx-x" onClick={handleToggleDelPondModal}></i>
+      <div className="del-blog-modal">
+        <div className="del-blog-header">
+          <strong>Delete Blog</strong>
+          <i className="bx bx-x" onClick={handleToggleDelBlogModal}></i>
         </div>
-        <div className="del-pond-main">
-          <p>Are you sure to delete Pond #{pondId}</p>
+        <div className="del-blog-main">
+          <p>Are you sure to delete Blog #{blogId}</p>
         </div>
-        <div className="submit">
-          <button onClick={handleSubmit}>Delete Confirm</button>
+        <div className="submit" onClick={handleSubmit}>
+          <button>Delete Confirm</button>
         </div>
       </div>
     </div>

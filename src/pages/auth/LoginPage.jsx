@@ -94,12 +94,17 @@ export const LoginPage = () => {
   const oauthMutation = useMutation({
     mutationKey: ["oauth"],
     mutationFn: AccountService.oauthService,
+    onSuccess: () => {
+      setTimeout(() => {
+        dispatch(toggleSuccessModal());
+        navigate("/");
+      }, 1500);
+    },
   });
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
       const googleIdToken = credentialResponse.access_token;
-      console.log(googleIdToken);
-      console.log("Success");
+      oauthMutation.mutateAsync(googleIdToken);
     },
   });
   return (

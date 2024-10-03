@@ -160,17 +160,17 @@ export const updateMyInfo = async (data) => {
     return error;
   }
 };
-export const oauthService = async (googleToken) => {
+export const oauthService = async (token) => {
   try {
     const api = "http://localhost:8080/auth/sign-in-by-google";
-    const res = await axios.post(api, googleToken, {
+    const res = await axios.post(api, token, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     console.log(res.data);
-    return res.data;
+    return res.data.result;
   } catch (error) {
-    return error.response.data;
+    return error;
   }
 };

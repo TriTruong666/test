@@ -92,6 +92,10 @@ export const UpdatePond = () => {
   //   handle func
   const removeChooseImage = () => {
     setPreviewImage(null);
+    setSubmitData({
+      ...submitData,
+      image: "",
+    });
   };
   const handleToggleUpdatePondModal = () => {
     dispatch(toggleUpdatePondModal());

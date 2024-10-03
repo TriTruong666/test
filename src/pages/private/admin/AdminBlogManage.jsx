@@ -8,6 +8,7 @@ import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AdminBlogList } from "../../../components/adminblog/AdminBlogList";
 import { AddBlog } from "../../../components/modal/AddBlog";
 import { UpdateBlog } from "../../../components/modal/UpdateBlog";
+import { DelBlog } from "../../../components/modal/DelBlog";
 // import slices
 import { toggleAddBlogModal } from "../../../redux/slices/modal/modal";
 export const AdminBlogManage = () => {
@@ -20,6 +21,9 @@ export const AdminBlogManage = () => {
   const isToggleUpdateBlogModal = useSelector(
     (state) => state.modal.updateBlogModal.isToggleModal
   );
+  const isToggleDelBlogModal = useSelector(
+    (state) => state.modal.deleteBlogModal.isToggleModal
+  );
   // handle func
   const handleToggleAddBlogModal = () => {
     dispatch(toggleAddBlogModal());
@@ -30,12 +34,13 @@ export const AdminBlogManage = () => {
       <Dashnav />
       {isToggleAddBlogModal && <AddBlog />}
       {isToggleUpdateBlogModal && <UpdateBlog />}
+      {isToggleDelBlogModal && <DelBlog />}
       <div className="admin-blog">
         <div className="admin-blog-header">
           <strong>My Blog</strong>
         </div>
         <div className="admin-blog-utils">
-          {/* <div className="filter">
+          <div className="filter">
             <select name="" id="">
               <option value="">Filter</option>
               <option value="">By Date</option>
@@ -43,7 +48,7 @@ export const AdminBlogManage = () => {
               <option value="">By Number of Items</option>
             </select>
             <i className="bx bx-chevron-down"></i>
-          </div> */}
+          </div>
           <div className="add" onClick={handleToggleAddBlogModal}>
             <i className="bx bx-plus"></i>
             <p>Create new blog</p>

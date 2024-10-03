@@ -46,8 +46,8 @@ const otpSlice = createSlice({
   },
 });
 // Export the action
-export const { setAccountInfo } = accountInfomationSlice.actions;
-export const { getAccountInfo } = accountInfomationSlice.actions;
+export const { setAccountInfo, getAccountInfo } =
+  accountInfomationSlice.actions;
 export const { setEmail } = emailSlice.actions;
 export const { setOtp } = otpSlice.actions;
 // Combine reducers

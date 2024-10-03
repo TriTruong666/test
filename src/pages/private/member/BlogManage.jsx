@@ -8,7 +8,7 @@ import { Dashnav } from "../../../components/navbar/Dashnav";
 import { MyBlogList } from "../../../components/myblog/MyBlogList";
 import { AddBlog } from "../../../components/modal/AddBlog";
 import { UpdateBlog } from "../../../components/modal/UpdateBlog";
-
+import { DelBlog } from "../../../components/modal/DelBlog";
 // import slices
 import { toggleAddBlogModal } from "../../../redux/slices/modal/modal";
 export const BlogManage = () => {
@@ -21,6 +21,9 @@ export const BlogManage = () => {
   const isToggleUpdateBlogModal = useSelector(
     (state) => state.modal.updateBlogModal.isToggleModal
   );
+  const isToggleDelBlogModal = useSelector(
+    (state) => state.modal.deleteBlogModal.isToggleModal
+  );
   // handle func
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddBlogModal());
@@ -31,6 +34,7 @@ export const BlogManage = () => {
       <Dashnav />
       {isToggleUpdateBlogModal && <UpdateBlog />}
       {isToggleAddBlogModal && <AddBlog />}
+      {isToggleDelBlogModal && <DelBlog />}
       <div className="blog-manage">
         <div className="blog-manage-header">
           <strong>My Blog</strong>

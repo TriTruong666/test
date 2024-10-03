@@ -118,10 +118,9 @@ select option {
   }
   .account-list-table tbody tr td:nth-child(6) {
     display: flex;
-    -moz-column-gap: 10px;
-         column-gap: 10px;
   }
   .account-list-table tbody tr td:nth-child(6) i {
+    margin-left: 8px;
     padding: 7px;
     font-size: 18px;
     cursor: pointer;

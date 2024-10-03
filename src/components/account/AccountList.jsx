@@ -6,6 +6,8 @@ import "../../styles/components/account/account.css";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 export const AccountList = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const ownUserId = user.userId;
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   // query
@@ -62,8 +64,13 @@ export const AccountList = () => {
                 <td>{user.address || "NULL"}</td>
                 <td>{user.role}</td>
                 <td>
-                  <i className="bx bxs-edit-alt"></i>
-                  <i className="bx bxs-trash-alt"></i>
+                  {user.userId === ownUserId ? (
+                    ""
+                  ) : (
+                    <>
+                      <i className="bx bx-block"></i>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

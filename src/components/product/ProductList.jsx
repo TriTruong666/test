@@ -9,7 +9,10 @@ import image from "../../assets/koiproduct.png";
 // import service
 import * as ProductService from "../../service/product/productService";
 // import slices
-import { toggleUpdateProductModal } from "../../redux/slices/modal/modal";
+import {
+  toggleUpdateProductModal,
+  toggleDeleteProductModal,
+} from "../../redux/slices/modal/modal";
 import { setProductId } from "../../redux/slices/product/product";
 export const ProductList = () => {
   // dispatch
@@ -47,7 +50,10 @@ export const ProductList = () => {
     dispatch(setProductId(id));
     dispatch(toggleUpdateProductModal());
   };
-
+  const handleToggleDelProductModal = (id) => {
+    dispatch(setProductId(id));
+    dispatch(toggleDeleteProductModal());
+  };
   return (
     <table className="product-list-table">
       <thead>
@@ -96,7 +102,12 @@ export const ProductList = () => {
                       handleToggleUpdateProductModal(product.productId)
                     }
                   ></i>
-                  <i className="bx bxs-trash-alt"></i>
+                  <i
+                    className="bx bxs-trash-alt"
+                    onClick={() =>
+                      handleToggleDelProductModal(product.productId)
+                    }
+                  ></i>
                 </td>
               </tr>
             ))}

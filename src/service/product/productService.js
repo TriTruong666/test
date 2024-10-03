@@ -63,10 +63,23 @@ export const updateProductService = async (productId, data) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    return error.response.data;
+  }
+};
+export const deleteProductService = async (productId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/product/delete/${productId}`;
+    const res = await axios.delete(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
     return error.response.data;
   }
 };

@@ -7,6 +7,7 @@ import { Dashnav } from "../../../components/navbar/Dashnav";
 import { ProductList } from "../../../components/product/ProductList";
 import { AddProduct } from "../../../components/modal/AddProduct";
 import { UpdateProduct } from "../../../components/modal/UpdateProduct";
+import { DelProduct } from "../../../components/modal/DelProduct";
 // import slices
 import { toggleAddProductModal } from "../../../redux/slices/modal/modal";
 export const AdminProductManage = () => {
@@ -19,14 +20,19 @@ export const AdminProductManage = () => {
   const isToggleUpdateProductModal = useSelector(
     (state) => state.modal.updateProductModal.isToggleModal
   );
+  const isToggleDeleteProductModal = useSelector(
+    (state) => state.modal.deleteProductModal.isToggleModal
+  );
   const handleToggleAddProductModal = () => {
     dispatch(toggleAddProductModal());
   };
+
   return (
     <div className="admin-product-container">
       <Dashnav />
       {isToggleUpdateProductModal && <UpdateProduct />}
       {isToggleAddProductModal && <AddProduct />}
+      {isToggleDeleteProductModal && <DelProduct />}
       <div className="admin-product">
         <div className="admin-product-header">
           <strong>Product Manager</strong>

@@ -74,7 +74,7 @@ export const UpdateProduct = () => {
         unitprice: productInfo.unitPrice || "",
         description: productInfo.description || "",
         categoryId: productInfo.category?.cateId || "",
-        status: productInfo.status === 1 ? true : false,
+        status: productInfo.status || "",
       });
 
       if (productInfo.image) {
@@ -139,13 +139,6 @@ export const UpdateProduct = () => {
   };
   const handleToggleUpdateProductModal = () => {
     dispatch(toggleUpdateProductModal());
-  };
-  const handleOnChangeStatus = (e) => {
-    const { value } = e.target;
-    setSubmitData({
-      ...submitData,
-      status: value === "true", // Always set status as a boolean
-    });
   };
   const handleInputNumber = (e) => {
     const { name, value } = e.target;
@@ -379,10 +372,10 @@ export const UpdateProduct = () => {
               </select>
               <select
                 className="cate"
-                onChange={handleOnChangeStatus}
+                onChange={handleOnChange}
                 name="status"
                 id=""
-                value={submitData.status ? "true" : "false"} // This still converts it to string, but ensures consistency
+                value={submitData.status ? "true" : "false"}
               >
                 <option value="">Status</option>
                 <option value="true">Active</option>

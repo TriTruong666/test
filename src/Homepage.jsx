@@ -19,6 +19,7 @@ import group from "./assets/group.png";
 // import service
 import * as AccountService from "./service/account/AccountService";
 import * as BlogService from "./service/blog/blogService";
+import * as ProductService from "./service/product/productService";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -44,6 +45,10 @@ export const Homepage = () => {
   } = useQuery({
     queryKey: ["last-blogs"],
     queryFn: BlogService.getAllBlog,
+  });
+  const { data: products = [] } = useQuery({
+    queryKey: ["header-product"],
+    queryFn: ProductService.getAllProductShop,
   });
   // mutation
   const queryClient = useQueryClient();
@@ -177,18 +182,14 @@ export const Homepage = () => {
             <div className="shop-intro-item-list">
               <strong>Best Health Products</strong>
               <div>
-                <div className="product-item">
-                  <img src={koiproduct} alt="" />
-                  <strong>Mazuri Koi Diet</strong>
-                  <p>$25.00</p>
-                  <button>Buy now</button>
-                </div>
-                <div className="product-item">
-                  <img src={koiproduct} alt="" />
-                  <strong>Mazuri Koi Diet</strong>
-                  <p>$25.00</p>
-                  <button>Buy now</button>
-                </div>
+                {products.slice(0, 2).map((product) => (
+                  <div key={product.productId} className="product-item">
+                    <img src={product.image} alt="" />
+                    <strong>{product.productName}</strong>
+                    <p>${product.unitPrice}</p>
+                    <button>Buy now</button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -212,18 +213,14 @@ export const Homepage = () => {
             <div className="shop-intro-item-list">
               <strong>Best Water Products</strong>
               <div>
-                <div className="product-item">
-                  <img src={koiproduct} alt="" />
-                  <strong>Mazuri Koi Diet</strong>
-                  <p>$25.00</p>
-                  <button>Buy now</button>
-                </div>
-                <div className="product-item">
-                  <img src={koiproduct} alt="" />
-                  <strong>Mazuri Koi Diet</strong>
-                  <p>$25.00</p>
-                  <button>Buy now</button>
-                </div>
+                {products.slice(2, 4).map((product) => (
+                  <div key={product.productId} className="product-item">
+                    <img src={product.image} alt="" />
+                    <strong>{product.productName}</strong>
+                    <p>${product.unitPrice}</p>
+                    <button>Buy now</button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

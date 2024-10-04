@@ -1,9 +1,12 @@
 import { useState, React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useGoogleLogin } from "@react-oauth/google";
 import SyncLoader from "react-spinners/SyncLoader";
 // import styles
 import "../../styles/auth/auth.css";
+// import components
+import { ModalSuccess } from "../../components/modal/ModalSuccess";
 // import assets
 import logo from "../../assets/logo.png";
 import coverImg from "../../assets/logincover.jpg";
@@ -13,6 +16,7 @@ import * as AccountService from "../../service/account/AccountService";
 import { useDispatch, useSelector } from "react-redux";
 // import slices
 import { setEmail } from "../../redux/slices/account/account";
+import { toggleSuccessModal } from "../../redux/slices/modal/modal";
 export const SignupPage = () => {
   // selector
   const isToggleSignupSuccess = useSelector(
@@ -118,8 +122,40 @@ export const SignupPage = () => {
       console.error(error);
     }
   };
+  const oauthMutation = useMutation({
+    mutationKey: ["oauth"],
+    mutationFn: AccountService.oauthService,
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: (responseData) => {
+      setIsLoading(false);
+      if (responseData && responseData.code === "EMAIL_EXISTED") {
+        setExistedEmail("This email have existed, please try another one");
+      } else {
+        setExistedEmail(null);
+        dispatch(toggleSuccessModal());
+        setTimeout(() => {
+          dispatch(toggleSuccessModal());
+          navigate("/");
+        }, 1500);
+      }
+    },
+  });
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      const googleIdToken = credentialResponse.access_token;
+      oauthMutation.mutateAsync(googleIdToken);
+    },
+  });
   return (
     <div className="signup-container">
+      {isToggleSignupSuccess && (
+        <ModalSuccess
+          title="Signup Success"
+          message="Welcome to Izumiya Koi, now system will redirect you to homepage"
+        />
+      )}
       {isLoading && (
         <div className="loading">
           <SyncLoader color="#ffffff" size={20} />
@@ -131,7 +167,7 @@ export const SignupPage = () => {
           <strong>Get Started Now</strong>
           <p>Let's create an account to access our features</p>
         </div>
-        <div className="signup-oauth">
+        <div className="signup-oauth" onClick={handleGoogleLogin}>
           <i className="bx bxl-google"></i>
           <p>Signup with Google</p>
         </div>

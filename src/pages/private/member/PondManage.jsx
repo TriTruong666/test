@@ -88,11 +88,6 @@ export const PondManage = () => {
         </div>
         <PondList />
       </div>
-      {/*  */}
-      {/* <div className="pondmanage-empty">
-        <strong>No pond was selected</strong>
-        <p>You can click to a pond to see detail</p>
-      </div> */}
       <Outlet />
     </div>
   );

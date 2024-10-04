@@ -14,6 +14,7 @@ export const PondList = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
   // query
   const {
     data: ponds = [],
@@ -26,51 +27,67 @@ export const PondList = () => {
     refetchOnWindowFocus: false,
   });
   useEffect(() => {
-    if (ponds.length === 0) {
-      setEmptyList("Pond list is empty");
-    } else {
-      setEmptyList(null);
-    }
     if (isLoading || isFetching) {
       setIsLoadingPage(true);
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+    if (ponds.length === 0) {
+      setEmptyList("Pond list is empty");
+    } else {
+      setEmptyList(null);
+    }
+  }, [isFetching, isLoading, isError]);
   return (
     <div className="pond-list">
-      {isLoadingPage ? (
+      {serverError ? (
         <>
-          <div className="loading">
-            <ClipLoader color="#000000" size={40} />
+          <div className="error-page">
+            <p>Server is closed now</p>
           </div>
         </>
       ) : (
         <>
-          {emptyList && (
-            <div className="empty-list">
-              <p>{emptyList}</p>
-            </div>
-          )}
-          {ponds.map((pond) => (
-            <Link
-              key={pond && pond.pondId}
-              to={`/dashboard/mypond/detail/info/${pond && pond.pondId}`}
-            >
-              <img src={pond && pond.image} alt="" />
-              <div className="pond-info">
-                <div>
-                  <strong>{pond && pond.pondName}</strong>
-                  <p>{pond && pond.size}m²</p>
-                  <p>
-                    {pond && Intl.NumberFormat("de-DE").format(pond.volume)}L
-                  </p>
-                </div>
-                <p>{(pond && pond.kois && pond.kois.length) || "0"} Kois</p>
-                <span>Status: Good</span>
+          {isLoadingPage ? (
+            <>
+              <div className="loading">
+                <ClipLoader color="#000000" size={40} />
               </div>
-            </Link>
-          ))}
+            </>
+          ) : (
+            <>
+              {emptyList && (
+                <div className="empty-list">
+                  <p>{emptyList}</p>
+                </div>
+              )}
+              {ponds.map((pond) => (
+                <Link
+                  key={pond && pond.pondId}
+                  to={`/dashboard/mypond/detail/info/${pond && pond.pondId}`}
+                >
+                  <img src={pond && pond.image} alt="" />
+                  <div className="pond-info">
+                    <div>
+                      <strong>{pond && pond.pondName}</strong>
+                      <p>{pond && pond.size}m²</p>
+                      <p>
+                        {pond && Intl.NumberFormat("de-DE").format(pond.volume)}
+                        L
+                      </p>
+                    </div>
+                    <p>{(pond && pond.kois && pond.kois.length) || "0"} Kois</p>
+                    <span>Status: Good</span>
+                  </div>
+                </Link>
+              ))}
+            </>
+          )}
         </>
       )}
     </div>

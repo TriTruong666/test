@@ -60,7 +60,7 @@ export const Homepage = () => {
       });
     },
     onError: () => {
-      console.log("Fail to connect server");
+      // modal
     },
   });
   // handle func

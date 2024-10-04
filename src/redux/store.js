@@ -4,6 +4,7 @@ import ModalReducer from "./slices/modal/modal";
 import NavbarReducer from "./slices/navbar/navbar";
 import AccountReducer from "./slices/account/account";
 import ProductReducer from "./slices/product/product";
+import KoiReducer from "./slices/koi/koi";
 export default configureStore({
   reducer: {
     // modal
@@ -14,5 +15,7 @@ export default configureStore({
     account: AccountReducer,
     // product
     product: ProductReducer,
+    // koi
+    koi: KoiReducer,
   },
 });

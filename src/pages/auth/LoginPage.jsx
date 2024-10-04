@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
+import SyncLoader from "react-spinners/SyncLoader";
+
 // import styles
 import "../../styles/auth/auth.css";
 // import components
@@ -25,6 +27,7 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   // state
   const [visiblePass, setVisiblePass] = useState(false);
+  const [isLoading, setIsLoading] = useState(null);
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -39,7 +42,11 @@ export const LoginPage = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationFn: AccountService.loginService,
+    onMutate: () => {
+      setIsLoading(true);
+    },
     onSuccess: (responseData) => {
+      setIsLoading(false);
       setResponseData(responseData);
       if (responseData && responseData.code === "LOGIN_FAIL") {
         setWrongPassEmail("Wrong email or password");
@@ -91,19 +98,23 @@ export const LoginPage = () => {
   const handleVisiblePass = () => {
     setVisiblePass(!visiblePass);
   };
-  // test
+  // oauth mutation
   const oauthMutation = useMutation({
     mutationKey: ["oauth"],
     mutationFn: AccountService.oauthService,
-    onSuccess: () => {
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: (responseData) => {
+      setIsLoading(false);
       if (responseData && responseData.code === "EMAIL_EXISTED") {
         setExistedEmail("This email have existed, please try another one");
       } else {
         setExistedEmail(null);
-        // dispatch(toggleSuccessModal());
+        dispatch(toggleSuccessModal());
         setTimeout(() => {
-          // dispatch(toggleSuccessModal());
-          // navigate("/");
+          dispatch(toggleSuccessModal());
+          navigate("/");
         }, 1500);
       }
     },
@@ -117,6 +128,11 @@ export const LoginPage = () => {
   });
   return (
     <div className="cover">
+      {isLoading && (
+        <div className="loading">
+          <SyncLoader color="#ffffff" size={20} />
+        </div>
+      )}
       {isToggleLoginSuccess && (
         <ModalSuccess
           title="Login Success"

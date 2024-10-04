@@ -62,7 +62,6 @@ export const UpdatePond = () => {
       });
     },
   });
-  // Set default image when pondInfo is available
   useEffect(() => {
     if (pondInfo && pondInfo.image) {
       setPreviewImage(pondInfo.image);

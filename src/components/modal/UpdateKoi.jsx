@@ -1,19 +1,77 @@
 import React, { useEffect, useState } from "react";
 import FileResizer from "react-image-file-resizer";
 import ReactFlagsSelect from "react-flags-select";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import slices
 import { toggleUpdateKoiModal } from "../../redux/slices/modal/modal";
-
+// import service
+import * as KoiService from "../../service/koi/koiService";
 export const UpdateKoi = () => {
+  const countryNameMap = {
+    JP: "Japan",
+    CN: "China",
+    ID: "Indonesia",
+    TH: "Thailand",
+    VN: "Vietnam",
+    KR: "South Korea",
+  };
+  const countryCodeMap = {
+    Japan: "JP",
+    China: "CN",
+    Indonesia: "ID",
+    Thailand: "TH",
+    Vietnam: "VN",
+    "South Korea": "KR",
+  };
+  //   dispatch
+  const dispatch = useDispatch();
+  // selector
+  const koiId = useSelector((state) => state.koi.koiId.koiId);
+  // query
+  const {
+    data: koiInfo = {},
+    isFetching,
+    isLoading,
+  } = useQuery({
+    queryKey: ["koi-detail", koiId],
+    queryFn: () => KoiService.detailKoiService(koiId),
+  });
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
-  //   dispatch
-  const dispatch = useDispatch();
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [submitData, setSubmitData] = useState({
+    image: "",
+    name: "",
+    sex: "",
+    origin: "",
+    type: "",
+  });
+  useEffect(() => {
+    if (isFetching || isLoading) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+    if (koiInfo) {
+      setSubmitData({
+        image: koiInfo.image || "",
+        name: koiInfo.name || "",
+        sex: koiInfo.sex || "",
+        origin: koiInfo.origin || "",
+        type: koiInfo.type || "",
+      });
+    }
+    if (koiInfo && koiInfo.image) {
+      setPreviewImage(koiInfo.image);
+    }
+  }, [koiInfo, isFetching, isLoading]);
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -25,30 +83,105 @@ export const UpdateKoi = () => {
       0,
       (uri) => {
         setPreviewImage(uri);
+        setSubmitData({
+          ...submitData,
+          image: uri,
+        });
       },
       "base64",
       250,
       250
     );
   };
+  // mutation
+  const queryCilent = useQueryClient();
+  const mutation = useMutation({
+    mutationKey: ["update-koi", koiId],
+    mutationFn: (updateData) => {
+      KoiService.updateKoiService(koiId, updateData);
+    },
+    onSuccess: () => {
+      toast.success("Update successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
+      queryCilent.invalidateQueries({
+        queryKey: ["update-koi"],
+      });
+    },
+  });
   //   handle func
   const removeChooseImage = () => {
     setPreviewImage(null);
+    setSubmitData({
+      ...submitData,
+      image: "",
+    });
   };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+  };
+  const handleOnSelectFlag = (code) => {
+    setSelectedFlag(code);
+    setSubmitData((prevData) => ({
+      ...prevData,
+      origin: countryNameMap[code], // Set the origin field with the selected flag code
+    }));
+  };
+  // default value of select flag
+  const getOriginCode = (origin) => countryCodeMap[origin] || "";
   const handleToggleUpdateKoiModal = () => {
     dispatch(toggleUpdateKoiModal());
   };
-  //   useEffect(() => {
-  //     console.log("Selected country code:", selectedFlag);
-  //   }, [selectedFlag]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      !submitData.image ||
+      !submitData.name ||
+      !submitData.origin ||
+      !submitData.sex ||
+      !submitData.type
+    ) {
+      toast.error("All fields are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+      await mutation.mutateAsync(submitData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="update-koi-container">
+      <ToastContainer />
       <div className="update-koi-modal">
         <div className="update-koi-header">
           <strong>Update A Koi</strong>
           <i className="bx bx-x" onClick={handleToggleUpdateKoiModal}></i>
         </div>
-        <form action="" className="update-koi-form">
+        <form action="" onSubmit={handleSubmit} className="update-koi-form">
           <div className="input-image">
             <i className="bx bx-trash-alt" onClick={removeChooseImage}></i>
 
@@ -71,14 +204,22 @@ export const UpdateKoi = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input type="text" id="koiname" placeholder="Koi name" />
-          <div className="input-two-fields">
-            <input type="text" placeholder="Size (cm)" />
-            <input type="text" placeholder="Weight (kg)" />
-          </div>
+          <input
+            type="text"
+            id="koiname"
+            name="name"
+            defaultValue={koiInfo.name}
+            onChange={handleOnChange}
+            placeholder="Koi name"
+          />
           <div className="select-two-fields">
             <div className="select">
-              <select name="" id="">
+              <select
+                name="type"
+                onChange={handleOnChange}
+                defaultValue={koiInfo.type}
+                id=""
+              >
                 <option value="">Type</option>
                 <option value="Kohaku">Kohaku</option>
                 <option value="Sanke">Sanke</option>
@@ -94,18 +235,24 @@ export const UpdateKoi = () => {
               <i className="bx bxs-chevron-down"></i>
             </div>
             <div className="select">
-              <select name="" id="">
+              <select
+                name="sex"
+                defaultValue={koiInfo.sex ? "true" : "false"}
+                onChange={handleOnChange}
+                id=""
+              >
                 <option value="">Gender</option>
-                <option value="">Male</option>
-                <option value="">Female</option>
+                <option value="true">Male</option>
+                <option value="false">Female</option>
               </select>
               <i className="bx bxs-chevron-down"></i>
             </div>
           </div>
           <ReactFlagsSelect
-            selected={selectedFlag}
-            onSelect={(code) => setSelectedFlag(code)}
+            selected={getOriginCode(koiInfo.origin)}
+            onSelect={handleOnSelectFlag}
             placeholder="Select origin"
+            countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
             className="menu-flags"
           />
           <div className="submit">

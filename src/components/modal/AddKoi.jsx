@@ -5,6 +5,8 @@ import ReactFlagsSelect from "react-flags-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
@@ -14,8 +16,6 @@ import { toggleAddKoiModal } from "../../redux/slices/modal/modal";
 // import service
 import * as KoiService from "../../service/koi/koiService";
 export const AddKoi = () => {
-  // param
-  const { pondId } = useParams();
   const countryNameMap = {
     JP: "Japan",
     CN: "China",
@@ -24,9 +24,13 @@ export const AddKoi = () => {
     VN: "Vietnam",
     KR: "South Korea",
   };
+  // param
+  const { pondId } = useParams();
+
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
   const [submitData, setSubmitData] = useState({
     name: "",
     image: "",
@@ -193,7 +197,6 @@ export const AddKoi = () => {
                 <option value="Goshiki">Goshiki</option>
                 <option value="Koromo">Koromo</option>
               </select>
-              <i className="bx bxs-chevron-down"></i>
             </div>
             <div className="select">
               <select name="sex" onChange={handleOnChange} id="">
@@ -201,7 +204,6 @@ export const AddKoi = () => {
                 <option value="true">Male</option>
                 <option value="false">Female</option>
               </select>
-              <i className="bx bxs-chevron-down"></i>
             </div>
           </div>
           <ReactFlagsSelect
@@ -210,6 +212,12 @@ export const AddKoi = () => {
             countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
             placeholder="Select origin"
             className="menu-flags"
+          />
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            className="custom-datepicker"
+            calendarClassName="custom-calendar"
           />
           <div className="submit">
             <button onClick={handleToggleAddKoiModal}>Cancel</button>

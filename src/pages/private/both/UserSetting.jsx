@@ -62,9 +62,8 @@ export const UserSetting = () => {
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
-      setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 2000);
+    } else {
+      setIsLoadingPage(false);
     }
     if (!isToggleChangePass) {
       setNewPass("");

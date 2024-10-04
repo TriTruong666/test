@@ -103,7 +103,12 @@ export const PondWater = () => {
             </div>
             <div className="pond-water-param">
               <strong>Temparature</strong>
-              <p>24℃</p>
+              <p>
+                {pondInfo &&
+                  pondInfo.waterParam &&
+                  pondInfo.waterParam.temperature}
+                ℃
+              </p>
             </div>
             <div className="pond-water-param">
               <strong>Salt</strong>

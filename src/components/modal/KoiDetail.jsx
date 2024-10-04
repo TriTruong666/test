@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import components
@@ -15,6 +17,7 @@ import {
   toggleDelKoiModal,
   toggleUpdateKoiModal,
 } from "../../redux/slices/modal/modal";
+import * as KoiService from "../../service/koi/koiService";
 export const KoiDetail = () => {
   // dispatch
   const dispatch = useDispatch();
@@ -22,6 +25,25 @@ export const KoiDetail = () => {
   const isToggleKoiHistory = useSelector(
     (state) => state.modal.koiHistoryModal.isToggleModal
   );
+  const koiId = useSelector((state) => state.koi.koiId.koiId);
+  // state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  // query
+  const {
+    data: koiInfo = {},
+    isFetching,
+    isLoading,
+  } = useQuery({
+    queryKey: ["koi-detail", koiId],
+    queryFn: () => KoiService.detailKoiService(koiId),
+  });
+  useEffect(() => {
+    if (isFetching || isLoading) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+  }, [isFetching, isLoading]);
   // handle func
   const handeToggleKoiHistoryModalOn = () => {
     dispatch(toggleKoiHistoryOn());
@@ -41,71 +63,90 @@ export const KoiDetail = () => {
     <div className="koi-detail-container">
       {isToggleKoiHistory && <KoiHistory />}
       <div className="koi-detail-modal">
-        <div className="koi-detail-header">
-          <strong>Koi Detail #1233</strong>
-          <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
-        </div>
-        <div className="koi-detail-info">
-          <img src={image} alt="" />
-          <div className="koi-detail-info-header">
-            <div>
-              <strong>Koi Infomation</strong>
-              <p>View all infomation of your koi</p>
+        {isLoadingPage ? (
+          <>
+            <div className="loading">
+              <ClipLoader color="#000000" size={35} />
             </div>
-            <span onClick={handeToggleKoiHistoryModalOn}>
-              View info history
-            </span>
-          </div>
-          <div className="koi-detail-main">
-            <div className="koi-info">
-              <strong>First date in pond</strong>
-              <p>26 Aug 2022</p>
+          </>
+        ) : (
+          <>
+            <div className="koi-detail-header">
+              <strong>Koi Detail #{koiInfo.koiId}</strong>
+              <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
             </div>
-            <div className="koi-info">
-              <strong>Name</strong>
-              <p>Your Koi Name</p>
-            </div>
-            <div className="koi-info">
-              <strong>Size</strong>
-              <p>40cm</p>
-            </div>
-            <div className="koi-info">
-              <strong>Weight</strong>
-              <p>2.3kg</p>
-            </div>
-            <div className="koi-info">
-              <strong>Type</strong>
-              <p>Sanke</p>
-            </div>
-            <div className="koi-info">
-              <strong>Origin</strong>
-              <p>JP</p>
-            </div>
-          </div>
-          <div className="koi-detail-recommendation">
-            <div className="koi-recommendation-header">
-              <strong>Recommendation</strong>
-              <p>Our system will calculate how many food based on Koi Age</p>
-            </div>
-            <div className="recommendation">
-              <div className="koi-food">
-                <strong>Amount of food (% of Koi Weight)</strong>
-                <p>1%</p>
+            <div className="koi-detail-info">
+              <img src={koiInfo.image} alt="" />
+              <div className="koi-detail-info-header">
+                <div>
+                  <strong>Koi Infomation</strong>
+                  <p>View all infomation of your koi</p>
+                </div>
+                <span onClick={handeToggleKoiHistoryModalOn}>
+                  View info history
+                </span>
               </div>
-              <span>
-                A diet consisting of lower protein pellets, around 25-35%, is
-                appropriate, supplemented with vegetables and fruits such as
-                watermelon, lettuce, or citrus slices. Adult koi should be fed
-                once or twice daily, depending on their activity level and water
-                temperature.
-              </span>
+              <div className="koi-detail-main">
+                <div className="koi-info">
+                  <strong>First date in pond</strong>
+                  <p>
+                    {new Date(koiInfo.createDate).toLocaleDateString() ||
+                      "Date not available"}
+                  </p>
+                </div>
+                <div className="koi-info">
+                  <strong>Name</strong>
+                  <p>{koiInfo.name}</p>
+                </div>
+                <div className="koi-info">
+                  <strong>Sex</strong>
+                  <p>{koiInfo.sex ? "Male" : "Female"}</p>
+                </div>
+                <div className="koi-info">
+                  <strong>Size</strong>
+                  <p>40cm</p>
+                </div>
+                <div className="koi-info">
+                  <strong>Weight</strong>
+                  <p>2.3kg</p>
+                </div>
+                <div className="koi-info">
+                  <strong>Type</strong>
+                  <p>{koiInfo.type}</p>
+                </div>
+                <div className="koi-info">
+                  <strong>Origin</strong>
+                  <p>{koiInfo.origin}</p>
+                </div>
+              </div>
+              <div className="koi-detail-recommendation">
+                <div className="koi-recommendation-header">
+                  <strong>Recommendation</strong>
+                  <p>
+                    Our system will calculate how many food based on Koi Age
+                  </p>
+                </div>
+                <div className="recommendation">
+                  <div className="koi-food">
+                    <strong>Amount of food (% of Koi Weight)</strong>
+                    <p>1%</p>
+                  </div>
+                  <span>
+                    A diet consisting of lower protein pellets, around 25-35%,
+                    is appropriate, supplemented with vegetables and fruits such
+                    as watermelon, lettuce, or citrus slices. Adult koi should
+                    be fed once or twice daily, depending on their activity
+                    level and water temperature.
+                  </span>
+                </div>
+                <div className="utils">
+                  <button onClick={handleToggleUpdateKoiModal}>Update</button>
+                  <button onClick={handleToggleDelKoiModal}>Delete</button>
+                </div>
+              </div>
             </div>
-            <div className="utils">
-              <button onClick={handleToggleUpdateKoiModal}>Update</button>
-              <button onClick={handleToggleDelKoiModal}>Delete</button>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

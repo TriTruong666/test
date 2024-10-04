@@ -14,6 +14,7 @@ import {
   toggleDetailKoiModal,
   toggleKoiHistoryOff,
 } from "../../redux/slices/modal/modal";
+import { setKoiId } from "../../redux/slices/koi/koi";
 // import service
 import * as PondService from "../../service/pond/pondService";
 export const KoiList = () => {
@@ -25,7 +26,8 @@ export const KoiList = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   // handle func
-  const handleToggleKoiDetailModal = () => {
+  const handleToggleKoiDetailModal = (koiId) => {
+    dispatch(setKoiId(koiId));
     dispatch(toggleDetailKoiModal());
     dispatch(toggleKoiHistoryOff());
   };
@@ -60,7 +62,7 @@ export const KoiList = () => {
       setIsLoadingPage(false);
     }
     if (pondInfo && pondInfo.kois && pondInfo.kois.length === 0) {
-      setEmptyList("Product list is empty");
+      setEmptyList("Koi list is empty");
     } else {
       setEmptyList(null);
     }
@@ -85,10 +87,18 @@ export const KoiList = () => {
           </>
         ) : (
           <>
+            {emptyList && (
+              <div className="empty-list">
+                <p>{emptyList}</p>
+              </div>
+            )}
             {pondInfo &&
               pondInfo.kois &&
               pondInfo.kois.map((koi) => (
-                <tr key={koi.koiId} onClick={handleToggleKoiDetailModal}>
+                <tr
+                  key={koi.koiId}
+                  onClick={() => handleToggleKoiDetailModal(koi.koiId)}
+                >
                   <th>
                     <img src={koi.image} alt="" />
                     <div>

@@ -33,6 +33,7 @@ export const LoginPage = () => {
   const [validEmail, setValidEmail] = useState(null);
   const [wrongPassEmail, setWrongPassEmail] = useState(null);
   const [requiredField, setRequiredField] = useState(null);
+  const [existedEmail, setExistedEmail] = useState(null);
 
   // mutation
   const queryCilent = useQueryClient();
@@ -95,15 +96,22 @@ export const LoginPage = () => {
     mutationKey: ["oauth"],
     mutationFn: AccountService.oauthService,
     onSuccess: () => {
-      navigate("/");
-      setTimeout(() => {
-      }, 1500);
-    },  
+      if (responseData && responseData.code === "EMAIL_EXISTED") {
+        setExistedEmail("This email have existed, please try another one");
+      } else {
+        setExistedEmail(null);
+        // dispatch(toggleSuccessModal());
+        setTimeout(() => {
+          // dispatch(toggleSuccessModal());
+          // navigate("/");
+        }, 1500);
+      }
+    },
   });
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
       const googleIdToken = credentialResponse.access_token;
-      console.log(googleIdToken)
+      console.log(googleIdToken);
       oauthMutation.mutateAsync(googleIdToken);
     },
   });
@@ -173,6 +181,7 @@ export const LoginPage = () => {
             {requiredField && <p className="fail">{requiredField}</p>}
             {validEmail && <p className="fail">{validEmail}</p>}
             {wrongPassEmail && <p className="fail">{wrongPassEmail}</p>}
+            {existedEmail && <p className="fail">{existedEmail}</p>}
             <Link to="/forget">Forget password?</Link>
             <input type="submit" value="Login To Izumiya" />
           </form>

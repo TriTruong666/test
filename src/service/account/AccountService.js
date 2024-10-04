@@ -173,6 +173,6 @@ export const oauthService = async (token) => {
     console.log(res.data);
     return res.data.result;
   } catch (error) {
-    return error;
+    return error.response.data;
   }
 };

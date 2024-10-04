@@ -124,7 +124,9 @@ export const AddBlog = () => {
     }
     try {
       await mutation.mutateAsync(submitData);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     console.log(submitData);

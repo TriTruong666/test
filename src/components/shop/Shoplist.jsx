@@ -5,7 +5,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import * as ProductService from "../../service/product/productService";
 import "../../styles/components/shop/shop.css";
 
-export const Shoplist = () => {
+export const Shoplist = ({
+  isLoadingList,
+  infinityScroll,
+  isRow,
+  isColumn,
+}) => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   const {
@@ -32,26 +37,55 @@ export const Shoplist = () => {
 
   return (
     <div className="shoplist-container">
-      {isLoadingPage ? (
+      {isLoadingPage || isLoadingList ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={50} />
         </div>
       ) : (
-        <div className="shoplist">
-          {products.map((product) => (
-            <div className="shop-item" key={product.productId}>
-              <img src={product.image} alt="image" />
-              <Link to={`/productdetail/${product.productId}`}>
-                {product.productName}
-              </Link>
-              <p>${product.unitPrice}</p>
-              <div>
-                <button>Buy now</button>
-                <button>Add to cart</button>
+        <>
+          {isColumn ? (
+            <>
+              <div className="shoplist-column">
+                {products.slice(0, infinityScroll).map((product) => (
+                  <div className="shop-item" key={product.productId}>
+                    <img src={product.image} alt="image" />
+                    <Link to={`/productdetail/${product.productId}`}>
+                      {product.productName}
+                    </Link>
+                    <p>${product.unitPrice}</p>
+                    <div>
+                      <button>Buy now</button>
+                      <button>Add to cart</button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+            </>
+          ) : (
+            ""
+          )}
+          {isRow ? (
+            <>
+              <div className="shoplist-row">
+                {products.slice(0, infinityScroll).map((product) => (
+                  <div className="shop-item" key={product.productId}>
+                    <img src={product.image} alt="image" />
+                    <Link to={`/productdetail/${product.productId}`}>
+                      {product.productName}
+                    </Link>
+                    <p>${product.unitPrice}</p>
+                    <div>
+                      <button>Buy now</button>
+                      <button>Add to cart</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </>
       )}
     </div>
   );

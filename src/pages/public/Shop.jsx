@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 // import styles
 import "../../styles/shop/shop.css";
 // import components
@@ -7,12 +8,22 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 import { Shopnav } from "../../components/navbar/Shopnav";
 import { Shoplist } from "../../components/shop/Shoplist";
-// import API call
+// import service
+import * as ProductService from "../../service/product/productService";
 
 export const Shop = () => {
   // state
   const [isAuth, setIsAuth] = useState(false);
-
+  const [infinityScroll, setInfinityScroll] = useState(6);
+  const [endShop, setEndShop] = useState(null);
+  const [isLoadingList, setIsLoadingList] = useState(false);
+  const [isRow, setIsRow] = useState(false);
+  const [isColumn, setIsColumn] = useState(true);
+  // query
+  const { data: products = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: ProductService.getAllProductShop,
+  });
   // handle func
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -24,9 +35,32 @@ export const Shop = () => {
       setIsAuth(true);
     }
   };
+  const handlePagination = () => {
+    if (infinityScroll < products.length) {
+      setIsLoadingList(true);
+      setTimeout(() => {
+        setInfinityScroll(infinityScroll + 6);
+        setIsLoadingList(false);
+      }, 1000);
+    }
+  };
+  const handleSetRow = () => {
+    setIsRow(true);
+    setIsColumn(false);
+  };
+  const handleSetColumn = () => {
+    setIsRow(false);
+    setIsColumn(true);
+  };
   useEffect(() => {
     handleSetIsAuth();
-  }, []);
+
+    if (products.length > 0 && infinityScroll >= products.length) {
+      setEndShop("You have reached the last product");
+    } else {
+      setEndShop(null);
+    }
+  }, [products, infinityScroll]);
 
   return (
     <div className="shop-container">
@@ -44,9 +78,12 @@ export const Shop = () => {
           <div className="shop-main-header">
             <strong>All Product</strong>
             <div className="header-filter">
-              <p> products</p>
-              <i className="bx bx-grid-horizontal"></i>
-              <i className="bx bx-grid-vertical"></i>
+              <p>{products.length} products</p>
+              <i
+                className="bx bx-grid-horizontal"
+                onClick={handleSetColumn}
+              ></i>
+              <i className="bx bx-grid-vertical" onClick={handleSetRow}></i>
               <select name="" id="">
                 <option value="">Filter</option>
                 <option value="">Filter</option>
@@ -57,8 +94,28 @@ export const Shop = () => {
           </div>
           <div className="shop-main-list">
             <Shopnav />
-            <Shoplist />
+            <Shoplist
+              infinityScroll={infinityScroll}
+              isLoadingList={isLoadingList}
+              isRow={isRow}
+              isColumn={isColumn}
+            />
           </div>
+          {endShop ? (
+            <>
+              <div className="end-product">
+                <p>{endShop}</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="infinity-scroll">
+                <strong onClick={handlePagination}>
+                  Load more products...
+                </strong>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <Footer />

@@ -21,9 +21,8 @@ const stripHtmlTags = (html) => {
   });
   return doc.body.innerHTML;
 };
-export const Bloglist = () => {
+export const Bloglist = ({ infinityScroll, isLoadingList }) => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-
   const {
     data: blogs = [],
     isLoading,
@@ -42,13 +41,9 @@ export const Bloglist = () => {
     }
   }, [isLoading, isFetching]);
 
-  if (isError) {
-    return <p>Error fetching blogs. Please try again later.</p>;
-  }
-
   return (
     <div className="bloglist-container">
-      {isLoadingPage ? (
+      {isLoadingPage || isLoadingList ? (
         <>
           <div className="loading">
             <ClipLoader color="#ffffff" size={50} />
@@ -56,18 +51,22 @@ export const Bloglist = () => {
         </>
       ) : (
         <>
-          {blogs.map((blog) => (
-            <div className="blog-item" key={blog.blogId}>
+          {blogs.slice(0, infinityScroll).map((blog) => (
+            <Link
+              to={`/blogdetail/${blog.blogId}`}
+              className="blog-item"
+              key={blog.blogId}
+            >
               <img src={blog.image} alt="" />
               <small>Created at {blog.createDate}</small>
-              <Link to={`/blogdetail/${blog.blogId}`}>{blog.title}</Link>
+              <strong>{blog.title}</strong>
               <p
                 dangerouslySetInnerHTML={{
                   __html: blog && stripHtmlTags(blog.content),
                 }}
               ></p>
               <span>By {blog.fullname}</span>
-            </div>
+            </Link>
           ))}
         </>
       )}

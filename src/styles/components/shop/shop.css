@@ -45,14 +45,13 @@ select option {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
-  .shoplist-container .shoplist {
+  .shoplist-container .shoplist-column {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
-  .shoplist-container .shoplist .shop-item {
+  .shoplist-container .shoplist-column .shop-item {
     width: 100%;
     height: 600px;
     display: flex;
@@ -63,39 +62,91 @@ select option {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     justify-content: space-between;
   }
-  .shoplist-container .shoplist .shop-item img {
+  .shoplist-container .shoplist-column .shop-item img {
     width: 250px;
     height: 400px;
     -o-object-fit: cover;
        object-fit: cover;
   }
-  .shoplist-container .shoplist .shop-item a {
+  .shoplist-container .shoplist-column .shop-item a {
     font-size: 1rem;
     font-family: "Roboto Mono", monospace;
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
   }
-  .shoplist-container .shoplist .shop-item p {
+  .shoplist-container .shoplist-column .shop-item p {
     font-size: 0.9rem;
     color: white;
     font-family: "Roboto Mono", monospace;
   }
-  .shoplist-container .shoplist .shop-item div {
+  .shoplist-container .shoplist-column .shop-item div {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .shoplist-container .shoplist .shop-item div button {
+  .shoplist-container .shoplist-column .shop-item div button {
     padding: 7px 30px;
     border-radius: 10px;
   }
-  .shoplist-container .shoplist .shop-item div button:nth-child(1) {
+  .shoplist-container .shoplist-column .shop-item div button:nth-child(1) {
     background: #BCAB6F;
     color: black;
     font-weight: 700;
     font-family: "Roboto Mono", monospace;
   }
-  .shoplist-container .shoplist .shop-item div button:nth-child(2) {
+  .shoplist-container .shoplist-column .shop-item div button:nth-child(2) {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+  }
+  .shoplist-container .shoplist-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .shoplist-container .shoplist-row .shop-item {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    justify-content: space-between;
+  }
+  .shoplist-container .shoplist-row .shop-item img {
+    width: 250px;
+    height: 400px;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .shoplist-container .shoplist-row .shop-item a {
+    font-size: 1rem;
+    font-family: "Roboto Mono", monospace;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+  }
+  .shoplist-container .shoplist-row .shop-item p {
+    font-size: 0.9rem;
+    color: white;
+    font-family: "Roboto Mono", monospace;
+  }
+  .shoplist-container .shoplist-row .shop-item div {
+    display: flex;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+  }
+  .shoplist-container .shoplist-row .shop-item div button {
+    padding: 7px 30px;
+    border-radius: 10px;
+  }
+  .shoplist-container .shoplist-row .shop-item div button:nth-child(1) {
+    background: #BCAB6F;
+    color: black;
+    font-weight: 700;
+    font-family: "Roboto Mono", monospace;
+  }
+  .shoplist-container .shoplist-row .shop-item div button:nth-child(2) {
     border: 2px solid rgba(255, 255, 255, 0.2);
     font-weight: 700;
   }

@@ -74,8 +74,13 @@
 
                         i {
                             padding: 20px 40px;
-
                             font-size: 24px;
+                            cursor: pointer;
+                            transition: .4s;
+                        }
+
+                        i:hover {
+                            background: rgba(255, 255, 255, .1);
                         }
 
                         p {
@@ -95,6 +100,45 @@
                     // height: 2100px;
                     display: flex;
                     // border-bottom: 1px solid rgba(255, 255, 255, .2);
+                }
+
+                .end-product {
+                    padding: 100px 0 50px 0;
+                    background: $main-color;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    p {
+                        font-family: $main-font;
+                        color: #ffffff80;
+                        font-size: 1.1rem;
+                    }
+                }
+
+                .infinity-scroll {
+                    padding: 100px 0 50px 0;
+
+                    background: $main-color;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    strong {
+                        cursor: pointer;
+                        width: 250px;
+                        text-align: center;
+                        padding: 10px 0;
+                        border: 1px solid rgba(255, 255, 255, .2);
+                        color: rgba(255, 255, 255, .5);
+                        font-weight: 500;
+                        font-size: 0.9rem;
+                        transition: .4s;
+                    }
+
+                    strong:hover {
+                        background: rgba(255, 255, 255, .1);
+                    }
                 }
             }
         }

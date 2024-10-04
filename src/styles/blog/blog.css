@@ -63,4 +63,37 @@ select option {
     font-weight: 400;
     font-family: "Roboto Mono", monospace;
   }
+  .blog-container .blog .end-blog {
+    padding: 20px 0;
+    background: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .blog-container .blog .end-blog p {
+    font-family: "Roboto Mono", monospace;
+    color: rgba(255, 255, 255, 0.5019607843);
+    font-size: 1.1rem;
+  }
+  .blog-container .blog .infinity-scroll {
+    padding-top: 20px;
+    background: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .blog-container .blog .infinity-scroll strong {
+    cursor: pointer;
+    width: 250px;
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: 0.4s;
+  }
+  .blog-container .blog .infinity-scroll strong:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 }/*# sourceMappingURL=blog.css.map */

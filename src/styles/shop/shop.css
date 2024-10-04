@@ -98,6 +98,11 @@ select option {
   .shop-container .shop .shop-main .shop-main-header .header-filter i {
     padding: 20px 40px;
     font-size: 24px;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+  .shop-container .shop .shop-main .shop-main-header .header-filter i:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
   .shop-container .shop .shop-main .shop-main-header .header-filter p {
     padding: 20px 40px;
@@ -110,5 +115,38 @@ select option {
   .shop-container .shop .shop-main .shop-main-list {
     width: 100%;
     display: flex;
+  }
+  .shop-container .shop .shop-main .end-product {
+    padding: 100px 0 50px 0;
+    background: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shop-container .shop .shop-main .end-product p {
+    font-family: "Roboto Mono", monospace;
+    color: rgba(255, 255, 255, 0.5019607843);
+    font-size: 1.1rem;
+  }
+  .shop-container .shop .shop-main .infinity-scroll {
+    padding: 100px 0 50px 0;
+    background: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shop-container .shop .shop-main .infinity-scroll strong {
+    cursor: pointer;
+    width: 250px;
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: 0.4s;
+  }
+  .shop-container .shop .shop-main .infinity-scroll strong:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 }/*# sourceMappingURL=shop.css.map */

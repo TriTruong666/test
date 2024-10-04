@@ -122,7 +122,6 @@ export const LoginPage = () => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
       const googleIdToken = credentialResponse.access_token;
-      console.log(googleIdToken);
       oauthMutation.mutateAsync(googleIdToken);
     },
   });

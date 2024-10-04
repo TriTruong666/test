@@ -95,15 +95,15 @@ export const LoginPage = () => {
     mutationKey: ["oauth"],
     mutationFn: AccountService.oauthService,
     onSuccess: () => {
+      navigate("/");
       setTimeout(() => {
-        dispatch(toggleSuccessModal());
-        navigate("/");
       }, 1500);
-    },
+    },  
   });
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
       const googleIdToken = credentialResponse.access_token;
+      console.log(googleIdToken)
       oauthMutation.mutateAsync(googleIdToken);
     },
   });

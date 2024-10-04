@@ -13,7 +13,7 @@ import store from "./redux/store";
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <GoogleOAuthProvider clientId="907780403027-kalijn40kkcjhqaa3ng3ntlep92ootv4.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="347176202843-s8aa50994aqeuhovpeauc35buo5bj0uv.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>

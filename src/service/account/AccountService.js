@@ -168,6 +168,8 @@ export const oauthService = async (token) => {
         "Content-Type": "application/json",
       },
     });
+    localStorage.setItem("token", res.data.result.token);
+    localStorage.setItem("user", JSON.stringify(res.data.result.user));
     console.log(res.data);
     return res.data.result;
   } catch (error) {

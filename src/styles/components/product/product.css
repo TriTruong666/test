@@ -34,6 +34,7 @@ select option {
     padding: 15px 40px;
     display: flex;
     flex-direction: column;
+    /* Modern Scrollbar */
   }
   .product-list-table thead tr {
     display: grid;
@@ -68,12 +69,51 @@ select option {
   .product-list-table thead tr th:nth-child(6) {
     text-align: start;
   }
+  .product-list-table ::-webkit-scrollbar {
+    width: 8px;
+    /* Adjust width */
+  }
+  .product-list-table ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Track background */
+    border-radius: 10px;
+  }
+  .product-list-table ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Scroll thumb color */
+    border-radius: 10px;
+    /* Rounded corners */
+    border: 2px solid transparent;
+    /* Padding inside */
+    background-clip: padding-box;
+  }
+  .product-list-table ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Darker on hover */
+  }
+  .product-list-table tbody {
+    max-height: 470px;
+    height: 470px;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
   .product-list-table tbody .loading {
     width: 100%;
     height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .product-list-table tbody .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .product-list-table tbody .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
   }
   .product-list-table tbody .empty-list {
     width: 100%;
@@ -83,7 +123,7 @@ select option {
     align-items: center;
   }
   .product-list-table tbody .empty-list p {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.7);
   }

@@ -50,6 +50,14 @@ export const Homepage = () => {
     queryKey: ["last-blogs"],
     queryFn: BlogService.getAllBlog,
   });
+  const { data: products = [] } = useQuery({
+    queryKey: ["header-product"],
+    queryFn: ProductService.getAllProductShop,
+  });
+  const { data: cartInfo = {} } = useQuery({
+    queryKey: ["my-cart", userId],
+    queryFn: () => CartService.getCartByMember(userId),
+  });
   // handle func
   const handleSetIsAuth = async () => {
     if (!token && !user) {
@@ -69,10 +77,7 @@ export const Homepage = () => {
       console.log(error);
     }
   }, []);
-  const { data: products = [] } = useQuery({
-    queryKey: ["header-product"],
-    queryFn: ProductService.getAllProductShop,
-  });
+
   // mutation
   const queryClient = useQueryClient();
   const cartMutation = useMutation({
@@ -89,9 +94,6 @@ export const Homepage = () => {
       queryClient.invalidateQueries({
         queryKey: ["verify"],
       });
-    },
-    onError: () => {
-      // modal
     },
   });
 

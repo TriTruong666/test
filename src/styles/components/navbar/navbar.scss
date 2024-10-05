@@ -90,6 +90,7 @@
                 column-gap: 10px;
                 padding: 5px 10px 5px 20px;
                 display: flex;
+                cursor: pointer;
 
                 i:nth-child(2) {
                     font-size: 26px;
@@ -278,6 +279,7 @@
                 }
 
                 .close {
+                    cursor: pointer;
                     margin-top: 30px;
                     justify-self: end;
                     display: flex;

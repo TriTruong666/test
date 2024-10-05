@@ -161,7 +161,7 @@ select option {
     display: flex;
   }
   .my-blog-detail-container .my-blog-preview-main .main .blog-detail-main .blog-detail-content p {
-    line-height: 1.5;
+    line-height: 2;
     font-family: "Roboto Mono", monospace;
     font-size: 0.65rem;
     color: rgba(255, 255, 255, 0.7);

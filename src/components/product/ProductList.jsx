@@ -50,7 +50,7 @@ export const ProductList = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching, isRefetching, isLoading,isError]);
+  }, [isFetching, isRefetching, isLoading, isError]);
   // handle func
   const handleToggleUpdateProductModal = (id) => {
     dispatch(setProductId(id));
@@ -62,73 +62,67 @@ export const ProductList = () => {
   };
   return (
     <>
-      {serverError ? (
-        <div className="error-page">
-          <p>{serverError}</p>
-        </div>
-      ) : isLoadingPage ? (
-        <div className="loading">
-          <ClipLoader color="#000000" size={40} />
-        </div>
-      ) : (
-        <table className="product-list-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Product name</th>
-              <th>Image</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {emptyList ? (
-              <tr>
-                <td colSpan="7">
-                  <div className="empty-list">
-                    <p>{emptyList}</p>
+      <table className="product-list-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product name</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ) : emptyList ? (
+            <div className="empty-list">
+              <p>{emptyList}</p>
+            </div>
+          ) : (
+            products.map((product) => (
+              <tr key={product.productId}>
+                <td>{product.productId}</td>
+                <td>
+                  <i className="bx bxs-package"></i>
+                  <div>
+                    <strong>{product.productName}</strong>
+                    <p>{product.category && product.category.cateName}</p>
                   </div>
                 </td>
+                <td>
+                  <img src={product.image} alt="" />
+                </td>
+                <td>${product.unitPrice}</td>
+                <td>{product.stock}</td>
+                <td>{product.status ? "Active" : "Inactive"}</td>
+                <td>
+                  <i
+                    className="bx bxs-edit-alt"
+                    onClick={() =>
+                      handleToggleUpdateProductModal(product.productId)
+                    }
+                  ></i>
+                  <i
+                    className="bx bxs-trash-alt"
+                    onClick={() =>
+                      handleToggleDelProductModal(product.productId)
+                    }
+                  ></i>
+                </td>
               </tr>
-            ) : (
-              products.map((product) => (
-                <tr key={product.productId}>
-                  <td>{product.productId}</td>
-                  <td>
-                    <i className="bx bxs-package"></i>
-                    <div>
-                      <strong>{product.productName}</strong>
-                      <p>{product.category && product.category.cateName}</p>
-                    </div>
-                  </td>
-                  <td>
-                    <img src={product.image} alt="" />
-                  </td>
-                  <td>${product.unitPrice}</td>
-                  <td>{product.stock}</td>
-                  <td>{product.status ? "Active" : "Inactive"}</td>
-                  <td>
-                    <i
-                      className="bx bxs-edit-alt"
-                      onClick={() =>
-                        handleToggleUpdateProductModal(product.productId)
-                      }
-                    ></i>
-                    <i
-                      className="bx bxs-trash-alt"
-                      onClick={() =>
-                        handleToggleDelProductModal(product.productId)
-                      }
-                    ></i>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      )}
+            ))
+          )}
+        </tbody>
+      </table>
     </>
   );
 };

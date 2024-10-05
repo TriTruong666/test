@@ -106,11 +106,14 @@ select option {
     display: flex;
   }
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p {
-    line-height: 2;
+    line-height: 2.5;
     font-family: "Roboto Mono", monospace;
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.7);
     padding: 0 50px;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p i {
+    font-weight: 700;
   }
 }/*# sourceMappingURL=blogdetail.css.map */

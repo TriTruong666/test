@@ -114,6 +114,7 @@ select option {
          column-gap: 10px;
     padding: 5px 10px 5px 20px;
     display: flex;
+    cursor: pointer;
   }
   .navbar-container .navbar-third .info i:nth-child(2) {
     font-size: 26px;
@@ -277,6 +278,7 @@ select option {
     font-weight: 600;
   }
   .setting-nav-container .setting-nav .setting-nav-list .close {
+    cursor: pointer;
     margin-top: 30px;
     justify-self: end;
     display: flex;

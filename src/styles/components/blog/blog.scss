@@ -50,19 +50,20 @@
             }
 
 
-            p {
-                font-size: 0.8rem;
-                color: $fade-white;
-                line-height: 1.9;
-                font-weight: 300;
-                max-height: 100px; // You can adjust this value based on your design
-                overflow: hidden; // Prevent overflow
-                overflow-wrap: break-word; // Allow wrapping
-                word-wrap: break-word; // Older browsers support
-                text-overflow: ellipsis; // Optionally show ellipsis if you use width restrictions
-            }
+            // p {
+            //     font-size: 0.8rem;
+            //     color: $fade-white;
+            //     line-height: 1.9;
+            //     font-weight: 300;
+            //     max-height: 100px; // You can adjust this value based on your design
+            //     overflow: hidden; // Prevent overflow
+            //     overflow-wrap: break-word; // Allow wrapping
+            //     word-wrap: break-word; // Older browsers support
+            //     text-overflow: ellipsis; // Optionally show ellipsis if you use width restrictions
+            // }
 
             span {
+                margin-top: 20px;
                 font-size: 0.75rem;
                 color: $fade-white;
                 font-weight: 400;

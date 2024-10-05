@@ -43,7 +43,7 @@ export const Shoplist = ({
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }
-  }, [isLoading, isFetching]);
+  }, [isLoading, isFetching, cartInfo]);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({

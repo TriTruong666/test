@@ -51,60 +51,59 @@ export const BlogDetail = () => {
     } else {
       setServerError(null);
     }
-  }, [isFetching,isError]);
+  }, [isFetching, isError]);
 
   return (
     <div className="blog-detail-container">
       <Navbar />
       <Settingnav />
       <div className="blog-detail">
-
-      {serverError ? (
-        <>
-          <div className="error-page">
-            <p>Server is closed now</p>
-          </div>
-        </>
-      ) :(
-<>
-{isLoadingPage ? (
-          <div className="loading">
-            <ClipLoader color="#ffffff" size={50} />
-          </div>
-        ) : (
+        {serverError ? (
           <>
-            <div className="blog-detail-header">
-              <strong>{blog && blog.title}</strong>
-              <p>
-                {new Date(blog && blog.createDate).toLocaleDateString() ||
-                  "Date not available"}{" "}
-                - by {blog && blog.fullname}
-              </p>
-            </div>
-            <img src={blog && blog.image} alt="" />
-            <div className="blog-detail-main">
-              <div className="share">
-                <strong>Share Article</strong>
-                <div>
-                  <i className="bx bx-link-alt"></i>
-                  <i className="bx bxl-facebook-circle"></i>
-                  <i className="bx bxl-instagram-alt"></i>
-                </div>
-              </div>
-              <div className="blog-detail-content">
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: blog && stripHtmlTags(blog.content),
-                  }}
-                />
-              </div>
+            <div className="error-page">
+              <p>Server is closed now</p>
             </div>
           </>
+        ) : (
+          <>
+            {isLoadingPage ? (
+              <div className="loading">
+                <ClipLoader color="#ffffff" size={50} />
+              </div>
+            ) : (
+              <>
+                <div className="blog-detail-header">
+                  <strong>{blog && blog.title}</strong>
+                  <p>
+                    {new Date(blog && blog.createDate).toLocaleDateString() ||
+                      "Date not available"}{" "}
+                    - by {blog && blog.fullname}
+                  </p>
+                </div>
+                <img src={blog && blog.image} alt="" />
+                <div className="blog-detail-main">
+                  <div className="share">
+                    <strong>Share Article</strong>
+                    <div>
+                      <i className="bx bx-link-alt"></i>
+                      <i className="bx bxl-facebook-circle"></i>
+                      <i className="bx bxl-instagram-alt"></i>
+                    </div>
+                  </div>
+                  <div className="blog-detail-content">
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          blog &&
+                          stripHtmlTags(blog.content || "No content available"),
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </>
         )}
-</>
-
-      )}
-        
       </div>
       <Footer />
     </div>

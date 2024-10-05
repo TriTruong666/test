@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 // import styles
 import "../../styles/shop/shop.css";
 // import components
@@ -19,8 +19,9 @@ export const Shop = () => {
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [isRow, setIsRow] = useState(false);
   const [isColumn, setIsColumn] = useState(true);
+  const [serverError, setServerError] = useState(null);
   // query
-  const { data: products = [] } = useQuery({
+  const { data: products = [],isError } = useQuery({
     queryKey: ["products"],
     queryFn: ProductService.getAllProductShop,
   });
@@ -60,7 +61,14 @@ export const Shop = () => {
     } else {
       setEndShop(null);
     }
-  }, [products, infinityScroll]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+  }, [products, infinityScroll,isError]);
 
   return (
     <div className="shop-container">
@@ -101,6 +109,16 @@ export const Shop = () => {
               isColumn={isColumn}
             />
           </div>
+
+
+          {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ): (
+        <>
           {endShop ? (
             <>
               <div className="end-product">
@@ -116,6 +134,10 @@ export const Shop = () => {
               </div>
             </>
           )}
+        </>
+      )}
+
+        
         </div>
       </div>
       <Footer />

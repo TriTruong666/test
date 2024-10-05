@@ -12,6 +12,7 @@ export const Shoplist = ({
   isColumn,
 }) => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   const {
     data: products = [],
@@ -29,15 +30,30 @@ export const Shoplist = ({
     } else {
       setIsLoadingPage(false);
     }
-  }, [isLoading, isFetching]);
 
-  if (isError) {
-    return <p>Error fetching products. Please try again later.</p>;
-  }
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
+
+  }, [isLoading, isFetching,isError]);
+
+ 
 
   return (
     <div className="shoplist-container">
-      {isLoadingPage || isLoadingList ? (
+{serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ):(
+        <>
+         {isLoadingPage || isLoadingList ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={50} />
         </div>
@@ -85,6 +101,8 @@ export const Shoplist = ({
           ) : (
             ""
           )}
+        </>
+      )}
         </>
       )}
     </div>

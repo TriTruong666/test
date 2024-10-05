@@ -1,13 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import * as ProductService from "../../service/product/productService";
 import ClipLoader from "react-spinners/ClipLoader";
+import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/productdetail/productdetail.css";
 // import components
-import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
+import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
@@ -19,6 +19,7 @@ const stripHtmlTags = (html) => {
 export const ProductDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const { productId } = useParams();
   const numericProductId = parseInt(productId);
   const {
@@ -39,13 +40,30 @@ export const ProductDetail = () => {
       setIsLoadingPage(false);
       document.title = product && product.productName;
     }
-  }, [isFetching]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
+
+  }, [isFetching,isError]);
   return (
     <div className="product-detail-container">
       <Navbar />
       <Settingnav />
       <div className="product-detail">
         <div className="product-detail-main">
+        {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) :(
+        <>
           {isLoadingPage ? (
             <div className="loading">
               <ClipLoader color="#ffffff" size={50} />
@@ -65,6 +83,8 @@ export const ProductDetail = () => {
               </div>
             </>
           )}
+        </>
+      )}
         </div>
         <div className="product-detail-related">
           <strong>Explore Related Products</strong>

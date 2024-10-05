@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/account/account.css";
@@ -10,6 +10,7 @@ export const AccountList = () => {
   const ownUserId = user.userId;
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
   // query
   const {
     data: users = [],
@@ -28,7 +29,15 @@ export const AccountList = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isLoading, isFetching]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
+
+  }, [isLoading, isFetching,isError]);
   return (
     <table className="account-list-table">
       <thead>
@@ -42,7 +51,15 @@ export const AccountList = () => {
         </tr>
       </thead>
       <tbody>
-        {isLoadingPage ? (
+      {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) :(
+        <>
+                {isLoadingPage ? (
           <>
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
@@ -76,6 +93,8 @@ export const AccountList = () => {
             ))}
           </>
         )}
+        </>
+      )}
       </tbody>
     </table>
   );

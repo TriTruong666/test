@@ -14,6 +14,14 @@
             background: $main-color;
             column-gap: 120px;
 
+            .loading {
+                width: 100%;
+                height: 500px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
             .cart-main {
                 width: 60%;
                 display: flex;
@@ -24,11 +32,15 @@
                     display: flex;
                     padding: 30px 0;
                     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                    column-gap: 30px;
+                    // align-items: center;
 
                     img {
-                        width: 200px;
-                        height: 200px;
+                        // padding: 30px;
+                        width: 180px;
+                        height: 180px;
                         object-fit: cover;
+                        border-radius: 15px;
                     }
 
                     i {
@@ -40,10 +52,11 @@
                     }
 
                     .cart-item-info {
-                        margin-top: 20px;
+                        // margin-top: 20px;
                         display: flex;
                         flex-direction: column;
-                        row-gap: 20px;
+                        justify-content: space-between;
+                        // row-gap: 20px;
 
                         h2 {
                             color: white;

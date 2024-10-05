@@ -78,3 +78,39 @@ export const getCartByMember = async (userId) => {
     return error;
   }
 };
+
+export const updateQuantity = async (cartId, cartItemId, quantity) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/cart/${cartId}/update/${cartItemId}`;
+    const res = await axios.put(api, quantity, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const deleteCartItem = async (cartItemId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/cart/delete/${cartItemId}`;
+    const res = await axios.delete(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

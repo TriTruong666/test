@@ -39,17 +39,6 @@ select option {
     flex-direction: column;
     padding: 20px 40px;
   }
-  .pond-info-container .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .pond-info-container .error-page p {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
   .pond-info-container .loading {
     width: 100%;
     height: 500px;

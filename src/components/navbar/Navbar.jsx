@@ -41,7 +41,7 @@ export const Navbar = () => {
   };
   useEffect(() => {
     handleSetIsAuth();
-    if (cartInfo && cartInfo.items && cartInfo.items.length === 0) {
+    if (cartInfo && cartInfo.cartItems && cartInfo.cartItems.length === 0) {
       setIsEmptyCart(true);
     } else {
       setIsEmptyCart(false);
@@ -70,7 +70,9 @@ export const Navbar = () => {
             <>
               <Link to="/cart">
                 <i className="bx bxs-cart"></i>
-                <p>{cartInfo && cartInfo.items && cartInfo.items.length}</p>
+                <p>
+                  {cartInfo && cartInfo.cartItems && cartInfo.cartItems.length}
+                </p>
               </Link>
             </>
           )}

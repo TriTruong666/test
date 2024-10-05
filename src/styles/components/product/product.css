@@ -30,24 +30,6 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .error-page p {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-  .loading {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .product-list-table {
     padding: 15px 40px;
     display: flex;

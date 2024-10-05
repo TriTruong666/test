@@ -1,11 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/pond/pond.css";
 // import assets
-import image from "../../assets/logincover.jpg";
 // import service
 import * as PondService from "../../service/pond/pondService";
 export const PondList = () => {
@@ -15,6 +14,7 @@ export const PondList = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  
   // query
   const {
     data: ponds = [],

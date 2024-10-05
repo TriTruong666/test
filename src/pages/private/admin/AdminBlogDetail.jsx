@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useDispatch } from "react-redux";
 // import service
 import * as BlogService from "../../../service/blog/blogService";
 // import styles
 import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
 // import slices
 import {
-  toggleUpdateBlogModal,
   toggleDeleteBlogModal,
+  toggleUpdateBlogModal,
 } from "../../../redux/slices/modal/modal";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
@@ -33,6 +33,7 @@ export const AdminBlogDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isNotFoundBlog, setIsNotFoundBlog] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const { blogId } = useParams();
 
   const {
@@ -64,11 +65,25 @@ export const AdminBlogDetail = () => {
     } else {
       setIsNotFoundBlog(false);
     }
-  }, [isFetching, isLoading, blog]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading, blog,isError]);
 
   return (
     <div className="admin-blog-detail-container">
-      {isLoadingPage ? (
+        {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      )  :(
+        <>
+         {isLoadingPage ? (
         <>
           <div className="loading">
             <ClipLoader color="#000000" size={50} />
@@ -149,6 +164,9 @@ export const AdminBlogDetail = () => {
           )}
         </>
       )}
+        </>
+      )}
+     
     </div>
   );
 };

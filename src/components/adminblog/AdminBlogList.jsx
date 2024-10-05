@@ -12,6 +12,7 @@ export const AdminBlogList = () => {
   const ownUserId = user.userId;
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
   const {
     data: blogs = [],
     isLoading,
@@ -32,21 +33,30 @@ export const AdminBlogList = () => {
     } else {
       setEmptyList(null);
     }
-  }, [isLoading, isFetching]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isError, isLoading, isFetching, blogs.length]);
 
   return (
-    <div className="admin-blog-list">
-      {emptyList && (
-        <div className="empty-list">
-          <p>{emptyList}</p>
+      <div className="admin-blog-list">
+      {serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
         </div>
-      )}
-      {isLoading || isLoadingPage ? (
+      ) : isLoading || isFetching ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={50} />
         </div>
       ) : (
         <>
+          {emptyList && (
+            <div className="empty-list">
+              <p>{emptyList}</p>
+            </div>
+          )}
           {blogs.map((blog) => (
             <Link
               key={blog.blogId}

@@ -36,6 +36,24 @@ select option {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
+  .admin-blog-list .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .admin-blog-list .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .admin-blog-list .loading {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .admin-blog-list .empty-list {
     width: 100%;
     height: 400px;

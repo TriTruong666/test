@@ -1,12 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 
 // import styles
 import "../../../styles/dashboard/pondinfo/pondinfo.css";
 // import assets
-import image from "../../../assets/logincover2.jpg";
 // import service
 import * as PondService from "../../../service/pond/pondService";
 export const PondInfo = () => {
@@ -14,6 +13,7 @@ export const PondInfo = () => {
   const { pondId } = useParams();
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   const {
     data: pondInfo = {},
@@ -31,10 +31,27 @@ export const PondInfo = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
+
+
+  }, [isFetching, isLoading,isError]);
   return (
     <div className="pond-info-container">
-      {isLoadingPage ? (
+      {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) : (
+        <>
+    {isLoadingPage ? (
         <>
           <div className="loading">
             <ClipLoader color="#000000" size={40} />
@@ -80,6 +97,8 @@ export const PondInfo = () => {
               <p>{(pondInfo && pondInfo.vein) || "null"} veins</p>
             </div>
           </div>
+        </>
+      )}
         </>
       )}
     </div>

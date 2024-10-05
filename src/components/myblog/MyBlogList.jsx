@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/myblog/myblog.css";
@@ -12,6 +12,7 @@ export const MyBlogList = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
   // query
   const {
     data: blogs = [],
@@ -33,10 +34,24 @@ export const MyBlogList = () => {
     } else {
       setEmptyList(null);
     }
-  }, [isFetching, isLoading]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading,isError]);
   return (
     <div className="my-blog-list">
-      {emptyList && (
+{serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) :(
+        <>
+         {emptyList && (
         <div className="empty-list">
           <p>{emptyList}</p>
         </div>
@@ -60,6 +75,8 @@ export const MyBlogList = () => {
               </Link>
             </>
           ))}
+        </>
+      )}
         </>
       )}
     </div>

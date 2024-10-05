@@ -44,6 +44,18 @@ select option {
     padding: 80px 60px;
     background: #131313;
   }
+  .blog-detail-container .blog-detail .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .blog-detail-container .blog-detail .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+  }
   .blog-detail-container .blog-detail .loading {
     width: 100%;
     height: 800px;

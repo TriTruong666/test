@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 // import styles
 import "../../styles/blog/blog.css";
 // import components
-import { Navbar } from "../../components/navbar/Navbar";
-import { Footer } from "../../components/footer/Footer";
 import { Bloglist } from "../../components/blog/Bloglist";
+import { Footer } from "../../components/footer/Footer";
+import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import service
 import * as BlogService from "../../service/blog/blogService";
@@ -16,7 +16,8 @@ export const Blog = () => {
   const [infinityScroll, setInfinityScroll] = useState(6);
   const [endBlog, setEndBlog] = useState(null);
   const [isLoadingList, setIsLoadingList] = useState(false);
-  const { data: blogs = [] } = useQuery({
+  const [serverError, setServerError] = useState(null);
+  const { data: blogs = [],isError } = useQuery({
     queryKey: ["blogs"],
     queryFn: BlogService.getAllBlog,
     refetchOnWindowFocus: false,
@@ -50,7 +51,13 @@ export const Blog = () => {
     } else {
       setEndBlog(null);
     }
-  }, [blogs, infinityScroll]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [blogs, infinityScroll,isError]);
   return (
     <div className="blog-container">
       <Navbar />
@@ -60,7 +67,15 @@ export const Blog = () => {
           <strong>BLOGS</strong>
           <p>Find out outstanding topics of Izumiya's community.</p>
         </div>
-        <Bloglist
+        {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) : (
+        <>
+<Bloglist
           infinityScroll={infinityScroll}
           isLoadingList={isLoadingList}
         />
@@ -77,6 +92,8 @@ export const Blog = () => {
             </div>
           </>
         )}
+        </>
+      )}
       </div>
       <Footer />
     </div>

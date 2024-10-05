@@ -68,18 +68,6 @@ select option {
   .product-list-table thead tr th:nth-child(6) {
     text-align: start;
   }
-  .product-list-table .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .product-list-table .error-page p {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
   .product-list-table tbody .loading {
     width: 100%;
     height: 400px;

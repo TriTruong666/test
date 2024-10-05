@@ -38,18 +38,6 @@ select option {
     justify-content: center;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
   }
-  .shoplist-container .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .shoplist-container .error-page p {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-  }
   .shoplist-container .loading {
     width: 100%;
     height: 700px;

@@ -37,6 +37,17 @@ select option {
     max-height: 600px;
     height: 600px;
   }
+  .koi-list-table .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .koi-list-table .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
   .koi-list-table thead tr {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -80,6 +91,7 @@ select option {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.7);
   }
+
   .koi-list-table tbody .loading {
     width: 100%;
     height: 400px;

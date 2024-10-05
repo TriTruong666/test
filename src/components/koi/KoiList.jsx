@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 
 // import styles
 import "../../styles/components/koi/koi.css";
 // import assets
-import image from "../../assets/logincover2.jpg";
 // import redux
 import { useDispatch } from "react-redux";
 // import slices
+import { setKoiId } from "../../redux/slices/koi/koi";
 import {
   toggleDetailKoiModal,
   toggleKoiHistoryOff,
 } from "../../redux/slices/modal/modal";
-import { setKoiId } from "../../redux/slices/koi/koi";
 // import service
 import * as PondService from "../../service/pond/pondService";
 export const KoiList = () => {
@@ -25,6 +24,7 @@ export const KoiList = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
   // handle func
   const handleToggleKoiDetailModal = (koiId) => {
     dispatch(setKoiId(koiId));
@@ -66,7 +66,12 @@ export const KoiList = () => {
     } else {
       setEmptyList(null);
     }
-  }, [isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading,isError]);
   return (
     <table className="koi-list-table">
       <thead>
@@ -79,7 +84,15 @@ export const KoiList = () => {
         </tr>
       </thead>
       <tbody>
-        {isLoadingPage ? (
+      {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) :(
+        <>
+{isLoadingPage ? (
           <>
             <div className="loading">
               <ClipLoader color="#000000" size={35} />
@@ -114,6 +127,8 @@ export const KoiList = () => {
               ))}
           </>
         )}
+        </>
+      )}
       </tbody>
     </table>
   );

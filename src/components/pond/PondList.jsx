@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/pond/pond.css";
-// import assets
-import image from "../../assets/logincover.jpg";
 // import service
 import * as PondService from "../../service/pond/pondService";
 export const PondList = () => {

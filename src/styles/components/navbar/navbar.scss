@@ -59,11 +59,28 @@
         .navbar-third {
             display: flex;
             align-items: center;
-            column-gap: 30px;
+            column-gap: 50px;
 
-            i {
-                font-size: 22px;
-                color: $second-color;
+            a {
+                position: relative;
+
+                i {
+                    font-size: 26px;
+                    color: $second-color;
+                }
+
+                p {
+                    top: -17px;
+                    left: 23px;
+                    position: absolute;
+                    font-size: 0.5rem;
+                    padding: 3px 7px;
+                    text-align: center;
+                    border-radius: 50%;
+                    background: $second-color;
+                    color: black;
+                    font-weight: 600;
+                }
             }
 
             .info {

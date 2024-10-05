@@ -39,16 +39,6 @@ export const PondDetail = () => {
     dispatch(toggleDelPondModal());
   };
   useEffect(() => {
-    if (isLoading || isFetching) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
-    if (isError) {
-      setServerError("Server is closed now");
-    } else {
-      setServerError(null);
-    }
     if (pondStatus && pondStatus.code === "POND_NOT_FOUND") {
       setIsNotFoundPond(true);
     } else {
@@ -57,69 +47,49 @@ export const PondDetail = () => {
   }, [pondStatus, isFetching, isLoading, isError]);
   return (
     <div className="pond-detail-container">
-      {serverError ? (
+      {isNotFoundPond ? (
         <>
-          <div className="error-page">
-            <p>Server is closed now</p>
+          <div className="not-found">
+            <h2>Pond is not found</h2>
+            <p>Please check ID of pond or it had been delete !</p>
           </div>
         </>
       ) : (
         <>
-          {isLoadingPage ? (
-            <>
-              <div className="loading">
-                <ClipLoader color="#000000" size={40} />
-              </div>
-            </>
-          ) : (
-            <>
-              {isNotFoundPond ? (
-                <>
-                  <div className="not-found">
-                    <h2>Pond is not found</h2>
-                    <p>Please check ID of pond or it had been delete !</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="pond-detail-header">
-                    <strong>Pond Detail #{pondId}</strong>
-                    <div>
-                      <i
-                        className="bx bx-edit-alt"
-                        onClick={handleToggleUpdatePondModal}
-                      ></i>
-                      <i
-                        className="bx bx-trash-alt"
-                        onClick={handleToggleDelPondModal}
-                      ></i>
-                    </div>
-                  </div>
-                  <div className="pond-detail-link">
-                    <NavLink
-                      to={`/dashboard/mypond/detail/info/${pondId}`}
-                      className={({ isActive }) => (isActive ? "active" : "")}
-                    >
-                      Infomation
-                    </NavLink>
-                    <NavLink
-                      to={`/dashboard/mypond/detail/water/${pondId}`}
-                      className={({ isActive }) => (isActive ? "active" : "")}
-                    >
-                      Water
-                    </NavLink>
-                    <NavLink
-                      to={`/dashboard/mypond/detail/kois/${pondId}`}
-                      className={({ isActive }) => (isActive ? "active" : "")}
-                    >
-                      Kois
-                    </NavLink>
-                  </div>
-                  <Outlet />
-                </>
-              )}
-            </>
-          )}
+          <div className="pond-detail-header">
+            <strong>Pond Detail #{pondId}</strong>
+            <div>
+              <i
+                className="bx bx-edit-alt"
+                onClick={handleToggleUpdatePondModal}
+              ></i>
+              <i
+                className="bx bx-trash-alt"
+                onClick={handleToggleDelPondModal}
+              ></i>
+            </div>
+          </div>
+          <div className="pond-detail-link">
+            <NavLink
+              to={`/dashboard/mypond/detail/info/${pondId}`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Infomation
+            </NavLink>
+            <NavLink
+              to={`/dashboard/mypond/detail/water/${pondId}`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Water
+            </NavLink>
+            <NavLink
+              to={`/dashboard/mypond/detail/kois/${pondId}`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Kois
+            </NavLink>
+          </div>
+          <Outlet />
         </>
       )}
     </div>

@@ -20,6 +20,7 @@ import group from "./assets/group.png";
 import * as AccountService from "./service/account/AccountService";
 import * as BlogService from "./service/blog/blogService";
 import * as ProductService from "./service/product/productService";
+import * as CartService from "./service/cart/cartService";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -34,6 +35,9 @@ const stripHtmlTags = (html) => {
   return doc.body.innerHTML;
 };
 export const Homepage = () => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.userId;
   // state
   const [isAuth, setIsAuth] = useState(false);
   // query
@@ -46,12 +50,39 @@ export const Homepage = () => {
     queryKey: ["last-blogs"],
     queryFn: BlogService.getAllBlog,
   });
+  // handle func
+  const handleSetIsAuth = async () => {
+    if (!token && !user) {
+      setIsAuth(false);
+    } else {
+      setIsAuth(true);
+      await mutation.mutateAsync(token);
+      await cartMutation.mutateAsync(userId);
+      localStorage.removeItem("cart");
+    }
+  };
+  useEffect(() => {
+    document.title = "Izumiya Koi";
+    try {
+      handleSetIsAuth();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   const { data: products = [] } = useQuery({
     queryKey: ["header-product"],
     queryFn: ProductService.getAllProductShop,
   });
   // mutation
   const queryClient = useQueryClient();
+  const cartMutation = useMutation({
+    mutationFn: CartService.createCart,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cart"],
+      });
+    },
+  });
   const mutation = useMutation({
     mutationFn: AccountService.verifyToken,
     onSuccess: () => {
@@ -63,28 +94,7 @@ export const Homepage = () => {
       // modal
     },
   });
-  // handle func
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
-  const handleVerifyToken = async () => {
-    await mutation.mutateAsync(token);
-  };
-  const handleSetIsAuth = () => {
-    if (!token && !user) {
-      setIsAuth(false);
-    } else {
-      setIsAuth(true);
-    }
-  };
-  useEffect(() => {
-    document.title = "Izumiya Koi";
-    handleSetIsAuth();
-    try {
-      handleVerifyToken();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+
   return (
     <div className="homepage-container" id="about">
       <Navbar />

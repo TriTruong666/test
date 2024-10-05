@@ -1,8 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import service
 import * as ProductService from "../../service/product/productService";
+import * as CartService from "../../service/cart/cartService";
+// import styles
 import "../../styles/components/shop/shop.css";
 
 export const Shoplist = ({
@@ -11,32 +16,74 @@ export const Shoplist = ({
   isRow,
   isColumn,
 }) => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.userId;
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-
+  const [cartId, setCartId] = useState(null);
   const {
     data: products = [],
     isLoading,
-    isError,
     isFetching,
   } = useQuery({
     queryKey: ["products"],
     queryFn: ProductService.getAllProductShop,
     refetchOnWindowFocus: false,
   });
+  const { data: cartInfo = {} } = useQuery({
+    queryKey: ["my-cart", userId],
+    queryFn: () => CartService.getCartByMember(userId),
+  });
   useEffect(() => {
-    if (isFetching) {
+    if (isFetching || isLoading) {
       setIsLoadingPage(true);
     } else {
       setIsLoadingPage(false);
     }
+    if (cartInfo) {
+      setCartId(cartInfo.cartId);
+    }
   }, [isLoading, isFetching]);
+  // mutation
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationKey: ["add-item-to-cart"],
+    mutationFn: ({ cartId, productId, quantity }) =>
+      CartService.addToCartByMember(cartId, productId, quantity),
+    onSuccess: () => {
+      toast.success("Product added", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      queryClient.invalidateQueries(["cart"]);
+    },
+  });
 
-  if (isError) {
-    return <p>Error fetching products. Please try again later.</p>;
-  }
-
+  // handle func
+  const handleAddToCart = async (product) => {
+    if (user && token && cartId) {
+      try {
+        await mutation.mutateAsync({
+          cartId,
+          productId: product.productId,
+          quantity: 1,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      CartService.addToCartByGuest(product);
+    }
+  };
   return (
     <div className="shoplist-container">
+      <ToastContainer />
       {isLoadingPage || isLoadingList ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={50} />
@@ -55,7 +102,9 @@ export const Shoplist = ({
                     <p>${product.unitPrice}</p>
                     <div>
                       <button>Buy now</button>
-                      <button>Add to cart</button>
+                      <button onClick={() => handleAddToCart(product)}>
+                        Add to cart
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -76,7 +125,9 @@ export const Shoplist = ({
                     <p>${product.unitPrice}</p>
                     <div>
                       <button>Buy now</button>
-                      <button>Add to cart</button>
+                      <button onClick={() => handleAddToCart(product)}>
+                        Add to cart
+                      </button>
                     </div>
                   </div>
                 ))}

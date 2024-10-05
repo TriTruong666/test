@@ -42,6 +42,7 @@ export const Settingnav = () => {
     dispatch(toggleSettingNav());
   };
   const handleLogout = async () => {
+    localStorage.removeItem("cartId");
     try {
       await mutation.mutateAsync(token);
       dispatch(toggleSettingNav());

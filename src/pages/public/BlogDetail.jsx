@@ -27,6 +27,7 @@ const stripHtmlTags = (html) => {
 };
 export const BlogDetail = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const { blogId } = useParams();
   const {
     data: blog,
@@ -44,14 +45,29 @@ export const BlogDetail = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching,isError]);
 
   return (
     <div className="blog-detail-container">
       <Navbar />
       <Settingnav />
       <div className="blog-detail">
-        {isLoadingPage ? (
+
+      {serverError ? (
+        <>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
+        </>
+      ) :(
+<>
+{isLoadingPage ? (
           <div className="loading">
             <ClipLoader color="#ffffff" size={50} />
           </div>
@@ -85,6 +101,10 @@ export const BlogDetail = () => {
             </div>
           </>
         )}
+</>
+
+      )}
+        
       </div>
       <Footer />
     </div>

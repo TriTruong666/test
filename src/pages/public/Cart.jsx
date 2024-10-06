@@ -17,6 +17,7 @@ export const Cart = () => {
   const [quantity, setQuantity] = useState(0);
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isEmptyCart, setIsEmptyCart] = useState(false);
   // query
   const {
     data: cartData = {},
@@ -86,8 +87,13 @@ export const Cart = () => {
     document.title = "Cart";
     if (cartData) {
       setCartList(cartData.cartItems);
+      if (cartList && cartList.length === 0) {
+        setIsEmptyCart(true);
+      } else {
+        setIsEmptyCart(false);
+      }
     }
-  }, [cartData]);
+  }, [cartData, cartList]);
   // format
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -105,65 +111,80 @@ export const Cart = () => {
     <div className="cart-container">
       <Navbar />
       <Settingnav />
-      <div className="cart">
-        <div className="cart-main">
-          {cartList.map((item) => (
-            <div key={item.product.productId} className="cart-item">
-              <i
-                className="bx bxs-trash-alt"
-                onClick={() => handleDeleteCartItem(item.cartItemId)}
-              ></i>
-              <img src={item.product.image} alt="" />
-              <div className="cart-item-info">
-                <h2>{item.product.productName}</h2>
-                <strong>{formatPrice(item.product.unitPrice)}</strong>
-                <div>
-                  <p
-                    onClick={() =>
-                      handlePlus(
-                        cartData.cartId,
-                        item.cartItemId,
-                        item.quantity
-                      )
-                    }
-                  >
-                    +
-                  </p>
-                  <p>{item.quantity}</p>
-                  <p
-                    onClick={() =>
-                      handleMinus(
-                        cartData.cartId,
-                        item.cartItemId,
-                        item.quantity
-                      )
-                    }
-                  >
-                    -
-                  </p>
+      {isEmptyCart ? (
+        <>
+          <div className="empty">
+            <p>Your cart is empty</p>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="cart">
+            <div className="cart-main">
+              {cartList.map((item) => (
+                <div key={item.product.productId} className="cart-item">
+                  <i
+                    className="bx bxs-trash-alt"
+                    onClick={() => handleDeleteCartItem(item.cartItemId)}
+                  ></i>
+                  <img src={item.product.image} alt="" />
+                  <div className="cart-item-info">
+                    <h2>{item.product.productName}</h2>
+                    <strong>{formatPrice(item.product.unitPrice)}</strong>
+                    <div>
+                      <p
+                        onClick={() =>
+                          handlePlus(
+                            cartData.cartId,
+                            item.cartItemId,
+                            item.quantity
+                          )
+                        }
+                      >
+                        +
+                      </p>
+                      <p>{item.quantity}</p>
+                      <p
+                        onClick={() =>
+                          handleMinus(
+                            cartData.cartId,
+                            item.cartItemId,
+                            item.quantity
+                          )
+                        }
+                      >
+                        -
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="checkout-summary">
-          <div className="checkout-info">
-            {cartList.map((item) => (
-              <div key={item.product.productId} className="checkout-info-item">
-                <p>
-                  {item.product.productName} (x{item.quantity})
-                </p>
-                <p>{formatPrice(item.product.unitPrice)}</p>
+
+            <div className="checkout-summary">
+              <div className="checkout-info">
+                {cartList.map((item) => (
+                  <div
+                    key={item.product.productId}
+                    className="checkout-info-item"
+                  >
+                    <p>
+                      {item.product.productName} (x{item.quantity})
+                    </p>
+                    <p>{formatPrice(item.product.unitPrice)}</p>
+                  </div>
+                ))}
               </div>
-            ))}
+              <div className="total">
+                <strong>Total</strong>
+                <strong>{formatPrice(calculateTotalPrice())}</strong>
+              </div>
+              <Link to="/checkout">PROCEED TO CHECKOUT</Link>
+            </div>
           </div>
-          <div className="total">
-            <strong>Total</strong>
-            <strong>{formatPrice(calculateTotalPrice())}</strong>
-          </div>
-          <Link to="/checkout">PROCEED TO CHECKOUT</Link>
-        </div>
-      </div>
+        </>
+      )}
+
       <Footer />
     </div>
   );

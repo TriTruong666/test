@@ -62,6 +62,7 @@
                     button {
                         padding: 7px 30px;
                         border-radius: 10px;
+                        cursor: pointer;
                     }
 
                     button:nth-child(1) {
@@ -74,6 +75,12 @@
                     button:nth-child(2) {
                         border: 2px solid rgba(255, 255, 255, .2);
                         font-weight: 700;
+                        transition: .4s;
+                    }
+
+                    button:nth-child(2):hover {
+                        background-color: rgba(255, 255, 255, .8);
+                        color: black;
                     }
                 }
             }

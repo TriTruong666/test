@@ -7,12 +7,29 @@
         display: flex;
         flex-direction: column;
 
+        .empty {
+            width: 100%;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: $main-color;
+
+            p {
+                color: $second-color;
+                font-family: $main-font;
+                font-size: 1.3rem;
+            }
+        }
+
         .cart {
             margin-top: 88px;
             display: flex;
             padding: 60px 120px;
             background: $main-color;
             column-gap: 120px;
+
+
 
             .loading {
                 width: 100%;

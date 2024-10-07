@@ -9,6 +9,7 @@ const SuccessModalSlice = createSlice({
     },
   },
 });
+
 const AddPondModalSlice = createSlice({
   name: "addPondModal",
   initialState: { isToggleModal: false },
@@ -162,6 +163,15 @@ const DeleteProductModalSlice = createSlice({
     },
   },
 });
+const AddKoiLogModalSlice = createSlice({
+  name: "addKoiLogModal",
+  initialState: { isToggleModal: false },
+  reducers: {
+    toggleKoiLogModal: (state) => {
+      state.isToggleModal = !state.isToggleModal;
+    },
+  },
+});
 // Export the action
 export const { toggleSuccessModal } = SuccessModalSlice.actions;
 export const { toggleAddPondModal } = AddPondModalSlice.actions;
@@ -183,6 +193,7 @@ export const { toggleDeleteBlogModal } = DeleteBlogModalSlice.actions;
 export const { toggleAddProductModal } = AddProductModalSlice.actions;
 export const { toggleUpdateProductModal } = UpdateProductModalSlice.actions;
 export const { toggleDeleteProductModal } = DeleteProductModalSlice.actions;
+export const { toggleKoiLogModal } = AddKoiLogModalSlice.actions;
 
 // Combine reducers
 const ModalReducer = combineReducers({
@@ -203,6 +214,7 @@ const ModalReducer = combineReducers({
   addProductModal: AddProductModalSlice.reducer,
   updateProductModal: UpdateProductModalSlice.reducer,
   deleteProductModal: DeleteProductModalSlice.reducer,
+  addKoiLogModal: AddKoiLogModalSlice.reducer,
 });
 
 export default ModalReducer;

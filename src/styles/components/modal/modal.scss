@@ -481,12 +481,12 @@
         }
     }
 
-    .add-koi-container {
+    .add-koi-log-container {
         position: fixed;
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, .7);
-        z-index: 20;
+        z-index: 21;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -496,7 +496,7 @@
             width: 0;
         }
 
-        .add-koi-modal {
+        .add-koi-log-modal {
             width: 800px;
             max-height: 700px;
             background: white;
@@ -504,7 +504,7 @@
             padding: 40px;
             overflow-y: auto;
 
-            .add-koi-header {
+            .add-koi-log-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -519,11 +519,36 @@
                 }
             }
 
-            .add-koi-form {
+            .add-koi-log-form {
+                margin-top: 40px;
                 display: flex;
                 flex-direction: column;
                 row-gap: 35px;
                 position: relative;
+
+                .input-item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 10px;
+
+                    label {
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                    }
+
+                    ::placeholder {
+                        color: rgba(0, 0, 0, .6);
+                        font-size: 0.8rem;
+                    }
+
+                    input {
+                        padding: 12px 25px;
+                        border: 1px solid rgba(0, 0, 0, .2);
+                        color: black;
+                        font-size: 0.8rem;
+                        border-radius: 10px;
+                    }
+                }
 
                 .custom-datepicker {
                     color: black;
@@ -583,6 +608,165 @@
                     .react-datepicker__day--outside-month {
                         color: #ccc;
                         /* Color for days outside the current month */
+                    }
+                }
+
+                .submit {
+                    display: flex;
+                    justify-content: end;
+                    column-gap: 15px;
+
+
+                    button:nth-child(1) {
+                        padding: 10px 40px;
+                        border: 2px solid rgba(0, 0, 0, .2);
+                        color: black;
+                        border-radius: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+
+                    }
+
+                    button:nth-child(2) {
+                        padding: 10px 50px;
+                        background: #4b87e0;
+                        font-weight: 600;
+                        border-radius: 15px;
+                        color: white;
+                        cursor: pointer;
+
+                    }
+                }
+            }
+        }
+    }
+
+    .add-koi-container {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, .7);
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 50px;
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .add-koi-modal {
+            width: 800px;
+            max-height: 700px;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            overflow-y: auto;
+
+            .add-koi-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                strong {
+                    font-size: 1.3rem;
+                }
+
+                i {
+                    font-size: 32px;
+                    cursor: pointer;
+                }
+            }
+
+            .add-koi-form {
+                display: flex;
+                flex-direction: column;
+                row-gap: 35px;
+                position: relative;
+
+                .input-item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 10px;
+
+                    label {
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                    }
+
+                    ::placeholder {
+                        color: rgba(0, 0, 0, .6);
+                        font-size: 0.8rem;
+                    }
+
+                    input {
+                        padding: 12px 25px;
+                        border: 1px solid rgba(0, 0, 0, .2);
+                        color: black;
+                        font-size: 0.8rem;
+                        border-radius: 10px;
+                    }
+
+                    .custom-datepicker {
+                        color: black;
+                        padding: 10px 25px;
+                        width: 100%;
+                        border: 1px solid rgba(0, 0, 0, .2);
+                        border-radius: 10px;
+                        cursor: pointer;
+                    }
+
+                    .custom-calendar {
+                        background-color: white;
+                        /* Background color of the datepicker */
+                        border: 1px solid #ddd;
+                        /* Border */
+                        border-radius: 5px;
+                        /* Rounded corners */
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                        /* Shadow effect */
+                        z-index: 1000;
+
+                        react-datepicker__header {
+                            background-color: #007bff;
+                            /* Header background color */
+                            color: white;
+                            /* Header text color */
+                            border-bottom: none;
+                            /* Remove bottom border */
+                        }
+
+                        .react-datepicker__current-month {
+                            font-weight: bold;
+                            /* Bold month name */
+                            font-size: 1.2rem;
+                            /* Increase font size */
+                        }
+
+                        .react-datepicker__day {
+                            line-height: 2;
+                            /* Increase line height for spacing */
+                        }
+
+                        .react-datepicker__day:hover {
+                            background-color: #007bff;
+                            /* Change background on hover */
+                            color: white;
+                            /* Change text color on hover */
+                        }
+
+                        .react-datepicker__day--selected {
+                            background-color: #007bff;
+                            /* Selected day background */
+                            color: white;
+                            /* Selected day text color */
+                        }
+
+                        .react-datepicker__day--outside-month {
+                            color: #ccc;
+                            /* Color for days outside the current month */
+                        }
                     }
                 }
 
@@ -732,7 +916,7 @@
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, .7);
-        z-index: 20;
+        z-index: 21;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1103,9 +1287,47 @@
             background: white;
             display: flex;
             flex-direction: column;
-            padding: 30px;
+            padding: 30px 30px 50px 30px;
             overflow-y: auto;
             border-right: 1px solid rgba(0, 0, 0, .2);
+
+            .empty-log {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                row-gap: 10px;
+
+                strong {
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+
+                p {
+                    text-align: center;
+                    font-size: 0.8rem;
+                }
+
+                button {
+                    margin-top: 10px;
+                    color: white;
+                    padding: 8px 40px;
+                    font-size: 0.8rem;
+                    background: black;
+                    border-radius: 15px;
+                    border: 2px solid transparent;
+                    font-weight: 600;
+                    transition: .4s;
+                }
+
+                button:hover {
+                    border-color: black;
+                    background: white;
+                    color: black;
+                }
+            }
 
             .koi-history-header {
                 display: flex;
@@ -1133,21 +1355,35 @@
                 .header {
                     margin-top: 30px;
                     display: flex;
-                    flex-direction: column;
-                    row-gap: 5px;
+                    align-items: center;
+                    justify-content: space-between;
 
-                    strong {
-                        font-size: 1.05rem;
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        row-gap: 5px;
+
+                        strong {
+                            font-size: 1.05rem;
+                        }
+
+                        p {
+                            color: rgba(0, 0, 0, .8);
+                            font-size: 0.8rem;
+                        }
                     }
 
-                    p {
+                    span {
+                        font-size: 0.75rem;
                         color: rgba(0, 0, 0, .8);
-                        font-size: 0.8rem;
+                        text-decoration: underline;
+                        cursor: pointer;
                     }
                 }
 
                 .history {
                     margin-top: 20px;
+                    padding-bottom: 30px;
 
                     thead {
                         tr {
@@ -1336,7 +1572,7 @@
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, .7);
-        z-index: 20;
+        z-index: 21;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -1,15 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "../../styles/checkout/checkout.css";
 // import components
 import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
+// import service
+import * as CartService from "../../service/cart/cartService";
+import { ClipLoader } from "react-spinners";
 export const Checkout = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.userId || null;
+  // state
+  const [cartList, setCartList] = useState([]);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  // query
+  const {
+    data: cartData = {},
+    isFetching,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["my-cart", userId],
+    queryFn: () => CartService.getCartByMember(userId),
+    refetchOnWindowFocus: false,
+  });
   useEffect(() => {
     document.title = "Checkout";
-  });
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+    if (cartData && Array.isArray(cartData.cartItems)) {
+      setCartList(cartData.cartItems);
+    }
+  }, [isFetching, isLoading]);
+  // calculator
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(price);
+  const calculateItemPrice = (unitPrice, quantity) => {
+    return unitPrice * quantity;
+  };
+  const calculateTotalPrice = () => {
+    return cartList.reduce((total, item) => {
+      return total + item.product.unitPrice * item.quantity;
+    }, 0);
+  };
   return (
     <div className="checkout-container">
       <Checkoutnav />
@@ -25,17 +68,28 @@ export const Checkout = () => {
           <form action="" autoComplete="off" className="checkout-form">
             <div className="input-item">
               <label htmlFor="fullname">Full name</label>
-              <input type="text" id="fullname" placeholder="Enter full name" />
+              <input
+                type="text"
+                id="fullname"
+                defaultValue={user.fullname}
+                placeholder="Enter full name"
+              />
             </div>
             <div className="input-item">
               <label htmlFor="email">Email</label>
-              <input type="text" id="email" placeholder="Enter your email" />
+              <input
+                type="text"
+                id="email"
+                defaultValue={user.email}
+                placeholder="Enter your email"
+              />
             </div>
             <div className="input-item">
               <label htmlFor="phone">Phone</label>
               <input
                 type="text"
                 id="phone"
+                defaultValue={user.phone}
                 placeholder="Enter your phone number"
               />
             </div>
@@ -44,50 +98,64 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="address"
+                defaultValue={user.address}
                 placeholder="Enter your address"
               />
             </div>
           </form>
         </div>
         <div className="cart-review">
-          <div className="cart-review-header">
-            <h2>Review Your Cart</h2>
-          </div>
-          <div className="cart-list">
-            <div className="cart-item">
-              <img src={koiproduct} alt="" />
-              <div>
-                <strong>Mazuri Koi Diet</strong>
-                <small>x4</small>
-                <p>Koi food</p>
-                <span>$100</span>
+          {isLoadingPage ? (
+            <>
+              <div className="loading">
+                <ClipLoader color="#ffffff" size={40} />
               </div>
-            </div>
-            <div className="cart-item">
-              <img src={koiproduct} alt="" />
-              <div>
-                <strong>Mazuri Koi Diet</strong>
-                <small>x4</small>
-                <p>Koi food</p>
-                <span>$100</span>
+            </>
+          ) : (
+            <>
+              <div className="cart-review-header">
+                <h2>Review Your Cart</h2>
               </div>
-            </div>
-          </div>
-          <div className="cart-summary">
-            <div className="summary-item">
-              <p>Subtotal</p>
-              <p>$100</p>
-            </div>
-            <div className="summary-item">
-              <p>Shipping</p>
-              <p>Free</p>
-            </div>
-            <div className="summary-total">
-              <strong>Total</strong>
-              <strong>$100</strong>
-            </div>
-          </div>
-          <Link to="/payment">Pay Now</Link>
+              <div className="cart-list">
+                {cartList.map((item) => (
+                  <div key={item.cartItemId} className="cart-item">
+                    <img src={item.product.image} alt="" />
+                    <div className="info">
+                      <div>
+                        <strong>{item.product.productName}</strong>
+                        <small>x{item.quantity}</small>
+                      </div>
+                      <p>{item.product.category.cateName}</p>
+
+                      <span>
+                        {formatPrice(
+                          calculateItemPrice(
+                            item.product.unitPrice,
+                            item.quantity
+                          )
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="cart-summary">
+                <div className="summary-item">
+                  <p>Subtotal</p>
+                  <p>{formatPrice(calculateTotalPrice())}</p>
+                </div>
+                <div className="summary-item">
+                  <p>Shipping</p>
+                  <p>Free</p>
+                </div>
+                <div className="summary-total">
+                  <strong>Total</strong>
+                  <strong>{formatPrice(calculateTotalPrice())}</strong>
+                </div>
+              </div>
+              <Link to="/payment">Pay Now</Link>
+            </>
+          )}
         </div>
       </div>
     </div>

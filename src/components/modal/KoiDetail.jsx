@@ -53,11 +53,11 @@ export const KoiDetail = () => {
   };
   const handleToggleDelKoiModal = () => {
     dispatch(toggleDelKoiModal());
-    dispatch(toggleDetailKoiModalOff());
+    // dispatch(toggleDetailKoiModalOff());
   };
   const handleToggleUpdateKoiModal = () => {
     dispatch(toggleUpdateKoiModal());
-    dispatch(toggleDetailKoiModalOff());
+    // dispatch(toggleDetailKoiModalOff());
   };
   return (
     <div className="koi-detail-container">
@@ -101,14 +101,6 @@ export const KoiDetail = () => {
                 <div className="koi-info">
                   <strong>Sex</strong>
                   <p>{koiInfo.sex ? "Male" : "Female"}</p>
-                </div>
-                <div className="koi-info">
-                  <strong>Size</strong>
-                  <p>40cm</p>
-                </div>
-                <div className="koi-info">
-                  <strong>Weight</strong>
-                  <p>2.3kg</p>
                 </div>
                 <div className="koi-info">
                   <strong>Type</strong>

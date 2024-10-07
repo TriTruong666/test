@@ -50,19 +50,6 @@ select option {
     -moz-column-gap: 120px;
          column-gap: 120px;
   }
-
-  .product-detail-container .product-detail .product-detail-main .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  } 
-  .product-detail-container .product-detail .product-detail-main .error-page  p {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-  }
   .product-detail-container .product-detail .product-detail-main .loading {
     width: 100%;
     height: 400px;

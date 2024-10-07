@@ -36,15 +36,34 @@
             column-gap: 40px;
             align-items: center;
 
-            i {
-                font-size: 22px;
-                color: $second-color;
-            }
-
             a {
+                position: relative;
                 color: $second-color;
                 font-size: 0.8rem;
                 font-family: $main-font;
+
+                i {
+                    font-size: 26px;
+                    color: $second-color;
+                }
+
+                p {
+                    top: -17px;
+                    left: 23px;
+                    position: absolute;
+                    font-size: 0.5rem;
+                    padding: 3px 7px;
+                    text-align: center;
+                    border-radius: 50%;
+                    background: $second-color;
+                    color: black;
+                    font-weight: 600;
+                }
+            }
+
+            i {
+                font-size: 22px;
+                color: $second-color;
             }
 
             a:nth-child(3) {

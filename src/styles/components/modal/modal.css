@@ -460,6 +460,146 @@ select option {
     color: white;
     cursor: pointer;
   }
+  .add-koi-log-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 21;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .add-koi-log-container ::-webkit-scrollbar {
+    width: 0;
+  }
+  .add-koi-log-container .add-koi-log-modal {
+    width: 800px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-header strong {
+    font-size: 1.3rem;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 35px;
+    position: relative;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .input-item input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-datepicker {
+    color: black;
+    padding: 10px 25px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar {
+    background-color: white;
+    /* Background color of the datepicker */
+    border: 1px solid #ddd;
+    /* Border */
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Shadow effect */
+    z-index: 1000;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar react-datepicker__header {
+    background-color: #007bff;
+    /* Header background color */
+    color: white;
+    /* Header text color */
+    border-bottom: none;
+    /* Remove bottom border */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__current-month {
+    font-weight: bold;
+    /* Bold month name */
+    font-size: 1.2rem;
+    /* Increase font size */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day {
+    line-height: 2;
+    /* Increase line height for spacing */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day:hover {
+    background-color: #007bff;
+    /* Change background on hover */
+    color: white;
+    /* Change text color on hover */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--selected {
+    background-color: #007bff;
+    /* Selected day background */
+    color: white;
+    /* Selected day text color */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--outside-month {
+    color: #ccc;
+    /* Color for days outside the current month */
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .add-koi-container {
     position: fixed;
     width: 100vw;
@@ -500,7 +640,31 @@ select option {
     row-gap: 35px;
     position: relative;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-datepicker {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-datepicker {
     color: black;
     padding: 10px 25px;
     width: 100%;
@@ -508,7 +672,7 @@ select option {
     border-radius: 10px;
     cursor: pointer;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar {
     background-color: white;
     /* Background color of the datepicker */
     border: 1px solid #ddd;
@@ -519,7 +683,7 @@ select option {
     /* Shadow effect */
     z-index: 1000;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar react-datepicker__header {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar react-datepicker__header {
     background-color: #007bff;
     /* Header background color */
     color: white;
@@ -527,29 +691,29 @@ select option {
     border-bottom: none;
     /* Remove bottom border */
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar .react-datepicker__current-month {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__current-month {
     font-weight: bold;
     /* Bold month name */
     font-size: 1.2rem;
     /* Increase font size */
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar .react-datepicker__day {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day {
     line-height: 2;
     /* Increase line height for spacing */
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar .react-datepicker__day:hover {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day:hover {
     background-color: #007bff;
     /* Change background on hover */
     color: white;
     /* Change text color on hover */
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar .react-datepicker__day--selected {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day--selected {
     background-color: #007bff;
     /* Selected day background */
     color: white;
     /* Selected day text color */
   }
-  .add-koi-container .add-koi-modal .add-koi-form .custom-calendar .react-datepicker__day--outside-month {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day--outside-month {
     color: #ccc;
     /* Color for days outside the current month */
   }
@@ -680,7 +844,7 @@ select option {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 20;
+    z-index: 21;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -998,9 +1162,42 @@ select option {
     background: white;
     display: flex;
     flex-direction: column;
-    padding: 30px;
+    padding: 30px 30px 50px 30px;
     overflow-y: auto;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .koi-detail-container .koi-history-modal .empty-log {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .koi-detail-container .koi-history-modal .empty-log strong {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .koi-detail-container .koi-history-modal .empty-log p {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-history-modal .empty-log button {
+    margin-top: 10px;
+    color: white;
+    padding: 8px 40px;
+    font-size: 0.8rem;
+    background: black;
+    border-radius: 15px;
+    border: 2px solid transparent;
+    font-weight: 600;
+    transition: 0.4s;
+  }
+  .koi-detail-container .koi-history-modal .empty-log button:hover {
+    border-color: black;
+    background: white;
+    color: black;
   }
   .koi-detail-container .koi-history-modal .koi-history-header {
     display: flex;
@@ -1024,18 +1221,30 @@ select option {
   .koi-detail-container .koi-history-modal .koi-history-main .header {
     margin-top: 30px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .koi-detail-container .koi-history-modal .koi-history-main .header div {
+    display: flex;
     flex-direction: column;
     row-gap: 5px;
   }
-  .koi-detail-container .koi-history-modal .koi-history-main .header strong {
+  .koi-detail-container .koi-history-modal .koi-history-main .header div strong {
     font-size: 1.05rem;
   }
-  .koi-detail-container .koi-history-modal .koi-history-main .header p {
+  .koi-detail-container .koi-history-modal .koi-history-main .header div p {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
   }
+  .koi-detail-container .koi-history-modal .koi-history-main .header span {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: underline;
+    cursor: pointer;
+  }
   .koi-detail-container .koi-history-modal .koi-history-main .history {
     margin-top: 20px;
+    padding-bottom: 30px;
   }
   .koi-detail-container .koi-history-modal .koi-history-main .history thead tr {
     display: grid;
@@ -1186,7 +1395,7 @@ select option {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 20;
+    z-index: 21;
     display: flex;
     align-items: center;
     justify-content: center;

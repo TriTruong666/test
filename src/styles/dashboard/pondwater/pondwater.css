@@ -37,17 +37,6 @@ select option {
     padding: 20px 40px 100px 40px;
     scroll-behavior: smooth;
   }
-  .pond-water-container .error-page {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .pond-water-container .error-page p {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
   .pond-water-container .loading {
     width: 100%;
     height: 500px;

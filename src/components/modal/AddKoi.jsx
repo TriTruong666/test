@@ -16,6 +16,7 @@ import { toggleAddKoiModal } from "../../redux/slices/modal/modal";
 // import service
 import * as KoiService from "../../service/koi/koiService";
 export const AddKoi = () => {
+  const maxKoiAge = 40;
   const countryNameMap = {
     JP: "Japan",
     CN: "China",
@@ -37,6 +38,7 @@ export const AddKoi = () => {
     sex: "",
     type: "",
     origin: "",
+    createDate: "",
     pondId: pondId,
   });
   //   dispatch
@@ -121,7 +123,8 @@ export const AddKoi = () => {
       !submitData.origin ||
       !submitData.pondId ||
       !submitData.sex ||
-      !submitData.type
+      !submitData.type ||
+      !submitData.createDate
     ) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -175,17 +178,21 @@ export const AddKoi = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input
-            type="text"
-            id="koiname"
-            placeholder="Koi name"
-            onChange={handleOnChange}
-            name="name"
-          />
+          <div className="input-item">
+            <label htmlFor="koiname">Koi name</label>
+            <input
+              type="text"
+              id="koiname"
+              placeholder="Koi name"
+              onChange={handleOnChange}
+              name="name"
+            />
+          </div>
+
           <div className="select-two-fields">
             <div className="select">
               <select name="type" onChange={handleOnChange} id="">
-                <option value="">Type</option>
+                <option value="">Select Type</option>
                 <option value="Kohaku">Kohaku</option>
                 <option value="Sanke">Sanke</option>
                 <option value="Showa">Showa</option>
@@ -200,7 +207,7 @@ export const AddKoi = () => {
             </div>
             <div className="select">
               <select name="sex" onChange={handleOnChange} id="">
-                <option value="">Gender</option>
+                <option value="">Select Gender</option>
                 <option value="true">Male</option>
                 <option value="false">Female</option>
               </select>
@@ -213,12 +220,47 @@ export const AddKoi = () => {
             placeholder="Select origin"
             className="menu-flags"
           />
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            className="custom-datepicker"
-            calendarClassName="custom-calendar"
-          />
+          <div className="input-item">
+            <label htmlFor="">First date in pond</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                const currentDate = new Date();
+                const koiAge = currentDate.getFullYear() - date.getFullYear();
+
+                if (koiAge <= maxKoiAge) {
+                  setStartDate(date);
+                  setSubmitData({
+                    ...submitData,
+                    createDate: date.toISOString().split("T")[0],
+                  });
+                } else {
+                  setSubmitData({
+                    ...submitData,
+                    createDate: "",
+                  });
+                  toast.error(
+                    `Koi age exceeds the maximum allowed age of ${maxKoiAge} years`,
+                    {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      theme: "dark",
+                    }
+                  );
+                }
+              }}
+              maxDate={new Date()}
+              endDate={new Date()}
+              dateFormat="yyyy-MM-dd"
+              className="custom-datepicker"
+              calendarClassName="custom-calendar"
+            />
+          </div>
+
           <div className="submit">
             <button onClick={handleToggleAddKoiModal}>Cancel</button>
             <button>Create confirm</button>

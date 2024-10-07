@@ -1,5 +1,9 @@
-// cartService.js
 import axios from "axios";
+
+//
+//
+//
+// guest
 export const addToCartByGuest = async (product) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
@@ -21,10 +25,33 @@ export const addToCartByGuest = async (product) => {
   }
 };
 
+export const updateGuestCartQuantity = (productId, newQuantity) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const productIndex = cart.findIndex((item) => item.productId === productId);
+
+  if (productIndex !== -1) {
+    if (newQuantity > 0) {
+      cart[productIndex].quantity = newQuantity;
+    } else {
+      cart.splice(productIndex, 1);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+};
+
+export const removeFromGuestCart = (productId) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart = cart.filter((item) => item.productId !== productId);
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
 export const getCartByGuest = () => {
   return JSON.parse(localStorage.getItem("cart")) || [];
 };
-
+//
+//
+//
+// member
 export const addToCartByMember = async (cartId, productId, quantity) => {
   const token = localStorage.getItem("token");
   try {
@@ -54,10 +81,8 @@ export const createCart = async (userId) => {
       },
     });
     localStorage.setItem("cartId", res.data.result.cartId);
-    console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.result;
   }
 };
@@ -89,10 +114,8 @@ export const updateQuantity = async (cartId, cartItemId, quantity) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -107,10 +130,8 @@ export const deleteCartItem = async (cartItemId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };

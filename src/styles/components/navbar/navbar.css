@@ -65,14 +65,31 @@ select option {
          column-gap: 40px;
     align-items: center;
   }
-  .navbar-container .navbar-second i {
-    font-size: 22px;
-    color: #BCAB6F;
-  }
   .navbar-container .navbar-second a {
+    position: relative;
     color: #BCAB6F;
     font-size: 0.8rem;
     font-family: "Roboto Mono", monospace;
+  }
+  .navbar-container .navbar-second a i {
+    font-size: 26px;
+    color: #BCAB6F;
+  }
+  .navbar-container .navbar-second a p {
+    top: -17px;
+    left: 23px;
+    position: absolute;
+    font-size: 0.5rem;
+    padding: 3px 7px;
+    text-align: center;
+    border-radius: 50%;
+    background: #BCAB6F;
+    color: black;
+    font-weight: 600;
+  }
+  .navbar-container .navbar-second i {
+    font-size: 22px;
+    color: #BCAB6F;
   }
   .navbar-container .navbar-second a:nth-child(3) {
     padding: 10px 25px;

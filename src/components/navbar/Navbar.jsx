@@ -15,12 +15,18 @@ export const Navbar = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+
   // state
+  const [lengthOfGuestCart, setLengthOfGuestCart] = useState(0);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
+  const [guestCartList, setGuestCartList] = useState([]);
+  const [cartList, setCartList] = useState([]);
+  const [isEmptyCartGuest, setIsEmptyCartGuest] = useState(false);
   // query
   const { data: cartInfo = {} } = useQuery({
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
+    enabled: !!userId,
   });
   const [isAuth, setIsAuth] = useState(false);
   // navigate
@@ -39,56 +45,114 @@ export const Navbar = () => {
       setIsAuth(true);
     }
   };
+
   useEffect(() => {
     handleSetIsAuth();
-    if (cartInfo && cartInfo.cartItems && cartInfo.cartItems.length === 0) {
-      setIsEmptyCart(true);
+
+    if (token && user) {
+      if (cartInfo && cartInfo.cartItems && cartInfo.cartItems.length === 0) {
+        setIsEmptyCart(true);
+      } else {
+        setIsEmptyCart(false);
+        if (cartInfo) {
+          setCartList(cartInfo.cartItems);
+        }
+      }
     } else {
-      setIsEmptyCart(false);
+      const currentCart = CartService.getCartByGuest;
+      setGuestCartList(currentCart);
+      if (guestCartList.length === 0) {
+        setIsEmptyCartGuest(true);
+      } else {
+        setIsEmptyCartGuest(false);
+        setLengthOfGuestCart(guestCartList.length);
+      }
     }
   }, [cartInfo]);
+  const totalQuantity = () => {
+    return cartList.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  };
+  const totalQuantityGuestCart = () => {
+    return guestCartList.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  };
   return (
     <div className="navbar-container">
-      <div className="navbar-main">
-        <img src={logo} alt="" onClick={() => navigate("/")} />
-        <Link to="/#about">What Is Izumiya?</Link>
-        <Link to="/shop">Shop</Link>
-        <Link to="/#solution">Solutions</Link>
-        <a href="">About</a>
-        <a href="">Contact</a>
-        <Link to="/blog">Blog</Link>
-      </div>
-      {isAuth ? (
-        <div className="navbar-third">
-          {isEmptyCart ? (
-            <>
+      {token && user ? (
+        <>
+          <div className="navbar-main">
+            <img src={logo} alt="" onClick={() => navigate("/")} />
+            <Link to="/#about">What Is Izumiya?</Link>
+            <Link to="/shop">Shop</Link>
+            <Link to="/#solution">Solutions</Link>
+            <a href="">About</a>
+            <a href="">Contact</a>
+            <Link to="/blog">Blog</Link>
+          </div>
+          {isAuth ? (
+            <div className="navbar-third">
+              {isEmptyCart ? (
+                <>
+                  <Link to="/cart">
+                    <i className="bx bx-cart"></i>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/cart">
+                    <i className="bx bxs-cart"></i>
+                    <p>{totalQuantity()}</p>
+                  </Link>
+                </>
+              )}
+              <div className="info" onClick={handleToggleSettingnav}>
+                <strong>{user.fullname}</strong>
+                <i className="bx bx-chevron-down"></i>
+              </div>
+            </div>
+          ) : (
+            <div className="navbar-second">
               <Link to="/cart">
                 <i className="bx bx-cart"></i>
               </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/cart">
-                <i className="bx bxs-cart"></i>
-                <p>
-                  {cartInfo && cartInfo.cartItems && cartInfo.cartItems.length}
-                </p>
-              </Link>
-            </>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
           )}
-          <div className="info" onClick={handleToggleSettingnav}>
-            <strong>{user.fullname}</strong>
-            <i className="bx bx-chevron-down"></i>
-          </div>
-        </div>
+        </>
       ) : (
-        <div className="navbar-second">
-          <Link to="/cart">
-            <i className="bx bx-cart"></i>
-          </Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
+        <>
+          <div className="navbar-main">
+            <img src={logo} alt="" onClick={() => navigate("/")} />
+            <Link to="/#about">What Is Izumiya?</Link>
+            <Link to="/shop">Shop</Link>
+            <Link to="/#solution">Solutions</Link>
+            <a href="">About</a>
+            <a href="">Contact</a>
+            <Link to="/blog">Blog</Link>
+          </div>
+          <div className="navbar-second">
+            {isEmptyCartGuest ? (
+              <>
+                <Link to="/cart">
+                  <i className="bx bx-cart"></i>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/cart">
+                  <i className="bx bxs-cart"></i>
+                  <p>{totalQuantityGuestCart()}</p>
+                </Link>
+              </>
+            )}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        </>
       )}
     </div>
   );

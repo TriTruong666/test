@@ -26,7 +26,7 @@ export const Shoplist = ({
     data: products = [],
     isLoading,
     isFetching,
-    isError
+    isError,
   } = useQuery({
     queryKey: ["products"],
     queryFn: ProductService.getAllProductShop,
@@ -51,7 +51,7 @@ export const Shoplist = ({
     } else {
       setServerError(null);
     }
-  }, [isLoading, isFetching, cartInfo,isError]);
+  }, [isLoading, isFetching, cartInfo, isError]);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -69,7 +69,7 @@ export const Shoplist = ({
         progress: undefined,
         theme: "dark",
       });
-      queryClient.invalidateQueries(["cart"]);
+      queryClient.invalidateQueries(["products"]);
     },
   });
 
@@ -87,20 +87,21 @@ export const Shoplist = ({
       }
     } else {
       CartService.addToCartByGuest(product);
+      CartService.getCartByGuest();
     }
   };
   return (
     <div className="shoplist-container">
       <ToastContainer />
       {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingList ? (
+        <div className="loading">
+          <ClipLoader color="#ffffff" size={40} />
+        </div>
+      ) : (
         <>
           {isColumn ? (
             <>

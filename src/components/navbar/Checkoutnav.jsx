@@ -22,8 +22,8 @@ export const Checkoutnav = () => {
         </div>
         <div className="line"></div>
         <div className="process-item">
-          <i className="bx bxs-check-circle"></i>
-          <p>Confirm</p>
+          <i className="bx bxs-x-circle"></i>
+          <p>Payment</p>
         </div>
       </div>
     </div>

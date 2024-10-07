@@ -1,5 +1,5 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,6 +26,7 @@ export const UserSetting = () => {
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const [submitData, setSubmitData] = useState({
     fullname: myInfo && myInfo.fullname,
     phone: myInfo && myInfo.phone,
@@ -69,7 +70,12 @@ export const UserSetting = () => {
       setNewPass("");
       setConfirmPass("");
     }
-  }, [isToggleChangePass, isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isToggleChangePass, isFetching, isLoading,isError]);
 
   // handle func
   const handleToggleChangePassTrue = () => {
@@ -99,13 +105,15 @@ export const UserSetting = () => {
       <Dashnav />
       <ToastContainer />
       <div className="user-setting">
-        {isLoadingPage ? (
-          <>
+      {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
             </div>
-          </>
-        ) : (
+          ): (
           <>
             <div className="setting-header">
               <strong>{myInfo && myInfo.fullname}'s setting</strong>

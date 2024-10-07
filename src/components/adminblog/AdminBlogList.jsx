@@ -42,15 +42,15 @@ export const AdminBlogList = () => {
 
   return (
       <div className="admin-blog-list">
-      {serverError ? (
-        <div className="error-page">
-          <p>{serverError}</p>
-        </div>
-      ) : isLoading || isFetching ? (
-        <div className="loading">
-          <ClipLoader color="#ffffff" size={50} />
-        </div>
-      ) : (
+       {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ) : (
         <>
           {emptyList && (
             <div className="empty-list">

@@ -1,12 +1,12 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import service
-import * as ProductService from "../../service/product/productService";
 import * as CartService from "../../service/cart/cartService";
+import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/components/shop/shop.css";
 
@@ -21,10 +21,12 @@ export const Shoplist = ({
   const userId = user.userId;
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [cartId, setCartId] = useState(null);
+  const [serverError, setServerError] = useState(null);
   const {
     data: products = [],
     isLoading,
     isFetching,
+    isError
   } = useQuery({
     queryKey: ["products"],
     queryFn: ProductService.getAllProductShop,
@@ -43,7 +45,13 @@ export const Shoplist = ({
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }
-  }, [isLoading, isFetching, cartInfo]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isLoading, isFetching, cartInfo,isError]);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -84,11 +92,15 @@ export const Shoplist = ({
   return (
     <div className="shoplist-container">
       <ToastContainer />
-      {isLoadingPage || isLoadingList ? (
-        <div className="loading">
-          <ClipLoader color="#ffffff" size={50} />
-        </div>
-      ) : (
+      {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ) : (
         <>
           {isColumn ? (
             <>

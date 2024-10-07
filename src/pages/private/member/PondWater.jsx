@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../../styles/dashboard/pondwater/pondwater.css";
@@ -21,6 +21,7 @@ export const PondWater = () => {
   const { pondId } = useParams();
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   const {
     data: pondInfo = {},
@@ -38,16 +39,25 @@ export const PondWater = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
+  }, [isFetching, isLoading,isError]);
   return (
     <div className="pond-water-container">
-      {isLoadingPage ? (
-        <>
-          <div className="loading">
-            <ClipLoader color="#000000" size={40} />
-          </div>
-        </>
-      ) : (
+      {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ) : (
         <>
           <div className="pond-water-header">
             <div className="header">

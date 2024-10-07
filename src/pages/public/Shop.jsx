@@ -114,7 +114,7 @@ export const Shop = () => {
           {serverError ? (
         <>
           <div className="error-page">
-            <p>Server is closed now</p>
+            <p></p>
           </div>
         </>
       ): (

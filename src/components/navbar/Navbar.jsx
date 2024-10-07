@@ -17,7 +17,6 @@ export const Navbar = () => {
   const userId = user?.userId || null;
 
   // state
-  const [lengthOfGuestCart, setLengthOfGuestCart] = useState(0);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
   const [guestCartList, setGuestCartList] = useState([]);
   const [cartList, setCartList] = useState([]);
@@ -50,34 +49,31 @@ export const Navbar = () => {
     handleSetIsAuth();
 
     if (token && user) {
-      if (cartInfo && cartInfo.cartItems && cartInfo.cartItems.length === 0) {
-        setIsEmptyCart(true);
-      } else {
-        setIsEmptyCart(false);
-        if (cartInfo) {
-          setCartList(cartInfo.cartItems);
-        }
+      if (cartInfo) {
+        setCartList(cartInfo.cartItems || []); // Default to empty array
+        setIsEmptyCart(!cartInfo.cartItems || cartInfo.cartItems.length === 0);
       }
     } else {
       const currentCart = CartService.getCartByGuest;
-      setGuestCartList(currentCart);
-      if (guestCartList.length === 0) {
-        setIsEmptyCartGuest(true);
-      } else {
-        setIsEmptyCartGuest(false);
-        setLengthOfGuestCart(guestCartList.length);
-      }
+      setGuestCartList(currentCart || []); // Default to empty array
+      setIsEmptyCartGuest(currentCart.length === 0);
     }
-  }, [cartInfo]);
+  }, [cartInfo, token, user]);
+  // calculate
   const totalQuantity = () => {
-    return cartList.reduce((total, item) => {
-      return total + item.quantity;
-    }, 0);
+    return Array.isArray(cartList)
+      ? cartList.reduce((total, item) => {
+          return total + (item.quantity || 0);
+        }, 0)
+      : 0;
   };
+
   const totalQuantityGuestCart = () => {
-    return guestCartList.reduce((total, item) => {
-      return total + item.quantity;
-    }, 0);
+    return Array.isArray(guestCartList)
+      ? guestCartList.reduce((total, item) => {
+          return total + (item.quantity || 0);
+        }, 0)
+      : 0;
   };
   return (
     <div className="navbar-container">

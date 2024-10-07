@@ -18,7 +18,7 @@ export const Shoplist = ({
 }) => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.userId;
+  const userId = user?.userId || null;
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [cartId, setCartId] = useState(null);
   const {

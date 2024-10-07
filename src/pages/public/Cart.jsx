@@ -85,13 +85,9 @@ export const Cart = () => {
   };
   useEffect(() => {
     document.title = "Cart";
-    if (cartData) {
+    if (cartData && Array.isArray(cartData.cartItems)) {
       setCartList(cartData.cartItems);
-      if (cartList && cartList.length === 0) {
-        setIsEmptyCart(true);
-      } else {
-        setIsEmptyCart(false);
-      }
+      setIsEmptyCart(cartData.cartItems.length === 0);
     }
   }, [cartData, cartList]);
   // format

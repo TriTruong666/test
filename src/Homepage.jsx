@@ -37,7 +37,7 @@ const stripHtmlTags = (html) => {
 export const Homepage = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.userId;
+  const userId = user?.userId || null;
   // state
   const [isAuth, setIsAuth] = useState(false);
   // query

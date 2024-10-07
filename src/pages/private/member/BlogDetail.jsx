@@ -1,16 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../../styles/dashboard/myblogdetail/myblogdetail.css";
 // import assets
-import image from "../../../assets/blogheader.jpg";
 // import slices
 import {
-  toggleUpdateBlogModal,
   toggleDeleteBlogModal,
+  toggleUpdateBlogModal,
 } from "../../../redux/slices/modal/modal";
 // import service
 import * as BlogService from "../../../service/blog/blogService";
@@ -31,6 +30,7 @@ export const BlogDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isNotFoundBlog, setIsNotFoundBlog] = useState(false);
+  const [serverError, setServerError] = useState(null);
   // param
   const { blogId } = useParams();
   // dispatch
@@ -63,16 +63,24 @@ export const BlogDetail = () => {
     } else {
       setIsNotFoundBlog(false);
     }
-  }, [isFetching, isLoading, blog]);
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading, blog,isError]);
   return (
     <div className="my-blog-detail-container">
-      {isLoadingPage ? (
-        <>
-          <div className="loading">
-            <ClipLoader color="#000000" size={50} />
-          </div>
-        </>
-      ) : (
+     {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ) : (
         <>
           {isNotFoundBlog ? (
             <>

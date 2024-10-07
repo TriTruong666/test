@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 
 // import styles
@@ -8,8 +8,7 @@ import "../../../styles/dashboard/ponddetail/ponddetail.css";
 // import dispatch
 import { useDispatch } from "react-redux";
 // import slices
-import { toggleUpdatePondModal } from "../../../redux/slices/modal/modal";
-import { toggleDelPondModal } from "../../../redux/slices/modal/modal";
+import { toggleDelPondModal, toggleUpdatePondModal } from "../../../redux/slices/modal/modal";
 // import service
 import * as PondService from "../../../service/pond/pondService";
 export const PondDetail = () => {
@@ -44,10 +43,26 @@ export const PondDetail = () => {
     } else {
       setIsNotFoundPond(false);
     }
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
+
   }, [pondStatus, isFetching, isLoading, isError]);
   return (
     <div className="pond-detail-container">
-      {isNotFoundPond ? (
+      
+      {serverError ? (
+            <div className="error-page">
+              <p>{serverError}</p>
+            </div>
+          ) : isLoadingPage ? (
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          ): isNotFoundPond ? (
         <>
           <div className="not-found">
             <h2>Pond is not found</h2>

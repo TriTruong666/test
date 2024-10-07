@@ -43,42 +43,31 @@ export const MyBlogList = () => {
   }, [isFetching, isLoading,isError]);
   return (
     <div className="my-blog-list">
-{serverError ? (
-        <>
-          <div className="error-page">
-            <p>Server is closed now</p>
-          </div>
-        </>
-      ) :(
-        <>
-         {emptyList && (
-        <div className="empty-list">
-          <p>{emptyList}</p>
-        </div>
-      )}
-      {isLoadingPage ? (
-        <>
-          <div className="loading">
-            <ClipLoader color="#000000" size={50} />
-          </div>
-        </>
-      ) : (
-        <>
-          {blogs.map((blog) => (
-            <>
-              <Link
-                key={blog && blog.blogId}
-                to={`/dashboard/myblog/review/${blog.blogId}`}
-              >
-                <strong>{blog && blog.title}</strong>
-                <p>Create at {blog && blog.createDate}</p>
-              </Link>
-            </>
-          ))}
-        </>
-      )}
-        </>
-      )}
-    </div>
-  );
+    {serverError ? (
+      <div className="error-page">
+        <p>{serverError}</p>
+      </div>
+    ) : isLoadingPage ? (
+      <div className="loading">
+        <ClipLoader color="#000000" size={50} />
+      </div>
+    ) : emptyList ? (
+      <div className="empty-list">
+        <p>{emptyList}</p>
+      </div>
+    ) : (
+      <>
+        {blogs.map((blog) => (
+          <Link
+            key={blog.blogId}
+            to={`/dashboard/myblog/review/${blog.blogId}`}
+          >
+            <strong>{blog.title}</strong>
+            <p>Created at {blog.createDate}</p>
+          </Link>
+        ))}
+      </>
+    )}
+  </div>
+);
 };

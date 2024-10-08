@@ -11,6 +11,7 @@ import koiproduct from "../../assets/koiproduct.png";
 import * as CartService from "../../service/cart/cartService";
 import { ClipLoader } from "react-spinners";
 export const Checkout = () => {
+  const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
@@ -29,13 +30,24 @@ export const Checkout = () => {
   });
   useEffect(() => {
     document.title = "Checkout";
-    if (isLoading || isFetching) {
-      setIsLoadingPage(true);
+    if (token && user) {
+      if (isLoading || isFetching) {
+        setIsLoadingPage(true);
+      } else {
+        setIsLoadingPage(false);
+      }
+      if (cartData && Array.isArray(cartData.cartItems)) {
+        setCartList(cartData.cartItems);
+      }
     } else {
-      setIsLoadingPage(false);
-    }
-    if (cartData && Array.isArray(cartData.cartItems)) {
-      setCartList(cartData.cartItems);
+      const guestCart = CartService.getCartByGuest() || [];
+      setGuestCartList(guestCart);
+      if (guestCart.length === 0) {
+        setIsEmptyCart(true);
+        CartService.getCartByGuest();
+      } else {
+        setIsEmptyCart(false);
+      }
     }
   }, [isFetching, isLoading]);
   // calculator

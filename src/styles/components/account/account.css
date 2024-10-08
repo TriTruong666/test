@@ -67,6 +67,17 @@ select option {
   .account-list-table thead tr th:nth-child(6) {
     text-align: start;
   }
+  .account-list-table tbody .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .account-list-table tbody .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
   .account-list-table tbody .loading {
     width: 100%;
     height: 400px;

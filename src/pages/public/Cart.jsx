@@ -16,7 +16,6 @@ export const Cart = () => {
   const userId = user?.userId || null;
   const token = localStorage.getItem("token");
   // state
-  const [quantity, setQuantity] = useState(0);
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isEmptyCart, setIsEmptyCart] = useState(false);

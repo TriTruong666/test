@@ -272,7 +272,7 @@ export const PondWater = () => {
               )}`}
             >
               <strong>
-                Salt (
+                Saltt (
                 {calculateParamTitle(pondInfo?.waterParam?.salt, 0.1, 0.3)})
               </strong>
               <p>{saltAdjustment?.message}</p>

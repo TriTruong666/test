@@ -38,6 +38,19 @@ select option {
     justify-content: center;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
   }
+  .shoplist-container .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .shoplist-container .error-page p {
+    color: white;
+    font-size: 1.1rem;
+    font-family: "Roboto Mono", monospace;
+  }
   .shoplist-container .loading {
     width: 100%;
     height: 700px;

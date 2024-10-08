@@ -36,6 +36,19 @@ select option {
     display: flex;
     flex-direction: column;
   }
+  .cart-container .error-page {
+    width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #131313;
+  }
+  .cart-container .error-page p {
+    color: #BCAB6F;
+    font-family: "Roboto Mono", monospace;
+    font-size: 1.3rem;
+  }
   .cart-container .empty {
     width: 100%;
     height: 700px;

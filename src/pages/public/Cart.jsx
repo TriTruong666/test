@@ -1,14 +1,13 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/cart/cart.css";
 // import components
-import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
+import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import service
 import * as CartService from "../../service/cart/cartService";
@@ -22,6 +21,7 @@ export const Cart = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
   const [guestCartList, setGuestCartList] = useState([]);
+  const [serverError, setServerError] = useState(null);
   // query
   const {
     data: cartData = {},
@@ -119,12 +119,20 @@ export const Cart = () => {
   };
   useEffect(() => {
     document.title = "Cart";
+    // logged-user
     if (token && user) {
       if (cartData && Array.isArray(cartData.cartItems)) {
         setCartList(cartData.cartItems);
         setIsEmptyCart(cartData.cartItems.length === 0);
       }
-    } else {
+      if (isError) {
+        setServerError("Server is closed now");
+      } else {
+        setServerError(null);
+      }
+    }
+    // guest
+    else {
       const guestCart = CartService.getCartByGuest() || [];
       setGuestCartList(guestCart);
       if (guestCart.length === 0) {
@@ -134,7 +142,7 @@ export const Cart = () => {
         setIsEmptyCart(false);
       }
     }
-  }, [cartData, cartList]);
+  }, [cartData, cartList, isError]);
   // format
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -161,7 +169,12 @@ export const Cart = () => {
       <Navbar />
       <Settingnav />
       <ToastContainer />
-      {isEmptyCart ? (
+
+      {serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isEmptyCart ? (
         <>
           <div className="empty">
             <p>Your cart is empty</p>

@@ -97,7 +97,7 @@ export const Shoplist = ({
         <div className="error-page">
           <p>{serverError}</p>
         </div>
-      ) : isLoadingList ? (
+      ) : isLoadingList || isLoadingPage ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={40} />
         </div>

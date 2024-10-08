@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import components
 import { KoiHistory } from "./KoiHistory";
 // import assets
-import image from "../../assets/logincover2.jpg";
 // import redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import slices
 import {
-  toggleKoiHistoryOn,
-  toggleDetailKoiModal,
-  toggleDetailKoiModalOff,
   toggleDelKoiModal,
+  toggleDetailKoiModal,
+  toggleKoiHistoryOn,
   toggleUpdateKoiModal,
 } from "../../redux/slices/modal/modal";
 import * as KoiService from "../../service/koi/koiService";
@@ -28,11 +26,13 @@ export const KoiDetail = () => {
   const koiId = useSelector((state) => state.koi.koiId.koiId);
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [serverError, setServerError] = useState(null);
   // query
   const {
     data: koiInfo = {},
     isFetching,
     isLoading,
+    isError,
   } = useQuery({
     queryKey: ["koi-detail", koiId],
     queryFn: () => KoiService.detailKoiService(koiId),
@@ -43,7 +43,12 @@ export const KoiDetail = () => {
     } else {
       setIsLoadingPage(false);
     }
-  }, [isFetching, isLoading]);
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading, isError]);
   // handle func
   const handeToggleKoiHistoryModalOn = () => {
     dispatch(toggleKoiHistoryOn());
@@ -63,7 +68,11 @@ export const KoiDetail = () => {
     <div className="koi-detail-container">
       {isToggleKoiHistory && <KoiHistory />}
       <div className="koi-detail-modal">
-        {isLoadingPage ? (
+        {serverError ? (
+          <div className="error-page">
+            <p>{serverError}</p>
+          </div>
+        ) : isLoadingPage ? (
           <>
             <div className="loading">
               <ClipLoader color="#000000" size={35} />

@@ -1019,6 +1019,17 @@ select option {
     padding: 30px;
     overflow-y: auto;
   }
+  .koi-detail-container .koi-detail-modal .error-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .koi-detail-container .koi-detail-modal .error-page p {
+    font-size: 1.1rem;
+    color: black;
+  }
   .koi-detail-container .koi-detail-modal .loading {
     width: 100%;
     height: 100%;
@@ -1165,6 +1176,24 @@ select option {
     padding: 30px 30px 50px 30px;
     overflow-y: auto;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .koi-detail-container .koi-history-modal .error-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .koi-detail-container .koi-history-modal .error-page p {
+    font-size: 1.1rem;
+    color: black;
+  }
+  .koi-detail-container .koi-history-modal .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .koi-detail-container .koi-history-modal .empty-log {
     width: 100%;

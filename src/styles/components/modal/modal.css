@@ -1268,6 +1268,7 @@ select option {
     text-align: start;
   }
   .koi-detail-container .koi-history-modal .koi-history-main .history tbody tr {
+    align-items: center;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 10px 0;

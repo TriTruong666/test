@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const LineGraph = ({ koiGrowthLogs }) => {
+export const SizeLineChart = ({ koiGrowthLogs }) => {
   const [formattedData, setFormattedData] = useState([]);
 
   useEffect(() => {
@@ -20,9 +20,8 @@ export const LineGraph = ({ koiGrowthLogs }) => {
           day: "2-digit",
           month: "short",
           year: "numeric",
-        }), // Format date as "25 Aug 2023"
-        weight: log.weight, // Assuming `weight` is in kg
-        size: log.size, // Assuming `size` is in cm
+        }),
+        size: log.size,
       }));
       setFormattedData(data);
     }
@@ -36,12 +35,11 @@ export const LineGraph = ({ koiGrowthLogs }) => {
         <Tooltip />
         <Legend />
         <Line
-          type="monotone"
-          dataKey="weight"
-          stroke="#8884d8"
-          activeDot={{ r: 12 }}
+          type="linear"
+          dataKey="size"
+          stroke="#000000"
+          activeDot={{ r: 10 }}
         />
-        <Line type="monotone" dataKey="size" stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );

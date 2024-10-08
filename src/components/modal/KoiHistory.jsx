@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import "../../styles/components/modal/modal.css";
 import { useQuery } from "@tanstack/react-query";
 // import chart
-import { LineGraph } from "../../chart/Line";
+import { WeightLineChart } from "../../chart/WeightLineChart";
+import { SizeLineChart } from "../../chart/SizeLineChart";
 // import slices
 import {
   toggleKoiHistoryModal,
@@ -66,7 +67,8 @@ export const KoiHistory = () => {
             <i className="bx bx-x" onClick={handleToggleKoiHistoryModal}></i>
           </div>
           <div className="koi-history-chart">
-            <LineGraph koiGrowthLogs={koiLogList} />
+            <WeightLineChart koiGrowthLogs={koiLogList} />
+            <SizeLineChart koiGrowthLogs={koiLogList} />
           </div>
           <div className="koi-history-main">
             <div className="header">
@@ -94,7 +96,8 @@ export const KoiHistory = () => {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
-                      })}
+                      })}{" "}
+                      {log.logTime}
                     </td>
                     <td>{log.size}cm</td>
                     <td>{log.weight}kg</td>

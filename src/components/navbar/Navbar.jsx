@@ -54,11 +54,11 @@ export const Navbar = () => {
         setIsEmptyCart(!cartInfo.cartItems || cartInfo.cartItems.length === 0);
       }
     } else {
-      const currentCart = CartService.getCartByGuest;
-      setGuestCartList(currentCart || []); // Default to empty array
-      setIsEmptyCartGuest(currentCart.length === 0);
+      const currentCart = CartService.getCartByGuest();
+      setGuestCartList(currentCart || []);
+      setIsEmptyCartGuest(guestCartList.length === 0);
     }
-  }, [cartInfo, token, user]);
+  }, [cartInfo]);
   // calculate
   const totalQuantity = () => {
     return Array.isArray(cartList)

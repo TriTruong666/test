@@ -11,15 +11,22 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import service
 import * as CartService from "../../service/cart/cartService";
+import { useSelector } from "react-redux";
 export const Cart = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   const token = localStorage.getItem("token");
+  // selector
+  const totalItemInCart = useSelector(
+    (state) => state.navbar.itemInCart.quantity
+  );
   // state
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
-  const [guestCartList, setGuestCartList] = useState([]);
+  const [guestCartList, setGuestCartList] = useState(
+    JSON.parse(localStorage.getItem("cart"))
+  );
   const [serverError, setServerError] = useState(null);
   // query
   const {
@@ -63,19 +70,19 @@ export const Cart = () => {
   // handle func
   const handleDeleteCartItemByGuest = (productId) => {
     CartService.removeFromGuestCart(productId);
-    const updatedCart = CartService.getCartByGuest() || []; // Ensure this is an array
+    const updatedCart = CartService.getCartByGuest() || [];
     setGuestCartList(updatedCart);
   };
   const handlePlusByGuest = (productId, currentQuantity) => {
     const newQuantity = currentQuantity + 1;
     CartService.updateGuestCartQuantity(productId, newQuantity);
-    const updatedCart = CartService.getCartByGuest() || []; // Ensure this is an array
+    const updatedCart = CartService.getCartByGuest() || [];
     setGuestCartList(updatedCart);
   };
   const handleMinusByGuest = (productId, currentQuantity) => {
     const newQuantity = currentQuantity - 1;
     CartService.updateGuestCartQuantity(productId, newQuantity);
-    const updatedCart = CartService.getCartByGuest() || []; // Ensure this is an array
+    const updatedCart = CartService.getCartByGuest() || [];
     setGuestCartList(updatedCart);
   };
   const handleDeleteCartItem = async (cartItemId) => {
@@ -132,16 +139,9 @@ export const Cart = () => {
     }
     // guest
     else {
-      const guestCart = CartService.getCartByGuest() || [];
-      setGuestCartList(guestCart);
-      if (guestCart.length === 0) {
-        setIsEmptyCart(true);
-        CartService.getCartByGuest();
-      } else {
-        setIsEmptyCart(false);
-      }
+      setIsEmptyCart(totalItemInCart === 0);
     }
-  }, [cartData, cartList, isError]);
+  }, [cartData, cartList]);
   // format
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {

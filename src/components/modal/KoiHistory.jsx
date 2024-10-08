@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 // import styles
-import "../../styles/components/modal/modal.css";
 import { useQuery } from "@tanstack/react-query";
+import "../../styles/components/modal/modal.css";
 // import chart
-import { WeightLineChart } from "../../chart/WeightLineChart";
 import { SizeLineChart } from "../../chart/SizeLineChart";
+import { WeightLineChart } from "../../chart/WeightLineChart";
 // import slices
 import {
   toggleKoiHistoryModal,
@@ -13,6 +13,7 @@ import {
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 // import service
+import ClipLoader from "react-spinners/ClipLoader";
 import * as KoiService from "../../service/koi/koiService";
 export const KoiHistory = () => {
   // dispatch
@@ -22,11 +23,14 @@ export const KoiHistory = () => {
   // state
   const [isEmptyLog, setIsEmptyLog] = useState(false);
   const [koiLogList, setKoiLogList] = useState([]);
+  const [serverError, setServerError] = useState(null);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   // query
   const {
     data: koiInfo = {},
     isFetching,
     isLoading,
+    isError,
   } = useQuery({
     queryKey: ["koi-detail", koiId],
     queryFn: () => KoiService.detailKoiService(koiId),
@@ -39,6 +43,18 @@ export const KoiHistory = () => {
     dispatch(toggleKoiLogModal());
   };
   useEffect(() => {
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+
     if (koiInfo && koiInfo.koiGrowthLogs) {
       if (koiInfo.koiGrowthLogs.length === 0) {
         setIsEmptyLog(true);
@@ -47,7 +63,7 @@ export const KoiHistory = () => {
         setKoiLogList(koiInfo.koiGrowthLogs);
       }
     }
-  }, [koiInfo]);
+  }, [koiInfo, isLoading, isFetching, isError]);
   return (
     <div className="koi-history-modal">
       {isEmptyLog ? (
@@ -58,6 +74,16 @@ export const KoiHistory = () => {
               Start tracking the growth by adding the koi's size and weight!
             </p>
             <button onClick={handleToggleKoiLogModal}>Add Growth Data</button>
+          </div>
+        </>
+      ) : serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <>
+          <div className="loading">
+            <ClipLoader color="#000000" size={35} />
           </div>
         </>
       ) : (

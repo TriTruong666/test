@@ -43,6 +43,18 @@ select option {
     max-height: 100vh;
     overflow-y: auto;
   }
+  .user-setting-container .user-setting .error-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-setting-container .user-setting .error-page .p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+  }
   .user-setting-container .user-setting .loading {
     width: 100%;
     height: 100%;

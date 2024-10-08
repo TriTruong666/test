@@ -36,6 +36,18 @@ select option {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
+  .my-blog-list .error-page {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .my-blog-list .error-page .p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+  }
   .my-blog-list .loading {
     width: 100%;
     height: 600px;

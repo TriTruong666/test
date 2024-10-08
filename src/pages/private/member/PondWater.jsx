@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
@@ -11,6 +11,16 @@ import { toggleUpdateWaterModal } from "../../../redux/slices/modal/modal";
 // import service
 import * as PondService from "../../../service/pond/pondService";
 export const PondWater = () => {
+  const statusClassName = {
+    good: "good",
+    moderate: "moderate",
+    poor: "poor",
+  };
+  const statusWaterTitle = {
+    good: "Good Condition",
+    moderate: "Moderate Condition",
+    poor: "Poor Condition",
+  };
   // import dispatch
   const dispatch = useDispatch();
   // handle func
@@ -44,20 +54,51 @@ export const PondWater = () => {
     } else {
       setServerError(null);
     }
-
-
-  }, [isFetching, isLoading,isError]);
+  }, [isFetching, isLoading, isError]);
+  // handle func
+  const oxygenIdealClassNameCase = (oxy) => {
+    if (oxy >= 7 || oxy <= 9) {
+      return statusClassName.good;
+    }
+    if (oxy >= 6 && oxy <= 10) {
+      return statusClassName.moderate;
+    }
+    if (oxy < 6 || oxy > 10) {
+      return statusClassName.poor;
+    }
+  };
+  const oxygenIdealTitleCase = (oxy) => {
+    if (oxy >= 7 && oxy <= 9) {
+      return statusWaterTitle.good;
+    }
+    if (oxy >= 6 && oxy <= 10) {
+      return statusWaterTitle.moderate;
+    }
+    if (oxy < 6 || oxy > 10) {
+      return statusWaterTitle.poor;
+    }
+  };
+  const oxyClassName = useMemo(() => {
+    return oxygenIdealClassNameCase(
+      pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
+    );
+  }, [pondInfo.waterParamdInfo]);
+  const oxyTitle = useMemo(() => {
+    return oxygenIdealTitleCase(
+      pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
+    );
+  }, [pondInfo.waterParamdInfo]);
   return (
     <div className="pond-water-container">
       {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <div className="loading">
+          <ClipLoader color="#000000" size={40} />
+        </div>
+      ) : (
         <>
           <div className="pond-water-header">
             <div className="header">
@@ -138,9 +179,9 @@ export const PondWater = () => {
             </p>
           </div>
           <div className="pond-water-recommendation">
-            <div className="recommendation-param critical">
-              <strong>Salt (Critical)</strong>
-              <p>Less 0.1%</p>
+            <div className={`recommendation-param ${oxyClassName}`}>
+              <strong>O2 ({oxyTitle})</strong>
+              <p>Nothing to change</p>
             </div>
           </div>
         </>

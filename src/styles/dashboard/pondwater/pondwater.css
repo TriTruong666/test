@@ -116,8 +116,18 @@ select option {
     flex-direction: column;
     row-gap: 25px;
   }
-  .pond-water-container .pond-water-recommendation .critical strong,
-  .pond-water-container .pond-water-recommendation .critical p {
+  .pond-water-container .pond-water-recommendation .good strong,
+  .pond-water-container .pond-water-recommendation .good p {
+    color: green !important;
+    font-weight: 600 !important;
+  }
+  .pond-water-container .pond-water-recommendation .moderate strong,
+  .pond-water-container .pond-water-recommendation .moderate p {
+    color: yellow !important;
+    font-weight: 600 !important;
+  }
+  .pond-water-container .pond-water-recommendation .poor strong,
+  .pond-water-container .pond-water-recommendation .poor p {
     color: red !important;
     font-weight: 600 !important;
   }

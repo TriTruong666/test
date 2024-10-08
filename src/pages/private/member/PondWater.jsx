@@ -93,7 +93,6 @@ export const PondWater = () => {
       return statusWaterTitle.moderate;
     return statusWaterTitle.poor;
   };
-<<<<<<< HEAD
 
   // Parameter recommendations
   const oxygenAdjustment = calculateAdjustment(pondInfo?.waterParam?.o2, 7, 9);
@@ -112,8 +111,6 @@ export const PondWater = () => {
   );
   const phAdjustment = calculateAdjustment(pondInfo?.waterParam?.ph, 7, 8);
 
-=======
->>>>>>> 1a3620e9f3d7618474594e89098575e90c75a642
   return (
     <div className="pond-water-container">
       {serverError ? (
@@ -206,7 +203,6 @@ export const PondWater = () => {
           </div>
           <div className="pond-water-recommendation">
             <div
-<<<<<<< HEAD
               className={`recommendation-param ${calculateParamStatus(
                 pondInfo?.waterParam?.o2,
                 7,
@@ -293,20 +289,6 @@ export const PondWater = () => {
                 pH ({calculateParamTitle(pondInfo?.waterParam?.ph, 7, 8)})
               </strong>
               <p>{phAdjustment?.message}</p>
-=======
-              className={`recommendation-param ${oxygenIdealClassNameCase(
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-              )}`}
-            >
-              <strong>
-                O2 (
-                {oxygenIdealTitleCase(
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-                )}
-                )
-              </strong>
-              <p>Nothing to change</p>
->>>>>>> 1a3620e9f3d7618474594e89098575e90c75a642
             </div>
           </div>
         </>

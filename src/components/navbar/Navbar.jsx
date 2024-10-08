@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector, useDispatch } from "react-redux";
 // import styles
 import "../../styles/components/navbar/navbar.css";
 // import assets
 import logo from "../../assets/logo.png";
-// import dispatch
-import { useDispatch } from "react-redux";
 // import slices
-import { toggleSettingNav } from "../../redux/slices/navbar/navbar";
+import {
+  setQuantityItemInCart,
+  toggleSettingNav,
+} from "../../redux/slices/navbar/navbar";
 // import service
 import * as CartService from "../../service/cart/cartService";
 export const Navbar = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
-
+  const currentCart = JSON.parse(localStorage.getItem("cart"));
+  // selector
+  const totalItemInCart = useSelector(
+    (state) => state.navbar.itemInCart.quantity
+  );
   // state
   const [isEmptyCart, setIsEmptyCart] = useState(false);
-  const [guestCartList, setGuestCartList] = useState([]);
   const [cartList, setCartList] = useState([]);
   const [isEmptyCartGuest, setIsEmptyCartGuest] = useState(false);
   // query
@@ -44,7 +49,11 @@ export const Navbar = () => {
       setIsAuth(true);
     }
   };
-
+  const totalQuantityGuestCart = () => {
+    return Array.isArray(currentCart)
+      ? currentCart.reduce((total, item) => total + (item.quantity || 0), 0)
+      : 0;
+  };
   useEffect(() => {
     handleSetIsAuth();
 
@@ -54,11 +63,15 @@ export const Navbar = () => {
         setIsEmptyCart(!cartInfo.cartItems || cartInfo.cartItems.length === 0);
       }
     } else {
-      const currentCart = CartService.getCartByGuest();
-      setGuestCartList(currentCart || []);
-      setIsEmptyCartGuest(guestCartList.length === 0);
+      const totalQuantityGuest = totalQuantityGuestCart();
+      if (totalItemInCart === 0) {
+        setIsEmptyCartGuest(true);
+      } else {
+        setIsEmptyCartGuest(false);
+      }
+      dispatch(setQuantityItemInCart(totalQuantityGuest));
     }
-  }, [cartInfo]);
+  }, [cartInfo, currentCart, token]);
   // calculate
   const totalQuantity = () => {
     return Array.isArray(cartList)
@@ -68,13 +81,6 @@ export const Navbar = () => {
       : 0;
   };
 
-  const totalQuantityGuestCart = () => {
-    return Array.isArray(guestCartList)
-      ? guestCartList.reduce((total, item) => {
-          return total + (item.quantity || 0);
-        }, 0)
-      : 0;
-  };
   return (
     <div className="navbar-container">
       {token && user ? (
@@ -141,7 +147,7 @@ export const Navbar = () => {
               <>
                 <Link to="/cart">
                   <i className="bx bxs-cart"></i>
-                  <p>{totalQuantityGuestCart()}</p>
+                  <p>{totalItemInCart}</p>
                 </Link>
               </>
             )}

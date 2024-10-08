@@ -1,24 +1,30 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/components/shop/shop.css";
-
+// import slice
+import { setQuantityItemInCart } from "../../redux/slices/navbar/navbar";
 export const Shoplist = ({
   isLoadingList,
   infinityScroll,
   isRow,
   isColumn,
 }) => {
+  // dispatch
+  const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+  // state
+  const [guestCartList, setGuestCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [cartId, setCartId] = useState(null);
   const [serverError, setServerError] = useState(null);
@@ -87,7 +93,23 @@ export const Shoplist = ({
       }
     } else {
       CartService.addToCartByGuest(product);
-      CartService.getCartByGuest();
+      const guestCart = CartService.getCartByGuest() || [];
+      setGuestCartList(guestCart);
+      toast.success("Product added", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      if (guestCart) {
+        guestCart.reduce((total, item) => {
+          dispatch(setQuantityItemInCart(total + item.quantity || 0));
+        }, 0);
+      }
     }
   };
   return (
@@ -97,7 +119,7 @@ export const Shoplist = ({
         <div className="error-page">
           <p>{serverError}</p>
         </div>
-      ) : isLoadingList || isLoadingPage ? (
+      ) : isLoadingList ? (
         <div className="loading">
           <ClipLoader color="#ffffff" size={40} />
         </div>

@@ -78,16 +78,6 @@ export const PondWater = () => {
       return statusWaterTitle.poor;
     }
   };
-  const oxyClassName = useMemo(() => {
-    return oxygenIdealClassNameCase(
-      pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-    );
-  }, [pondInfo.waterParamdInfo]);
-  const oxyTitle = useMemo(() => {
-    return oxygenIdealTitleCase(
-      pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-    );
-  }, [pondInfo.waterParamdInfo]);
   return (
     <div className="pond-water-container">
       {serverError ? (
@@ -179,8 +169,18 @@ export const PondWater = () => {
             </p>
           </div>
           <div className="pond-water-recommendation">
-            <div className={`recommendation-param ${oxyClassName}`}>
-              <strong>O2 ({oxyTitle})</strong>
+            <div
+              className={`recommendation-param ${oxygenIdealClassNameCase(
+                pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
+              )}`}
+            >
+              <strong>
+                O2 (
+                {oxygenIdealTitleCase(
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
+                )}
+                )
+              </strong>
               <p>Nothing to change</p>
             </div>
           </div>

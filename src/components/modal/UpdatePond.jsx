@@ -28,6 +28,7 @@ export const UpdatePond = () => {
   // dispatch
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState(null);
+  const [validNumber, setValidNumber] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: pondInfo.image,
     pondName: pondInfo.pondName,
@@ -113,12 +114,14 @@ export const UpdatePond = () => {
         ...submitData,
         [name]: "",
       });
+      setValidNumber(true);
       return;
     }
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
+    setValidNumber(false);
   };
   const handleInputFloatPond = (e) => {
     const { name, value } = e.target;
@@ -127,15 +130,29 @@ export const UpdatePond = () => {
         ...submitData,
         [name]: "",
       });
+      setValidNumber(true);
       return;
     }
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
+    setValidNumber(false);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validNumber) {
+      toast.error("Invalid number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {

@@ -1711,13 +1711,6 @@ select option {
     color: rgba(0, 0, 0, 0.6);
     font-size: 0.8rem;
   }
-  .add-blog-container .add-blog-modal .add-blog-form .input-item input {
-    padding: 12px 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: black;
-    font-size: 0.8rem;
-    border-radius: 10px;
-  }
   .add-blog-container .add-blog-modal .submit {
     display: flex;
     justify-content: end;
@@ -1778,6 +1771,10 @@ select option {
     display: flex;
     flex-direction: column;
     row-gap: 35px;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form label {
+    font-size: 0.8rem;
+    font-weight: 600;
   }
   .update-blog-container .update-blog-modal .update-blog-form input {
     padding: 12px 25px;
@@ -1842,6 +1839,23 @@ select option {
   }
   .update-blog-container .update-blog-modal .update-blog-form .input-image input {
     display: none;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
   }
   .update-blog-container .update-blog-modal .submit {
     display: flex;

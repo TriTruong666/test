@@ -1,34 +1,34 @@
-import FileResizer from "react-image-file-resizer";
-import { useDispatch } from "react-redux";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  Alignment,
+  BlockQuote,
+  Bold,
   ClassicEditor,
   Essentials,
-  Bold,
-  Italic,
-  Paragraph,
+  Font,
   Heading,
+  Image,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  Italic,
   Link,
   List,
-  BlockQuote,
-  Alignment,
-  Image,
-  ImageToolbar,
-  ImageStyle,
-  ImageResize,
+  Paragraph,
   Table,
   TableToolbar,
-  Font,
 } from "ckeditor5";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import "ckeditor5/ckeditor5.css";
+import FileResizer from "react-image-file-resizer";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import slices
-import { toggleUpdateBlogModal } from "../../redux/slices/modal/modal";
 import { useEffect, useState } from "react";
+import { toggleUpdateBlogModal } from "../../redux/slices/modal/modal";
 // import service
 import * as BlogService from "../../service/blog/blogService";
 export const UpdateBlog = () => {
@@ -158,13 +158,20 @@ export const UpdateBlog = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input
-            type="text"
-            name="title"
-            onChange={handleOnChange}
-            defaultValue={submitData.title}
-            placeholder="Enter blog title"
-          />
+
+          <div className="input-item">
+            <label htmlFor="title">Blog title</label>
+            <input
+              type="text"
+              name="title"
+              onChange={handleOnChange}
+              defaultValue={submitData.title}
+              placeholder="Enter blog title"
+            />
+          </div>
+
+          <label htmlFor="blog-content">Blog Content</label>
+
           <CKEditor
             editor={ClassicEditor}
             config={{

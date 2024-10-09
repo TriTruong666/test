@@ -205,6 +205,7 @@ export const AddKoi = () => {
                 <option value="Koromo">Koromo</option>
               </select>
             </div>
+
             <div className="select">
               <select name="sex" onChange={handleOnChange} id="">
                 <option value="">Select Gender</option>

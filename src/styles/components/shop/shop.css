@@ -30,6 +30,18 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
+  .empty-shop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 500px;
+  }
+  .empty-shop p {
+    font-size: 1.2rem;
+    font-family: "Roboto Mono", monospace;
+    color: rgba(255, 255, 255, 0.7);
+  }
   .shoplist-container {
     position: relative;
     width: calc(100% - 350px);
@@ -37,6 +49,16 @@ select option {
     align-items: center;
     justify-content: center;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .shoplist-container .empty-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shoplist-container .empty-search p {
+    font-size: 1.2rem;
+    font-family: "Roboto Mono", monospace;
+    color: rgba(255, 255, 255, 0.7);
   }
   .shoplist-container .error-page {
     width: 100%;
@@ -102,16 +124,16 @@ select option {
     padding: 7px 30px;
     border-radius: 10px;
     cursor: pointer;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.75rem;
   }
   .shoplist-container .shoplist-column .shop-item div button:nth-child(1) {
     background: #BCAB6F;
     color: black;
     font-weight: 700;
-    font-family: "Roboto Mono", monospace;
   }
   .shoplist-container .shoplist-column .shop-item div button:nth-child(2) {
     border: 2px solid rgba(255, 255, 255, 0.2);
-    font-weight: 700;
     transition: 0.4s;
   }
   .shoplist-container .shoplist-column .shop-item div button:nth-child(2):hover {

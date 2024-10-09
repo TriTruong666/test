@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/checkout/checkout.css";
 // import components
@@ -9,14 +11,18 @@ import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as CartService from "../../service/cart/cartService";
-import { ClipLoader } from "react-spinners";
 export const Checkout = () => {
+  // navigate
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [guestCartList, setGuestCartList] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
   // query
   const {
     data: cartData = {},
@@ -35,21 +41,28 @@ export const Checkout = () => {
         setIsLoadingPage(true);
       } else {
         setIsLoadingPage(false);
+        if (cartData && Array.isArray(cartData.cartItems)) {
+          setCartList(cartData.cartItems);
+        }
       }
-      if (cartData && Array.isArray(cartData.cartItems)) {
-        setCartList(cartData.cartItems);
+      if (cartData && cartData.cartItems && cartData.cartItems.length === 0) {
+        navigate("/shop");
       }
     } else {
-      const guestCart = CartService.getCartByGuest() || [];
-      setGuestCartList(guestCart);
-      if (guestCart.length === 0) {
-        setIsEmptyCart(true);
-        CartService.getCartByGuest();
-      } else {
-        setIsEmptyCart(false);
+      if (guestCartList.length === 0) {
+        navigate("/shop");
       }
     }
-  }, [isFetching, isLoading]);
+  }, [
+    isFetching,
+    isLoading,
+    token,
+    user,
+    cartData,
+    cartList,
+    guestCartList,
+    navigate,
+  ]);
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -63,6 +76,11 @@ export const Checkout = () => {
   const calculateTotalPrice = () => {
     return cartList.reduce((total, item) => {
       return total + item.product.unitPrice * item.quantity;
+    }, 0);
+  };
+  const calculateTotalPriceGuest = () => {
+    return guestCartList.reduce((total, item) => {
+      return total + item.unitPrice * item.quantity;
     }, 0);
   };
   return (
@@ -83,7 +101,7 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="fullname"
-                defaultValue={user.fullname}
+                defaultValue={user?.fullname || "Guest"}
                 placeholder="Enter full name"
               />
             </div>
@@ -92,7 +110,7 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="email"
-                defaultValue={user.email}
+                defaultValue={user?.email || ""}
                 placeholder="Enter your email"
               />
             </div>
@@ -101,7 +119,7 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="phone"
-                defaultValue={user.phone}
+                defaultValue={user?.phone || ""}
                 placeholder="Enter your phone number"
               />
             </div>
@@ -110,7 +128,7 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="address"
-                defaultValue={user.address}
+                defaultValue={user?.address || ""}
                 placeholder="Enter your address"
               />
             </div>
@@ -125,47 +143,85 @@ export const Checkout = () => {
             </>
           ) : (
             <>
-              <div className="cart-review-header">
-                <h2>Review Your Cart</h2>
-              </div>
-              <div className="cart-list">
-                {cartList.map((item) => (
-                  <div key={item.cartItemId} className="cart-item">
-                    <img src={item.product.image} alt="" />
-                    <div className="info">
-                      <div>
-                        <strong>{item.product.productName}</strong>
-                        <small>x{item.quantity}</small>
-                      </div>
-                      <p>{item.product.category.cateName}</p>
+              {token && user ? (
+                <>
+                  <div className="cart-review-header">
+                    <h2>Review Your Cart</h2>
+                  </div>
+                  <div className="cart-list">
+                    {cartList.map((item) => (
+                      <div key={item.cartItemId} className="cart-item">
+                        <img src={item.product.image} alt="" />
+                        <div className="info">
+                          <div>
+                            <strong>{item.product.productName}</strong>
+                            <small>x{item.quantity}</small>
+                          </div>
+                          <p>{item.product.category.cateName}</p>
 
-                      <span>
-                        {formatPrice(
-                          calculateItemPrice(
-                            item.product.unitPrice,
-                            item.quantity
-                          )
-                        )}
-                      </span>
+                          <span>{formatPrice(item.product.unitPrice)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="cart-summary">
+                    <div className="summary-item">
+                      <p>Subtotal</p>
+                      <p>{formatPrice(calculateTotalPrice())}</p>
+                    </div>
+                    <div className="summary-item">
+                      <p>Shipping</p>
+                      <p>Free</p>
+                    </div>
+                    <div className="summary-total">
+                      <strong>Total</strong>
+                      <strong>{formatPrice(calculateTotalPrice())}</strong>
                     </div>
                   </div>
-                ))}
-              </div>
-              <div className="cart-summary">
-                <div className="summary-item">
-                  <p>Subtotal</p>
-                  <p>{formatPrice(calculateTotalPrice())}</p>
-                </div>
-                <div className="summary-item">
-                  <p>Shipping</p>
-                  <p>Free</p>
-                </div>
-                <div className="summary-total">
-                  <strong>Total</strong>
-                  <strong>{formatPrice(calculateTotalPrice())}</strong>
-                </div>
-              </div>
-              <Link to="/payment">Pay Now</Link>
+                  <Link to="/payment">Pay Now</Link>
+                </>
+              ) : (
+                <>
+                  <div className="cart-review-header">
+                    <h2>Review Your Cart</h2>
+                  </div>
+                  <div className="cart-list">
+                    {guestCartList.map((item) => (
+                      <div key={item.productId} className="cart-item">
+                        <img src={item.image} alt="" />
+                        <div className="info">
+                          <div>
+                            <strong>{item.productName}</strong>
+                            <small>x{item.quantity}</small>
+                          </div>
+                          <p>{item.category.cateName}</p>
+
+                          <span>
+                            {formatPrice(
+                              calculateItemPrice(item.unitPrice, item.quantity)
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="cart-summary">
+                    <div className="summary-item">
+                      <p>Subtotal</p>
+                      <p>{formatPrice(calculateTotalPriceGuest())}</p>
+                    </div>
+                    <div className="summary-item">
+                      <p>Shipping</p>
+                      <p>Free</p>
+                    </div>
+                    <div className="summary-total">
+                      <strong>Total</strong>
+                      <strong>{formatPrice(calculateTotalPriceGuest())}</strong>
+                    </div>
+                  </div>
+                  <Link to="/payment">Pay Now</Link>
+                </>
+              )}
             </>
           )}
         </div>

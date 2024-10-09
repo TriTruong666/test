@@ -94,6 +94,7 @@ select option {
     height: 60px;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
     color: rgba(255, 255, 255, 0.7);
+    font-family: "Roboto Mono", monospace;
   }
   .shop-container .shop .shop-main .shop-main-header .header-filter i {
     padding: 20px 40px;
@@ -111,6 +112,9 @@ select option {
   }
   .shop-container .shop .shop-main .shop-main-header .header-filter select {
     padding: 20px 60px;
+  }
+  .shop-container .shop .shop-main .shop-main-header .header-filter select option {
+    font-family: "Roboto Mono", monospace;
   }
   .shop-container .shop .shop-main .shop-main-list {
     width: 100%;

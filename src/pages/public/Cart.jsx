@@ -22,10 +22,9 @@ export const Cart = () => {
   );
   // state
   const [cartList, setCartList] = useState([]);
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
   const [guestCartList, setGuestCartList] = useState(
-    JSON.parse(localStorage.getItem("cart"))
+    JSON.parse(localStorage.getItem("cart")) || []
   );
   const [serverError, setServerError] = useState(null);
   // query
@@ -72,6 +71,16 @@ export const Cart = () => {
     CartService.removeFromGuestCart(productId);
     const updatedCart = CartService.getCartByGuest() || [];
     setGuestCartList(updatedCart);
+    toast.success("Item removed", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
   const handlePlusByGuest = (productId, currentQuantity) => {
     const newQuantity = currentQuantity + 1;

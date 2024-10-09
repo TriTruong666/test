@@ -164,6 +164,24 @@ select option {
     color: rgba(255, 255, 255, 0.7);
     font-family: "Roboto Mono", monospace;
   }
+  .shopnav-container .shopnav .shopnav-item ::-moz-placeholder {
+    font-size: 0.7rem;
+    font-family: "Roboto Mono", monospace;
+  }
+  .shopnav-container .shopnav .shopnav-item ::placeholder {
+    font-size: 0.7rem;
+    font-family: "Roboto Mono", monospace;
+  }
+  .shopnav-container .shopnav .shopnav-item input {
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.7rem;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 700;
+  }
+  .shopnav-container .shopnav .shopnav-item input:hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
   .shopnav-container .shopnav .shopnav-item .shopnav-item-link {
     display: flex;
     flex-direction: column;
@@ -176,7 +194,7 @@ select option {
     font-family: "Roboto Mono", monospace;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   .checkoutnav-container {
     width: 100%;
@@ -222,6 +240,10 @@ select option {
          column-gap: 10px;
     align-items: center;
   }
+  .checkoutnav-container .checkoutnav-process .process-item .loading {
+    display: flex;
+    align-items: center;
+  }
   .checkoutnav-container .checkoutnav-process .process-item i {
     font-size: 28px;
     color: green;
@@ -230,6 +252,9 @@ select option {
     font-family: "Roboto Mono", monospace;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.85rem;
+  }
+  .checkoutnav-container .checkoutnav-process .process-item:nth-child(5) i {
+    color: red !important;
   }
   .setting-nav-container {
     position: fixed;

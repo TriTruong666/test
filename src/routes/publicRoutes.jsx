@@ -79,6 +79,10 @@ export const publicRoutes = [
     element: <Shop />,
   },
   {
+    path: "/shop/category/:cateId",
+    element: <Shop />,
+  },
+  {
     path: "/blog",
     element: <Blog />,
   },

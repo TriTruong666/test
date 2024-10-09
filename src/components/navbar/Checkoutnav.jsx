@@ -1,4 +1,5 @@
 import React from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/navbar/navbar.css";
 // import assets
@@ -17,7 +18,10 @@ export const Checkoutnav = () => {
         </div>
         <div className="line"></div>
         <div className="process-item">
-          <i className="bx bxs-check-circle"></i>
+          <div className="loading">
+            <ClipLoader color="#ffffff" size={25} />
+          </div>
+          {/* <i className="bx bxs-check-circle"></i> */}
           <p>Checkout</p>
         </div>
         <div className="line"></div>

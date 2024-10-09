@@ -149,6 +149,23 @@
                     font-family: $main-font;
                 }
 
+                ::placeholder {
+                    font-size: 0.7rem;
+                    font-family: $main-font;
+                }
+
+                input {
+                    padding: 10px 15px;
+                    border: 1px solid rgba(255, 255, 255, .1);
+                    font-size: 0.7rem;
+                    font-family: $main-font;
+                    font-weight: 700;
+                }
+
+                input:hover {
+                    border: 1px solid rgba(255, 255, 255, .4);
+                }
+
                 .shopnav-item-link {
                     display: flex;
                     flex-direction: column;
@@ -161,7 +178,7 @@
                         font-family: $main-font;
                         border: 2px solid rgba(255, 255, 255, .2);
                         border-radius: 10px;
-                        font-size: 0.8rem;
+                        font-size: 0.75rem;
                     }
                 }
             }
@@ -213,15 +230,27 @@
                 column-gap: 10px;
                 align-items: center;
 
+                .loading {
+                    display: flex;
+                    align-items: center;
+                }
+
                 i {
                     font-size: 28px;
                     color: green;
                 }
 
+
                 p {
                     font-family: $main-font;
                     color: $fade-white;
                     font-size: 0.85rem;
+                }
+            }
+
+            .process-item:nth-child(5) {
+                i {
+                    color: red !important;
                 }
             }
         }

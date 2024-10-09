@@ -1,12 +1,10 @@
 import axios from "axios";
 
-export const getAllCategoryService = async () => {
-  const token = localStorage.getItem("token");
+export const getAllCategory = async () => {
   try {
-    const api = "http://localhost:8080/category/list"
+    const api = "http://localhost:8080/category/list";
     const response = await axios.get(api, {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
@@ -16,9 +14,7 @@ export const getAllCategoryService = async () => {
   }
 };
 
-
-
-export const detailPondService = async (categoryId) => {
+export const getProductCategory = async (categoryId) => {
   try {
     const api = `http://localhost:8080/category/${categoryId}`;
     const res = await axios.get(api, {

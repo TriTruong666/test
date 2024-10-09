@@ -1,6 +1,20 @@
 @import "../../global/global.scss";
 
 @media only screen and (max-width: 1537px) {
+    .empty-shop {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 500px;
+
+        p {
+            font-size: 1.2rem;
+            font-family: $main-font;
+            color: $fade-white;
+        }
+    }
+
     .shoplist-container {
         position: relative;
         width: calc(100% - 350px);
@@ -8,6 +22,18 @@
         align-items: center;
         justify-content: center;
         border-left: 1px solid rgba(255, 255, 255, .2);
+
+        .empty-search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            p {
+                font-size: 1.2rem;
+                font-family: $main-font;
+                color: $fade-white;
+            }
+        }
 
         .error-page {
             width: 100%;
@@ -78,18 +104,18 @@
                         padding: 7px 30px;
                         border-radius: 10px;
                         cursor: pointer;
+                        font-family: $main-font;
+                        font-size: 0.75rem;
                     }
 
                     button:nth-child(1) {
                         background: $second-color;
                         color: black;
                         font-weight: 700;
-                        font-family: $main-font;
                     }
 
                     button:nth-child(2) {
                         border: 2px solid rgba(255, 255, 255, .2);
-                        font-weight: 700;
                         transition: .4s;
                     }
 

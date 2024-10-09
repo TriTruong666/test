@@ -1,30 +1,30 @@
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  Alignment,
+  BlockQuote,
+  Bold,
+  ClassicEditor,
+  Essentials,
+  Font,
+  Heading,
+  Image,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  Italic,
+  Link,
+  List,
+  Paragraph,
+  Table,
+  TableToolbar,
+} from "ckeditor5";
+import "ckeditor5/ckeditor5.css";
 import React, { useEffect, useState } from "react";
 import FileResizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  ClassicEditor,
-  Essentials,
-  Bold,
-  Italic,
-  Paragraph,
-  Heading,
-  Link,
-  List,
-  BlockQuote,
-  Alignment,
-  Image,
-  ImageToolbar,
-  ImageStyle,
-  ImageResize,
-  Table,
-  TableToolbar,
-  Font,
-} from "ckeditor5";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import "ckeditor5/ckeditor5.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import slices
@@ -162,13 +162,19 @@ export const AddBlog = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Enter blog title"
-            onChange={handleOnChange}
-          />
+          <div className="input-item">
+            <label htmlFor="title"> Blog title</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Enter blog title"
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="blogContent">Blog Content</label>
+          </div>
           <CKEditor
             editor={ClassicEditor}
             config={{

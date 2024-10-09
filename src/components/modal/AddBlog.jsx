@@ -38,6 +38,7 @@ export const AddBlog = () => {
   const dispatch = useDispatch();
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [isValidName, setIsValidName] = useState(false);
   const [submitData, setSubmitData] = useState({
     title: "",
     userId: userId,
@@ -97,6 +98,31 @@ export const AddBlog = () => {
       [name]: value,
     });
   };
+
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
   const removeChooseImage = () => {
     setPreviewImage(null);
     setSubmitData({
@@ -109,6 +135,21 @@ export const AddBlog = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isValidName) {
+      toast.error("Blog must at least 10 characters and not a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     if (!submitData.content || !submitData.title || !submitData.image) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -169,7 +210,7 @@ export const AddBlog = () => {
               name="title"
               id="title"
               placeholder="Enter blog title"
-              onChange={handleOnChange}
+              onChange={handleOnChangeName}
             />
           </div>
           <div className="input-item">

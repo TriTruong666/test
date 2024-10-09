@@ -49,6 +49,7 @@ export const UpdateProduct = () => {
   });
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [isValidName, setIsValidName] = useState(false);
   const [submitData, setSubmitData] = useState({
     name: "",
     image: "",
@@ -180,8 +181,46 @@ export const UpdateProduct = () => {
       [name]: value,
     });
   };
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+
+    if (isValidName) {
+      toast.error("Product name must at least 10 characters and not a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     // number validation
     if (isValidNumber) {
       toast.error("Invalid number", {
@@ -273,7 +312,7 @@ export const UpdateProduct = () => {
                 <input
                   className="name"
                   type="text"
-                  onChange={handleOnChange}
+                  onChange={handleOnChangeName}
                   defaultValue={submitData.name}
                   name="name"
                   placeholder="Product name"

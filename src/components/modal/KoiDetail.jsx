@@ -194,8 +194,8 @@ export const KoiDetail = () => {
                 <div className="koi-recommendation-header">
                   <strong>Feeding Recommendation</strong>
                   <p>
-                    Our system calculates the amount of food based on Koi Age,
-                    Weight, and Water Temperature.
+                    Our system calculates the amount of food based on your koi's
+                    age, sex, type and origin
                   </p>
                 </div>
                 <div className="recommendation">
@@ -210,20 +210,23 @@ export const KoiDetail = () => {
                     feeding based on koi activity and water temperature.
                   </span>
                 </div>
-                <div className="shop-recommendation">
+                <div className="recommendation">
                   <strong>Recommended Product</strong>
-                  <p>
+                  <span>
                     We recommend this product for optimal koi health and feeding
                     care.
-                  </p>
-                  <a
-                    href="http://localhost:5173/productdetail/814301"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="product-link"
-                  >
-                    View and Buy Product
-                  </a>
+                  </span>
+
+                  <span>
+                    <a
+                      href="http://localhost:5173/productdetail/814301"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="product-link"
+                    >
+                      View and Buy Product
+                    </a>
+                  </span>
                 </div>
                 <div className="utils">
                   <button onClick={handleToggleUpdateKoiModal}>Update</button>

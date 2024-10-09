@@ -27,6 +27,7 @@ export const UpdateWater = () => {
     no3: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isValidNumber, setIsValidNumber] = useState(false);
   // const query
   const {
     data: pondInfo = {},
@@ -93,6 +94,20 @@ export const UpdateWater = () => {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isValidNumber) {
+      toast.error("Invalid number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {
@@ -106,12 +121,14 @@ export const UpdateWater = () => {
         ...submitData,
         [name]: "",
       });
+      setIsValidNumber(true);
       return;
     }
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
+    setIsValidNumber(false);
   };
   //   handle func
   const handleToggleUpdateWaterModal = () => {

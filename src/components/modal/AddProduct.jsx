@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import FileResizer from "react-image-file-resizer";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  Alignment,
+  BlockQuote,
+  Bold,
   ClassicEditor,
   Essentials,
-  Bold,
-  Italic,
-  Paragraph,
+  Font,
   Heading,
+  Image,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  Italic,
   Link,
   List,
-  BlockQuote,
-  Alignment,
-  Image,
-  ImageToolbar,
-  ImageStyle,
-  ImageResize,
+  Paragraph,
   Table,
   TableToolbar,
-  Font,
 } from "ckeditor5";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import "ckeditor5/ckeditor5.css";
+import React, { useState } from "react";
+import FileResizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -47,6 +47,8 @@ export const AddProduct = () => {
     status: true,
   });
   const [invalidNumber, setInvalidNumber] = useState(null);
+  const [isValidName, setIsValidName] = useState(false);
+
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -159,6 +161,32 @@ export const AddProduct = () => {
     });
     setInvalidNumber(null);
   };
+
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -168,6 +196,20 @@ export const AddProduct = () => {
   };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+
+    if (isValidName) {
+      toast.error("Product name must at least 10 characters and not a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     // empty validation
     if (
       !submitData.name ||
@@ -237,7 +279,7 @@ export const AddProduct = () => {
           <input
             className="name"
             type="text"
-            onChange={handleOnChange}
+            onChange={handleOnChangeName}
             name="name"
             placeholder="Product name"
           />

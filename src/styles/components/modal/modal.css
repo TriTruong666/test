@@ -325,7 +325,7 @@ select option {
   }
   .update-pond-container .update-pond-modal .update-pond-form .input-image label p {
     font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(0, 0, 0, 0.8);
   }
   .update-pond-container .update-pond-modal .update-pond-form .input-image input {
     display: none;
@@ -335,16 +335,18 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields ::placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields input {
+  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields .input-field {
+    display: flex;
+    flex-direction: column;
     width: 50%;
+  }
+  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields .input-field label {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .update-pond-container .update-pond-modal .update-pond-form .input-two-fields .input-field input {
+    width: 100%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
@@ -415,23 +417,31 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .update-water-container .update-water-modal .update-water-form .input-two-fields ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .update-water-container .update-water-modal .update-water-form .input-two-fields ::placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .update-water-container .update-water-modal .update-water-form .input-two-fields input {
+  .update-water-container .update-water-modal .update-water-form .input-two-fields .input-field {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-two-fields .input-field label {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-two-fields .input-field input {
+    width: 100%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .update-water-container .update-water-modal .update-water-form #temp {
+  .update-water-container .update-water-modal .update-water-form .input-field label {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: black;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-field input {
+    width: 100%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;

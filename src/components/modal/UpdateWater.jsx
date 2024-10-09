@@ -1,5 +1,5 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,8 +10,8 @@ import { toggleUpdateWaterModal } from "../../redux/slices/modal/modal";
 // import redux
 import { useDispatch } from "react-redux";
 // import service
-import * as WaterService from "../../service/waterParams/waterParamsService";
 import * as PondService from "../../service/pond/pondService";
+import * as WaterService from "../../service/waterParams/waterParamsService";
 export const UpdateWater = () => {
   // param
   const { pondId } = useParams();
@@ -132,75 +132,104 @@ export const UpdateWater = () => {
           className="update-water-form"
         >
           <div className="input-two-fields">
-            <input
-              type="text"
-              name="no2"
-              defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.no2
-              }
-              placeholder="NO2 (ppm)"
-              onChange={handleInputFloatWater}
-            />
-            <input
-              type="text"
-              name="no3"
-              defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.no3
-              }
-              placeholder="NO3 (ppm)"
-              onChange={handleInputFloatWater}
-            />
+            <div className="input-field">
+              <label htmlFor="no2">NO2 (ppm)</label>
+              <input
+                type="text"
+                id="no2"
+                name="no2"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.no2
+                }
+                placeholder="NO2 (ppm)"
+                onChange={handleInputFloatWater}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="no3">NO3 (ppm)</label>
+              <input
+                type="text"
+                id="no3"
+                name="no3"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.no3
+                }
+                placeholder="NO3 (ppm)"
+                onChange={handleInputFloatWater}
+              />
+            </div>
           </div>
           <div className="input-two-fields">
-            <input
-              type="text"
-              name="nh4"
-              defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.nh4
-              }
-              placeholder="NH3/NH4 (ppm)"
-              onChange={handleInputFloatWater}
-            />
-            <input
-              type="text"
-              name="o2"
-              defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-              }
-              placeholder="O2 (mg/l)"
-              onChange={handleInputFloatWater}
-            />
+            <div className="input-field">
+              <label htmlFor="nh4">NH3/NH4 (ppm)</label>
+              <input
+                type="text"
+                id="nh4"
+                name="nh4"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.nh4
+                }
+                placeholder="NH3/NH4 (ppm)"
+                onChange={handleInputFloatWater}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="o2">O2 (mg/l)</label>
+              <input
+                type="text"
+                id="o2"
+                name="o2"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
+                }
+                placeholder="O2 (mg/l)"
+                onChange={handleInputFloatWater}
+              />
+            </div>
           </div>
           <div className="input-two-fields">
+            <div className="input-field">
+              <label htmlFor="salt">Salt (%)</label>
+              <input
+                type="text"
+                id="salt"
+                name="salt"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.salt
+                }
+                placeholder="Salt (%)"
+                onChange={handleInputFloatWater}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="ph">pH</label>
+              <input
+                type="text"
+                id="ph"
+                name="ph"
+                defaultValue={
+                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.ph
+                }
+                placeholder="pH"
+                onChange={handleInputFloatWater}
+              />
+            </div>
+          </div>
+          <div className="input-field">
+            <label htmlFor="temperature">Temperature (℃)</label>
             <input
               type="text"
-              name="salt"
+              id="temperature"
+              name="temperature"
               defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.salt
+                pondInfo &&
+                pondInfo.waterParam &&
+                pondInfo.waterParam.temperature
               }
-              placeholder="Salt (%)"
-              onChange={handleInputFloatWater}
-            />
-            <input
-              type="text"
-              name="ph"
-              defaultValue={
-                pondInfo && pondInfo.waterParam && pondInfo.waterParam.ph
-              }
-              placeholder="pH"
+              placeholder="Temperature (℃)"
               onChange={handleInputFloatWater}
             />
           </div>
-          <input
-            type="text"
-            id="temp"
-            name="temperature"
-            defaultValue={
-              pondInfo && pondInfo.waterParam && pondInfo.waterParam.temperature
-            }
-            placeholder="Temparature (℃  )"
-            onChange={handleInputFloatWater}
-          />
           <div className="submit">
             <button onClick={handleToggleUpdateWaterModal}>Cancel</button>
             <button>Create confirm</button>

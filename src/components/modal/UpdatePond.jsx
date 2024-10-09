@@ -1,6 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import FileResizer from "react-image-file-resizer";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -195,54 +195,82 @@ export const UpdatePond = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
+
           <div className="input-two-fields">
-            <input
-              type="text"
-              placeholder="Pond name"
-              name="pondName"
-              onChange={handleOnChange}
-              defaultValue={pondInfo && pondInfo.pondName}
-            />
-            <input
-              type="text"
-              placeholder="Pump power (W)"
-              name="pumpPower"
-              onChange={handleInputFloatPond}
-              defaultValue={pondInfo && pondInfo.pumpPower}
-            />
+            <div className="input-field">
+              <label htmlFor="pondName">Pond Name</label>
+              <input
+                type="text"
+                id="pondName"
+                placeholder="Pond name"
+                name="pondName"
+                onChange={handleOnChange}
+                defaultValue={pondInfo && pondInfo.pondName}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="pumpPower">Pump Power (W)</label>
+              <input
+                type="text"
+                id="pumpPower"
+                placeholder="Pump power (W)"
+                name="pumpPower"
+                onChange={handleInputFloatPond}
+                defaultValue={pondInfo && pondInfo.pumpPower}
+              />
+            </div>
           </div>
+
           <div className="input-two-fields">
-            <input
-              type="text"
-              placeholder="Size (m²)"
-              name="size"
-              onChange={handleInputFloatPond}
-              defaultValue={pondInfo && pondInfo.size}
-            />
-            <input
-              type="text"
-              placeholder="Depth (m)"
-              name="depth"
-              onChange={handleInputFloatPond}
-              defaultValue={pondInfo && pondInfo.depth}
-            />
+            <div className="input-field">
+              <label htmlFor="size">Size (m²)</label>
+              <input
+                type="text"
+                id="size"
+                placeholder="Size (m²)"
+                name="size"
+                onChange={handleInputFloatPond}
+                defaultValue={pondInfo && pondInfo.size}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="depth">Depth (m)</label>
+              <input
+                type="text"
+                id="depth"
+                placeholder="Depth (m)"
+                name="depth"
+                onChange={handleInputFloatPond}
+                defaultValue={pondInfo && pondInfo.depth}
+              />
+            </div>
           </div>
+
           <div className="input-two-fields">
-            <input
-              type="text"
-              placeholder="Volumn (L)"
-              name="volume"
-              onChange={handleInputFloatPond}
-              defaultValue={pondInfo && pondInfo.volume}
-            />
-            <input
-              type="text"
-              placeholder="Number of veins"
-              name="vein"
-              onChange={handleInputNumberPond}
-              defaultValue={pondInfo && pondInfo.vein}
-            />
+            <div className="input-field">
+              <label htmlFor="volume">Volume (L)</label>
+              <input
+                type="text"
+                id="volume"
+                placeholder="Volume (L)"
+                name="volume"
+                onChange={handleInputFloatPond}
+                defaultValue={pondInfo && pondInfo.volume}
+              />
+            </div>
+            <div className="input-field">
+              <label htmlFor="vein">Number of Veins</label>
+              <input
+                type="text"
+                id="vein"
+                placeholder="Number of veins"
+                name="vein"
+                onChange={handleInputNumberPond}
+                defaultValue={pondInfo && pondInfo.vein}
+              />
+            </div>
           </div>
+
           <div className="submit">
             <button onClick={handleToggleUpdatePondModal}>Cancel</button>
             <button>Create confirm</button>

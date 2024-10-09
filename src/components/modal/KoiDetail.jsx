@@ -49,6 +49,76 @@ export const KoiDetail = () => {
       setServerError(null);
     }
   }, [isFetching, isLoading, isError]);
+
+  // Calculate the age of the koi in years
+  const calculateKoiAge = (createDate) => {
+    const today = new Date();
+    const created = new Date(createDate);
+    const age = today.getFullYear() - created.getFullYear();
+    return age;
+  };
+
+  // Calculate recommended food amount based on koi age, weight, sex, type, and origin
+  const calculateFoodAmount = (age, weight, sex, type, origin) => {
+    let baseAmount = 0;
+
+    // Adjust base food amount based on age
+    if (age <= 1) baseAmount = weight * 0.05;
+    // Young koi (up to 1 year old) - 5% of body weight
+    else if (age <= 2) baseAmount = weight * 0.03;
+    // Juvenile koi (1-2 years) - 3% of body weight
+    else baseAmount = weight * 0.01; // Adult koi (3+ years) - 1% of body weight
+
+    // Adjust for koi sex (Female typically needs more due to egg production)
+    if (sex === "Female") baseAmount *= 1.1; // Increase food by 10% for females
+
+    // Adjust based on koi type
+    const typeAdjustment = {
+      Kohaku: 1.05,
+      Sanke: 1.05,
+      Showa: 1.05,
+      Tancho: 1.04,
+      Asagi: 1.03,
+      Shusui: 1.03,
+      Utsurimono: 1.02,
+      Bekko: 1.02,
+      Goshiki: 1.03,
+      Koromo: 1.03,
+    };
+
+    baseAmount *= typeAdjustment[type] || 1; // Adjust based on koi type (default to 1 if no match)
+
+    // Adjust based on koi origin
+    const originAdjustment = {
+      Japan: 1.1, // Japanese koi are often higher quality and might need more food
+      China: 1.05,
+      Indonesia: 1.05,
+      Thailand: 1.04,
+      Vietnam: 1.03,
+      "South Korea": 1.03,
+    };
+
+    baseAmount *= originAdjustment[origin] || 1; // Adjust based on origin (default to 1 if no match)
+
+    return baseAmount;
+  };
+
+  // Extract koi info
+  const koiAge = koiInfo.createDate ? calculateKoiAge(koiInfo.createDate) : 0;
+  const koiWeight = koiInfo.weight || 1000; // Assuming koi weight is provided in grams
+  const koiSex = koiInfo.sex ? "Male" : "Female";
+  const koiType = koiInfo.type;
+  const koiOrigin = koiInfo.origin;
+
+  // Calculate food recommendation
+  const recommendedFoodAmount = calculateFoodAmount(
+    koiAge,
+    koiWeight,
+    koiSex,
+    koiType,
+    koiOrigin
+  );
+
   // handle func
   const handeToggleKoiHistoryModalOn = () => {
     dispatch(toggleKoiHistoryOn());
@@ -122,23 +192,38 @@ export const KoiDetail = () => {
               </div>
               <div className="koi-detail-recommendation">
                 <div className="koi-recommendation-header">
-                  <strong>Recommendation</strong>
+                  <strong>Feeding Recommendation</strong>
                   <p>
-                    Our system will calculate how many food based on Koi Age
+                    Our system calculates the amount of food based on Koi Age,
+                    Weight, and Water Temperature.
                   </p>
                 </div>
                 <div className="recommendation">
                   <div className="koi-food">
-                    <strong>Amount of food (% of Koi Weight)</strong>
-                    <p>1%</p>
+                    <strong>Recommended Food Amount (grams per day)</strong>
+                    <p>{recommendedFoodAmount.toFixed(2)}g</p>
                   </div>
+
                   <span>
-                    A diet consisting of lower protein pellets, around 25-35%,
-                    is appropriate, supplemented with vegetables and fruits such
-                    as watermelon, lettuce, or citrus slices. Adult koi should
-                    be fed once or twice daily, depending on their activity
-                    level and water temperature.
+                    In addition to pellets, you can feed koi vegetables and
+                    fruits such as lettuce, watermelon, and oranges. Adjust
+                    feeding based on koi activity and water temperature.
                   </span>
+                </div>
+                <div className="shop-recommendation">
+                  <strong>Recommended Product</strong>
+                  <p>
+                    We recommend this product for optimal koi health and feeding
+                    care.
+                  </p>
+                  <a
+                    href="http://localhost:5173/productdetail/814301"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="product-link"
+                  >
+                    View and Buy Product
+                  </a>
                 </div>
                 <div className="utils">
                   <button onClick={handleToggleUpdateKoiModal}>Update</button>

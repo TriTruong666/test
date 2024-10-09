@@ -237,7 +237,7 @@ export const UpdateProduct = () => {
         ) : (
           <>
             <div className="update-product-header">
-              <strong>Create A Product</strong>
+              <strong>Update Product</strong>
               <i
                 className="bx bx-x"
                 onClick={handleToggleUpdateProductModal}
@@ -251,10 +251,9 @@ export const UpdateProduct = () => {
             >
               <div className="input-image">
                 <i className="bx bx-trash-alt" onClick={removeChooseImage}></i>
-
                 {previewImage ? (
                   <label htmlFor="img">
-                    <img src={previewImage} alt="" />
+                    <img src={previewImage} alt="Selected" />
                   </label>
                 ) : (
                   <label htmlFor="img">
@@ -262,129 +261,153 @@ export const UpdateProduct = () => {
                     <p>Choose An Image</p>
                   </label>
                 )}
-
                 <input
                   type="file"
                   id="img"
-                  src=""
-                  alt=""
                   onChange={(e) => resizeFile(e.target.files[0])}
                 />
               </div>
-              <input
-                className="name"
-                type="text"
-                onChange={handleOnChange}
-                defaultValue={submitData.name}
-                name="name"
-                placeholder="Product name"
-              />
-              <div className="input-two-fields">
+
+              <div className="form-group">
+                <label htmlFor="name">Product Name</label>
                 <input
+                  className="name"
                   type="text"
-                  name="unitprice"
-                  placeholder="Price"
-                  defaultValue={submitData.unitprice}
-                  onChange={handleInputFloat}
-                />
-                <input
-                  type="text"
-                  name="stock"
-                  placeholder="Stock"
-                  defaultValue={submitData.stock}
-                  onChange={handleInputNumber}
+                  onChange={handleOnChange}
+                  defaultValue={submitData.name}
+                  name="name"
+                  placeholder="Product name"
+                  id="name"
                 />
               </div>
-              <CKEditor
-                editor={ClassicEditor}
-                config={{
-                  plugins: [
-                    Essentials,
-                    Bold,
-                    Italic,
-                    Paragraph,
-                    Heading,
-                    Link,
-                    List,
-                    BlockQuote,
-                    Alignment,
-                    Image,
-                    ImageToolbar,
-                    ImageStyle,
-                    ImageResize,
-                    Table,
-                    TableToolbar,
-                    Font,
-                  ],
-                  toolbar: [
-                    "heading",
-                    "|",
-                    "bold",
-                    "italic",
-                    "link",
-                    "bulletedList",
-                    "numberedList",
-                    "|",
-                    "blockQuote",
-                    "alignment",
-                    "fontSize",
-                    "|",
-                    "imageUpload",
-                    "insertTable",
-                    "|",
-                    "undo",
-                    "redo",
-                  ],
-                  image: {
+
+              <div className="input-two-fields">
+                <div className="form-group">
+                  <label htmlFor="unitprice">Price</label>
+                  <input
+                    type="text"
+                    name="unitprice"
+                    placeholder="Price"
+                    defaultValue={submitData.unitprice}
+                    onChange={handleInputFloat}
+                    id="unitprice"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="stock">Stock</label>
+                  <input
+                    type="text"
+                    name="stock"
+                    placeholder="Stock"
+                    defaultValue={submitData.stock}
+                    onChange={handleInputNumber}
+                    id="stock"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <CKEditor
+                  editor={ClassicEditor}
+                  config={{
+                    plugins: [
+                      Essentials,
+                      Bold,
+                      Italic,
+                      Paragraph,
+                      Heading,
+                      Link,
+                      List,
+                      BlockQuote,
+                      Alignment,
+                      Image,
+                      ImageToolbar,
+                      ImageStyle,
+                      ImageResize,
+                      Table,
+                      TableToolbar,
+                      Font,
+                    ],
                     toolbar: [
-                      "imageTextAlternative",
-                      "imageStyle:full",
-                      "imageStyle:side",
+                      "heading",
+                      "|",
+                      "bold",
+                      "italic",
+                      "link",
+                      "bulletedList",
+                      "numberedList",
+                      "|",
+                      "blockQuote",
+                      "alignment",
+                      "fontSize",
+                      "|",
+                      "imageUpload",
+                      "insertTable",
+                      "|",
+                      "undo",
+                      "redo",
                     ],
-                    styles: ["full", "side"],
-                  },
-                  table: {
-                    contentToolbar: [
-                      "tableColumn",
-                      "tableRow",
-                      "mergeTableCells",
-                    ],
-                  },
-                }}
-                data={submitData.description}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setSubmitData({
-                    ...submitData,
-                    description: data,
-                  });
-                }}
-              />
-              <select
-                className="cate"
-                onChange={handleInputNumber}
-                name="categoryId"
-                id=""
-                value={submitData.categoryId || ""}
-              >
-                <option value="">Category</option>
-                <option value="1">Koi Health Treatment</option>
-                <option value="2">Water Parameter Improvement</option>
-              </select>
-              <select
-                className="cate"
-                onChange={handleOnChange}
-                name="status"
-                id=""
-                value={submitData.status ? "true" : "false"}
-              >
-                <option value="">Status</option>
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-              </select>
+                    image: {
+                      toolbar: [
+                        "imageTextAlternative",
+                        "imageStyle:full",
+                        "imageStyle:side",
+                      ],
+                      styles: ["full", "side"],
+                    },
+                    table: {
+                      contentToolbar: [
+                        "tableColumn",
+                        "tableRow",
+                        "mergeTableCells",
+                      ],
+                    },
+                  }}
+                  data={submitData.description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setSubmitData({
+                      ...submitData,
+                      description: data,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="categoryId">Category</label>
+                <select
+                  className="cate"
+                  onChange={handleInputNumber}
+                  name="categoryId"
+                  id="categoryId"
+                  value={submitData.categoryId || ""}
+                >
+                  <option value="">Category</option>
+                  <option value="1">Koi Health Treatment</option>
+                  <option value="2">Water Parameter Improvement</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="status">Status</label>
+                <select
+                  className="cate"
+                  onChange={handleOnChange}
+                  name="status"
+                  id="status"
+                  value={submitData.status ? "true" : "false"}
+                >
+                  <option value="">Status</option>
+                  <option value="true">Active</option>
+                  <option value="false">Inactive</option>
+                </select>
+              </div>
+
               <div className="submit">
                 <span onClick={handleToggleUpdateProductModal}>Cancel</span>
-                <button>Create confirm</button>
+                <button type="submit">Create Confirm</button>
               </div>
             </form>
           </>

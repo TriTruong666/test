@@ -254,15 +254,15 @@ export const AddProduct = () => {
           autoComplete="off"
           className="add-product-detail"
         >
-          <div className="input-image">
+          <div className="field input-image">
             <i className="bx bx-trash-alt" onClick={removeChooseImage}></i>
 
             {previewImage ? (
-              <label htmlFor="img">
-                <img src={previewImage} alt="" />
+              <label htmlFor="img" className="image-preview">
+                <img src={previewImage} alt="Preview" />
               </label>
             ) : (
-              <label htmlFor="img">
+              <label htmlFor="img" className="image-placeholder">
                 <i className="bx bx-image-add"></i>
                 <p>Choose An Image</p>
               </label>
@@ -271,107 +271,142 @@ export const AddProduct = () => {
             <input
               type="file"
               id="img"
-              src=""
-              alt=""
+              name="img"
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input
-            className="name"
-            type="text"
-            onChange={handleOnChangeName}
-            name="name"
-            placeholder="Product name"
-          />
-          <div className="input-two-fields">
+
+          <div className="field">
+            <label htmlFor="name" className="field-label">
+              Product Name
+            </label>
             <input
+              id="name"
+              className="name"
               type="text"
-              name="unitprice"
-              placeholder="Price"
-              onChange={handleInputFloat}
-            />
-            <input
-              type="text"
-              name="stock"
-              placeholder="Stock"
-              onChange={handleInputNumber}
+              onChange={handleOnChangeName}
+              name="name"
+              placeholder="Enter product name"
             />
           </div>
+
+          <div className="input-two-fields">
+            <div className="field">
+              <label htmlFor="unitprice" className="field-label">
+                Price
+              </label>
+              <input
+                id="unitprice"
+                type="text"
+                name="unitprice"
+                placeholder="Enter price"
+                onChange={handleInputFloat}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="stock" className="field-label">
+                Stock
+              </label>
+              <input
+                id="stock"
+                type="text"
+                name="stock"
+                placeholder="Enter stock quantity"
+                onChange={handleInputNumber}
+              />
+            </div>
+          </div>
+
           {invalidNumber && <p className="invalid">{invalidNumber}</p>}
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [
-                Essentials,
-                Bold,
-                Italic,
-                Paragraph,
-                Heading,
-                Link,
-                List,
-                BlockQuote,
-                Alignment,
-                Image,
-                ImageToolbar,
-                ImageStyle,
-                ImageResize,
-                Table,
-                TableToolbar,
-                Font,
-              ],
-              toolbar: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "|",
-                "blockQuote",
-                "alignment",
-                "fontSize",
-                "|",
-                "imageUpload",
-                "insertTable",
-                "|",
-                "undo",
-                "redo",
-              ],
-              image: {
-                toolbar: [
-                  "imageTextAlternative",
-                  "imageStyle:full",
-                  "imageStyle:side",
+
+          <div className="field">
+            <label className="field-label">Description</label>
+            <CKEditor
+              editor={ClassicEditor}
+              config={{
+                plugins: [
+                  Essentials,
+                  Bold,
+                  Italic,
+                  Paragraph,
+                  Heading,
+                  Link,
+                  List,
+                  BlockQuote,
+                  Alignment,
+                  Image,
+                  ImageToolbar,
+                  ImageStyle,
+                  ImageResize,
+                  Table,
+                  TableToolbar,
+                  Font,
                 ],
-                styles: ["full", "side"],
-              },
-              table: {
-                contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-              },
-            }}
-            data=""
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setSubmitData({
-                ...submitData,
-                description: data,
-              });
-            }}
-          />
-          <select
-            className="cate"
-            onChange={handleInputNumber}
-            name="categoryId"
-            id=""
-          >
-            <option value="">Category</option>
-            <option value="1">Koi Health Treatment</option>
-            <option value="2">Water Parameter Improvement</option>
-          </select>
+                toolbar: [
+                  "heading",
+                  "|",
+                  "bold",
+                  "italic",
+                  "link",
+                  "bulletedList",
+                  "numberedList",
+                  "|",
+                  "blockQuote",
+                  "alignment",
+                  "fontSize",
+                  "|",
+                  "imageUpload",
+                  "insertTable",
+                  "|",
+                  "undo",
+                  "redo",
+                ],
+                image: {
+                  toolbar: [
+                    "imageTextAlternative",
+                    "imageStyle:full",
+                    "imageStyle:side",
+                  ],
+                  styles: ["full", "side"],
+                },
+                table: {
+                  contentToolbar: [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                  ],
+                },
+              }}
+              data=""
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setSubmitData({
+                  ...submitData,
+                  description: data,
+                });
+              }}
+            />
+          </div>
+
+          <div className="field">
+            <label htmlFor="categoryId" className="field-label">
+              Category
+            </label>
+            <select
+              className="cate"
+              onChange={handleInputNumber}
+              name="categoryId"
+              id="categoryId"
+            >
+              <option value="">Select Category</option>
+              <option value="1">Koi Health Treatment</option>
+              <option value="2">Water Parameter Improvement</option>
+            </select>
+          </div>
+
           <div className="submit">
             <span onClick={handleToggleAddProductModal}>Cancel</span>
-            <button>Create confirm</button>
+            <button type="submit">Create Confirm</button>
           </div>
         </form>
       </div>

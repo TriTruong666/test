@@ -1,7 +1,7 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import FileResizer from "react-image-file-resizer";
 import ReactFlagsSelect from "react-flags-select";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import FileResizer from "react-image-file-resizer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -199,26 +199,30 @@ export const UpdateKoi = () => {
             <input
               type="file"
               id="img"
-              src=""
-              alt=""
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
-          <input
-            type="text"
-            id="koiname"
-            name="name"
-            defaultValue={koiInfo.name}
-            onChange={handleOnChange}
-            placeholder="Koi name"
-          />
+
+          <div className="input-item">
+            <label htmlFor="koiname">Koi Name</label>
+            <input
+              type="text"
+              id="koiname"
+              name="name"
+              defaultValue={koiInfo.name}
+              onChange={handleOnChange}
+              placeholder="Koi name"
+            />
+          </div>
+
           <div className="select-two-fields">
             <div className="select">
+              <label htmlFor="koi-type">Select Type</label>
               <select
                 name="type"
                 onChange={handleOnChange}
                 defaultValue={koiInfo.type}
-                id=""
+                id="koi-type"
               >
                 <option value="">Type</option>
                 <option value="Kohaku">Kohaku</option>
@@ -234,12 +238,14 @@ export const UpdateKoi = () => {
               </select>
               <i className="bx bxs-chevron-down"></i>
             </div>
+
             <div className="select">
+              <label htmlFor="koi-sex">Select Gender</label>
               <select
                 name="sex"
                 defaultValue={koiInfo.sex ? "true" : "false"}
                 onChange={handleOnChange}
-                id=""
+                id="koi-sex"
               >
                 <option value="">Gender</option>
                 <option value="true">Male</option>
@@ -248,16 +254,23 @@ export const UpdateKoi = () => {
               <i className="bx bxs-chevron-down"></i>
             </div>
           </div>
-          <ReactFlagsSelect
-            selected={getOriginCode(koiInfo.origin)}
-            onSelect={handleOnSelectFlag}
-            placeholder="Select origin"
-            countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
-            className="menu-flags"
-          />
+
+          <div className="input-item">
+            <label htmlFor="origin">Origin</label>
+            <ReactFlagsSelect
+              selected={getOriginCode(koiInfo.origin)}
+              onSelect={handleOnSelectFlag}
+              placeholder="Select origin"
+              countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
+              className="menu-flags"
+            />
+          </div>
+
           <div className="submit">
-            <button onClick={handleToggleUpdateKoiModal}>Cancel</button>
-            <button>Update confirm</button>
+            <button type="button" onClick={handleToggleUpdateKoiModal}>
+              Cancel
+            </button>
+            <button type="submit">Update Confirm</button>
           </div>
         </form>
       </div>

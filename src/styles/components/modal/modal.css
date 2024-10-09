@@ -160,6 +160,23 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
   .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::-moz-placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
@@ -167,14 +184,6 @@ select option {
   .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
-  }
-  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields input {
-    width: 50%;
-    padding: 12px 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: black;
-    font-size: 0.8rem;
-    border-radius: 10px;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water {
     display: flex;
@@ -194,18 +203,27 @@ select option {
     font-size: 0.75rem;
     color: rgba(0, 0, 0, 0.7);
   }
-  .add-pond-container .add-pond-modal .add-pond-detail .water ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .add-pond-container .add-pond-modal .add-pond-detail .water ::placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
   .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields .input-field {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields .input-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields .input-field input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields ::-moz-placeholder {
     color: rgba(0, 0, 0, 0.8);
@@ -214,14 +232,6 @@ select option {
   .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields ::placeholder {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
-  }
-  .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields input {
-    width: 50%;
-    padding: 12px 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: black;
-    font-size: 0.8rem;
-    border-radius: 10px;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water #temp {
     padding: 12px 25px;
@@ -653,19 +663,12 @@ select option {
   .add-koi-container .add-koi-modal .add-koi-form .input-item {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 5px;
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item label {
     font-size: 0.8rem;
     font-weight: 600;
-  }
-  .add-koi-container .add-koi-modal .add-koi-form .input-item ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.8rem;
-  }
-  .add-koi-container .add-koi-modal .add-koi-form .input-item ::placeholder {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.8rem;
+    margin-bottom: 5px;
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item input {
     padding: 12px 25px;
@@ -673,6 +676,14 @@ select option {
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item input ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .input-item input ::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-datepicker {
     color: black;
@@ -684,48 +695,33 @@ select option {
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar {
     background-color: white;
-    /* Background color of the datepicker */
     border: 1px solid #ddd;
-    /* Border */
     border-radius: 5px;
-    /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Shadow effect */
     z-index: 1000;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar react-datepicker__header {
+  .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__header {
     background-color: #007bff;
-    /* Header background color */
     color: white;
-    /* Header text color */
     border-bottom: none;
-    /* Remove bottom border */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__current-month {
     font-weight: bold;
-    /* Bold month name */
     font-size: 1.2rem;
-    /* Increase font size */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day {
     line-height: 2;
-    /* Increase line height for spacing */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day:hover {
     background-color: #007bff;
-    /* Change background on hover */
     color: white;
-    /* Change text color on hover */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day--selected {
     background-color: #007bff;
-    /* Selected day background */
     color: white;
-    /* Selected day text color */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-item .custom-calendar .react-datepicker__day--outside-month {
     color: #ccc;
-    /* Color for days outside the current month */
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-image {
     position: relative;
@@ -774,16 +770,14 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
-  .add-koi-container .add-koi-modal .add-koi-form .input-two-fields ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .add-koi-container .add-koi-modal .add-koi-form .input-two-fields ::placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
+  .add-koi-container .add-koi-modal .add-koi-form .input-two-fields .input-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
   .add-koi-container .add-koi-modal .add-koi-form .input-two-fields input {
-    width: 50%;
+    width: 100%;
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
@@ -796,17 +790,25 @@ select option {
          column-gap: 20px;
   }
   .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select {
-    width: 50%;
+    flex: 1;
     position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    row-gap: 5px;
+    border: none;
+    border-radius: 10px;
+  }
+  .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
   }
   .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select select {
     width: 100%;
     padding: 12px 25px;
     color: black;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
   .add-koi-container .add-koi-modal .add-koi-form .select-two-fields .select i {
     left: 90%;
@@ -962,7 +964,13 @@ select option {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .update-koi-container .update-koi-modal .update-koi-form .select-two-fields .select label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
   }
   .update-koi-container .update-koi-modal .update-koi-form .select-two-fields .select select {
     width: 100%;

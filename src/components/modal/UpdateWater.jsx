@@ -95,16 +95,19 @@ export const UpdateWater = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isValidNumber) {
-      toast.error("Invalid number", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error(
+        "Invalid number, please enter a number or every params must < 10000",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
       return;
     }
 
@@ -117,6 +120,14 @@ export const UpdateWater = () => {
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
     if (isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidNumber(true);
+      return;
+    }
+    if (value > 10000) {
       setSubmitData({
         ...submitData,
         [name]: "",

@@ -117,6 +117,15 @@ export const UpdatePond = () => {
       setValidNumber(true);
       return;
     }
+
+    if (value > 10000) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setValidNumber(true);
+      return;
+    }
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
@@ -133,6 +142,16 @@ export const UpdatePond = () => {
       setValidNumber(true);
       return;
     }
+
+    if (value > 10000) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setValidNumber(true);
+      return;
+    }
+
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
@@ -152,6 +171,7 @@ export const UpdatePond = () => {
         progress: undefined,
         theme: "dark",
       });
+      return;
     }
     try {
       await mutation.mutateAsync(submitData);

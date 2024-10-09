@@ -178,6 +178,7 @@ export const AddKoi = () => {
               onChange={(e) => resizeFile(e.target.files[0])}
             />
           </div>
+
           <div className="input-item">
             <label htmlFor="koiname">Koi name</label>
             <input
@@ -191,7 +192,8 @@ export const AddKoi = () => {
 
           <div className="select-two-fields">
             <div className="select">
-              <select name="type" onChange={handleOnChange} id="">
+              <label htmlFor="koi-type">Select Type</label>
+              <select name="type" onChange={handleOnChange} id="koi-type">
                 <option value="">Select Type</option>
                 <option value="Kohaku">Kohaku</option>
                 <option value="Sanke">Sanke</option>
@@ -207,22 +209,28 @@ export const AddKoi = () => {
             </div>
 
             <div className="select">
-              <select name="sex" onChange={handleOnChange} id="">
+              <label htmlFor="koi-sex">Select Gender</label>
+              <select name="sex" onChange={handleOnChange} id="koi-sex">
                 <option value="">Select Gender</option>
                 <option value="true">Male</option>
                 <option value="false">Female</option>
               </select>
             </div>
           </div>
-          <ReactFlagsSelect
-            selected={selectedFlag}
-            onSelect={handleOnSelectFlag}
-            countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
-            placeholder="Select origin"
-            className="menu-flags"
-          />
+
           <div className="input-item">
-            <label htmlFor="">First date in pond</label>
+            <label htmlFor="origin">Origin</label>
+            <ReactFlagsSelect
+              selected={selectedFlag}
+              onSelect={handleOnSelectFlag}
+              countries={["JP", "CN", "ID", "TH", "VN", "KR"]}
+              placeholder="Select origin"
+              className="menu-flags"
+            />
+          </div>
+
+          <div className="input-item">
+            <label htmlFor="startDate">First date in pond</label>
             <DatePicker
               selected={startDate}
               onChange={(date) => {
@@ -263,8 +271,10 @@ export const AddKoi = () => {
           </div>
 
           <div className="submit">
-            <button onClick={handleToggleAddKoiModal}>Cancel</button>
-            <button>Create confirm</button>
+            <button type="button" onClick={handleToggleAddKoiModal}>
+              Cancel
+            </button>
+            <button type="submit">Create confirm</button>
           </div>
         </form>
       </div>

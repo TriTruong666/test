@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from "react";
-import FileResizer from "react-image-file-resizer";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  Alignment,
+  BlockQuote,
+  Bold,
   ClassicEditor,
   Essentials,
-  Bold,
-  Italic,
-  Paragraph,
+  Font,
   Heading,
+  Image,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  Italic,
   Link,
   List,
-  BlockQuote,
-  Alignment,
-  Image,
-  ImageToolbar,
-  ImageStyle,
-  ImageResize,
+  Paragraph,
   Table,
   TableToolbar,
-  Font,
 } from "ckeditor5";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import "ckeditor5/ckeditor5.css";
+import React, { useEffect, useState } from "react";
+import FileResizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from "react-redux";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { ToastContainer, toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
@@ -166,6 +166,7 @@ export const UpdateProduct = () => {
       setIsValidNumber(true);
       return;
     }
+
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),

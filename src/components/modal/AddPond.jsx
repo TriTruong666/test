@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
-import "../../styles/components/modal/modal.css";
 import FileResizer from "react-image-file-resizer";
+import "../../styles/components/modal/modal.css";
 // import slices
 import { toggleAddPondModal } from "../../redux/slices/modal/modal";
 // import dispatch
@@ -247,7 +247,7 @@ export const AddPond = () => {
 
               {previewImage ? (
                 <label htmlFor="img">
-                  <img src={previewImage} alt="" />
+                  <img src={previewImage} alt="Pond Image" />
                 </label>
               ) : (
                 <label htmlFor="img">
@@ -259,113 +259,171 @@ export const AddPond = () => {
               <input
                 type="file"
                 id="img"
-                src=""
-                alt=""
                 onChange={(e) => resizeFile(e.target.files[0])}
+                style={{ display: "none" }} // Hides the input field
               />
             </div>
+
             <div className="input-two-fields">
-              <input
-                type="text"
-                placeholder="Pond name"
-                name="pondName"
-                onChange={handleOnChangePond}
-              />
-              <input
-                type="text"
-                placeholder="Pump power (W)"
-                name="pumpPower"
-                onChange={handleInputFloatPond}
-              />
+              <div className="input-field">
+                <label htmlFor="pondName">Pond Name</label>
+                <input
+                  type="text"
+                  id="pondName"
+                  placeholder="Pond name"
+                  name="pondName"
+                  onChange={handleOnChangePond}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="pumpPower">Pump Power (W)</label>
+                <input
+                  type="text"
+                  id="pumpPower"
+                  placeholder="Pump power (W)"
+                  name="pumpPower"
+                  onChange={handleInputFloatPond}
+                />
+              </div>
             </div>
+
             <div className="input-two-fields">
-              <input
-                type="text"
-                placeholder="Size (m²)"
-                name="size"
-                onChange={handleInputFloatPond}
-              />
-              <input
-                type="text"
-                placeholder="Depth (m)"
-                name="depth"
-                onChange={handleInputFloatPond}
-              />
+              <div className="input-field">
+                <label htmlFor="size">Size (m²)</label>
+                <input
+                  type="text"
+                  id="size"
+                  placeholder="Size (m²)"
+                  name="size"
+                  onChange={handleInputFloatPond}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="depth">Depth (m)</label>
+                <input
+                  type="text"
+                  id="depth"
+                  placeholder="Depth (m)"
+                  name="depth"
+                  onChange={handleInputFloatPond}
+                />
+              </div>
             </div>
+
             <div className="input-two-fields">
-              <input
-                type="text"
-                placeholder="Volumn (L)"
-                name="volume"
-                onChange={handleInputFloatPond}
-              />
-              <input
-                type="text"
-                placeholder="Number of veins"
-                name="vein"
-                onChange={handleInputNumberPond}
-              />
+              <div className="input-field">
+                <label htmlFor="volume">Volume (L)</label>
+                <input
+                  type="text"
+                  id="volume"
+                  placeholder="Volume (L)"
+                  name="volume"
+                  onChange={handleInputFloatPond}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="vein">Number of Veins</label>
+                <input
+                  type="text"
+                  id="vein"
+                  placeholder="Number of veins"
+                  name="vein"
+                  onChange={handleInputNumberPond}
+                />
+              </div>
             </div>
           </div>
+
           <div className="water">
             <div className="header">
-              <strong>Water quality</strong>
-              <p>Input water infomation for the first time</p>
+              <strong>Water Quality</strong>
+              <p>Input water information for the first time</p>
             </div>
+
             <div className="input-two-fields">
-              <input
-                type="text"
-                placeholder="NO2 (ppm)"
-                name="no2"
-                onChange={handleInputFloatWater}
-              />
-              <input
-                type="text"
-                placeholder="NO3 (ppm)"
-                name="no3"
-                onChange={handleInputFloatWater}
-              />
+              <div className="input-field">
+                <label htmlFor="no2">NO2 (ppm)</label>
+                <input
+                  type="text"
+                  id="no2"
+                  placeholder="NO2 (ppm)"
+                  name="no2"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="no3">NO3 (ppm)</label>
+                <input
+                  type="text"
+                  id="no3"
+                  placeholder="NO3 (ppm)"
+                  name="no3"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
             </div>
+
             <div className="input-two-fields">
-              <input
-                type="text"
-                placeholder="NH3/NH4 (ppm)"
-                name="nh4"
-                onChange={handleInputFloatWater}
-              />
-              <input
-                type="text"
-                placeholder="O2 (mg/L)"
-                name="o2"
-                onChange={handleInputFloatWater}
-              />
+              <div className="input-field">
+                <label htmlFor="nh4">NH3/NH4 (ppm)</label>
+                <input
+                  type="text"
+                  id="nh4"
+                  placeholder="NH3/NH4 (ppm)"
+                  name="nh4"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="o2">O2 (mg/L)</label>
+                <input
+                  type="text"
+                  id="o2"
+                  placeholder="O2 (mg/L)"
+                  name="o2"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
             </div>
+
             <div className="input-two-fields">
+              <div className="input-field">
+                <label htmlFor="salt">Salt (%)</label>
+                <input
+                  type="text"
+                  id="salt"
+                  placeholder="Salt (%)"
+                  name="salt"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
+              <div className="input-field">
+                <label htmlFor="ph">pH</label>
+                <input
+                  type="text"
+                  id="ph"
+                  placeholder="pH"
+                  name="ph"
+                  onChange={handleInputFloatWater}
+                />
+              </div>
+            </div>
+
+            <div className="input-field">
               <input
                 type="text"
-                placeholder="Salt (%)"
-                name="salt"
-                onChange={handleInputFloatWater}
-              />
-              <input
-                type="text"
-                placeholder="pH"
-                name="ph"
+                id="temp"
+                placeholder="Temperature (℃)"
+                name="temperature"
                 onChange={handleInputFloatWater}
               />
             </div>
-            <input
-              type="text"
-              id="temp"
-              placeholder="Temparature (℃  )"
-              name="temperature"
-              onChange={handleInputFloatWater}
-            />
           </div>
+
           <div className="submit">
             <button onClick={handleToggleAddPondModal}>Cancel</button>
             <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Create confirm"}
+              {isSubmitting ? "Submitting..." : "Create Confirm"}
             </button>
           </div>
         </form>

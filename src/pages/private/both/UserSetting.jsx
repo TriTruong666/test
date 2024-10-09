@@ -9,7 +9,10 @@ import "../../../styles/dashboard/setting/setting.css";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 // import service
 import * as AccountService from "../../../service/account/AccountService";
+
 export const UserSetting = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   // query
   const {
     data: myInfo,
@@ -75,7 +78,7 @@ export const UserSetting = () => {
     } else {
       setServerError(null);
     }
-  }, [isToggleChangePass, isFetching, isLoading,isError]);
+  }, [isToggleChangePass, isFetching, isLoading, isError]);
 
   // handle func
   const handleToggleChangePassTrue = () => {
@@ -100,20 +103,21 @@ export const UserSetting = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="user-setting-container">
       <Dashnav />
       <ToastContainer />
       <div className="user-setting">
-      {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ): (
+        {serverError ? (
+          <div className="error-page">
+            <p>{serverError}</p>
+          </div>
+        ) : isLoadingPage ? (
+          <div className="loading">
+            <ClipLoader color="#000000" size={40} />
+          </div>
+        ) : (
           <>
             <div className="setting-header">
               <strong>{myInfo && myInfo.fullname}'s setting</strong>
@@ -173,57 +177,61 @@ export const UserSetting = () => {
               </div>
               <button>Update Infomation</button>
             </form>
-            <form action="" autoComplete="off" className="security-form">
-              <div className="header">
-                <div>
-                  <strong>Security Setting</strong>
-                  <p>You can change your sensitive infomation</p>
+            {user.googleAccount ? (
+              ""
+            ) : (
+              <form action="" autoComplete="off" className="security-form">
+                <div className="header">
+                  <div>
+                    <strong>Security Setting</strong>
+                    <p>You can change your sensitive infomation</p>
+                  </div>
+                  {isToggleChangePass ? (
+                    <span id="disable" onClick={handleToggleChangePassFalse}>
+                      Disable change password
+                    </span>
+                  ) : (
+                    <span id="enable" onClick={handleToggleChangePassTrue}>
+                      Enable change password
+                    </span>
+                  )}
                 </div>
-                {isToggleChangePass ? (
-                  <span id="disable" onClick={handleToggleChangePassFalse}>
-                    Disable change password
-                  </span>
-                ) : (
-                  <span id="enable" onClick={handleToggleChangePassTrue}>
-                    Enable change password
-                  </span>
-                )}
-              </div>
 
-              <div className="item">
-                <label htmlFor="recent">Recent password</label>
-                <input
-                  type="password"
-                  id="recent"
-                  placeholder="Your recent password"
-                  onChange={(e) => setNewPass(e.target.value)}
-                  disabled={!isToggleChangePass}
-                />
-              </div>
-              <div className="item">
-                <label htmlFor="newpass">New password</label>
-                <input
-                  type="password"
-                  id="newpass"
-                  placeholder="Enter new password"
-                  onChange={(e) => setNewPass(e.target.value)}
-                  value={newPass}
-                  disabled={!isToggleChangePass}
-                />
-              </div>
-              <div className="item">
-                <label htmlFor="confirm">Confirm password</label>
-                <input
-                  type="password"
-                  id="confirm"
-                  placeholder="Enter confirm password"
-                  onChange={(e) => setConfirmPass(e.target.value)}
-                  value={confirmPass}
-                  disabled={!isToggleChangePass}
-                />
-              </div>
-              <button id="submit">Change Password</button>
-            </form>
+                <div className="item">
+                  <label htmlFor="recent">Recent password</label>
+                  <input
+                    type="password"
+                    id="recent"
+                    placeholder="Your recent password"
+                    onChange={(e) => setNewPass(e.target.value)}
+                    disabled={!isToggleChangePass}
+                  />
+                </div>
+                <div className="item">
+                  <label htmlFor="newpass">New password</label>
+                  <input
+                    type="password"
+                    id="newpass"
+                    placeholder="Enter new password"
+                    onChange={(e) => setNewPass(e.target.value)}
+                    value={newPass}
+                    disabled={!isToggleChangePass}
+                  />
+                </div>
+                <div className="item">
+                  <label htmlFor="confirm">Confirm password</label>
+                  <input
+                    type="password"
+                    id="confirm"
+                    placeholder="Enter confirm password"
+                    onChange={(e) => setConfirmPass(e.target.value)}
+                    value={confirmPass}
+                    disabled={!isToggleChangePass}
+                  />
+                </div>
+                <button id="submit">Change Password</button>
+              </form>
+            )}
           </>
         )}
       </div>

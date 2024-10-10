@@ -12,6 +12,21 @@
             display: flex;
             flex-direction: column;
 
+            .empty-blog {
+                width: 100%;
+                height: 400px;
+                background: $main-color;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                p {
+                    font-family: $main-font;
+                    font-size: 1.2rem;
+                    color: $fade-white;
+                }
+            }
+
             .blog-header {
                 position: relative;
                 width: 100%;

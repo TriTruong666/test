@@ -17,7 +17,7 @@ export const Blog = () => {
   const [endBlog, setEndBlog] = useState(null);
   const [isLoadingList, setIsLoadingList] = useState(false);
   const [serverError, setServerError] = useState(null);
-  const { data: blogs = [],isError } = useQuery({
+  const { data: blogs = [], isError } = useQuery({
     queryKey: ["blogs"],
     queryFn: BlogService.getAllBlog,
     refetchOnWindowFocus: false,
@@ -44,7 +44,6 @@ export const Blog = () => {
   };
   useEffect(() => {
     handleSetIsAuth();
-
     // Check if we've loaded all blogs
     if (blogs.length > 0 && infinityScroll >= blogs.length) {
       setEndBlog("You have reached the last blog");
@@ -57,43 +56,57 @@ export const Blog = () => {
     } else {
       setServerError(null);
     }
-  }, [blogs, infinityScroll,isError]);
+  }, [blogs, infinityScroll, isError]);
   return (
     <div className="blog-container">
       <Navbar />
       {isAuth && <Settingnav />}
       <div className="blog">
-        <div className="blog-header">
-          <strong>BLOGS</strong>
-          <p>Find out outstanding topics of Izumiya's community.</p>
-        </div>
-        {serverError ? (
-        <>
-          <div className="error-page">
-            <p>Server is closed now</p>
-          </div>
-        </>
-      ) : (
-        <>
-<Bloglist
-          infinityScroll={infinityScroll}
-          isLoadingList={isLoadingList}
-        />
-        {endBlog ? (
+        {blogs.length === 0 ? (
           <>
-            <div className="end-blog">
-              <p>{endBlog}</p>
+            <div className="empty-blog">
+              <p>Our community has not posted any blogs yet.</p>
             </div>
           </>
         ) : (
           <>
-            <div className="infinity-scroll">
-              <strong onClick={handlePagination}>Load more blogs...</strong>
+            <div className="blog-header">
+              <strong>BLOGS</strong>
+              <p>Find out outstanding topics of Izumiya's community.</p>
             </div>
+            {serverError ? (
+              <>
+                <div className="error-page">
+                  <p>Server is closed now</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <Bloglist
+                  infinityScroll={infinityScroll}
+                  isLoadingList={isLoadingList}
+                />
+                {endBlog ? (
+                  ""
+                ) : (
+                  <>
+                    {blogs.length === 0 ? (
+                      ""
+                    ) : (
+                      <>
+                        <div className="infinity-scroll">
+                          <strong onClick={handlePagination}>
+                            Load more blogs
+                          </strong>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </>
         )}
-        </>
-      )}
       </div>
       <Footer />
     </div>

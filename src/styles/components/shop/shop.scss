@@ -100,23 +100,28 @@
                     display: flex;
                     column-gap: 20px;
 
-                    button {
+                    .buynow {
+                        display: flex;
+                        align-items: center;
                         padding: 7px 30px;
                         border-radius: 10px;
-                        cursor: pointer;
-                        font-family: $main-font;
-                        font-size: 0.75rem;
-                    }
-
-                    button:nth-child(1) {
                         background: $second-color;
                         color: black;
                         font-weight: 700;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
+                    }
+
+                    button {
+                        padding: 7px 30px;
+                        border-radius: 10px;
                     }
 
                     button:nth-child(2) {
                         border: 2px solid rgba(255, 255, 255, .2);
                         transition: .4s;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
                     }
 
                     button:nth-child(2):hover {
@@ -166,9 +171,17 @@
                     display: flex;
                     column-gap: 20px;
 
-                    a {
+                    .buynow {
+                        display: flex;
+                        align-items: center;
                         padding: 7px 30px;
                         border-radius: 10px;
+                        background: $second-color;
+                        color: black;
+                        font-weight: 700;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
+                        cursor: pointer;
                     }
 
                     button {
@@ -176,20 +189,13 @@
                         border-radius: 10px;
                     }
 
-                    a:nth-child(1) {
-                        background: $second-color;
-                        color: black;
-                        font-weight: 700;
-                        font-family: $main-font;
-                        font-size: 0.8rem;
-                        text-align: center;
-                    }
-
                     button:nth-child(2) {
                         border: 2px solid rgba(255, 255, 255, .2);
                         font-weight: 700;
                         transition: .4s;
                         cursor: pointer;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
                     }
 
                     button:nth-child(2):hover {

@@ -225,7 +225,10 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <Link to={`/buynow/${product.productId}`}>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
                                         Buy now
                                       </Link>
                                       <button
@@ -259,7 +262,10 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <Link to={`/buynow/${product.productId}`}>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
                                         Buy now
                                       </Link>
                                       <button
@@ -296,7 +302,10 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <Link to={`/buynow/${product.productId}`}>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
                                         Buy now
                                       </Link>
                                       <button
@@ -330,7 +339,10 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <Link to={`/buynow/${product.productId}`}>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
                                         Buy now
                                       </Link>
                                       <button

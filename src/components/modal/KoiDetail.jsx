@@ -219,7 +219,7 @@ export const KoiDetail = () => {
 
                   <span>
                     <a
-                      href="http://localhost:5173/productdetail/814301"
+                      href="http://localhost:5173/shop/category/1"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="product-link"

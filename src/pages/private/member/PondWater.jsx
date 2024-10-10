@@ -289,6 +289,19 @@ export const PondWater = () => {
               </strong>
               <p>{phAdjustment?.message}</p>
             </div>
+            <hr />
+            <div className={`recommendation-param good`}>
+              <strong>Recommend Product</strong>
+
+              <a
+                href="http://localhost:5173/shop/category/2"
+                className="product-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Water improvement
+              </a>
+            </div>
           </div>
         </>
       )}

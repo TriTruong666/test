@@ -31,6 +31,7 @@ export const AddKoi = () => {
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
+  const [isValidName, setIsValidName] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [submitData, setSubmitData] = useState({
     name: "",
@@ -105,9 +106,35 @@ export const AddKoi = () => {
     setSelectedFlag(code);
     setSubmitData((prevData) => ({
       ...prevData,
-      origin: countryNameMap[code], // Set the origin field with the selected flag code
+      origin: countryNameMap[code],
     }));
   };
+
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -115,8 +142,22 @@ export const AddKoi = () => {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isValidName) {
+      toast.error("Koi name must at least 10 characters and not a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (
       !submitData.image ||
       !submitData.name ||
@@ -185,7 +226,7 @@ export const AddKoi = () => {
               type="text"
               id="koiname"
               placeholder="Koi name"
-              onChange={handleOnChange}
+              onChange={handleOnChangeName}
               name="name"
             />
           </div>

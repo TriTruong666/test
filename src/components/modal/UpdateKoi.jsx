@@ -46,6 +46,7 @@ export const UpdateKoi = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isValidName, setIsValidName] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: "",
     name: "",
@@ -127,6 +128,32 @@ export const UpdateKoi = () => {
       image: "",
     });
   };
+
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitData({
+        ...submitData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -203,7 +230,7 @@ export const UpdateKoi = () => {
               id="koiname"
               name="name"
               defaultValue={koiInfo.name}
-              onChange={handleOnChange}
+              onChange={handleOnChangeName}
               placeholder="Koi name"
             />
           </div>

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import DatePicker from "react-datepicker";
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -16,6 +15,7 @@ export const AddKoiLog = () => {
   const koiId = useSelector((state) => state.koi.koiId.koiId);
   // state
   const [startDate, setStartDate] = useState(new Date());
+  const [invalidNumber, setInvalidNumber] = useState(null);
   const [submitData, setSubmitData] = useState({
     size: "",
     weight: "",
@@ -48,20 +48,65 @@ export const AddKoiLog = () => {
   //   handle func
   const handleInputFloatKoiLog = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
+    const floatRegex = /^\d+(\.\d+)?$/;
+    if (!floatRegex.test(value)) {
+      setInvalidNumber("Please input a valid number.");
+      setSubmitData((prev) => ({
+        ...prev,
         [name]: "",
-      });
+      }));
       return;
     }
-    setSubmitData({
-      ...submitData,
-      [name]: parseFloat(value),
-    });
+    const floatValue = parseFloat(value);
+    if (floatValue > 10000) {
+      setInvalidNumber("Number too large.");
+      setSubmitData((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+      return;
+    }
+    setSubmitData((prev) => ({
+      ...prev,
+      [name]: floatValue,
+    }));
+    setInvalidNumber(null);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (invalidNumber != null) {
+      toast.error(invalidNumber, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (
+      submitData.size === null ||
+      submitData.size === undefined ||
+      submitData.weight === null ||
+      submitData.weight === undefined
+    ) {
+      toast.error("All fields are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {

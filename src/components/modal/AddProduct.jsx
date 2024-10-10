@@ -196,6 +196,19 @@ export const AddProduct = () => {
   };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    if (invalidNumber) {
+      toast.error("Product price must be a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
 
     if (isValidName) {
       toast.error("Product name must at least 10 characters and not a number", {

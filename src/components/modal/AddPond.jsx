@@ -39,6 +39,7 @@ export const AddPond = () => {
   });
   const [invalidNumber, setInvalidNumber] = useState(null);
   const [isMutatePond, setIsMutatePond] = useState(true);
+  const [isValidName, setIsValidName] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // dispatch
   const dispatch = useDispatch();
@@ -114,6 +115,32 @@ export const AddPond = () => {
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddPondModal());
   };
+
+  const handleOnChangeName = (e) => {
+    const { name, value } = e.target;
+    if (!isNaN(value)) {
+      setSubmitPondData({
+        ...submitPondData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    if (value.length < 10) {
+      setSubmitPondData({
+        ...submitPondData,
+        [name]: "",
+      });
+      setIsValidName(true);
+      return;
+    }
+    setSubmitPondData({
+      ...submitPondData,
+      [name]: value,
+    });
+    setIsValidName(false);
+  };
+
   const handleOnChangePond = (e) => {
     const { name, value } = e.target;
     setSubmitPondData({
@@ -123,50 +150,79 @@ export const AddPond = () => {
   };
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitPondData({
-        ...submitPondData,
+    const numberRegex = /^\d+$/;
+
+    if (!numberRegex.test(value)) {
+      setInvalidNumber("Please input a valid integer number.");
+      setSubmitPondData((prev) => ({
+        ...prev,
         [name]: "",
-      });
-      setInvalidNumber("Please input invalid number");
+      }));
       return;
     }
-    setSubmitPondData({
-      ...submitPondData,
+    setSubmitPondData((prev) => ({
+      ...prev,
       [name]: parseInt(value),
-    });
+    }));
     setInvalidNumber(null);
   };
   const handleInputFloatPond = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitPondData({
-        ...submitPondData,
+    const floatRegex = /^\d+(\.\d+)?$/;
+
+    if (!floatRegex.test(value)) {
+      setInvalidNumber("Please input a valid number.");
+      setSubmitPondData((prev) => ({
+        ...prev,
         [name]: "",
-      });
-      setInvalidNumber("Please input invalid number");
+      }));
       return;
     }
-    setSubmitPondData({
-      ...submitPondData,
-      [name]: parseFloat(value),
-    });
+
+    const floatValue = parseFloat(value);
+    if (floatValue > 10000) {
+      setInvalidNumber("Number too large.");
+      setSubmitPondData((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+      return;
+    }
+
+    setSubmitPondData((prev) => ({
+      ...prev,
+      [name]: floatValue,
+    }));
     setInvalidNumber(null);
   };
+
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitWaterData({
-        ...submitWaterData,
+    const floatRegex = /^\d+(\.\d+)?$/;
+
+    if (!floatRegex.test(value)) {
+      setInvalidNumber("Please input a valid number.");
+      setSubmitWaterData((prev) => ({
+        ...prev,
         [name]: "",
-      });
-      setInvalidNumber("Please input a valid number");
+      }));
       return;
     }
-    setSubmitWaterData({
-      ...submitWaterData,
-      [name]: parseFloat(value),
-    });
+
+    const floatValue = parseFloat(value);
+    if (floatValue > 10000) {
+      setInvalidNumber("Number too large.");
+      setSubmitWaterData((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+      return;
+    }
+
+    setSubmitWaterData((prev) => ({
+      ...prev,
+      [name]: floatValue,
+    }));
     setInvalidNumber(null);
   };
   useEffect(() => {
@@ -178,6 +234,34 @@ export const AddPond = () => {
   }, [submitWaterData.pondId]);
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    if (isValidName) {
+      toast.error("Pond name must at least 10 characters and not a number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (invalidNumber != null) {
+      toast.error(invalidNumber, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     if (
       submitPondData.depth === null ||
       submitPondData.depth === undefined ||
@@ -272,7 +356,7 @@ export const AddPond = () => {
                   id="pondName"
                   placeholder="Pond name"
                   name="pondName"
-                  onChange={handleOnChangePond}
+                  onChange={handleOnChangeName}
                 />
               </div>
               <div className="input-field">

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/components/navbar/navbar.css";
 // import assets
@@ -90,7 +90,7 @@ export const Navbar = () => {
             <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
             <Link to="/#solution">Solutions</Link>
-            <a href="">About</a>
+            <Link to="/About">About</Link>
             <a href="">Contact</a>
             <Link to="/blog">Blog</Link>
           </div>

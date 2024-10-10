@@ -1,25 +1,26 @@
 import React from "react";
 // import pages
 import { Homepage } from "../Homepage";
-import { LoginPage } from "../pages/auth/LoginPage";
-import { SignupPage } from "../pages/auth/SignupPage";
+import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
 import { ForgetPage } from "../pages/auth/ForgetPage";
-import { Shop } from "../pages/public/Shop";
+import { LoginPage } from "../pages/auth/LoginPage";
+import { ResetPass } from "../pages/auth/ResetPass";
+import { SignupPage } from "../pages/auth/SignupPage";
+import { VerifyForgetPage } from "../pages/auth/VerifyForgetPage";
+import { About } from "../pages/public/About";
 import { Blog } from "../pages/public/Blog";
 import { BlogDetail } from "../pages/public/BlogDetail";
-import { ProductDetail } from "../pages/public/ProductDetail";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
-import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
-import { VerifyForgetPage } from "../pages/auth/VerifyForgetPage";
-import { ResetPass } from "../pages/auth/ResetPass";
 import { NotFound } from "../pages/public/NotFound";
+import { ProductDetail } from "../pages/public/ProductDetail";
+import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
 import {
   LoggedWrapper,
-  VerifyEmailSignupWrapper,
-  VerifyEmailForgetWrapper,
   ResetPassWrapper,
+  VerifyEmailForgetWrapper,
+  VerifyEmailSignupWrapper,
 } from "./LoggedWrapper";
 export const publicRoutes = [
   {
@@ -85,6 +86,10 @@ export const publicRoutes = [
   {
     path: "/blog",
     element: <Blog />,
+  },
+  {
+    path: "/About",
+    element: <About />,
   },
   {
     path: "/blogdetail/:blogId",

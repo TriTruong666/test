@@ -60,11 +60,7 @@ export const Bloglist = ({ infinityScroll, isLoadingList }) => {
               <img src={blog.image} alt="" />
               <small>Created at {blog.createDate}</small>
               <strong>{blog.title}</strong>
-              {/* <p
-                dangerouslySetInnerHTML={{
-                  __html: blog && stripHtmlTags(blog.content),
-                }}
-              ></p> */}
+
               <span>By {blog.fullname}</span>
             </Link>
           ))}

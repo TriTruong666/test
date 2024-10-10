@@ -93,7 +93,6 @@ export const PondWater = () => {
     return statusWaterTitle.poor;
   };
 
-  // Parameter recommendations
   const oxygenAdjustment = calculateAdjustment(pondInfo?.waterParam?.o2, 7, 9);
   const no2Adjustment = calculateAdjustment(pondInfo?.waterParam?.no2, 0, 0.5);
   const no3Adjustment = calculateAdjustment(pondInfo?.waterParam?.no3, 0, 20);

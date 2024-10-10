@@ -164,11 +164,20 @@ select option {
     display: flex;
     flex-direction: column;
     width: 50%;
+    row-gap: 5px;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field label {
     font-size: 0.8rem;
     font-weight: 600;
     margin-bottom: 5px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field ::placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields .input-field input {
     padding: 12px 25px;
@@ -176,14 +185,6 @@ select option {
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
-  }
-  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::-moz-placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
-  }
-  .add-pond-container .add-pond-modal .add-pond-detail .pond .input-two-fields ::placeholder {
-    color: rgba(0, 0, 0, 0.8);
-    font-size: 0.8rem;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water {
     display: flex;
@@ -212,6 +213,7 @@ select option {
     display: flex;
     flex-direction: column;
     width: 50%;
+    row-gap: 5px;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water .input-two-fields .input-field label {
     font-size: 0.8rem;
@@ -234,6 +236,16 @@ select option {
     font-size: 0.8rem;
   }
   .add-pond-container .add-pond-modal .add-pond-detail .water #temp {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .water #temp label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .add-pond-container .add-pond-modal .add-pond-detail .water #temp input {
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
@@ -422,6 +434,24 @@ select option {
     flex-direction: column;
     row-gap: 35px;
   }
+  .update-water-container .update-water-modal .update-water-form .input-field-water {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-field-water label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: black;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-field-water input {
+    width: 100%;
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
   .update-water-container .update-water-modal .update-water-form .input-two-fields {
     display: flex;
     -moz-column-gap: 20px;
@@ -431,9 +461,9 @@ select option {
     width: 50%;
     display: flex;
     flex-direction: column;
+    row-gap: 5px;
   }
   .update-water-container .update-water-modal .update-water-form .input-two-fields .input-field label {
-    margin-bottom: 8px;
     font-size: 0.8rem;
     font-weight: 600;
   }
@@ -444,6 +474,11 @@ select option {
     color: black;
     font-size: 0.8rem;
     border-radius: 10px;
+  }
+  .update-water-container .update-water-modal .update-water-form .input-field {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
   .update-water-container .update-water-modal .update-water-form .input-field label {
     margin-bottom: 8px;
@@ -1132,19 +1167,44 @@ select option {
   .koi-detail-container .koi-detail-modal .koi-detail-recommendation .koi-recommendation-header p {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.8rem;
+    width: 80%;
   }
-  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation {
-    margin-top: 25px;
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation-product {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation-product div {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 5px;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation-product div strong {
+    font-size: 1.05rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation-product div p {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation-product span {
+    text-decoration: underline;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+  }
+  .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
   .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food {
     display: flex;
     justify-content: space-between;
   }
   .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food strong {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
   .koi-detail-container .koi-detail-modal .koi-detail-recommendation .recommendation .koi-food p {
     font-size: 0.8rem;
@@ -1797,21 +1857,6 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .update-blog-container .update-blog-modal .update-blog-form .ck-editor__editable {
-    min-height: 300px;
-    /* Adjust the minimum height as needed */
-    max-height: 600px;
-    /* You can also set a maximum height if needed */
-    overflow-y: auto;
-    /* Enable scrolling if content exceeds max height */
-    padding: 10px;
-    /* Add some padding for a more comfortable text entry */
-    border: 1px solid #ddd;
-    /* Optional: Adds a border for visual clarity */
-    border-radius: 4px;
-    /* Rounded corners for a smoother look */
-    outline: none;
-  }
   .update-blog-container .update-blog-modal .update-blog-form .input-image {
     position: relative;
     margin-top: 30px;
@@ -1858,6 +1903,21 @@ select option {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+  }
+  .update-blog-container .update-blog-modal .update-blog-form .input-item .ck-editor__editable {
+    min-height: 300px;
+    /* Adjust the minimum height as needed */
+    max-height: 600px;
+    /* You can also set a maximum height if needed */
+    overflow-y: auto;
+    /* Enable scrolling if content exceeds max height */
+    padding: 10px;
+    /* Add some padding for a more comfortable text entry */
+    border: 1px solid #ddd;
+    /* Optional: Adds a border for visual clarity */
+    border-radius: 4px;
+    /* Rounded corners for a smoother look */
+    outline: none;
   }
   .update-blog-container .update-blog-modal .update-blog-form .input-item label {
     font-size: 0.8rem;
@@ -1944,22 +2004,16 @@ select option {
   }
   .add-product-container .add-product-modal .add-product-detail .input-image {
     position: relative;
+    margin-top: 30px;
     width: 300px;
     height: 220px;
     border: 1px dashed rgba(0, 0, 0, 0.3);
     align-self: center;
     border-radius: 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
   .add-product-container .add-product-modal .add-product-detail .input-image .bx-trash-alt {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    left: 110%;
     font-size: 24px;
     color: red;
     cursor: pointer;
@@ -1972,31 +2026,69 @@ select option {
     align-items: center;
     justify-content: center;
     row-gap: 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
   }
-  .add-product-container .add-product-modal .add-product-detail .input-image label.image-preview img {
-    width: 100%;
-    height: 100%;
+  .add-product-container .add-product-modal .add-product-detail .input-image label img {
+    width: 300px;
+    height: 220px;
     -o-object-fit: cover;
        object-fit: cover;
     border-radius: 15px;
   }
-  .add-product-container .add-product-modal .add-product-detail .input-image label.image-placeholder {
-    color: rgba(0, 0, 0, 0.6);
-  }
-  .add-product-container .add-product-modal .add-product-detail .input-image label.image-placeholder i {
+  .add-product-container .add-product-modal .add-product-detail .input-image label i {
     font-size: 40px;
   }
-  .add-product-container .add-product-modal .add-product-detail .input-image label.image-placeholder p {
+  .add-product-container .add-product-modal .add-product-detail .input-image label p {
     font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.9);
   }
   .add-product-container .add-product-modal .add-product-detail .input-image input {
     display: none;
   }
-  .add-product-container .add-product-modal .add-product-detail .field .ck-editor__editable {
+  .add-product-container .add-product-modal .add-product-detail .input-field-name {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-name label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-name input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-cate {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-cate label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-cate select {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-des {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-field-des label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .add-product-container .add-product-modal .add-product-detail .ck-editor__editable {
     min-height: 300px;
     max-height: 600px;
     overflow-y: auto;
@@ -2006,83 +2098,33 @@ select option {
     outline: none;
     font-size: 0.9rem;
   }
-  .add-product-container .add-product-modal .add-product-detail .cate {
-    cursor: pointer;
-    padding: 12px 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: black;
-    font-size: 0.9rem;
-    border-radius: 10px;
-    background-color: #fff;
-  }
-  .add-product-container .add-product-modal .add-product-detail .cate:hover {
-    border-color: black;
-  }
-  .add-product-container .add-product-modal .add-product-detail .name {
-    padding: 12px 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: black;
-    font-size: 0.9rem;
-    border-radius: 10px;
-    background-color: #fff;
-  }
-  .add-product-container .add-product-modal .add-product-detail .name:focus {
-    border-color: #555;
-    outline: none;
-  }
   .add-product-container .add-product-modal .add-product-detail .invalid {
     color: red;
     font-size: 0.75rem;
   }
   .add-product-container .add-product-modal .add-product-detail .input-two-fields {
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
   }
-  .add-product-container .add-product-modal .add-product-detail .input-two-fields .field {
-    flex: 1;
+  .add-product-container .add-product-modal .add-product-detail .input-two-fields .input-field {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
-  .add-product-container .add-product-modal .add-product-detail .input-two-fields .field input {
-    width: 100%;
+  .add-product-container .add-product-modal .add-product-detail .input-two-fields .input-field label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .add-product-container .add-product-modal .add-product-detail .input-two-fields .input-field input {
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: black;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 10px;
-    background-color: #fff;
-  }
-  .add-product-container .add-product-modal .add-product-detail .input-two-fields .field input:focus {
-    border-color: #555;
-    outline: none;
-  }
-  .add-product-container .add-product-modal .add-product-detail .submit {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  .add-product-container .add-product-modal .add-product-detail .submit span {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-  }
-  .add-product-container .add-product-modal .add-product-detail .submit span:hover {
-    background-color: #e0e0e0;
-  }
-  .add-product-container .add-product-modal .add-product-detail .submit button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .add-product-container .add-product-modal .add-product-detail .submit button:hover {
-    background-color: #0056b3;
   }
   .add-product-container .add-product-modal .submit {
     display: flex;

@@ -243,8 +243,8 @@ export const UpdateWater = () => {
               />
             </div>
           </div>
-          <div className="input-field">
-            <label htmlFor="temperature">Temperature (℃)</label>
+          <div className="input-field-water">
+            <label>Temperature (℃)</label>
             <input
               type="text"
               id="temperature"

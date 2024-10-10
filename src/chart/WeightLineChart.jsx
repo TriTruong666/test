@@ -15,14 +15,16 @@ export const WeightLineChart = ({ koiGrowthLogs }) => {
 
   useEffect(() => {
     if (koiGrowthLogs && koiGrowthLogs.length > 0) {
-      const data = koiGrowthLogs.map((log) => ({
-        date: new Date().toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        }), // Format date as "25 Aug 2023"
-        weight: log.weight, // Assuming `weight` is in kg
-      }));
+      const data = koiGrowthLogs
+        .slice(Math.max(koiGrowthLogs.length - 10, 0))
+        .map((log) => ({
+          date: new Date().toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }), // Format date as "25 Aug 2023"
+          weight: log.weight, // Assuming `weight` is in kg
+        }));
       setFormattedData(data);
     }
   }, [koiGrowthLogs]);

@@ -15,14 +15,16 @@ export const SizeLineChart = ({ koiGrowthLogs }) => {
 
   useEffect(() => {
     if (koiGrowthLogs && koiGrowthLogs.length > 0) {
-      const data = koiGrowthLogs.map((log) => ({
-        date: new Date(log.koiLogDate).toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        }),
-        size: log.size,
-      }));
+      const data = koiGrowthLogs
+        .slice(Math.max(koiGrowthLogs.length - 10, 0))
+        .map((log) => ({
+          date: new Date(log.koiLogDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }),
+          size: log.size,
+        }));
       setFormattedData(data);
     }
   }, [koiGrowthLogs]);

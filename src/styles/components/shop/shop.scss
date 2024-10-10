@@ -166,16 +166,23 @@
                     display: flex;
                     column-gap: 20px;
 
+                    a {
+                        padding: 7px 30px;
+                        border-radius: 10px;
+                    }
+
                     button {
                         padding: 7px 30px;
                         border-radius: 10px;
                     }
 
-                    button:nth-child(1) {
+                    a:nth-child(1) {
                         background: $second-color;
                         color: black;
                         font-weight: 700;
                         font-family: $main-font;
+                        font-size: 0.8rem;
+                        text-align: center;
                     }
 
                     button:nth-child(2) {

@@ -15,6 +15,7 @@ import { VerifyForgetPage } from "../pages/auth/VerifyForgetPage";
 import { ResetPass } from "../pages/auth/ResetPass";
 import { NotFound } from "../pages/public/NotFound";
 import { Unauthorize } from "../pages/public/Unauthorize";
+import { Buynow } from "../pages/public/Buynow";
 import {
   LoggedWrapper,
   VerifyEmailSignupWrapper,
@@ -101,6 +102,10 @@ export const publicRoutes = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "/buynow/:productId",
+    element: <Buynow />,
   },
   {
     path: "*",

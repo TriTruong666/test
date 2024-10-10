@@ -276,7 +276,7 @@ export const AddProduct = () => {
             />
           </div>
 
-          <div className="field">
+          <div className="input-field-name">
             <label htmlFor="name" className="field-label">
               Product Name
             </label>
@@ -291,7 +291,7 @@ export const AddProduct = () => {
           </div>
 
           <div className="input-two-fields">
-            <div className="field">
+            <div className="input-field">
               <label htmlFor="unitprice" className="field-label">
                 Price
               </label>
@@ -303,7 +303,7 @@ export const AddProduct = () => {
                 onChange={handleInputFloat}
               />
             </div>
-            <div className="field">
+            <div className="input-field">
               <label htmlFor="stock" className="field-label">
                 Stock
               </label>
@@ -319,8 +319,8 @@ export const AddProduct = () => {
 
           {invalidNumber && <p className="invalid">{invalidNumber}</p>}
 
-          <div className="field">
-            <label className="field-label">Description</label>
+          <div className="input-field-des">
+            <label>Description</label>
             <CKEditor
               editor={ClassicEditor}
               config={{
@@ -388,10 +388,8 @@ export const AddProduct = () => {
             />
           </div>
 
-          <div className="field">
-            <label htmlFor="categoryId" className="field-label">
-              Category
-            </label>
+          <div className="input-field-cate">
+            <label>Category</label>
             <select
               className="cate"
               onChange={handleInputNumber}

@@ -169,73 +169,78 @@ export const UpdateBlog = () => {
               placeholder="Enter blog title"
             />
           </div>
-
-          <label htmlFor="blog-content">Blog Content</label>
-
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [
-                Essentials,
-                Bold,
-                Italic,
-                Paragraph,
-                Heading,
-                Link,
-                List,
-                BlockQuote,
-                Alignment,
-                Image,
-                ImageToolbar,
-                ImageStyle,
-                ImageResize,
-                Table,
-                TableToolbar,
-                Font,
-              ],
-              toolbar: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "|",
-                "blockQuote",
-                "alignment",
-                "fontSize",
-                "|",
-                "imageUpload",
-                "insertTable",
-                "|",
-                "undo",
-                "redo",
-              ],
-              image: {
-                toolbar: [
-                  "imageTextAlternative",
-                  "imageStyle:full",
-                  "imageStyle:side",
+          <div className="input-item">
+            <label htmlFor="blog-content">Blog Content</label>
+            <CKEditor
+              editor={ClassicEditor}
+              config={{
+                plugins: [
+                  Essentials,
+                  Bold,
+                  Italic,
+                  Paragraph,
+                  Heading,
+                  Link,
+                  List,
+                  BlockQuote,
+                  Alignment,
+                  Image,
+                  ImageToolbar,
+                  ImageStyle,
+                  ImageResize,
+                  Table,
+                  TableToolbar,
+                  Font,
                 ],
-                styles: ["full", "side"],
-              },
-              table: {
-                contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-              },
-            }}
-            data={submitData.content || ""}
-            onReady={(editor) => {
-              console.log("Editor is ready to use!", editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setSubmitData({
-                ...submitData,
-                content: data,
-              });
-            }}
-          />
+                toolbar: [
+                  "heading",
+                  "|",
+                  "bold",
+                  "italic",
+                  "link",
+                  "bulletedList",
+                  "numberedList",
+                  "|",
+                  "blockQuote",
+                  "alignment",
+                  "fontSize",
+                  "|",
+                  "imageUpload",
+                  "insertTable",
+                  "|",
+                  "undo",
+                  "redo",
+                ],
+                image: {
+                  toolbar: [
+                    "imageTextAlternative",
+                    "imageStyle:full",
+                    "imageStyle:side",
+                  ],
+                  styles: ["full", "side"],
+                },
+                table: {
+                  contentToolbar: [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                  ],
+                },
+              }}
+              data={submitData.content || ""}
+              onReady={(editor) => {
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setSubmitData({
+                  ...submitData,
+                  content: data,
+                });
+              }}
+            />
+          </div>
+
           <div className="submit">
             <button onClick={handleToggleUpdatePondModal}>Cancel</button>
             <button>Update confirm</button>

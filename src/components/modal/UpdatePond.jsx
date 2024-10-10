@@ -30,13 +30,13 @@ export const UpdatePond = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [validNumber, setValidNumber] = useState(false);
   const [submitData, setSubmitData] = useState({
-    image: pondInfo.image,
-    pondName: pondInfo.pondName,
-    pumpPower: pondInfo.pumpPower,
-    size: pondInfo.size,
-    depth: pondInfo.depth,
-    volume: pondInfo.volume,
-    vein: pondInfo.vein,
+    image: "",
+    pondName: "",
+    pumpPower: "",
+    size: "",
+    depth: "",
+    volume: "",
+    vein: "",
   });
   // mutation
   const queryCilent = useQueryClient();
@@ -66,6 +66,17 @@ export const UpdatePond = () => {
   useEffect(() => {
     if (pondInfo && pondInfo.image) {
       setPreviewImage(pondInfo.image);
+    }
+    if (pondInfo) {
+      setSubmitData({
+        image: pondInfo.image || "",
+        pondName: pondInfo.pondName || "",
+        pumpPower: pondInfo.pumpPower || "",
+        size: pondInfo.size || "",
+        depth: pondInfo.depth || "",
+        volume: pondInfo.volume || "",
+        vein: pondInfo.vein || "",
+      });
     }
   }, [pondInfo]);
   //   file resizer
@@ -160,6 +171,19 @@ export const UpdatePond = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!submitData.pondName || !submitData.image) {
+      toast.error("Please input all fields", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (validNumber) {
       toast.error("Invalid number", {
         position: "top-right",

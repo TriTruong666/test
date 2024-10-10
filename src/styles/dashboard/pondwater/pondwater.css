@@ -123,7 +123,7 @@ select option {
   }
   .pond-water-container .pond-water-recommendation .moderate strong,
   .pond-water-container .pond-water-recommendation .moderate p {
-    color: yellow !important;
+    color: rgb(148, 148, 46) !important;
     font-weight: 600 !important;
   }
   .pond-water-container .pond-water-recommendation .poor strong,

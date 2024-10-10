@@ -178,15 +178,21 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
+  .shoplist-container .shoplist-row .shop-item div a {
+    padding: 7px 30px;
+    border-radius: 10px;
+  }
   .shoplist-container .shoplist-row .shop-item div button {
     padding: 7px 30px;
     border-radius: 10px;
   }
-  .shoplist-container .shoplist-row .shop-item div button:nth-child(1) {
+  .shoplist-container .shoplist-row .shop-item div a:nth-child(1) {
     background: #BCAB6F;
     color: black;
     font-weight: 700;
     font-family: "Roboto Mono", monospace;
+    font-size: 0.8rem;
+    text-align: center;
   }
   .shoplist-container .shoplist-row .shop-item div button:nth-child(2) {
     border: 2px solid rgba(255, 255, 255, 0.2);

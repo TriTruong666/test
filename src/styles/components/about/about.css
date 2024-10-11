@@ -86,24 +86,4 @@ select option {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 4px 15px rgba(255, 255, 255, 0.1);
     transform: scale(1.03);
   }
-}
-@media only screen and (max-width: 1537px) and (max-width: 1200px) {
-  .bloglist-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media only screen and (max-width: 1537px) and (max-width: 992px) {
-  .bloglist-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media only screen and (max-width: 1537px) and (max-width: 768px) {
-  .bloglist-container {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-  .bloglist-container .blog-item {
-    max-height: none;
-    height: auto;
-  }
 }/*# sourceMappingURL=about.css.map */

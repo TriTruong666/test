@@ -309,6 +309,7 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
     border-radius: 10px;
+    font-family: "Poppins", sans-serif;
   }
   .setting-nav-container .setting-nav .setting-nav-list .setting-item i {
     color: rgba(255, 255, 255, 0.7);

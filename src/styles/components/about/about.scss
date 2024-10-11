@@ -63,28 +63,4 @@
       transform: scale(1.03);
     }
   }
-
-  @media only screen and (max-width: 1200px) {
-    .bloglist-container {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media only screen and (max-width: 992px) {
-    .bloglist-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media only screen and (max-width: 768px) {
-    .bloglist-container {
-      grid-template-columns: 1fr;
-      padding: 20px;
-
-      .blog-item {
-        max-height: none;
-        height: auto;
-      }
-    }
-  }
 }

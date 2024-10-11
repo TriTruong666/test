@@ -12,6 +12,7 @@ import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as ProductService from "../../service/product/productService";
+import * as PaypalService from "../../service/paypal/paypal";
 export const Buynow = () => {
   // param
   const { productId } = useParams();

@@ -11,6 +11,7 @@ import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as CartService from "../../service/cart/cartService";
+import * as PaypalService from "../../service/paypal/paypal";
 export const Checkout = () => {
   // navigate
   const navigate = useNavigate();
@@ -20,6 +21,15 @@ export const Checkout = () => {
   // state
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isLoadingPayment, setLoadingPayment] = useState(false);
+  const [submitData, setSubmitData] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    address: "",
+    cartId: "",
+    total: "",
+  });
   const [guestCartList, setGuestCartList] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
@@ -34,9 +44,24 @@ export const Checkout = () => {
     queryFn: () => CartService.getCartByMember(userId),
     refetchOnWindowFocus: false,
   });
+  // mutation
+  const paypalMutation = useMutation({
+    mutationKey: ["paypal"],
+    mutationFn: PaypalService.createPayment,
+    onMutate: () => {
+      setLoadingPayment(true);
+    },
+    onSuccess: () => {
+      setLoadingPayment(false);
+    },
+  });
   useEffect(() => {
     document.title = "Checkout";
     if (token && user) {
+      setSubmitData({
+        ...submitData,
+        fullname: user.
+      })
       if (isLoading || isFetching) {
         setIsLoadingPage(true);
       } else {
@@ -44,6 +69,7 @@ export const Checkout = () => {
         if (cartData && Array.isArray(cartData.cartItems)) {
           setCartList(cartData.cartItems);
         }
+        
       }
       if (cartData && cartData.cartItems && cartData.cartItems.length === 0) {
         navigate("/shop");
@@ -63,6 +89,12 @@ export const Checkout = () => {
     guestCartList,
     navigate,
   ]);
+  // handle func
+  const handlePayNow = async () => {
+    try {
+      await paypalMutation.mutateAsync();
+    } catch (error) {}
+  };
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {

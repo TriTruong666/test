@@ -8,7 +8,9 @@ export const createPayment = async (data) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res.data);
+    if (res.data && res.data.result && res.data.result.approval_url) {
+      window.location.href = res.data.result.approval_url;
+    }
     return res.data;
   } catch (error) {
     console.error(error);

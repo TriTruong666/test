@@ -10,13 +10,13 @@ import { VerifyForgetPage } from "../pages/auth/VerifyForgetPage";
 import { About } from "../pages/public/About";
 import { Blog } from "../pages/public/Blog";
 import { BlogDetail } from "../pages/public/BlogDetail";
+import { Buynow } from "../pages/public/Buynow";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
 import { NotFound } from "../pages/public/NotFound";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { Buynow } from "../pages/public/Buynow";
 import {
   LoggedWrapper,
   ResetPassWrapper,

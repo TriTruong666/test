@@ -6,6 +6,7 @@ import { AdminBlogManage } from "../pages/private/admin/AdminBlogManage";
 import { AdminOrderDetail } from "../pages/private/admin/AdminOrderDetail";
 import { AdminOrderManage } from "../pages/private/admin/AdminOrderManage";
 import { AdminProductManage } from "../pages/private/admin/AdminProductManage";
+import { Summary } from "../pages/private/admin/AdminSummary";
 import { UserSetting } from "../pages/private/both/UserSetting";
 import { BlogDetail } from "../pages/private/member/BlogDetail";
 import { BlogManage } from "../pages/private/member/BlogManage";
@@ -132,6 +133,14 @@ export const privateRoutes = [
         ),
       },
     ],
+  },
+  {
+    path: "/dashboard/admin/summary",
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <Summary />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/dashboard/admin/account",

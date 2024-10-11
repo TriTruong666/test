@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 // import styles
 import "../../styles/about/about.css";
 // import components
+import blogheader from "../../assets/blogheader.jpg";
+import AboutOurTeam from "../../components/About/Aboutourteam";
 import { Footer } from "../../components/footer/Footer";
 import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import service
-import AboutOurTeam from "../../components/About/Aboutourteam";
 
 export const About = () => {
   // state
@@ -30,9 +31,26 @@ export const About = () => {
       <Navbar />
       {isAuth && <Settingnav />}
       <div className="about">
+        <div className="about-title">
+          <strong>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit in,
+            mollitia ex quam deserunt tempore porro quaerat eum ut perspiciatis
+            repellendus, ad, eligendi nihil quibusdam corrupti excepturi
+            cupiditate voluptatum? Quis?
+          </strong>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, sunt
+            reiciendis cumque aut maiores suscipit eos temporibus voluptatibus.
+            At accusantium debitis quia ipsam aut sequi corporis voluptatem
+            similique ratione sed.
+          </p>
+        </div>
+        <div className="banner">
+          <img src={blogheader} alt="" />
+        </div>
         <div className="about-header">
-          <strong>About Us</strong>
-          <p>Who Are We ?</p>
+          <strong>Our Team</strong>
+          <p>Our team member</p>
         </div>
         <AboutOurTeam />
       </div>

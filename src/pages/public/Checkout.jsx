@@ -60,40 +60,43 @@ export const Checkout = () => {
     if (token && user) {
       setSubmitData({
         ...submitData,
-        fullname: user.
-      })
+        fullname: user.fullname || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        total: calculateTotalPrice() || "0",
+      });
       if (isLoading || isFetching) {
         setIsLoadingPage(true);
       } else {
         setIsLoadingPage(false);
         if (cartData && Array.isArray(cartData.cartItems)) {
           setCartList(cartData.cartItems);
+          setSubmitData({
+            ...submitData,
+            cartId: cartData.cartId || "",
+            total: calculateTotalPrice(),
+          });
         }
-        
-      }
-      if (cartData && cartData.cartItems && cartData.cartItems.length === 0) {
-        navigate("/shop");
       }
     } else {
       if (guestCartList.length === 0) {
         navigate("/shop");
       }
     }
-  }, [
-    isFetching,
-    isLoading,
-    token,
-    user,
-    cartData,
-    cartList,
-    guestCartList,
-    navigate,
-  ]);
+  }, [isFetching, isLoading, cartData]);
   // handle func
   const handlePayNow = async () => {
     try {
-      await paypalMutation.mutateAsync();
+      await paypalMutation.mutateAsync(submitData);
     } catch (error) {}
+  };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
   };
   // calculator
   const formatPrice = (price) =>
@@ -151,7 +154,9 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="phone"
+                name="phone"
                 defaultValue={user?.phone || ""}
+                onChange={handleOnChange}
                 placeholder="Enter your phone number"
               />
             </div>
@@ -160,7 +165,9 @@ export const Checkout = () => {
               <input
                 type="text"
                 id="address"
+                name="address"
                 defaultValue={user?.address || ""}
+                onChange={handleOnChange}
                 placeholder="Enter your address"
               />
             </div>
@@ -210,7 +217,7 @@ export const Checkout = () => {
                       <strong>{formatPrice(calculateTotalPrice())}</strong>
                     </div>
                   </div>
-                  <Link to="/payment">Pay Now</Link>
+                  <Link onClick={handlePayNow}>Pay Now</Link>
                 </>
               ) : (
                 <>

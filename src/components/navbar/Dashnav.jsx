@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // import styles
 import "../../styles/components/navbar/navbar.css";
 // import assets
@@ -82,7 +82,7 @@ export const Dashnav = () => {
                 <p>Admin</p>
               </div>
               <NavLink
-                to="/dashboard/summary"
+                to="/dashboard/admin/summary"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 <i className="bx bx-home-alt"></i>

@@ -6,79 +6,77 @@
     width: 100vw;
     display: flex;
     flex-direction: column;
+    background-color: $main-color;
 
     .about {
       margin-top: 88px;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      width: 100%;
 
-      .about-header {
-        position: relative;
+      .about-title {
         width: 100%;
-        padding: 80px 0;
+        padding: 80px 20px;
         background: $main-color;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        row-gap: 10px;
+        text-align: center;
+        row-gap: 20px;
 
         strong {
           color: white;
-          font-size: 30px;
+          font-size: 1.5rem;
           font-family: $main-font;
+          line-height: 1.4;
+          width: 50%;
+          margin-left: 30px;
         }
 
         p {
           color: $fade-white;
-          font-size: 0.85rem;
+          margin-top: 100px;
+          font-size: 0.9rem;
           font-weight: 400;
           font-family: $main-font;
+          line-height: 1.6;
+          width: 50%;
         }
       }
 
-      .blog-content {
+      .banner {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 20px;
-        background: $main-color;
+        width: 100%;
+        height: 700px;
+        background-color: $main-color;
 
-        .blog-item {
-          width: calc(25% - 20px);
-          margin-bottom: 30px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
 
-          @media only screen and (max-width: 1200px) {
-            width: calc(33.333% - 20px);
-          }
-
-          @media only screen and (max-width: 992px) {
-            width: calc(50% - 20px);
-          }
-
-          @media only screen and (max-width: 768px) {
-            width: 100%;
-          }
-
-          .blog-item-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-          }
-
-          .blog-item-title {
-            font-family: $main-font;
-            color: white;
-            font-size: 1.2rem;
-            margin-top: 10px;
-          }
-
-          .blog-item-excerpt {
-            font-family: $main-font;
-            color: $fade-white;
-            font-size: 0.9rem;
-            margin-top: 5px;
-          }
+      .about-header {
+        margin-top: 50px;
+        text-align: center;
+        flex-direction: column;
+        display: flex;
+        width: 100%;
+        margin-top: 100px;
+        height: 100%;
+        background-color: $main-color;
+        strong {
+          font-size: 2rem;
+          font-family: $main-font;
+          color: white;
+        }
+        p {
+          margin-top: 20px;
+          font-size: 1rem;
+          font-family: $main-font;
+          color: $fade-white;
         }
       }
     }

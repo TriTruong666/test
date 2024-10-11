@@ -17,7 +17,6 @@ import { NotFound } from "../pages/public/NotFound";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { Buynow } from "../pages/public/Buynow";
 import { PaymentSuccess } from "../pages/public/PaymentSuccess";
 import {
   LoggedWrapper,

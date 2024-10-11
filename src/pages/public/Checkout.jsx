@@ -56,7 +56,6 @@ export const Checkout = () => {
     },
   });
   useEffect(() => {
-    document.title = "Checkout";
     if (token && user) {
       setSubmitData({
         ...submitData,
@@ -64,7 +63,6 @@ export const Checkout = () => {
         email: user.email || "",
         phone: user.phone || "",
         address: user.address || "",
-        total: calculateTotalPrice() || "0",
       });
       if (isLoading || isFetching) {
         setIsLoadingPage(true);
@@ -75,7 +73,6 @@ export const Checkout = () => {
           setSubmitData({
             ...submitData,
             cartId: cartData.cartId || "",
-            total: calculateTotalPrice(),
           });
         }
       }
@@ -88,8 +85,16 @@ export const Checkout = () => {
   // handle func
   const handlePayNow = async () => {
     try {
-      await paypalMutation.mutateAsync(submitData);
-    } catch (error) {}
+      const totalPrice =
+        token && user ? calculateTotalPrice() : calculateTotalPriceGuest();
+      const updatedSubmitData = {
+        ...submitData,
+        total: totalPrice || "0", // Set the calculated total
+      };
+      await paypalMutation.mutateAsync(updatedSubmitData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleOnChange = (e) => {
     const { name, value } = e.target;

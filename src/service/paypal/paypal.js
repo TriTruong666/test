@@ -3,7 +3,7 @@ import axios from "axios";
 export const createPayment = async (data) => {
   try {
     const api = "http://localhost:8080/payment/create";
-    const res = await axios.get(api, data, {
+    const res = await axios.post(api, data, {
       headers: {
         "Content-Type": "application/json",
       },

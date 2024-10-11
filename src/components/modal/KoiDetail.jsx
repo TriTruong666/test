@@ -27,6 +27,7 @@ export const KoiDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
+  const [guideText, setGuideText] = useState(null);
   // query
   const {
     data: koiInfo = {},
@@ -37,20 +38,33 @@ export const KoiDetail = () => {
     queryKey: ["koi-detail", koiId],
     queryFn: () => KoiService.detailKoiService(koiId),
   });
-  useEffect(() => {
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
-    if (isError) {
-      setServerError("Server is closed now");
-    } else {
-      setServerError(null);
-    }
-  }, [isFetching, isLoading, isError]);
 
-  // Calculate the age of the koi in years
+  // recommendation
+  const feedingGuides = (age, recommendedFoodAmount) => {
+    const foodAmount =
+      typeof recommendedFoodAmount === "number"
+        ? recommendedFoodAmount.toFixed(2)
+        : "0.00";
+
+    if (age < 1) {
+      return `For koi under 1 year of age, we recommend feeding them approximately ${foodAmount} grams of high-protein pellets per day. Younger koi are growing rapidly, so providing them with a nutrient-dense diet is essential.`;
+    } else if (age >= 1 && age < 2) {
+      return `At this stage, koi require about ${foodAmount} grams of pellets daily, as their growth slows slightly compared to their first year. It's crucial to balance their diet with protein-rich foods to support muscle development and maintain vibrant colors.`;
+    } else {
+      return `Koi over 2 years of age should be fed approximately ${foodAmount} grams of pellets per day. As adult koi grow at a slower pace, it’s important to prevent overfeeding while still offering them high-quality food. Incorporate vegetables and fruits to ensure a balanced diet, and keep an eye on water quality to maintain a healthy environment for your koi.`;
+    }
+  };
+  const importantGuides = (age) => {
+    if (age < 1) {
+      return "Young koi are in a crucial growth phase, requiring a nutrient-dense diet to support their rapid development. It's beneficial to offer high-protein pellets along with soft fruits such as watermelon and leafy vegetables during warmer months. This variety helps maintain their health and encourages robust growth.";
+    } else if (age >= 1 && age < 2) {
+      return "At this stage, koi experience a slight slowdown in growth. It's essential to maintain a balanced diet that includes protein-rich foods to support muscle development and vibrant coloration. Introducing vegetables like lettuce and peas can enhance their diet while ensuring they remain healthy and active.";
+    } else {
+      return "Adult koi grow at a slower rate, so it’s important to avoid overfeeding. High-quality pellets should be supplemented with vegetables and fruits to ensure a balanced diet. Regularly monitor water quality to maintain a healthy environment, and adjust feeding based on their activity levels and seasonal changes.";
+    }
+  };
+
+  // calulator
   const calculateKoiAge = (createDate) => {
     const today = new Date();
     const created = new Date(createDate);
@@ -58,21 +72,20 @@ export const KoiDetail = () => {
     return age;
   };
 
-  // Calculate recommended food amount based on koi age, weight, sex, type, and origin
-  const calculateFoodAmount = (age, weight, sex, type, origin) => {
+  const calculateFoodAmount = (
+    age = 0,
+    weight = 0,
+    sex = "Female",
+    type = "Kohaku",
+    origin = "Japan"
+  ) => {
     let baseAmount = 0;
 
-    // Adjust base food amount based on age
     if (age <= 1) baseAmount = weight * 0.05;
-    // Young koi (up to 1 year old) - 5% of body weight
     else if (age <= 2) baseAmount = weight * 0.03;
-    // Juvenile koi (1-2 years) - 3% of body weight
-    else baseAmount = weight * 0.01; // Adult koi (3+ years) - 1% of body weight
+    else baseAmount = weight * 0.01;
+    if (sex === "Female") baseAmount *= 1.1;
 
-    // Adjust for koi sex (Female typically needs more due to egg production)
-    if (sex === "Female") baseAmount *= 1.1; // Increase food by 10% for females
-
-    // Adjust based on koi type
     const typeAdjustment = {
       Kohaku: 1.05,
       Sanke: 1.05,
@@ -85,32 +98,29 @@ export const KoiDetail = () => {
       Goshiki: 1.03,
       Koromo: 1.03,
     };
+    baseAmount *= typeAdjustment[type] || 1;
 
-    baseAmount *= typeAdjustment[type] || 1; // Adjust based on koi type (default to 1 if no match)
-
-    // Adjust based on koi origin
     const originAdjustment = {
-      Japan: 1.1, // Japanese koi are often higher quality and might need more food
+      Japan: 1.1,
       China: 1.05,
       Indonesia: 1.05,
       Thailand: 1.04,
       Vietnam: 1.03,
       "South Korea": 1.03,
     };
-
-    baseAmount *= originAdjustment[origin] || 1; // Adjust based on origin (default to 1 if no match)
+    baseAmount *= originAdjustment[origin] || 1;
 
     return baseAmount;
   };
 
-  // Extract koi info
   const koiAge = koiInfo.createDate ? calculateKoiAge(koiInfo.createDate) : 0;
-  const koiWeight = koiInfo.weight || 1000; // Assuming koi weight is provided in grams
+  const koiWeight = koiInfo?.koiGrowthLogs?.length
+    ? koiInfo.koiGrowthLogs[koiInfo?.koiGrowthLogs?.length - 1].weight * 1000
+    : 0;
   const koiSex = koiInfo.sex ? "Male" : "Female";
-  const koiType = koiInfo.type;
-  const koiOrigin = koiInfo.origin;
-
-  // Calculate food recommendation
+  const koiType = koiInfo.type || "Kohaku";
+  const koiOrigin = koiInfo.origin || "Japan";
+  // Calculate recommended food amount
   const recommendedFoodAmount = calculateFoodAmount(
     koiAge,
     koiWeight,
@@ -118,7 +128,19 @@ export const KoiDetail = () => {
     koiType,
     koiOrigin
   );
-
+  useEffect(() => {
+    if (isFetching || isLoading) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+      setGuideText(feedingGuides(koiAge, recommendedFoodAmount));
+    }
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+  }, [isFetching, isLoading, isError, guideText]);
   // handle func
   const handeToggleKoiHistoryModalOn = () => {
     dispatch(toggleKoiHistoryOn());
@@ -191,41 +213,25 @@ export const KoiDetail = () => {
                 </div>
               </div>
               <div className="koi-detail-recommendation">
-                <div className="koi-recommendation-header">
-                  <strong>Feeding Recommendation</strong>
-                  <p>
-                    Our system calculates the amount of food based on your koi's
-                    age, sex, type and origin
-                  </p>
+                <div className="recommendation">
+                  <div className="koi-food">
+                    <strong>Feeding Guidelines</strong>
+                  </div>
+                  <span>{guideText}</span>
                 </div>
                 <div className="recommendation">
                   <div className="koi-food">
-                    <strong>Recommended Food Amount (grams per day)</strong>
-                    <p>{recommendedFoodAmount.toFixed(2)}g</p>
+                    <strong>Important</strong>
                   </div>
-
-                  <span>
-                    In addition to pellets, you can feed koi vegetables and
-                    fruits such as lettuce, watermelon, and oranges. Adjust
-                    feeding based on koi activity and water temperature.
-                  </span>
+                  <span>{importantGuides(koiAge)}</span>
                 </div>
-                <div className="recommendation">
-                  <strong>Recommended Product</strong>
-                  <span>
-                    We recommend this product for optimal koi health and feeding
-                    care.
-                  </span>
-
-                  <span>
-                    <a
-                      href="http://localhost:5173/shop/category/1"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="product-link"
-                    >
-                      View and Buy Product
-                    </a>
+                <div className="recommendation-product">
+                  <div>
+                    <strong>Recommended Product</strong>
+                    <p>We suggest some product for you</p>
+                  </div>
+                  <span onClick={handeToggleKoiHistoryModalOn}>
+                    View product suggest
                   </span>
                 </div>
                 <div className="utils">

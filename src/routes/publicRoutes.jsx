@@ -16,6 +16,7 @@ import { NotFound } from "../pages/public/NotFound";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
+import { Buynow } from "../pages/public/Buynow";
 import {
   LoggedWrapper,
   ResetPassWrapper,
@@ -106,6 +107,10 @@ export const publicRoutes = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "/buynow/:productId",
+    element: <Buynow />,
   },
   {
     path: "*",

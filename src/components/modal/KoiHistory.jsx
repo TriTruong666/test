@@ -89,7 +89,7 @@ export const KoiHistory = () => {
       ) : (
         <>
           <div className="koi-history-header">
-            <strong>Koi History #1233</strong>
+            <strong>Growth Data</strong>
             <i className="bx bx-x" onClick={handleToggleKoiHistoryModal}></i>
           </div>
           <div className="koi-history-chart">

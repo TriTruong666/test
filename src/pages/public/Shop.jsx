@@ -146,7 +146,6 @@ export const Shop = () => {
             </div>
           </div>
           <div className="shop-main-list">
-            {/* <Shopnav /> */}
             <Shoplist
               infinityScroll={infinityScroll}
               isLoadingList={isLoadingList}

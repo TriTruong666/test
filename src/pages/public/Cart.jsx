@@ -115,7 +115,6 @@ export const Cart = () => {
       console.error("Error updating quantity:", error);
     }
   };
-
   const handleMinus = async (cartId, cartItemId, currentQuantity) => {
     const newQuantity = currentQuantity - 1;
     if (newQuantity > 0) {

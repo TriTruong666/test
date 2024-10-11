@@ -493,7 +493,8 @@ export const AddPond = () => {
               </div>
             </div>
 
-            <div className="input-field">
+            <div id="temp">
+              <label htmlFor="">Temperature</label>
               <input
                 type="text"
                 id="temp"

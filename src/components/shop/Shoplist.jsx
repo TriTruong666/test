@@ -58,6 +58,7 @@ export const Shoplist = ({
     queryKey: ["category"],
     queryFn: CategoryService.getAllCategory,
   });
+
   // use effect
   useEffect(() => {
     if (isFetching || isLoading) {
@@ -103,20 +104,6 @@ export const Shoplist = ({
   });
 
   // handle func
-  const handleBuyNow = async (product) => {
-    if (user && token && cartId) {
-      try {
-        await mutation.mutateAsync({
-          cartId,
-          productId: product.productId,
-          quantity: 1,
-        });
-        navigate("/checkout");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
   const handleAddToCart = async (product) => {
     if (user && token && cartId) {
       try {
@@ -238,7 +225,12 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <button>Buy now</button>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
+                                        Buy now
+                                      </Link>
                                       <button
                                         onClick={() => handleAddToCart(product)}
                                       >
@@ -270,7 +262,12 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <button>Buy now</button>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
+                                        Buy now
+                                      </Link>
                                       <button
                                         onClick={() => handleAddToCart(product)}
                                       >
@@ -305,7 +302,12 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <button>Buy now</button>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
+                                        Buy now
+                                      </Link>
                                       <button
                                         onClick={() => handleAddToCart(product)}
                                       >
@@ -337,7 +339,12 @@ export const Shoplist = ({
                                     </Link>
                                     <p>{formatPrice(product.unitPrice)}</p>
                                     <div>
-                                      <button>Buy now</button>
+                                      <Link
+                                        className="buynow"
+                                        to={`/buynow/${product.productId}`}
+                                      >
+                                        Buy now
+                                      </Link>
                                       <button
                                         onClick={() => handleAddToCart(product)}
                                       >

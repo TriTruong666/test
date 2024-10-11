@@ -100,21 +100,27 @@
       display: flex;
       flex-direction: column;
       row-gap: 25px;
+
       .good {
+
         strong,
         p {
           color: green !important;
           font-weight: 600 !important;
         }
       }
+
       .moderate {
+
         strong,
         p {
-          color: yellow !important;
+          color: rgb(148, 148, 46) !important;
           font-weight: 600 !important;
         }
       }
+
       .poor {
+
         strong,
         p {
           color: red !important;
@@ -123,6 +129,7 @@
       }
 
       .careful {
+
         strong,
         p {
           color: yellow !important;

@@ -165,42 +165,19 @@ export const UpdateKoi = () => {
     setSelectedFlag(code);
     setSubmitData((prevData) => ({
       ...prevData,
-      origin: countryNameMap[code], // Set the origin field with the selected flag code
+      origin: countryNameMap[code],
     }));
   };
-  // default value of select flag
   const getOriginCode = (origin) => countryCodeMap[origin] || "";
   const handleToggleUpdateKoiModal = () => {
     dispatch(toggleUpdateKoiModal());
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isValidName) {
-      toast.error(
-        "The new Koi name must at least 10 characters and not a number",
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
-      return;
-    }
-    if (
-      !submitData.image ||
-      !submitData.name ||
-      !submitData.origin ||
-      !submitData.sex ||
-      !submitData.type
-    ) {
-      toast.error("All fields are required", {
+    if (!submitData.image || !submitData.name || !submitData.type) {
+      toast.error("Please input all fields", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -301,7 +278,7 @@ export const UpdateKoi = () => {
           <div className="input-item">
             <label htmlFor="origin">Origin</label>
             <ReactFlagsSelect
-              selected={getOriginCode(koiInfo.origin)}
+              selected={getOriginCode(submitData.origin)}
               onSelect={handleOnSelectFlag}
               placeholder="Select origin"
               countries={["JP", "CN", "ID", "TH", "VN", "KR"]}

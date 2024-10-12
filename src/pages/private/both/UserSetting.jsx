@@ -9,7 +9,6 @@ import "../../../styles/dashboard/setting/setting.css";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 // import service
 import * as AccountService from "../../../service/account/AccountService";
-
 export const UserSetting = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -26,8 +25,6 @@ export const UserSetting = () => {
   });
   // state
   const [isToggleChangePass, setIsToggleChangePass] = useState(false);
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [submitData, setSubmitData] = useState({
@@ -35,16 +32,21 @@ export const UserSetting = () => {
     phone: myInfo && myInfo.phone,
     address: myInfo && myInfo.address,
   });
-
+  const [submitPassData, setSubmitPassData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
+    mutationKey: ["update-info"],
     mutationFn: AccountService.updateMyInfo,
     onSuccess: (responseData) => {
       const user = JSON.parse(localStorage.getItem("user"));
       const updatedUser = { ...user, ...responseData };
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      toast.success("Update Successfully", {
+      toast.success("Update Infomation Successfully", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -62,6 +64,38 @@ export const UserSetting = () => {
       });
     },
   });
+  const updatePassMutation = useMutation({
+    mutationKey: ["update-pass"],
+    mutationFn: AccountService.updatePassword,
+    onSuccess: (response) => {
+      if (response && response.code === "WRONG_PASSWORD") {
+        toast.error("Wrong current password", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        toast.success("Update Password Successfully", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      }
+    },
+  });
   // handle func
   useEffect(() => {
     if (isFetching || isLoading) {
@@ -70,8 +104,11 @@ export const UserSetting = () => {
       setIsLoadingPage(false);
     }
     if (!isToggleChangePass) {
-      setNewPass("");
-      setConfirmPass("");
+      setSubmitPassData({
+        oldPassword: "",
+        confirmPassword: "",
+        newPassword: "",
+      });
     }
     if (isError) {
       setServerError("Server is closed now");
@@ -88,12 +125,57 @@ export const UserSetting = () => {
   const handleToggleChangePassFalse = () => {
     setIsToggleChangePass(false);
   };
+  const handleOnChangePass = (e) => {
+    const { name, value } = e.target;
+    setSubmitPassData({
+      ...submitPassData,
+      [name]: value,
+    });
+  };
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
       ...submitData,
       [name]: value,
     });
+  };
+  const handleOnSubmitPass = async (e) => {
+    e.preventDefault();
+    if (
+      !submitPassData.confirmPassword ||
+      !submitPassData.newPassword ||
+      !submitPassData.oldPassword
+    ) {
+      toast.error("Please input all fields", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (submitPassData.newPassword !== submitPassData.confirmPassword) {
+      toast.error("Password and Confirm Password must be the same", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+      await updatePassMutation.mutateAsync(submitPassData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleOnSubmitInfo = async (e) => {
     e.preventDefault();
@@ -180,7 +262,12 @@ export const UserSetting = () => {
             {user.googleAccount ? (
               ""
             ) : (
-              <form action="" autoComplete="off" className="security-form">
+              <form
+                action=""
+                onSubmit={handleOnSubmitPass}
+                autoComplete="off"
+                className="security-form"
+              >
                 <div className="header">
                   <div>
                     <strong>Security Setting</strong>
@@ -202,9 +289,11 @@ export const UserSetting = () => {
                   <input
                     type="password"
                     id="recent"
+                    name="oldPassword"
                     placeholder="Your recent password"
-                    onChange={(e) => setNewPass(e.target.value)}
-                    disabled={!isToggleChangePass}
+                    value={submitPassData.oldPassword}
+                    onChange={handleOnChangePass}
+                    disabled={!isToggleChangePass} // Enable/disable based on toggle state
                   />
                 </div>
                 <div className="item">
@@ -212,9 +301,10 @@ export const UserSetting = () => {
                   <input
                     type="password"
                     id="newpass"
+                    name="newPassword"
                     placeholder="Enter new password"
-                    onChange={(e) => setNewPass(e.target.value)}
-                    value={newPass}
+                    value={submitPassData.newPassword}
+                    onChange={handleOnChangePass}
                     disabled={!isToggleChangePass}
                   />
                 </div>
@@ -223,13 +313,16 @@ export const UserSetting = () => {
                   <input
                     type="password"
                     id="confirm"
-                    placeholder="Enter confirm password"
-                    onChange={(e) => setConfirmPass(e.target.value)}
-                    value={confirmPass}
+                    name="confirmPassword"
+                    placeholder="Confirm new password"
+                    value={submitPassData.confirmPassword}
+                    onChange={handleOnChangePass}
                     disabled={!isToggleChangePass}
                   />
                 </div>
-                <button id="submit">Change Password</button>
+                <button id="submit" disabled={!isToggleChangePass}>
+                  Change Password
+                </button>
               </form>
             )}
           </>

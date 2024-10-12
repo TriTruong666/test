@@ -1437,6 +1437,63 @@ select option {
     color: white;
     cursor: pointer;
   }
+  .del-account-containter {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .del-account-containter ::-webkit-scrollbar {
+    width: 0;
+  }
+  .del-account-containter .del-account-modal {
+    width: 500px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .del-account-containter .del-account-modal .del-account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .del-account-containter .del-account-modal .del-account-header strong {
+    font-size: 1.3rem;
+  }
+  .del-account-containter .del-account-modal .del-account-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .del-account-containter .del-account-modal .del-account-main {
+    margin: 30px 0;
+  }
+  .del-account-containter .del-account-modal .del-account-main p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .del-account-containter .del-account-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .del-account-containter .del-account-modal .submit button:nth-child(1) {
+    width: 100%;
+    padding: 10px 50px;
+    background: red;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .del-product-containter {
     position: fixed;
     width: 100vw;

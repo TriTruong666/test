@@ -1,11 +1,14 @@
 @import "../../global/global.scss";
 @media only screen and (max-width: 1537px) {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
   .admin-summary-container {
     width: 100vw;
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: hidden;
+    overflow-y: auto;
     .summary {
       width: calc(100% - 220px);
       height: 100vh;
@@ -89,6 +92,40 @@
             strong {
               font-size: 0.9rem;
               color: $fade-black;
+            }
+          }
+        }
+      }
+      .chart-container {
+        margin-top: 105px;
+        padding: 0 40px;
+        .charts {
+          display: flex;
+          column-gap: 25px;
+          .left-chart {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+              rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            padding: 20px 15px;
+            border-radius: 15px;
+            h3 {
+              font-size: 0.9rem;
+            }
+          }
+          .right-chart {
+            width: 67%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+              rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            padding: 20px 40px;
+            border-radius: 15px;
+            h3 {
+              font-size: 0.9rem;
             }
           }
         }

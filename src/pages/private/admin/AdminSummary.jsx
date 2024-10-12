@@ -21,6 +21,12 @@ export const Summary = () => {
         <div className="section1">
           <div className="item">
             <strong>Welcome admin</strong>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem,
+              minima aliquam totam sint cupiditate voluptas minus facere, veniam
+              quasi autem voluptates libero ea recusandae numquam suscipit
+              mollitia nam rem maiores.
+            </p>
           </div>
           <div className="info">
             <div className="small-item">

@@ -1,15 +1,21 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 // import styles
 import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AccountList } from "../../../components/account/AccountList";
+import { DelAccount } from "../../../components/modal/DelAccount";
 export const AdminAccountManage = () => {
+  const isToggleDelAccountModal = useSelector(
+    (state) => state.modal.deleteAccountModal.isToggleModal
+  );
   useEffect(() => {
     document.title = "Admin Dashboard";
   }, []);
   return (
     <div className="admin-account-container">
+      {isToggleDelAccountModal && <DelAccount />}
       <Dashnav />
       <div className="admin-account">
         <div className="admin-account-header">

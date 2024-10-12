@@ -188,6 +188,21 @@ export const updatePassword = async (data) => {
     });
     return res.data;
   } catch (error) {
+    return error.response.data;
+  }
+};
+export const deleteAccount = async (userId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/users/${userId}`;
+    const res = await axios.delete(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
     return error;
   }
 };

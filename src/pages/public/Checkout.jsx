@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
+import SyncLoader from "react-spinners/SyncLoader";
 import { useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/checkout/checkout.css";
@@ -12,13 +14,18 @@ import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
+// import slices
+import { setOrderRequest } from "../../redux/slices/order/order";
 export const Checkout = () => {
+  // dispatch
+  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
+  const [requiredField, setRequiredField] = useState(null);
   const [cartList, setCartList] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isLoadingPayment, setLoadingPayment] = useState(false);
@@ -45,6 +52,7 @@ export const Checkout = () => {
     refetchOnWindowFocus: false,
   });
   // mutation
+  const queryClient = useQueryClient();
   const paypalMutation = useMutation({
     mutationKey: ["paypal"],
     mutationFn: PaypalService.createPayment,
@@ -53,6 +61,7 @@ export const Checkout = () => {
     },
     onSuccess: () => {
       setLoadingPayment(false);
+      queryClient.invalidateQueries(["my-cart"]);
     },
   });
   useEffect(() => {
@@ -84,13 +93,24 @@ export const Checkout = () => {
   }, [isFetching, isLoading, cartData]);
   // handle func
   const handlePayNow = async () => {
+    if (
+      !submitData.address ||
+      !submitData.email ||
+      !submitData.fullname ||
+      !submitData.phone
+    ) {
+      setRequiredField("You have to input all fields");
+      return;
+    }
+    setRequiredField(null);
     try {
       const totalPrice =
         token && user ? calculateTotalPrice() : calculateTotalPriceGuest();
       const updatedSubmitData = {
         ...submitData,
-        total: totalPrice || "0", // Set the calculated total
+        total: totalPrice || "0",
       };
+      localStorage.setItem("orderReq", JSON.stringify(updatedSubmitData));
       await paypalMutation.mutateAsync(updatedSubmitData);
     } catch (error) {
       console.log(error);
@@ -125,6 +145,11 @@ export const Checkout = () => {
   };
   return (
     <div className="checkout-container">
+      {isLoadingPayment && (
+        <div className="loading-payment">
+          <SyncLoader color="#ffffff" size={20} />
+        </div>
+      )}
       <Checkoutnav />
       <div className="checkout">
         <div className="checkout-main">
@@ -176,6 +201,7 @@ export const Checkout = () => {
                 placeholder="Enter your address"
               />
             </div>
+            {requiredField && <p className="error">{requiredField}</p>}
           </form>
         </div>
         <div className="cart-review">
@@ -255,8 +281,8 @@ export const Checkout = () => {
                       <p>{formatPrice(calculateTotalPriceGuest())}</p>
                     </div>
                     <div className="summary-item">
-                      <p>Shipping</p>
-                      <p>Free</p>
+                      <p>VAT</p>
+                      <p>20</p>
                     </div>
                     <div className="summary-total">
                       <strong>Total</strong>

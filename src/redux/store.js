@@ -6,6 +6,7 @@ import AccountReducer from "./slices/account/account";
 import ProductReducer from "./slices/product/product";
 import KoiReducer from "./slices/koi/koi";
 import CartReducer from "./slices/cart/cart";
+import OrderReducer from "./slices/order/order";
 export default configureStore({
   reducer: {
     // modal
@@ -20,5 +21,7 @@ export default configureStore({
     koi: KoiReducer,
     // cart
     cart: CartReducer,
+    // order
+    order: OrderReducer,
   },
 });

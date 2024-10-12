@@ -40,6 +40,16 @@ select option {
     flex-direction: column;
     overflow-y: hidden;
   }
+  .checkout-container .loading-payment {
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .checkout-container .checkout {
     display: flex;
     height: calc(100vh - 100px);
@@ -99,6 +109,10 @@ select option {
     padding: 15px 20px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
+  }
+  .checkout-container .checkout .checkout-main .checkout-form p {
+    font-size: 0.75rem;
+    color: rgb(231, 42, 42);
   }
   .checkout-container .checkout .cart-review {
     width: 50%;

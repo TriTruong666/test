@@ -32,7 +32,6 @@ export const Summary = () => {
 
   const orderData = generateFakeOrders();
 
-  // Generate fake best seller product data
   const generateBestSellerProducts = () => {
     const products = [];
     for (let i = 0; i < 3; i++) {
@@ -46,7 +45,6 @@ export const Summary = () => {
 
   const bestSellerProducts = generateBestSellerProducts();
 
-  // Generate fake data for the charts
   const generateFakeRevenueData = () => {
     const data = [];
     for (let i = 0; i < 10; i++) {
@@ -55,6 +53,7 @@ export const Summary = () => {
         revenue: faker.number.int({ min: 1000, max: 5000 }),
         totalOrders: faker.number.int({ min: 10, max: 100 }),
         newCustomers: faker.number.int({ min: 5, max: 50 }),
+        refund: faker.number.int({ min: 50, max: 500 }),
       });
     }
     return data;
@@ -62,25 +61,36 @@ export const Summary = () => {
 
   const chartData = generateFakeRevenueData();
 
-  // Revenue multi-line chart configuration (right)
   const [revenueChartOptions, setRevenueChartOptions] = useState({
     chart: {
-      type: "line",
+      type: "area",
       id: "revenue-chart",
       toolbar: {
         show: false,
+      },
+      animations: {
+        enabled: true,
+        easing: "easeinout",
+        speed: 800,
       },
     },
     xaxis: {
       categories: chartData.map((data) => data.date),
     },
-    colors: ["#1E90FF", "#32CD32", "#FF6347"],
+    colors: ["#00E396", "#0090FF", "#FF4560", "#775DD0"], // Updated with a professional color palette
     stroke: {
       curve: "smooth",
+      width: 2,
+    },
+    grid: {
+      borderColor: "#f1f1f1",
     },
     tooltip: {
       enabled: true,
       theme: "dark",
+    },
+    dataLabels: {
+      enabled: false, // Disabled to avoid clashing numbers over lines
     },
     yaxis: [
       {
@@ -110,14 +120,18 @@ export const Summary = () => {
       name: "New Customers",
       data: chartData.map((data) => data.newCustomers),
     },
+    {
+      name: "Refund",
+      data: chartData.map((data) => data.refund), // Added a new refund data series for complexity
+    },
   ]);
 
-  // Pie chart configuration (left) for accounts
   const [accountChartOptions, setAccountChartOptions] = useState({
     chart: {
       type: "pie",
     },
     labels: ["Admin", "Member", "Guest"],
+    colors: ["#1E90FF", "#32CD32", "#FF6347"], // Professional contrasting colors
     responsive: [
       {
         breakpoint: 480,
@@ -135,7 +149,6 @@ export const Summary = () => {
 
   const [accountChartSeries, setAccountChartSeries] = useState([10, 30, 60]);
 
-  // Fake data for different charts in section2
   const generateBarChartData = () => {
     return {
       categories: Array.from({ length: 5 }, () => faker.commerce.department()),
@@ -158,7 +171,7 @@ export const Summary = () => {
     xaxis: {
       categories: barChartData.categories,
     },
-    colors: ["#1E90FF"],
+    colors: ["#00E396"], // Updated to a single professional color
     plotOptions: {
       bar: {
         distributed: true,
@@ -189,7 +202,7 @@ export const Summary = () => {
     chart: {
       type: "radar",
     },
-    colors: ["#FF6347"], // Tomato color for radar chart
+    colors: ["#775DD0"], // Dark purple color for a professional touch
     fill: {
       opacity: 0.3,
     },
@@ -207,12 +220,11 @@ export const Summary = () => {
       type: "donut",
     },
     labels: ["Blogs", "Articles", "Tutorials"],
-    colors: ["#FF4500", "#32CD32", "#1E90FF"], // Use different colors
+    colors: ["#FF4500", "#32CD32", "#1E90FF"], // Professional, trading-style colors
   });
 
   const [donutChartSeries, setDonutChartSeries] = useState([40, 30, 30]);
 
-  // Generate fake box plot data
   const generateFakeBoxPlotData = () => {
     const data = [];
     for (let i = 0; i < 5; i++) {
@@ -238,8 +250,8 @@ export const Summary = () => {
     plotOptions: {
       boxPlot: {
         colors: {
-          upper: "#FF6347",
-          lower: "#1E90FF",
+          upper: "#FF4560",
+          lower: "#00E396",
         },
       },
     },
@@ -295,13 +307,13 @@ export const Summary = () => {
         </div>
         <div className="section2">
           <div className="item">
-            <strong>Total active products</strong>
+            {/* <strong>Total active products</strong> */}
             <Chart
               options={boxPlotChartOptions}
               series={boxPlotChartSeries}
               type="boxPlot"
               width="100%"
-              height="350"
+              height="400px"
             />
           </div>
           <div className="item">
@@ -311,7 +323,7 @@ export const Summary = () => {
               series={radarChartSeries}
               type="radar"
               width="100%"
-              height="200"
+              height="300px"
             />
           </div>
           <div className="item">
@@ -321,7 +333,7 @@ export const Summary = () => {
               series={donutChartSeries}
               type="donut"
               width="100%"
-              height="200"
+              height="100%"
             />
           </div>
         </div>

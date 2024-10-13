@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/product/product.css";
-// import assets
 // import service
 import * as ProductService from "../../service/product/productService";
 // import slices
@@ -13,13 +12,12 @@ import {
   toggleUpdateProductModal,
 } from "../../redux/slices/modal/modal";
 import { setProductId } from "../../redux/slices/product/product";
-export const ProductList = () => {
-  // dispatch
+
+export const ProductList = ({ searchTerm }) => {
+  // Accept searchTerm as prop
   const dispatch = useDispatch();
-  // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
-  const [propProductId, setPropProductId] = useState(null);
   const [serverError, setServerError] = useState(null);
   // query
   const {
@@ -27,12 +25,12 @@ export const ProductList = () => {
     isLoading,
     isError,
     isFetching,
-    isRefetching,
   } = useQuery({
     queryKey: ["productList"],
     queryFn: ProductService.getAllProductAdmin,
     refetchOnWindowFocus: false,
   });
+
   useEffect(() => {
     if (products.length === 0) {
       setEmptyList("Product list is empty");
@@ -45,21 +43,24 @@ export const ProductList = () => {
       setServerError(null);
     }
 
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
-  }, [isFetching, isRefetching, isLoading, isError]);
-  // handle func
+    setIsLoadingPage(isFetching || isLoading);
+  }, [isFetching, isLoading, isError]);
+
+  // Filter products based on searchTerm
+  const filteredProducts = products.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleToggleUpdateProductModal = (id) => {
     dispatch(setProductId(id));
     dispatch(toggleUpdateProductModal());
   };
+
   const handleToggleDelProductModal = (id) => {
     dispatch(setProductId(id));
     dispatch(toggleDeleteProductModal());
   };
+
   return (
     <>
       <table className="product-list-table">
@@ -88,7 +89,7 @@ export const ProductList = () => {
               <p>{emptyList}</p>
             </div>
           ) : (
-            products.map((product) => (
+            filteredProducts.map((product) => (
               <tr key={product.productId}>
                 <td>{product.productId}</td>
                 <td>

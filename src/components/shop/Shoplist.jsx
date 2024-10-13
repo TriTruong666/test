@@ -1,15 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
 // import service
 import * as CartService from "../../service/cart/cartService";
-import * as ProductService from "../../service/product/productService";
 import * as CategoryService from "../../service/category/categoryService";
+import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/components/shop/shop.css";
 // import slice

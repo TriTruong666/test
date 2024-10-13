@@ -128,7 +128,7 @@ select option {
     color: rgba(0, 0, 0, 0.9);
   }
   .admin-summary-container .summary .chart-container {
-    margin-top: 105px;
+    margin-top: 300px;
     padding: 0 40px;
   }
   .admin-summary-container .summary .chart-container .charts {

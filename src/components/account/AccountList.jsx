@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/account/account.css";
 // import service

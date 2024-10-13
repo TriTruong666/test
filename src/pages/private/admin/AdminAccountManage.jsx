@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 // import styles
 import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
-import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AccountList } from "../../../components/account/AccountList";
 import { DelAccount } from "../../../components/modal/DelAccount";
+import { Dashnav } from "../../../components/navbar/Dashnav";
 export const AdminAccountManage = () => {
   const isToggleDelAccountModal = useSelector(
     (state) => state.modal.deleteAccountModal.isToggleModal

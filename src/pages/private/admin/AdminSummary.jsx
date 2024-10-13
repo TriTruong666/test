@@ -158,7 +158,7 @@ export const Summary = () => {
     xaxis: {
       categories: barChartData.categories,
     },
-    colors: ["#1E90FF"], // Blue for bar chart
+    colors: ["#1E90FF"],
     plotOptions: {
       bar: {
         distributed: true,
@@ -212,6 +212,53 @@ export const Summary = () => {
 
   const [donutChartSeries, setDonutChartSeries] = useState([40, 30, 30]);
 
+  // Generate fake box plot data
+  const generateFakeBoxPlotData = () => {
+    const data = [];
+    for (let i = 0; i < 5; i++) {
+      const values = Array.from({ length: 10 }, () =>
+        faker.number.int({ min: 20, max: 100 })
+      );
+      const sorted = values.sort((a, b) => a - b);
+      data.push({
+        x: faker.commerce.department(),
+        y: [sorted[0], sorted[2], sorted[5], sorted[7], sorted[9]],
+      });
+    }
+    return data;
+  };
+
+  const boxPlotData = generateFakeBoxPlotData();
+
+  const [boxPlotChartOptions, setBoxPlotChartOptions] = useState({
+    chart: {
+      type: "boxPlot",
+      height: 350,
+    },
+    plotOptions: {
+      boxPlot: {
+        colors: {
+          upper: "#FF6347",
+          lower: "#1E90FF",
+        },
+      },
+    },
+    xaxis: {
+      type: "category",
+    },
+    title: {
+      text: "Product Performance BoxPlot",
+      align: "left",
+    },
+  });
+
+  const [boxPlotChartSeries, setBoxPlotChartSeries] = useState([
+    {
+      name: "Product Performance",
+      data: boxPlotData,
+    },
+  ]);
+
   return (
     <div className="admin-summary-container">
       <Dashnav />
@@ -248,15 +295,14 @@ export const Summary = () => {
         </div>
         <div className="section2">
           <div className="item">
-            <strong>Total active account</strong>
-            {/* Bar Chart for Active Accounts
+            <strong>Total active products</strong>
             <Chart
-              options={barChartOptions}
-              series={barChartSeries}
-              type="radar"
+              options={boxPlotChartOptions}
+              series={boxPlotChartSeries}
+              type="boxPlot"
               width="100%"
-              height="200"
-            /> */}
+              height="350"
+            />
           </div>
           <div className="item">
             <strong>Total active products</strong>

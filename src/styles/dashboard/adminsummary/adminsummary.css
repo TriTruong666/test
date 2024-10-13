@@ -160,4 +160,57 @@ select option {
   .admin-summary-container .summary .chart-container .charts .right-chart h3 {
     font-size: 0.9rem;
   }
+  .admin-summary-container .summary .summary-bottom {
+    margin-top: 50px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom {
+    width: 70%;
+    padding: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 15px;
+    background: white;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table th,
+  .admin-summary-container .summary .summary-bottom .left-bottom table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table th {
+    background-color: #f4f4f4;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table button {
+    background-color: #1e90ff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom {
+    width: 30%;
+    padding: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 15px;
+    background: white;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table th,
+  .admin-summary-container .summary .summary-bottom .right-bottom table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table th {
+    background-color: #f4f4f4;
+  }
 }/*# sourceMappingURL=adminsummary.css.map */

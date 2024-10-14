@@ -18,6 +18,7 @@ import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
 import { PaymentSuccess } from "../pages/public/PaymentSuccess";
+import { PaymentFail } from "../pages/public/PaymentFail";
 import {
   LoggedWrapper,
   ResetPassWrapper,
@@ -80,6 +81,10 @@ export const publicRoutes = [
   {
     path: "/payment/success",
     element: <PaymentSuccess />,
+  },
+  {
+    path: "/payment/cancel",
+    element: <PaymentFail />,
   },
   {
     path: "/shop",

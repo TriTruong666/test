@@ -126,7 +126,7 @@ export const UpdateProduct = () => {
         location.reload();
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: ["productList"],
       });
     },
   });

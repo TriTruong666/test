@@ -7,6 +7,18 @@ import "../../styles/components/adminorder/adminorder.css";
 // import service
 import * as OrderService from "../../service/order/order";
 export const AdminOrderList = () => {
+  const statusClassName = {
+    pending: "pending",
+    success: "success",
+    cancel: "cancel",
+    delivering: "delivering",
+  };
+  const statusTitle = {
+    pending: "Pending",
+    success: "Success",
+    cancel: "Cancel",
+    delivering: "Delivering",
+  };
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
@@ -22,6 +34,16 @@ export const AdminOrderList = () => {
     queryFn: OrderService.getAllOrders,
   });
   // handle func
+  const handleOrderStatusClassName = (status) => {
+    if (status === "PROCESSING") {
+      return statusClassName.pending;
+    }
+  };
+  const handleStatusTitle = (status) => {
+    if (status === "PROCESSING") {
+      return statusTitle.pending;
+    }
+  };
   useEffect(() => {
     if (isLoading || isFetching) {
       setIsLoadingPage(true);
@@ -62,7 +84,9 @@ export const AdminOrderList = () => {
                 <p>{order.orders.orderDetails.length} items</p>
               </div>
               <p>$100.00</p>
-              <span>Status: {order.orders.status}</span>
+              <span className={handleOrderStatusClassName(order.orders.status)}>
+                Status: {handleStatusTitle(order.orders.status)}
+              </span>
             </Link>
           ))}
         </>

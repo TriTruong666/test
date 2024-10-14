@@ -31,3 +31,18 @@ export const getAllOrders = async () => {
     return error;
   }
 };
+export const getOwnOrders = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/order/get-my-order";
+    const res = await axios.get(api, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.result;
+  } catch (error) {
+    return error;
+  }
+};

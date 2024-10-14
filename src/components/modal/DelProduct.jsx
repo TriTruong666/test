@@ -30,11 +30,11 @@ export const DelProduct = () => {
         progress: undefined,
         theme: "dark",
       });
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["delete-product"],
+        queryKey: ["productList"],
       });
     },
   });

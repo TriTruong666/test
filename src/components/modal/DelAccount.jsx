@@ -31,6 +31,9 @@ export const DelAccount = () => {
         progress: undefined,
         theme: "dark",
       });
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
       queryCilent.invalidateQueries(["accounts"]);
     },
   });

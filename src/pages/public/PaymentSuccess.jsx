@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/paymentsuccess/paymentsuccess.css";
 // import components
-import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import service
 import * as OrderService from "../../service/order/order";
 export const PaymentSuccess = () => {
@@ -26,12 +25,13 @@ export const PaymentSuccess = () => {
   });
   const [responseData, setResponseData] = useState(null);
   // mutation
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["create-order"],
     mutationFn: OrderService.createInvoice,
     onSuccess: (response) => {
       setResponseData(response);
+      queryClient.invalidateQueries("my-orders");
     },
   });
   // handle func
@@ -42,10 +42,17 @@ export const PaymentSuccess = () => {
   const createOrder = async () => {
     try {
       await mutation.mutateAsync(submitData);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
-    if (!orderReq) {
+    if (
+      !orderReq ||
+      !orderReq.fullname ||
+      !orderReq.cartId ||
+      !orderReq.total
+    ) {
       navigate("/cart");
     } else {
       try {

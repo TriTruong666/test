@@ -114,7 +114,7 @@ export const AddProduct = () => {
         }, 1500);
       }
       queryCilent.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: ["productList"],
       });
     },
   });

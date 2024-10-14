@@ -68,6 +68,90 @@ select option {
     font-weight: 400;
     color: rgba(0, 0, 0, 0.7);
   }
+  .add-account-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .add-account-container .add-account-modal {
+    width: 800px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .add-account-container .add-account-modal .add-account-header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .add-account-container .add-account-modal .add-account-header strong {
+    font-size: 1.3rem;
+  }
+  .add-account-container .add-account-modal .add-account-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .add-account-container .add-account-modal .add-account-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .add-pond-container {
     position: fixed;
     width: 100vw;

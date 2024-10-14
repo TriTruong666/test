@@ -1,20 +1,29 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import styles
 import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
 import { AccountList } from "../../../components/account/AccountList";
 import { DelAccount } from "../../../components/modal/DelAccount";
 import { Dashnav } from "../../../components/navbar/Dashnav";
+import { AddAccountAdmin } from "../../../components/modal/AddAccountAdmin";
+import { toggleAccountModal } from "../../../redux/slices/modal/modal";
 export const AdminAccountManage = () => {
+  // dispatch
+  const dispatch = useDispatch();
   const isToggleDelAccountModal = useSelector(
     (state) => state.modal.deleteAccountModal.isToggleModal
   );
-  useEffect(() => {
-    document.title = "Admin Dashboard";
-  }, []);
+  const isToggleAddAccountModal = useSelector(
+    (state) => state.modal.addAccountModal.isToggleModal
+  );
+  // handle func
+  const handleToggleAddAccountModal = () => {
+    dispatch(toggleAccountModal());
+  };
   return (
     <div className="admin-account-container">
+      {isToggleAddAccountModal && <AddAccountAdmin />}
       {isToggleDelAccountModal && <DelAccount />}
       <Dashnav />
       <div className="admin-account">
@@ -35,7 +44,7 @@ export const AdminAccountManage = () => {
             </select>
             <i className="bx bx-chevron-down"></i>
           </div>
-          <div className="add">
+          <div className="add" onClick={handleToggleAddAccountModal}>
             <i className="bx bx-plus"></i>
             <p>Create new account</p>
           </div>

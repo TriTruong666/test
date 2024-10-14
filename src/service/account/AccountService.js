@@ -206,3 +206,19 @@ export const deleteAccount = async (userId) => {
     return error;
   }
 };
+export const createAccountAdmin = async (data) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const api = "http://localhost:8080/users/admin/create";
+    const res = await axios.post(api, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};

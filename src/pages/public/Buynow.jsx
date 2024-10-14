@@ -63,17 +63,31 @@ export const Buynow = () => {
           <form action="" autoComplete="off" className="buynow-form">
             <div className="input-item">
               <label htmlFor="fullname">Full name</label>
-              <input type="text" id="fullname" placeholder="Enter full name" />
+              <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                defaultValue={user.fullname || ""}
+                placeholder="Enter full name"
+              />
             </div>
             <div className="input-item">
               <label htmlFor="email">Email</label>
-              <input type="text" id="email" placeholder="Enter your email" />
+              <input
+                type="text"
+                id="email"
+                defaultValue={user.email || ""}
+                name="email"
+                placeholder="Enter your email"
+              />
             </div>
             <div className="input-item">
               <label htmlFor="phone">Phone</label>
               <input
                 type="text"
                 id="phone"
+                defaultValue={user.phone || ""}
+                name="phone"
                 placeholder="Enter your phone number"
               />
             </div>
@@ -81,6 +95,8 @@ export const Buynow = () => {
               <label htmlFor="address">Address</label>
               <input
                 type="text"
+                defaultValue={user.address || ""}
+                name="address"
                 id="address"
                 placeholder="Enter your address"
               />

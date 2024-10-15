@@ -2312,6 +2312,13 @@ select option {
     padding: 40px;
     overflow-y: auto;
   }
+  .update-product-container .update-product-modal .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 800px;
+  }
   .update-product-container .update-product-modal .update-product-header {
     display: flex;
     justify-content: space-between;

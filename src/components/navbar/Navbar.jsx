@@ -13,6 +13,7 @@ import {
 } from "../../redux/slices/navbar/navbar";
 // import service
 import * as CartService from "../../service/cart/cartService";
+import { scroller } from "react-scroll";
 export const Navbar = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -80,18 +81,29 @@ export const Navbar = () => {
         }, 0)
       : 0;
   };
-
+  const handleScrollTo = (section) => {
+    scroller.scrollTo(section, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -85,
+    });
+  };
   return (
     <div className="navbar-container">
       {token && user ? (
         <>
           <div className="navbar-main">
-            <img src={logo} alt="" onClick={() => navigate("/")} />
-            <Link to="/#about">What Is Izumiya?</Link>
+            <Link to="/?section=contact">
+              <img src={logo} alt="" />
+            </Link>
+            <Link onClick={() => handleScrollTo("homepage")}>
+              What Is Izumiya?
+            </Link>
             <Link to="/shop">Shop</Link>
-            <Link to="/#solution">Solutions</Link>
+            <Link onClick={() => handleScrollTo("solutions")}>Solutions</Link>
             <Link to="/About">About</Link>
-            <a href="">Contact</a>
+            <Link onClick={() => handleScrollTo("contact")}>Contact</Link>
             <Link to="/blog">Blog</Link>
           </div>
           {isAuth ? (

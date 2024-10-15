@@ -35,12 +35,12 @@ export const AdminOrderList = () => {
   });
   // handle func
   const handleOrderStatusClassName = (status) => {
-    if (status === "PROCESSING") {
+    if (status === "PENDING") {
       return statusClassName.pending;
     }
   };
   const handleStatusTitle = (status) => {
-    if (status === "PROCESSING") {
+    if (status === "PENDING") {
       return statusTitle.pending;
     }
   };

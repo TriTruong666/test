@@ -18,11 +18,15 @@ export const AddAccountAdmin = () => {
     email: "",
     password: "",
   });
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   //   mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["addAccount"],
     mutationFn: AccountService.createAccountAdmin,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: (response) => {
       if (response && response.code === "EMAIL_EXISTED") {
         toast.error("This email is existed", {
@@ -69,6 +73,19 @@ export const AddAccountAdmin = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (!submitData.email || !submitData.email || !submitData.email) {
       toast.error("Please input all fields", {
         position: "top-right",

@@ -73,14 +73,30 @@
 
                         button {
                             padding: 10px 40px;
-                            border: 2px solid rgba(255, 255, 255, .2);
                             font-family: $main-font;
+                            cursor: pointer;
+                            transition: .4s;
                         }
 
-                        button:nth-child(1) {
+                        a {
                             background: white;
                             color: black;
                             font-weight: 600;
+                            padding: 10px 40px;
+                            font-family: $main-font;
+                            cursor: pointer;
+                            transition: .4s;
+                            font-size: 0.9rem;
+                        }
+
+                        button:nth-child(2) {
+                            border: 2px solid rgba(255, 255, 255, .2);
+                            color: white;
+                            font-weight: 600;
+                        }
+
+                        button:nth-child(2):hover {
+                            background: rgba(255, 255, 255, .1);
                         }
                     }
                 }

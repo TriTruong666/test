@@ -39,6 +39,7 @@ export const AddBlog = () => {
   // state
   const [previewImage, setPreviewImage] = useState(null);
   const [isValidName, setIsValidName] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
     title: "",
     userId: userId,
@@ -70,7 +71,10 @@ export const AddBlog = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationFn: BlogService.createBlogService,
-    onSuccess: (responseData) => {
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
+    onSuccess: () => {
       toast.success("Create successfully", {
         position: "top-right",
         autoClose: 1500,
@@ -82,23 +86,14 @@ export const AddBlog = () => {
         theme: "dark",
       });
       setTimeout(() => {
-        dispatch(toggleAddBlogModal());
         location.reload();
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["blog"],
+        queryKey: ["myBlogs", "adminBlogs"],
       });
     },
   });
   //   handle func
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setSubmitData({
-      ...submitData,
-      [name]: value,
-    });
-  };
-
   const handleOnChangeName = (e) => {
     const { name, value } = e.target;
     if (!isNaN(value)) {
@@ -135,9 +130,21 @@ export const AddBlog = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (isValidName) {
-      toast.error("Blog must at least 10 characters and not a number", {
+      toast.error("Blog title must at least 10 characters and not a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

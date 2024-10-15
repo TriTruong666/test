@@ -56,11 +56,12 @@ export const UserSetting = () => {
         progress: undefined,
         theme: "dark",
       });
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1500);
+
       queryClient.invalidateQueries({
-        queryKey: ["update-info"],
+        queryKey: ["my-info"],
       });
     },
   });

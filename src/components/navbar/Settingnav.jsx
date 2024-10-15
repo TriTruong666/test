@@ -89,7 +89,7 @@ export const Settingnav = () => {
         <div className="setting-nav-list">
           {isAdmin && (
             <>
-              <Link to="/dashboard/admin/account" className="setting-item">
+              <Link to="/dashboard/admin/summary" className="setting-item">
                 <i className="bx bxs-dashboard"></i>
                 <p>Admin Dashboard</p>
               </Link>

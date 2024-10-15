@@ -99,13 +99,27 @@ select option {
   }
   .product-detail-container .product-detail .product-detail-main .product-detail-content div button {
     padding: 10px 40px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
     font-family: "Roboto Mono", monospace;
+    cursor: pointer;
+    transition: 0.4s;
   }
-  .product-detail-container .product-detail .product-detail-main .product-detail-content div button:nth-child(1) {
+  .product-detail-container .product-detail .product-detail-main .product-detail-content div a {
     background: white;
     color: black;
     font-weight: 600;
+    padding: 10px 40px;
+    font-family: "Roboto Mono", monospace;
+    cursor: pointer;
+    transition: 0.4s;
+    font-size: 0.9rem;
+  }
+  .product-detail-container .product-detail .product-detail-main .product-detail-content div button:nth-child(2) {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-weight: 600;
+  }
+  .product-detail-container .product-detail .product-detail-main .product-detail-content div button:nth-child(2):hover {
+    background: rgba(255, 255, 255, 0.1);
   }
   .product-detail-container .product-detail .product-detail-related {
     width: 100%;

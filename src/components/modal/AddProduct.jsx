@@ -48,6 +48,7 @@ export const AddProduct = () => {
   });
   const [invalidNumber, setInvalidNumber] = useState(null);
   const [isValidName, setIsValidName] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
 
   //   file resizer
   const resizeFile = (file) => {
@@ -74,6 +75,9 @@ export const AddProduct = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationFn: ProductService.createProductService,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: (responseData) => {
       if (responseData && responseData.code === "STOCK_INVALID") {
         toast.error("Stock must at least 0", {
@@ -109,7 +113,6 @@ export const AddProduct = () => {
           theme: "dark",
         });
         setTimeout(() => {
-          dispatch(toggleAddProductModal());
           location.reload();
         }, 1500);
       }
@@ -187,17 +190,23 @@ export const AddProduct = () => {
     setIsValidName(false);
   };
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setSubmitData({
-      ...submitData,
-      [name]: value,
-    });
-  };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (invalidNumber) {
-      toast.error("Product price must be a number", {
+      toast.error("Price and stock must be a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -329,9 +338,6 @@ export const AddProduct = () => {
               />
             </div>
           </div>
-
-          {invalidNumber && <p className="invalid">{invalidNumber}</p>}
-
           <div className="input-field-des">
             <label>Description</label>
             <CKEditor

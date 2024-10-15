@@ -59,7 +59,7 @@ export const Navbar = () => {
 
     if (token && user) {
       if (cartInfo) {
-        setCartList(cartInfo.cartItems || []); // Default to empty array
+        setCartList(cartInfo.cartItems || []);
         setIsEmptyCart(!cartInfo.cartItems || cartInfo.cartItems.length === 0);
       }
     } else {

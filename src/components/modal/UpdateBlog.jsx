@@ -43,6 +43,7 @@ export const UpdateBlog = () => {
   });
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: blogInfo.image,
     title: blogInfo.title,
@@ -82,6 +83,9 @@ export const UpdateBlog = () => {
     mutationFn: (updateData) => {
       BlogService.updateBlogService(blogId, updateData);
     },
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Update successfully", {
         position: "top-right",
@@ -118,6 +122,19 @@ export const UpdateBlog = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {

@@ -192,6 +192,7 @@ select option {
     padding: 10px 15px;
     text-align: center;
     border-left: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
   }
   .buynow-container .buynow .cart-review .cart-list .cart-item .info .quantity div p:nth-child(3) {
     border-right: 2px solid rgba(255, 255, 255, 0.2);

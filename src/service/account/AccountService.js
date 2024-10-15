@@ -155,6 +155,7 @@ export const updateMyInfo = async (data) => {
         "Content-Type": "application/json",
       },
     });
+    localStorage.setItem("user", JSON.stringify(res.data.result));
     return res.data.result;
   } catch (error) {
     return error;

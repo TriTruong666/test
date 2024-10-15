@@ -2616,19 +2616,10 @@
     .update-product-modal {
       width: 800px;
       max-height: 700px;
-      height: 700px;
       background: white;
       border-radius: 15px;
       padding: 40px;
       overflow-y: auto;
-
-      .loading {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
 
       .update-product-header {
         display: flex;
@@ -2650,16 +2641,16 @@
         flex-direction: column;
         row-gap: 20px;
 
-        .form-group {
+        .field {
           display: flex;
           flex-direction: column;
-        }
 
-        label {
-          font-size: 0.9rem;
-          font-weight: 600;
-          margin-bottom: 5px;
-          color: #333;
+          .field-label {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 500;
+          }
         }
 
         .input-image {
@@ -2674,7 +2665,6 @@
           .bx-trash-alt {
             position: absolute;
             left: 110%;
-            top: 10px;
             font-size: 24px;
             color: red;
             cursor: pointer;
@@ -2690,20 +2680,19 @@
             row-gap: 10px;
 
             img {
-              width: 100%;
-              height: 100%;
+              width: 300px;
+              height: 220px;
               object-fit: cover;
               border-radius: 15px;
             }
 
             i {
               font-size: 40px;
-              color: #555;
             }
 
             p {
               font-size: 0.85rem;
-              color: rgba(0, 0, 0, 0.6);
+              color: $fade-black;
             }
           }
 
@@ -2712,25 +2701,57 @@
           }
         }
 
-        input,
-        select {
-          padding: 12px 25px;
-          border: 1px solid rgba(0, 0, 0, 0.2);
-          color: #000;
-          font-size: 0.8rem;
-          border-radius: 10px;
-          outline: none;
-          transition: border 0.3s;
+        .input-field-name {
+          display: flex;
+          flex-direction: column;
+          row-gap: 5px;
 
-          &:focus {
-            border-color: #000;
+          label {
+            color: $fade-black;
+            font-size: 0.8rem;
+            font-weight: 700;
+          }
+
+          input {
+            padding: 12px 25px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: black;
+            font-size: 0.8rem;
+            border-radius: 10px;
           }
         }
 
-        .name,
-        .cate,
-        .input-two-fields input {
-          margin-top: 0;
+        .input-field-cate {
+          display: flex;
+          flex-direction: column;
+          row-gap: 5px;
+
+          label {
+            color: $fade-black;
+            font-size: 0.8rem;
+            font-weight: 700;
+          }
+
+          select {
+            padding: 12px 25px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: black;
+            font-size: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+          }
+        }
+
+        .input-field-des {
+          display: flex;
+          flex-direction: column;
+          row-gap: 5px;
+
+          label {
+            color: $fade-black;
+            font-size: 0.8rem;
+            font-weight: 700;
+          }
         }
 
         .ck-editor__editable {
@@ -2741,74 +2762,280 @@
           border: 1px solid #ddd;
           border-radius: 4px;
           outline: none;
-          background-color: #fff;
+          font-size: 0.9rem;
+        }
+
+        .invalid {
+          color: red;
+          font-size: 0.75rem;
         }
 
         .input-two-fields {
           display: flex;
+          justify-content: space-between;
           column-gap: 20px;
 
-          .form-group {
-            flex: 1;
-          }
+          .input-field {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
 
-          input {
-            width: 100%;
+            label {
+              color: $fade-black;
+              font-size: 0.8rem;
+              font-weight: 700;
+            }
+
+            input {
+              padding: 12px 25px;
+              border: 1px solid rgba(0, 0, 0, 0.2);
+              color: black;
+              font-size: 0.8rem;
+              border-radius: 10px;
+            }
           }
         }
+      }
 
-        .cate {
+      .submit {
+        display: flex;
+        justify-content: end;
+        column-gap: 15px;
+
+        span {
+          padding: 10px 40px;
+          border: 2px solid rgba(0, 0, 0, 0.2);
+          color: black;
+          border-radius: 15px;
+          font-weight: 600;
           cursor: pointer;
-          background-color: #fff;
-
-          &:hover {
-            border: 1px solid #000;
-          }
+          font-size: 0.9rem;
         }
 
-        .submit {
-          display: flex;
-          justify-content: flex-end;
-          column-gap: 10px;
-
-          span {
-            cursor: pointer;
-            color: #555;
-            font-size: 0.9rem;
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-
-            &:hover {
-              background-color: #f0f0f0;
-              color: #000;
-            }
-          }
-
-          button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            &:hover {
-              background-color: #0056b3;
-            }
-          }
-        }
-
-        /* Error Message Styling */
-        .invalid {
-          color: red;
-          font-size: 0.75rem;
-          margin-top: 5px;
+        button:nth-child(2) {
+          padding: 10px 50px;
+          background: #4b87e0;
+          font-weight: 600;
+          border-radius: 15px;
+          color: white;
+          cursor: pointer;
         }
       }
     }
   }
+
+  // .update-product-container {
+  //   position: fixed;
+  //   width: 100vw;
+  //   height: 100vh;
+  //   background: rgba(0, 0, 0, 0.7);
+  //   z-index: 20;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   padding: 30px 50px;
+
+  //   ::-webkit-scrollbar {
+  //     width: 0;
+  //   }
+
+  //   .update-product-modal {
+  //     width: 800px;
+  //     max-height: 700px;
+  //     height: 700px;
+  //     background: white;
+  //     border-radius: 15px;
+  //     padding: 40px;
+  //     overflow-y: auto;
+
+  //     .loading {
+  //       width: 100%;
+  //       height: 100%;
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //     }
+
+  //     .update-product-header {
+  //       display: flex;
+  //       justify-content: space-between;
+  //       align-items: center;
+
+  //       strong {
+  //         font-size: 1.3rem;
+  //       }
+
+  //       i {
+  //         font-size: 32px;
+  //         cursor: pointer;
+  //       }
+  //     }
+
+  //     .update-product-detail {
+  //       display: flex;
+  //       flex-direction: column;
+  //       row-gap: 20px;
+
+  //       .form-group {
+  //         display: flex;
+  //         flex-direction: column;
+  //       }
+
+  //       label {
+  //         font-size: 0.9rem;
+  //         font-weight: 600;
+  //         margin-bottom: 5px;
+  //         color: #333;
+  //       }
+
+  //       .input-image {
+  //         position: relative;
+  //         margin-top: 30px;
+  //         width: 300px;
+  //         height: 220px;
+  //         border: 1px dashed rgba(0, 0, 0, 0.3);
+  //         align-self: center;
+  //         border-radius: 15px;
+
+  //         .bx-trash-alt {
+  //           position: absolute;
+  //           left: 110%;
+  //           top: 10px;
+  //           font-size: 24px;
+  //           color: red;
+  //           cursor: pointer;
+  //         }
+
+  //         label {
+  //           display: flex;
+  //           flex-direction: column;
+  //           width: 100%;
+  //           height: 100%;
+  //           align-items: center;
+  //           justify-content: center;
+  //           row-gap: 10px;
+
+  //           img {
+  //             width: 100%;
+  //             height: 100%;
+  //             object-fit: cover;
+  //             border-radius: 15px;
+  //           }
+
+  //           i {
+  //             font-size: 40px;
+  //             color: #555;
+  //           }
+
+  //           p {
+  //             font-size: 0.85rem;
+  //             color: rgba(0, 0, 0, 0.6);
+  //           }
+  //         }
+
+  //         input {
+  //           display: none;
+  //         }
+  //       }
+
+  //       input,
+  //       select {
+  //         padding: 12px 25px;
+  //         border: 1px solid rgba(0, 0, 0, 0.2);
+  //         color: #000;
+  //         font-size: 0.8rem;
+  //         border-radius: 10px;
+  //         outline: none;
+  //         transition: border 0.3s;
+
+  //         &:focus {
+  //           border-color: #000;
+  //         }
+  //       }
+
+  //       .name,
+  //       .cate,
+  //       .input-two-fields input {
+  //         margin-top: 0;
+  //       }
+
+  //       .ck-editor__editable {
+  //         min-height: 300px;
+  //         max-height: 600px;
+  //         overflow-y: auto;
+  //         padding: 10px;
+  //         border: 1px solid #ddd;
+  //         border-radius: 4px;
+  //         outline: none;
+  //         background-color: #fff;
+  //       }
+
+  //       .input-two-fields {
+  //         display: flex;
+  //         column-gap: 20px;
+
+  //         .form-group {
+  //           flex: 1;
+  //         }
+
+  //         input {
+  //           width: 100%;
+  //         }
+  //       }
+
+  //       .cate {
+  //         cursor: pointer;
+  //         background-color: #fff;
+
+  //         &:hover {
+  //           border: 1px solid #000;
+  //         }
+  //       }
+
+  //       .submit {
+  //         display: flex;
+  //         justify-content: flex-end;
+  //         column-gap: 10px;
+
+  //         span {
+  //           cursor: pointer;
+  //           color: #555;
+  //           font-size: 0.9rem;
+  //           padding: 10px 20px;
+  //           border: 1px solid #ccc;
+  //           border-radius: 5px;
+  //           transition: background-color 0.3s, color 0.3s;
+
+  //           &:hover {
+  //             background-color: #f0f0f0;
+  //             color: #000;
+  //           }
+  //         }
+
+  //         button {
+  //           padding: 10px 20px;
+  //           background-color: #007bff;
+  //           color: #fff;
+  //           border: none;
+  //           border-radius: 5px;
+  //           font-size: 0.9rem;
+  //           cursor: pointer;
+  //           transition: background-color 0.3s;
+
+  //           &:hover {
+  //             background-color: #0056b3;
+  //           }
+  //         }
+  //       }
+
+  //       /* Error Message Styling */
+  //       .invalid {
+  //         color: red;
+  //         font-size: 0.75rem;
+  //         margin-top: 5px;
+  //       }
+  //     }
+  //   }
+  // }
 }

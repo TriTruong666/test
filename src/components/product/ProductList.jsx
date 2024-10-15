@@ -60,7 +60,12 @@ export const ProductList = ({ searchTerm }) => {
     dispatch(setProductId(id));
     dispatch(toggleDeleteProductModal());
   };
-
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(price);
   return (
     <>
       <table className="product-list-table">
@@ -102,7 +107,7 @@ export const ProductList = ({ searchTerm }) => {
                 <td>
                   <img src={product.image} alt="" />
                 </td>
-                <td>${product.unitPrice}</td>
+                <td>{formatPrice(product.unitPrice)}</td>
                 <td>{product.stock}</td>
                 <td>{product.status ? "Active" : "Inactive"}</td>
                 <td>

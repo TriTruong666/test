@@ -30,9 +30,9 @@ export const DelProduct = () => {
         progress: undefined,
         theme: "dark",
       });
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1500);
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
       queryCilent.invalidateQueries({
         queryKey: ["productList"],
       });
@@ -57,7 +57,7 @@ export const DelProduct = () => {
       <ToastContainer />
       <div className="del-product-modal">
         <div className="del-product-header">
-          <strong>Delete Koi</strong>
+          <strong>Delete Product</strong>
           <i className="bx bx-x" onClick={handleToggleDelProductModal}></i>
         </div>
         <div className="del-product-main">

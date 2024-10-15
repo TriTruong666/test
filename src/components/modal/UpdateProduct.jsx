@@ -61,6 +61,7 @@ export const UpdateProduct = () => {
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isValidNumber, setIsValidNumber] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -108,6 +109,9 @@ export const UpdateProduct = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["update-product", productId],
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     mutationFn: (updateData) => {
       ProductService.updateProductService(productId, updateData);
     },
@@ -207,7 +211,19 @@ export const UpdateProduct = () => {
   };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (isValidName) {
       toast.error("Product name must at least 10 characters and not a number", {
         position: "top-right",
@@ -307,7 +323,7 @@ export const UpdateProduct = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="input-field-name">
                 <label htmlFor="name">Product Name</label>
                 <input
                   className="name"
@@ -321,7 +337,7 @@ export const UpdateProduct = () => {
               </div>
 
               <div className="input-two-fields">
-                <div className="form-group">
+                <div className="input-field">
                   <label htmlFor="unitprice">Price</label>
                   <input
                     type="text"
@@ -332,7 +348,7 @@ export const UpdateProduct = () => {
                     id="unitprice"
                   />
                 </div>
-                <div className="form-group">
+                <div className="input-field">
                   <label htmlFor="stock">Stock</label>
                   <input
                     type="text"
@@ -345,7 +361,7 @@ export const UpdateProduct = () => {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="input-field-des">
                 <label htmlFor="description">Description</label>
                 <CKEditor
                   editor={ClassicEditor}
@@ -414,7 +430,7 @@ export const UpdateProduct = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="input-field-cate">
                 <label htmlFor="categoryId">Category</label>
                 <select
                   className="cate"
@@ -429,14 +445,14 @@ export const UpdateProduct = () => {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="input-field-cate">
                 <label htmlFor="status">Status</label>
                 <select
                   className="cate"
                   onChange={handleOnChange}
                   name="status"
                   id="status"
-                  value={submitData.status ? "true" : "false"}
+                  defaultValue={submitData.status ? "true" : "false"}
                 >
                   <option value="">Status</option>
                   <option value="true">Active</option>
@@ -446,7 +462,7 @@ export const UpdateProduct = () => {
 
               <div className="submit">
                 <span onClick={handleToggleUpdateProductModal}>Cancel</span>
-                <button type="submit">Create Confirm</button>
+                <button type="submit">Update Confirm</button>
               </div>
             </form>
           </>

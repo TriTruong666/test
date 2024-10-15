@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
+import { useParams, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
@@ -148,49 +147,35 @@ export const ProductDetail = () => {
             </>
           ) : (
             <>
-              {isLoadingPage ? (
-                <div className="loading">
-                  <ClipLoader color="#ffffff" size={50} />
+              <img src={product.image} alt="" />
+              <div className="product-detail-content">
+                <small>{product.category && product.category.cateName}</small>
+                <h2>{product.productName}</h2>
+                <strong>{formatPrice(product.unitPrice)}</strong>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      product &&
+                      stripHtmlTags(product.description || "No description"),
+                  }}
+                />
+                <div>
+                  <Link to={`/buynow/${productId}`}>BUY PRODUCT</Link>
+                  {token && user ? (
+                    <>
+                      <button onClick={() => handleAddToCartMember(product)}>
+                        ADD TO CART
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={() => handleAddToCartGuest(product)}>
+                        ADD TO CART
+                      </button>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <img src={product.image} alt="" />
-                  <div className="product-detail-content">
-                    <small>
-                      {product.category && product.category.cateName}
-                    </small>
-                    <h2>{product.productName}</h2>
-                    <strong>{formatPrice(product.unitPrice)}</strong>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          product &&
-                          stripHtmlTags(
-                            product.description || "No description"
-                          ),
-                      }}
-                    />
-                    <div>
-                      <button>BUY PRODUCT</button>
-                      {token && user ? (
-                        <>
-                          <button
-                            onClick={() => handleAddToCartMember(product)}
-                          >
-                            ADD TO CART
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button onClick={() => handleAddToCartGuest(product)}>
-                            ADD TO CART
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </>
-              )}
+              </div>
             </>
           )}
         </div>

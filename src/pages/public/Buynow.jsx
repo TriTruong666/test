@@ -55,9 +55,9 @@ export const Buynow = () => {
         <div className="buynow-main">
           <div className="buynow-main-header">
             <h2>Checkout</h2>
-            <Link to="/cart">
+            <Link to="/shop">
               <i className="bx bx-arrow-back"></i>
-              <p>Back to cart</p>
+              <p>Back to shop</p>
             </Link>
           </div>
           <form action="" autoComplete="off" className="buynow-form">
@@ -109,7 +109,7 @@ export const Buynow = () => {
           </div>
           <div className="cart-list">
             <div className="cart-item">
-              <img src={koiproduct} alt="" />
+              <img src={productInfo.image} alt="" />
               <div className="info">
                 <div>
                   <strong>{productInfo.productName}</strong>

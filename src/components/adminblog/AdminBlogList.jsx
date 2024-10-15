@@ -19,7 +19,7 @@ export const AdminBlogList = () => {
     isError,
     isFetching,
   } = useQuery({
-    queryKey: ["blogs"],
+    queryKey: ["adminBlogs"],
     queryFn: BlogService.getAllBlog,
   });
   useEffect(() => {
@@ -41,16 +41,16 @@ export const AdminBlogList = () => {
   }, [isError, isLoading, isFetching, blogs.length]);
 
   return (
-      <div className="admin-blog-list">
-       {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : (
+    <div className="admin-blog-list">
+      {serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <div className="loading">
+          <ClipLoader color="#000000" size={40} />
+        </div>
+      ) : (
         <>
           {emptyList && (
             <div className="empty-list">

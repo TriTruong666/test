@@ -77,7 +77,7 @@ export const Summary = () => {
     xaxis: {
       categories: chartData.map((data) => data.date),
     },
-    colors: ["#00E396", "#0090FF", "#FF4560", "#775DD0"], // Updated with a professional color palette
+    colors: ["#00E396", "#0090FF", "#FF4560", "#775DD0"],
     stroke: {
       curve: "smooth",
       width: 2,
@@ -90,7 +90,7 @@ export const Summary = () => {
       theme: "dark",
     },
     dataLabels: {
-      enabled: false, // Disabled to avoid clashing numbers over lines
+      enabled: false,
     },
     yaxis: [
       {
@@ -122,7 +122,7 @@ export const Summary = () => {
     },
     {
       name: "Refund",
-      data: chartData.map((data) => data.refund), // Added a new refund data series for complexity
+      data: chartData.map((data) => data.refund),
     },
   ]);
 
@@ -131,7 +131,7 @@ export const Summary = () => {
       type: "pie",
     },
     labels: ["Admin", "Member", "Guest"],
-    colors: ["#1E90FF", "#32CD32", "#FF6347"], // Professional contrasting colors
+    colors: ["#1E90FF", "#32CD32", "#FF6347"],
     responsive: [
       {
         breakpoint: 480,
@@ -171,7 +171,7 @@ export const Summary = () => {
     xaxis: {
       categories: barChartData.categories,
     },
-    colors: ["#00E396"], // Updated to a single professional color
+    colors: ["#00E396"],
     plotOptions: {
       bar: {
         distributed: true,
@@ -202,7 +202,7 @@ export const Summary = () => {
     chart: {
       type: "radar",
     },
-    colors: ["#775DD0"], // Dark purple color for a professional touch
+    colors: ["#775DD0"],
     fill: {
       opacity: 0.3,
     },
@@ -220,7 +220,7 @@ export const Summary = () => {
       type: "donut",
     },
     labels: ["Blogs", "Articles", "Tutorials"],
-    colors: ["#FF4500", "#32CD32", "#1E90FF"], // Professional, trading-style colors
+    colors: ["#FF4500", "#32CD32", "#1E90FF"],
   });
 
   const [donutChartSeries, setDonutChartSeries] = useState([40, 30, 30]);

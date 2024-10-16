@@ -1,16 +1,17 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 // import styles
 import "../../../styles/dashboard/adminblog/adminblog.css";
 // import component
-import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AdminBlogList } from "../../../components/adminblog/AdminBlogList";
 import { AddBlog } from "../../../components/modal/AddBlog";
-import { UpdateBlog } from "../../../components/modal/UpdateBlog";
 import { DelBlog } from "../../../components/modal/DelBlog";
+import { UpdateBlog } from "../../../components/modal/UpdateBlog";
+import { Dashnav } from "../../../components/navbar/Dashnav";
 // import slices
 import { toggleAddBlogModal } from "../../../redux/slices/modal/modal";
+
 export const AdminBlogManage = () => {
   // dispatch
   const dispatch = useDispatch();
@@ -24,9 +25,18 @@ export const AdminBlogManage = () => {
   const isToggleDelBlogModal = useSelector(
     (state) => state.modal.deleteBlogModal.isToggleModal
   );
+
+  // New state for filter
+  const [filterOption, setFilterOption] = useState("default");
+
   // handle func
   const handleToggleAddBlogModal = () => {
     dispatch(toggleAddBlogModal());
+  };
+
+  // New function to handle filter change
+  const handleFilterChange = (e) => {
+    setFilterOption(e.target.value);
   };
 
   return (
@@ -41,11 +51,11 @@ export const AdminBlogManage = () => {
         </div>
         <div className="admin-blog-utils">
           <div className="filter">
-            <select name="" id="">
-              <option value="">Filter</option>
-              <option value="">By Date</option>
-              <option value="">By Price</option>
-              <option value="">By Number of Items</option>
+            <select name="filter" id="filter" value={filterOption} onChange={handleFilterChange}>
+              <option value="default">Filter</option>
+              <option value="date">By Date</option>
+              <option value="blogName">By Blog Name</option>
+              <option value="author">By Author</option>
             </select>
             <i className="bx bx-chevron-down"></i>
           </div>
@@ -54,12 +64,8 @@ export const AdminBlogManage = () => {
             <p>Create new blog</p>
           </div>
         </div>
-        <AdminBlogList />
+        <AdminBlogList filterOption={filterOption} />
       </div>
-      {/* <div className="admin-blog-empty">
-        <strong>No order was selected</strong>
-        <p>You can click to a order to see detail</p>
-      </div> */}
       <Outlet />
     </div>
   );

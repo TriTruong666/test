@@ -7,12 +7,15 @@ import "../../styles/components/adminblog/adminblog.css";
 import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import * as BlogService from "../../service/blog/blogService";
-export const AdminBlogList = () => {
+
+export const AdminBlogList = ({ filterOption }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const ownUserId = user.userId;
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+
   const {
     data: blogs = [],
     isLoading,
@@ -22,6 +25,7 @@ export const AdminBlogList = () => {
     queryKey: ["adminBlogs"],
     queryFn: BlogService.getAllBlog,
   });
+
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -40,6 +44,25 @@ export const AdminBlogList = () => {
     }
   }, [isError, isLoading, isFetching, blogs.length]);
 
+  useEffect(() => {
+    let sortedBlogs = [...blogs];
+    switch (filterOption) {
+      case "date":
+        sortedBlogs.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+        break;
+      case "blogName":
+        sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "author":
+        sortedBlogs.sort((a, b) => a.fullname.localeCompare(b.fullname));
+        break;
+      default:
+        // No sorting for default option
+        break;
+    }
+    setFilteredBlogs(sortedBlogs);
+  }, [filterOption, blogs]);
+
   return (
     <div className="admin-blog-list">
       {serverError ? (
@@ -57,7 +80,7 @@ export const AdminBlogList = () => {
               <p>{emptyList}</p>
             </div>
           )}
-          {blogs.map((blog) => (
+          {filteredBlogs.map((blog) => (
             <Link
               key={blog.blogId}
               to={`/dashboard/admin/blog/detail/${blog.blogId}`}

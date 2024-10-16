@@ -12,11 +12,13 @@ import * as ProductService from "../../service/product/productService";
 import "../../styles/components/shop/shop.css";
 // import slice
 import { setQuantityItemInCart } from "../../redux/slices/navbar/navbar";
+
 export const Shoplist = ({
   isLoadingList,
   infinityScroll,
   isRow,
   isColumn,
+  filterOption,
 }) => {
   // navigate
   const navigate = useNavigate();
@@ -80,6 +82,7 @@ export const Shoplist = ({
       setServerError(null);
     }
   }, [isLoading, isFetching, cartInfo, isError]);
+
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -133,16 +136,34 @@ export const Shoplist = ({
       }
     }
   };
+
   const handleSearching = (e) => {
     setSearchData(e.target.value);
   };
+
+  const applyFilter = (products) => {
+    switch (filterOption) {
+      case "priceLowToHigh":
+        return [...products].sort((a, b) => a.unitPrice - b.unitPrice);
+      case "priceHighToLow":
+        return [...products].sort((a, b) => b.unitPrice - a.unitPrice);
+      default:
+        return products;
+    }
+  };
+
   const filteredProducts = cateId
-    ? productFromCate?.filter((product) =>
-        product?.productName.toLowerCase().includes(searchData.toLowerCase())
+    ? applyFilter(
+        productFromCate?.filter((product) =>
+          product?.productName.toLowerCase().includes(searchData.toLowerCase())
+        )
       )
-    : products?.filter((product) =>
-        product?.productName.toLowerCase().includes(searchData.toLowerCase())
+    : applyFilter(
+        products?.filter((product) =>
+          product?.productName.toLowerCase().includes(searchData.toLowerCase())
+        )
       );
+
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -150,6 +171,7 @@ export const Shoplist = ({
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
   return (
     <>
       {products.length === 0 ? (
@@ -205,156 +227,140 @@ export const Shoplist = ({
                   <>
                     {cateId ? (
                       <>
-                        {isColumn ? (
-                          <>
-                            <div className="shoplist-column">
-                              {filteredProducts
-                                .slice(0, infinityScroll)
-                                .map((product) => (
-                                  <div
-                                    className="shop-item"
-                                    key={product.productId}
+                        {isColumn && (
+                          <div className="shoplist-column">
+                            {filteredProducts
+                              .slice(0, infinityScroll)
+                              .map((product) => (
+                                <div
+                                  className="shop-item"
+                                  key={product.productId}
+                                >
+                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
                                   >
-                                    <img src={product.image} alt="image" />
+                                    {product.productName}
+                                  </Link>
+                                  <p>{formatPrice(product.unitPrice)}</p>
+                                  <div>
                                     <Link
-                                      to={`/productdetail/${product.productId}`}
+                                      className="buynow"
+                                      to={`/buynow/${product.productId}`}
                                     >
-                                      {product.productName}
+                                      Buy now
                                     </Link>
-                                    <p>{formatPrice(product.unitPrice)}</p>
-                                    <div>
-                                      <Link
-                                        className="buynow"
-                                        to={`/buynow/${product.productId}`}
-                                      >
-                                        Buy now
-                                      </Link>
-                                      <button
-                                        onClick={() => handleAddToCart(product)}
-                                      >
-                                        Add to cart
-                                      </button>
-                                    </div>
+                                    <button
+                                      onClick={() => handleAddToCart(product)}
+                                    >
+                                      Add to cart
+                                    </button>
                                   </div>
-                                ))}
-                            </div>
-                          </>
-                        ) : (
-                          ""
+                                </div>
+                              ))}
+                          </div>
                         )}
-                        {isRow ? (
-                          <>
-                            <div className="shoplist-row">
-                              {filteredProducts
-                                .slice(0, infinityScroll)
-                                .map((product) => (
-                                  <div
-                                    className="shop-item"
-                                    key={product.productId}
+                        {isRow && (
+                          <div className="shoplist-row">
+                            {filteredProducts
+                              .slice(0, infinityScroll)
+                              .map((product) => (
+                                <div
+                                  className="shop-item"
+                                  key={product.productId}
+                                >
+                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
                                   >
-                                    <img src={product.image} alt="image" />
+                                    {product.productName}
+                                  </Link>
+                                  <p>{formatPrice(product.unitPrice)}</p>
+                                  <div>
                                     <Link
-                                      to={`/productdetail/${product.productId}`}
+                                      className="buynow"
+                                      to={`/buynow/${product.productId}`}
                                     >
-                                      {product.productName}
+                                      Buy now
                                     </Link>
-                                    <p>{formatPrice(product.unitPrice)}</p>
-                                    <div>
-                                      <Link
-                                        className="buynow"
-                                        to={`/buynow/${product.productId}`}
-                                      >
-                                        Buy now
-                                      </Link>
-                                      <button
-                                        onClick={() => handleAddToCart(product)}
-                                      >
-                                        Add to cart
-                                      </button>
-                                    </div>
+                                    <button
+                                      onClick={() => handleAddToCart(product)}
+                                    >
+                                      Add to cart
+                                    </button>
                                   </div>
-                                ))}
-                            </div>
-                          </>
-                        ) : (
-                          ""
+                                </div>
+                              ))}
+                          </div>
                         )}
                       </>
                     ) : (
                       <>
-                        {isColumn ? (
-                          <>
-                            <div className="shoplist-column">
-                              {filteredProducts
-                                .slice(0, infinityScroll)
-                                .map((product) => (
-                                  <div
-                                    className="shop-item"
-                                    key={product.productId}
+                        {isColumn && (
+                          <div className="shoplist-column">
+                            {filteredProducts
+                              .slice(0, infinityScroll)
+                              .map((product) => (
+                                <div
+                                  className="shop-item"
+                                  key={product.productId}
+                                >
+                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
                                   >
-                                    <img src={product.image} alt="image" />
+                                    {product.productName}
+                                  </Link>
+                                  <p>{formatPrice(product.unitPrice)}</p>
+                                  <div>
                                     <Link
-                                      to={`/productdetail/${product.productId}`}
+                                      className="buynow"
+                                      to={`/buynow/${product.productId}`}
                                     >
-                                      {product.productName}
+                                      Buy now
                                     </Link>
-                                    <p>{formatPrice(product.unitPrice)}</p>
-                                    <div>
-                                      <Link
-                                        className="buynow"
-                                        to={`/buynow/${product.productId}`}
-                                      >
-                                        Buy now
-                                      </Link>
-                                      <button
-                                        onClick={() => handleAddToCart(product)}
-                                      >
-                                        Add to cart
-                                      </button>
-                                    </div>
+                                    <button
+                                      onClick={() => handleAddToCart(product)}
+                                    >
+                                      Add to cart
+                                    </button>
                                   </div>
-                                ))}
-                            </div>
-                          </>
-                        ) : (
-                          ""
+                                </div>
+                              ))}
+                          </div>
                         )}
-                        {isRow ? (
-                          <>
-                            <div className="shoplist-row">
-                              {filteredProducts
-                                .slice(0, infinityScroll)
-                                .map((product) => (
-                                  <div
-                                    className="shop-item"
-                                    key={product.productId}
+                        {isRow && (
+                          <div className="shoplist-row">
+                            {filteredProducts
+                              .slice(0, infinityScroll)
+                              .map((product) => (
+                                <div
+                                  className="shop-item"
+                                  key={product.productId}
+                                >
+                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
                                   >
-                                    <img src={product.image} alt="image" />
+                                    {product.productName}
+                                  </Link>
+                                  <p>{formatPrice(product.unitPrice)}</p>
+                                  <div>
                                     <Link
-                                      to={`/productdetail/${product.productId}`}
+                                      className="buynow"
+                                      to={`/buynow/${product.productId}`}
                                     >
-                                      {product.productName}
+                                      Buy now
                                     </Link>
-                                    <p>{formatPrice(product.unitPrice)}</p>
-                                    <div>
-                                      <Link
-                                        className="buynow"
-                                        to={`/buynow/${product.productId}`}
-                                      >
-                                        Buy now
-                                      </Link>
-                                      <button
-                                        onClick={() => handleAddToCart(product)}
-                                      >
-                                        Add to cart
-                                      </button>
-                                    </div>
+                                    <button
+                                      onClick={() => handleAddToCart(product)}
+                                    >
+                                      Add to cart
+                                    </button>
                                   </div>
-                                ))}
-                            </div>
-                          </>
-                        ) : (
-                          ""
+                                </div>
+                              ))}
+                          </div>
                         )}
                       </>
                     )}

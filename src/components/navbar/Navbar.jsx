@@ -12,8 +12,8 @@ import {
   toggleSettingNav,
 } from "../../redux/slices/navbar/navbar";
 // import service
-import * as CartService from "../../service/cart/cartService";
 import { scroller } from "react-scroll";
+import * as CartService from "../../service/cart/cartService";
 export const Navbar = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -145,7 +145,7 @@ export const Navbar = () => {
             <Link to="/shop">Shop</Link>
             <Link to="/#solution">Solutions</Link>
             <a href="">About</a>
-            <a href="">Contact</a>
+            <a href="/Contact">Contact</a>
             <Link to="/blog">Blog</Link>
           </div>
           <div className="navbar-second">

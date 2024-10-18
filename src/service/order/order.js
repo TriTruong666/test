@@ -46,3 +46,18 @@ export const getOwnOrders = async () => {
     return error;
   }
 };
+export const getOrderById = async (orderId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/order/${orderId}`;
+    const res = await axios.get(api, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.result;
+  } catch (error) {
+    return error.response.data;
+  }
+};

@@ -81,7 +81,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/myorder/detail",
+        path: "/dashboard/myorder/detail/:orderId",
         element: (
           <AuthWrapper allowedRoles={["USER"]}>
             <MyOrderDetail />
@@ -125,7 +125,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/admin/order/detail",
+        path: "/dashboard/admin/order/detail/:orderId",
         element: (
           <AuthWrapper allowedRoles={["ADMIN"]}>
             <AdminOrderDetail />

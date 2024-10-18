@@ -91,11 +91,19 @@
                         }
 
                         select {
-                            padding: 20px 60px;
+                            cursor: pointer;
+                            padding: 0 40px;
+                            // text-align: center;
 
                             option {
                                 font-family: $main-font;
+                                // text-align: center;
                             }
+                        }
+
+                        select:hover {
+                            background: rgba(255, 255, 255, .1);
+                            transition: .4s;
                         }
                     }
                 }

@@ -41,7 +41,7 @@ export const PaymentSuccess = () => {
   };
   const createOrder = async () => {
     try {
-      await mutation.mutateAsync(submitData);
+      await mutation.mutateAsync(submitData)
     } catch (error) {
       console.log(error);
     }

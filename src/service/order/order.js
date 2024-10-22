@@ -10,7 +10,8 @@ export const createInvoice = async (data) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return res.data.result.orders;
+    console.log(res.data)
+    return res.data.result.order;
   } catch (error) {
     console.log(error);
     return error;

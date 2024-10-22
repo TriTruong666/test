@@ -27,7 +27,6 @@ export const UpdateWater = () => {
     no3: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [isValidNumber, setIsValidNumber] = useState(false);
   // const query
   const {
     data: pondInfo = {},
@@ -97,9 +96,24 @@ export const UpdateWater = () => {
   const handleToggleUpdateWaterModal = () => {
     dispatch(toggleUpdateWaterModal());
   };
+  const handleInputFloatWater = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: parseFloat(value),
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isValidNumber) {
+    if (
+      isNaN(submitData.nh4) ||
+      isNaN(submitData.no2) ||
+      isNaN(submitData.no3) ||
+      isNaN(submitData.o2) ||
+      isNaN(submitData.ph) ||
+      isNaN(submitData.salt) ||
+      isNaN(submitData.temperature)
+    ) {
       toast.error("Invalid number, please enter a number", {
         position: "top-right",
         autoClose: 1500,
@@ -112,29 +126,34 @@ export const UpdateWater = () => {
       });
       return;
     }
-
+    if (
+      !submitData.nh4 ||
+      !submitData.nh4 ||
+      !submitData.nh4 ||
+      !submitData.nh4 ||
+      !submitData.nh4 ||
+      !submitData.nh4 ||
+      !submitData.nh4
+    ) {
+      toast.error("Fields is not empty", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {
       console.error(error);
     }
   };
-  const handleInputFloatWater = (e) => {
-    const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
-    setSubmitData({
-      ...submitData,
-      [name]: parseFloat(value),
-    });
-    setIsValidNumber(false);
-  };
+
   return (
     <div className="update-water-container">
       <ToastContainer />

@@ -86,8 +86,8 @@ export const AddKoi = () => {
           theme: "dark",
         });
         setTimeout(() => {
-          dispatch(toggleAddKoiModal());
           location.reload();
+          setIsPreventSubmit(false);
         }, 1500);
       }
       queryCilent.invalidateQueries({
@@ -149,6 +149,19 @@ export const AddKoi = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (isValidName) {
       toast.error("Koi name must at least 10 characters and not a number", {
         position: "top-right",

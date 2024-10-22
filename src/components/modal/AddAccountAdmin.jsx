@@ -73,6 +73,7 @@ export const AddAccountAdmin = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    // validate duplicate submit
     if (isPreventSubmit) {
       toast.error("On going process, try again later", {
         position: "top-right",
@@ -86,6 +87,7 @@ export const AddAccountAdmin = () => {
       });
       return;
     }
+    // validate empty fields
     if (!submitData.email || !submitData.fullname || !submitData.password) {
       toast.error("Please input all fields", {
         position: "top-right",

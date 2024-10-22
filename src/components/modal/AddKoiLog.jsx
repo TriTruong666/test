@@ -14,7 +14,7 @@ export const AddKoiLog = () => {
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
   // state
-  const [startDate, setStartDate] = useState(new Date());
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [invalidNumber, setInvalidNumber] = useState(null);
   const [submitData, setSubmitData] = useState({
     size: "",
@@ -28,6 +28,9 @@ export const AddKoiLog = () => {
   const mutation = useMutation({
     mutationKey: ["addKoiLog"],
     mutationFn: KoiLogService.addKoiLog,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Add successfully", {
         position: "top-right",

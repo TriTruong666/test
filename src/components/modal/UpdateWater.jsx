@@ -92,22 +92,24 @@ export const UpdateWater = () => {
       });
     },
   });
+
+  //   handle func
+  const handleToggleUpdateWaterModal = () => {
+    dispatch(toggleUpdateWaterModal());
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isValidNumber) {
-      toast.error(
-        "Invalid number, please enter a number or every params must < 10000",
-        {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
+      toast.error("Invalid number, please enter a number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
 
@@ -127,23 +129,11 @@ export const UpdateWater = () => {
       setIsValidNumber(true);
       return;
     }
-    if (value > 10000) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
     setIsValidNumber(false);
-  };
-  //   handle func
-  const handleToggleUpdateWaterModal = () => {
-    dispatch(toggleUpdateWaterModal());
   };
   return (
     <div className="update-water-container">

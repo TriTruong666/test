@@ -16,7 +16,6 @@ import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
 // import slices
-import { setQuantityItemInCart } from "../../redux/slices/navbar/navbar";
 
 // convert to plain text
 const stripHtmlTags = (html) => {
@@ -32,9 +31,9 @@ const stripHtmlTags = (html) => {
   });
   return doc.body.innerHTML;
 };
+
 export const ProductDetail = () => {
   // dispatch
-  const dispatch = useDispatch();
   // param
   const { productId } = useParams();
 
@@ -42,7 +41,6 @@ export const ProductDetail = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [cartId, setCartId] = useState(null);
   const numericProductId = parseInt(productId);
@@ -75,6 +73,7 @@ export const ProductDetail = () => {
       setServerError(null);
     }
   }, [isLoading, isFetching, isError, cartInfo]);
+
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -95,6 +94,7 @@ export const ProductDetail = () => {
       queryClient.invalidateQueries(["productDetail"]);
     },
   });
+
   const handleAddToCartMember = async (product) => {
     try {
       await mutation.mutateAsync({
@@ -106,25 +106,7 @@ export const ProductDetail = () => {
       console.error(error);
     }
   };
-  const handleAddToCartGuest = (product) => {
-    CartService.addToCartByGuest(product);
-    const guestCart = CartService.getCartByGuest() || [];
-    toast.success("Product added", {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    if (guestCart) {
-      guestCart.reduce((total, item) => {
-        dispatch(setQuantityItemInCart(total + item.quantity || 0));
-      }, 0);
-    }
-  };
+
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -132,6 +114,7 @@ export const ProductDetail = () => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
   return (
     <div className="product-detail-container">
       <ToastContainer />
@@ -140,11 +123,9 @@ export const ProductDetail = () => {
       <div className="product-detail">
         <div className="product-detail-main">
           {serverError ? (
-            <>
-              <div className="error-page">
-                <p>Server is closed now</p>
-              </div>
-            </>
+            <div className="error-page">
+              <p>Server is closed now</p>
+            </div>
           ) : (
             <>
               <img src={product.image} alt="" />
@@ -161,18 +142,10 @@ export const ProductDetail = () => {
                 />
                 <div>
                   <Link to={`/buynow/${productId}`}>BUY PRODUCT</Link>
-                  {token && user ? (
-                    <>
-                      <button onClick={() => handleAddToCartMember(product)}>
-                        ADD TO CART
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => handleAddToCartGuest(product)}>
-                        ADD TO CART
-                      </button>
-                    </>
+                  {token && user && (
+                    <button onClick={() => handleAddToCartMember(product)}>
+                      ADD TO CART
+                    </button>
                   )}
                 </div>
               </div>

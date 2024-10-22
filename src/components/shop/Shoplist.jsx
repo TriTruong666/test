@@ -31,7 +31,6 @@ export const Shoplist = ({
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [productFromCate, setProductFromCate] = useState([]);
@@ -62,11 +61,6 @@ export const Shoplist = ({
 
   // use effect
   useEffect(() => {
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }

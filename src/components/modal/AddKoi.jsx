@@ -29,6 +29,7 @@ export const AddKoi = () => {
   const { pondId } = useParams();
 
   // state
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
   const [isValidName, setIsValidName] = useState(false);
@@ -69,6 +70,9 @@ export const AddKoi = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationFn: KoiService.createKoiService,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: (responseData) => {
       if (responseData && responseData.code === "200") {
         toast.success("Create successfully", {

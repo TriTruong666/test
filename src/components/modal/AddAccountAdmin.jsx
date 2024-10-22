@@ -86,7 +86,7 @@ export const AddAccountAdmin = () => {
       });
       return;
     }
-    if (!submitData.email || !submitData.email || !submitData.email) {
+    if (!submitData.email || !submitData.fullname || !submitData.password) {
       toast.error("Please input all fields", {
         position: "top-right",
         autoClose: 5000,

@@ -16,6 +16,8 @@ export const AddPond = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.userId;
   // state
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
+
   const [previewImage, setPreviewImage] = useState(null);
   const [submitPondData, setSubmitPondData] = useState({
     pondName: "",
@@ -141,13 +143,6 @@ export const AddPond = () => {
     setIsValidName(false);
   };
 
-  const handleOnChangePond = (e) => {
-    const { name, value } = e.target;
-    setSubmitPondData({
-      ...submitPondData,
-      [name]: value,
-    });
-  };
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
     const numberRegex = /^\d+$/;
@@ -263,7 +258,7 @@ export const AddPond = () => {
     }
 
     if (
-      submitPondData.depth === null ||
+      submitPondData.depth === "" ||
       submitPondData.depth === undefined ||
       submitPondData.image === "" ||
       submitPondData.pondName === "" ||

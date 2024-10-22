@@ -40,7 +40,6 @@ export const AddPond = () => {
     pondId: "",
   });
 
-  const [isValidName, setIsValidName] = useState(false);
   // dispatch
   const dispatch = useDispatch();
   // mutation
@@ -120,27 +119,10 @@ export const AddPond = () => {
   };
   const handleOnChangeName = (e) => {
     const { name, value } = e.target;
-    if (!isNaN(value)) {
-      setSubmitPondData({
-        ...submitPondData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    if (value.length < 10) {
-      setSubmitPondData({
-        ...submitPondData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
     setSubmitPondData({
       ...submitPondData,
       [name]: value,
     });
-    setIsValidName(false);
   };
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
@@ -180,8 +162,22 @@ export const AddPond = () => {
       });
       return;
     }
-    if (isNaN(submitPondData.pumpPower) || isNaN(submitPondData.depth)) {
-      toast.error(" not a number", {
+
+    if (
+      isNaN(submitPondData.depth) ||
+      isNaN(submitPondData.pumpPower) ||
+      isNaN(submitPondData.size) ||
+      isNaN(submitPondData.vein) ||
+      isNaN(submitPondData.volume) ||
+      isNaN(submitWaterData.nh4) ||
+      isNaN(submitWaterData.no2) ||
+      isNaN(submitWaterData.no3) ||
+      isNaN(submitWaterData.o2) ||
+      isNaN(submitWaterData.ph) ||
+      isNaN(submitWaterData.salt) ||
+      isNaN(submitWaterData.temperature)
+    ) {
+      toast.error("Pond and water data fields must be a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -193,6 +189,7 @@ export const AddPond = () => {
       });
       return;
     }
+
     if (
       !submitPondData.depth ||
       !submitPondData.image ||

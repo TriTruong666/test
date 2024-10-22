@@ -27,6 +27,7 @@ export const UpdateWater = () => {
     no3: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   // const query
   const {
     data: pondInfo = {},
@@ -72,6 +73,9 @@ export const UpdateWater = () => {
         updateData
       );
     },
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Update successfully", {
         position: "top-right",
@@ -85,6 +89,7 @@ export const UpdateWater = () => {
       });
       setTimeout(() => {
         location.reload();
+        setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
         queryKey: ["update-water"],
@@ -105,6 +110,20 @@ export const UpdateWater = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     if (
       isNaN(submitData.nh4) ||
       isNaN(submitData.no2) ||
@@ -128,12 +147,12 @@ export const UpdateWater = () => {
     }
     if (
       !submitData.nh4 ||
-      !submitData.nh4 ||
-      !submitData.nh4 ||
-      !submitData.nh4 ||
-      !submitData.nh4 ||
-      !submitData.nh4 ||
-      !submitData.nh4
+      !submitData.no2 ||
+      !submitData.no3 ||
+      !submitData.o2 ||
+      !submitData.ph ||
+      !submitData.salt ||
+      !submitData.temperature
     ) {
       toast.error("Fields is not empty", {
         position: "top-right",

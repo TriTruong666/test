@@ -60,7 +60,6 @@ export const UpdateProduct = () => {
     status: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [isValidNumber, setIsValidNumber] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   useEffect(() => {
     if (isFetching || isLoading) {
@@ -147,36 +146,19 @@ export const UpdateProduct = () => {
   };
   const handleInputNumber = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
+
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
-    setIsValidNumber(false);
   };
   const handleInputFloat = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
 
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
-    setIsValidNumber(false);
   };
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -237,9 +219,8 @@ export const UpdateProduct = () => {
       });
       return;
     }
-    // number validation
-    if (isValidNumber) {
-      toast.error("Invalid number", {
+    if (isNaN(submitData.stock) || isNaN(submitData.unitprice)) {
+      toast.error("Stock and unit price must be a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

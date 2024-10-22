@@ -13,8 +13,7 @@ import {
 } from "../../redux/slices/modal/modal";
 import { setProductId } from "../../redux/slices/product/product";
 
-export const ProductList = ({ searchTerm }) => {
-  // Accept searchTerm as prop
+export const ProductList = ({ searchTerm, filterBy }) => {
   const dispatch = useDispatch();
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
@@ -46,10 +45,19 @@ export const ProductList = ({ searchTerm }) => {
     setIsLoadingPage(isFetching || isLoading);
   }, [isFetching, isLoading, isError]);
 
-  // Filter products based on searchTerm
+  // Filter and sort products based on searchTerm and filterBy
   const filteredProducts = products.filter((product) =>
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ).sort((a, b) => {
+    if (filterBy === "stock") {
+      return a.stock - b.stock;
+    } else if (filterBy === "name") {
+      return a.productName.localeCompare(b.productName);
+    } else if (filterBy === "price") {
+      return a.unitPrice - b.unitPrice;
+    }
+    return 0;
+  });
 
   const handleToggleUpdateProductModal = (id) => {
     dispatch(setProductId(id));
@@ -60,12 +68,14 @@ export const ProductList = ({ searchTerm }) => {
     dispatch(setProductId(id));
     dispatch(toggleDeleteProductModal());
   };
+
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
   return (
     <>
       <table className="product-list-table">

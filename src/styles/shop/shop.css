@@ -111,10 +111,15 @@ select option {
     font-weight: 400;
   }
   .shop-container .shop .shop-main .shop-main-header .header-filter select {
-    padding: 20px 60px;
+    cursor: pointer;
+    padding: 0 40px;
   }
   .shop-container .shop .shop-main .shop-main-header .header-filter select option {
     font-family: "Roboto Mono", monospace;
+  }
+  .shop-container .shop .shop-main .shop-main-header .header-filter select:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transition: 0.4s;
   }
   .shop-container .shop .shop-main .shop-main-list {
     width: 100%;

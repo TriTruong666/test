@@ -13,7 +13,8 @@ import { toggleAddProductModal } from "../../../redux/slices/modal/modal";
 
 export const AdminProductManage = () => {
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState(""); // New state for search
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState(""); // New state for filter
 
   const isToggleAddProductModal = useSelector(
     (state) => state.modal.addProductModal.isToggleModal
@@ -30,7 +31,11 @@ export const AdminProductManage = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value); // Update search term
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
   };
 
   return (
@@ -50,15 +55,15 @@ export const AdminProductManage = () => {
               type="text"
               placeholder="Search product..."
               value={searchTerm}
-              onChange={handleSearchChange} // Handle input change
+              onChange={handleSearchChange}
             />
           </div>
           <div className="filter">
-            <select name="" id="">
+            <select name="" id="" value={filterBy} onChange={handleFilterChange}>
               <option value="">Filter</option>
-              <option value="">By Status</option>
-              <option value="">By size</option>
-              <option value="">By Number of Koi</option>
+              <option value="stock">By Stock</option>
+              <option value="name">By Name</option>
+              <option value="price">By Price</option>
             </select>
             <i className="bx bx-chevron-down"></i>
           </div>
@@ -67,8 +72,7 @@ export const AdminProductManage = () => {
             <p>Create new product</p>
           </div>
         </div>
-        {/* Pass searchTerm to ProductList */}
-        <ProductList searchTerm={searchTerm} />
+        <ProductList searchTerm={searchTerm} filterBy={filterBy} />
       </div>
     </div>
   );

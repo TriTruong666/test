@@ -1,0 +1,121 @@
+@import "../../global/global.scss";
+@media only screen and (max-width: 1537px) {
+
+  .ContactUs-container {
+    position: relative;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: $main-color;
+
+  .contact {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  
+    &__container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  
+    &__background {
+      position: absolute;
+      inset: 0;
+      min-height: 100vh;
+    }
+  
+    &__content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+    }
+  
+    &__title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+  
+    &__description {
+      font-size: 1.125rem;
+      color: #e0e0e0;
+      margin-bottom: 2rem;
+    }
+  
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+  
+    &__form-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  
+    &__form-label-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ffffff;
+    }
+  
+    &__form-input {
+      padding: 0.75rem 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5rem;
+      color: #ffffff;
+      font-size: 1rem;
+  
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+  
+      &:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  
+    &__form-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #3498db;
+      color: #ffffff;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #2980b9;
+      }
+  
+      &:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+      }
+    }
+  
+    &__form-button-arrow {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+}
+}

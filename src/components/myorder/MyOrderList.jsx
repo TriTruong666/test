@@ -61,6 +61,12 @@ export const MyOrderList = () => {
       setEmptyList(null);
     }
   }, [isFetching, isLoading, isError]);
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(price);
   return (
     <div className="myorder-list">
       {isLoadingPage ? (
@@ -84,12 +90,15 @@ export const MyOrderList = () => {
       ) : (
         <>
           {myOrders.map((order) => (
-            <Link key={order.orders.orderId} to="/dashboard/myorder/detail">
+            <Link
+              key={order.orders.orderId}
+              to={`/dashboard/myorder/detail/${order.orders.orderId}`}
+            >
               <div>
                 <strong>My Order</strong>
                 <p>{order.orders.orderDetails.length} items</p>
               </div>
-              <p>$225.00</p>
+              <p>{formatPrice(order.orders.total)}</p>
               <span className={handleOrderStatusClassName(order.orders.status)}>
                 Status: {handleStatusTitle(order.orders.status)}
               </span>

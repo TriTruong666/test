@@ -36,6 +36,40 @@ select option {
     flex-direction: column;
     overflow-y: hidden;
   }
+  .my-order-detail-container .error-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .my-order-detail-container .error-page p {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .my-order-detail-container .not-found {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+  }
+  .my-order-detail-container .not-found h2 {
+    font-size: 1.5rem;
+  }
+  .my-order-detail-container .not-found p {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+  .my-order-detail-container .loading {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .my-order-detail-container .my-order-detail-header {
     padding: 25px 40px;
     display: flex;
@@ -49,9 +83,11 @@ select option {
     font-size: 0.75rem;
     padding: 5px 30px;
     border-radius: 15px;
-    background: rgba(129, 237, 136, 0.621);
     font-weight: 600;
-    color: rgb(17, 119, 26);
+  }
+  .my-order-detail-container .my-order-detail-header .pending {
+    background: rgba(231, 237, 129, 0.621);
+    color: rgb(116, 119, 17);
   }
   .my-order-detail-container .my-order-main {
     display: flex;

@@ -32,6 +32,7 @@ export const Shoplist = ({
   const userId = user?.userId || null;
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [productFromCate, setProductFromCate] = useState([]);
   const [cartId, setCartId] = useState(null);
@@ -69,17 +70,18 @@ export const Shoplist = ({
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }
+
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
     if (cateId) {
       setProductFromCate(
         Array.isArray(products?.products) ? products.products : []
       );
     } else {
-      setProductFromCate([]);
-    }
-    if (isError) {
-      setServerError("Server is closed now");
-    } else {
-      setServerError(null);
+      return;
     }
   }, [isLoading, isFetching, cartInfo, isError]);
 
@@ -89,6 +91,9 @@ export const Shoplist = ({
     mutationKey: ["add-item-to-cart"],
     mutationFn: ({ cartId, productId, quantity }) =>
       CartService.addToCartByMember(cartId, productId, quantity),
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Product added", {
         position: "top-center",
@@ -101,41 +106,29 @@ export const Shoplist = ({
         theme: "dark",
       });
       queryClient.invalidateQueries(["products"]);
+      setIsPreventSubmit(false);
     },
   });
+  const debounce = (func, delay) => {
+    let debounceTimer;
+    return (...args) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(this, args), delay);
+    };
+  };
 
   // handle func
-  const handleAddToCart = async (product) => {
-    if (user && token && cartId) {
-      try {
-        await mutation.mutateAsync({
-          cartId,
-          productId: product.productId,
-          quantity: 1,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      CartService.addToCartByGuest(product);
-      const guestCart = CartService.getCartByGuest() || [];
-      toast.success("Product added", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+  const handleAddToCart = debounce(async (product) => {
+    try {
+      await mutation.mutateAsync({
+        cartId,
+        productId: product.productId,
+        quantity: 1,
       });
-      if (guestCart) {
-        guestCart.reduce((total, item) => {
-          dispatch(setQuantityItemInCart(total + item.quantity || 0));
-        }, 0);
-      }
+    } catch (error) {
+      console.error(error);
     }
-  };
+  }, 100);
 
   const handleSearching = (e) => {
     setSearchData(e.target.value);
@@ -154,14 +147,22 @@ export const Shoplist = ({
 
   const filteredProducts = cateId
     ? applyFilter(
-        productFromCate?.filter((product) =>
-          product?.productName.toLowerCase().includes(searchData.toLowerCase())
-        )
+        Array.isArray(productFromCate)
+          ? productFromCate.filter((product) =>
+              product?.productName
+                .toLowerCase()
+                .includes(searchData.toLowerCase())
+            )
+          : []
       )
     : applyFilter(
-        products?.filter((product) =>
-          product?.productName.toLowerCase().includes(searchData.toLowerCase())
-        )
+        Array.isArray(products)
+          ? products.filter((product) =>
+              product?.productName
+                .toLowerCase()
+                .includes(searchData.toLowerCase())
+            )
+          : []
       );
 
   // calculator
@@ -251,6 +252,7 @@ export const Shoplist = ({
                                       Buy now
                                     </Link>
                                     <button
+                                      disabled={isPreventSubmit}
                                       onClick={() => handleAddToCart(product)}
                                     >
                                       Add to cart
@@ -284,6 +286,7 @@ export const Shoplist = ({
                                       Buy now
                                     </Link>
                                     <button
+                                      disabled={isPreventSubmit}
                                       onClick={() => handleAddToCart(product)}
                                     >
                                       Add to cart
@@ -320,6 +323,7 @@ export const Shoplist = ({
                                       Buy now
                                     </Link>
                                     <button
+                                      disabled={isPreventSubmit}
                                       onClick={() => handleAddToCart(product)}
                                     >
                                       Add to cart
@@ -353,6 +357,7 @@ export const Shoplist = ({
                                       Buy now
                                     </Link>
                                     <button
+                                      disabled={isPreventSubmit}
                                       onClick={() => handleAddToCart(product)}
                                     >
                                       Add to cart

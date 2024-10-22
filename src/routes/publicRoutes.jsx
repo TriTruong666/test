@@ -13,12 +13,13 @@ import { BlogDetail } from "../pages/public/BlogDetail";
 import { Buynow } from "../pages/public/Buynow";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
+import { ContactUs } from "../pages/public/ContactUs";
 import { NotFound } from "../pages/public/NotFound";
+import { PaymentFail } from "../pages/public/PaymentFail";
+import { PaymentSuccess } from "../pages/public/PaymentSuccess";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { PaymentSuccess } from "../pages/public/PaymentSuccess";
-import { PaymentFail } from "../pages/public/PaymentFail";
 import {
   LoggedWrapper,
   ResetPassWrapper,
@@ -101,6 +102,10 @@ export const publicRoutes = [
   {
     path: "/About",
     element: <About />,
+  },
+  {
+    path: "/Contact",
+    element: <ContactUs />,
   },
   {
     path: "/blogdetail/:blogId",

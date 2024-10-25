@@ -28,7 +28,7 @@ export const UpdatePond = () => {
   // dispatch
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState(null);
-  const [validNumber, setValidNumber] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: "",
     pondName: "",
@@ -44,6 +44,9 @@ export const UpdatePond = () => {
     mutationKey: ["update-pond", pondId],
     mutationFn: (updatedData) =>
       PondService.updatePondService(pondId, updatedData),
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Update successfully", {
         position: "top-right",
@@ -57,6 +60,7 @@ export const UpdatePond = () => {
       });
       setTimeout(() => {
         location.reload();
+        setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
         queryKey: ["update-pond"],
@@ -120,58 +124,65 @@ export const UpdatePond = () => {
   };
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setValidNumber(true);
-      return;
-    }
-
-    if (value > 10000) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setValidNumber(true);
-      return;
-    }
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
-    setValidNumber(false);
   };
   const handleInputFloatPond = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setValidNumber(true);
-      return;
-    }
-
-    if (value > 10000) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setValidNumber(true);
-      return;
-    }
-
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
-    setValidNumber(false);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!submitData.pondName || !submitData.image) {
+
+    // validate duplicate submit
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (
+      isNaN(submitData.depth) ||
+      isNaN(submitData.pumpPower) ||
+      isNaN(submitData.size) ||
+      isNaN(submitData.vein) ||
+      isNaN(submitData.volume)
+    ) {
+      toast.error("Depth, Pumppower, Size, Vein and volume must be a number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (
+      !submitData.pondName ||
+      !submitData.image ||
+      !submitData.depth ||
+      !submitData.pumpPower ||
+      !submitData.size ||
+      !submitData.vein ||
+      !submitData.volume
+    ) {
       toast.error("Please input all fields", {
         position: "top-right",
         autoClose: 1500,
@@ -184,19 +195,7 @@ export const UpdatePond = () => {
       });
       return;
     }
-    if (validNumber) {
-      toast.error("Invalid number", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
+
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {

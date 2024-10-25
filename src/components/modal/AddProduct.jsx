@@ -46,7 +46,6 @@ export const AddProduct = () => {
     categoryId: "",
     status: true,
   });
-  const [invalidNumber, setInvalidNumber] = useState(null);
   const [isValidName, setIsValidName] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
 
@@ -134,35 +133,19 @@ export const AddProduct = () => {
   };
   const handleInputNumber = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setInvalidNumber("Please input invalid number");
-      return;
-    }
+
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
-    setInvalidNumber(null);
   };
   const handleInputFloat = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setInvalidNumber("Please input invalid number");
-      return;
-    }
+
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
-    setInvalidNumber(null);
   };
 
   const handleOnChangeName = (e) => {
@@ -205,7 +188,7 @@ export const AddProduct = () => {
       });
       return;
     }
-    if (invalidNumber) {
+    if (isNaN(submitData.stock) || isNaN(submitData.unitprice)) {
       toast.error("Price and stock must be a number", {
         position: "top-right",
         autoClose: 5000,

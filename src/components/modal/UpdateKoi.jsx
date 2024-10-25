@@ -44,6 +44,7 @@ export const UpdateKoi = () => {
   });
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [selectedFlag, setSelectedFlag] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isValidName, setIsValidName] = useState(false);
@@ -100,6 +101,9 @@ export const UpdateKoi = () => {
     mutationKey: ["update-koi", koiId],
     mutationFn: (updateData) => {
       KoiService.updateKoiService(koiId, updateData);
+    },
+    onMutate: () => {
+      setIsPreventSubmit(true);
     },
     onSuccess: () => {
       toast.success("Update successfully", {
@@ -174,7 +178,28 @@ export const UpdateKoi = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!submitData.image || !submitData.name || !submitData.type) {
+    // validate duplicate submit
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (
+      !submitData.image ||
+      !submitData.name ||
+      !submitData.type ||
+      !submitData.origin ||
+      submitData.sex
+    ) {
       toast.error("Please input all fields", {
         position: "top-right",
         autoClose: 1500,

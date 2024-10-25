@@ -15,7 +15,6 @@ export const AddKoiLog = () => {
   const koiId = useSelector((state) => state.koi.koiId.koiId);
   // state
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
-  const [invalidNumber, setInvalidNumber] = useState(null);
   const [submitData, setSubmitData] = useState({
     size: "",
     weight: "",
@@ -44,6 +43,7 @@ export const AddKoiLog = () => {
       });
       setTimeout(() => {
         dispatch(toggleKoiLogModal());
+        setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries(["koi-detail"]);
     },
@@ -51,34 +51,29 @@ export const AddKoiLog = () => {
   //   handle func
   const handleInputFloatKoiLog = (e) => {
     const { name, value } = e.target;
-    const floatRegex = /^\d+(\.\d+)?$/;
-    if (!floatRegex.test(value)) {
-      setInvalidNumber("Please input a valid number.");
-      setSubmitData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-    const floatValue = parseFloat(value);
-    if (floatValue > 10000) {
-      setInvalidNumber("Number too large.");
-      setSubmitData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-    setSubmitData((prev) => ({
-      ...prev,
-      [name]: floatValue,
-    }));
-    setInvalidNumber(null);
+
+    setSubmitData({
+      ...submitData,
+      [name]: parseFloat(value),
+    });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (invalidNumber != null) {
-      toast.error(invalidNumber, {
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.size) || isNaN(submitData.weight)) {
+      toast.error("Koi's weight and size must be a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -92,10 +87,10 @@ export const AddKoiLog = () => {
     }
 
     if (
-      submitData.size === null ||
-      submitData.size === undefined ||
-      submitData.weight === null ||
-      submitData.weight === undefined
+      !submitData.size ||
+      !submitData.size ||
+      !submitData.weight ||
+      !submitData.weight
     ) {
       toast.error("All fields are required", {
         position: "top-right",

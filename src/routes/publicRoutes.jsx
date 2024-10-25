@@ -16,6 +16,7 @@ import { ContactUs } from "../pages/public/ContactUs";
 import { NotFound } from "../pages/public/NotFound";
 import { PaymentFail } from "../pages/public/PaymentFail";
 import { PaymentSuccess } from "../pages/public/PaymentSuccess";
+import { PaymentSuccessPaynow } from "../pages/public/PaymentSuccessPaynow";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
@@ -82,6 +83,10 @@ export const publicRoutes = [
   {
     path: "/payment/success",
     element: <PaymentSuccess />,
+  },
+  {
+    path: "/payment/successbuy",
+    element: <PaymentSuccessPaynow />,
   },
   {
     path: "/payment/cancel",

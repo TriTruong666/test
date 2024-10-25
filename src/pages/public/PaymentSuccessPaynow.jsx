@@ -7,21 +7,22 @@ import "../../styles/paymentsuccess/paymentsuccess.css";
 // import service
 import * as OrderService from "../../service/order/order";
 import ClipLoader from "react-spinners/ClipLoader";
-export const PaymentSuccess = () => {
+export const PaymentSuccessPaynow = () => {
   // navigation
   const navigate = useNavigate();
   //
-  const orderReq = JSON.parse(localStorage.getItem("orderReq"));
+  const orderReqBuy = JSON.parse(localStorage.getItem("orderReqBuy"));
   const urlParams = new URLSearchParams(window.location.search);
   const paymentId = urlParams.get("paymentId");
   // state
   const [submitData, setSubmitData] = useState({
-    fullname: orderReq.fullname || "",
-    email: orderReq.email || "",
-    phone: orderReq.phone || "",
-    address: orderReq.address || "",
-    total: orderReq.total || "",
-    cartId: orderReq.cartId || "",
+    fullname: orderReqBuy.fullname || "",
+    email: orderReqBuy.email || "",
+    phone: orderReqBuy.phone || "",
+    address: orderReqBuy.address || "",
+    total: orderReqBuy.total || "",
+    productId: orderReqBuy.productId || "",
+    quantity: orderReqBuy.quantity || "",
     paymentId: paymentId || "",
   });
   const [responseData, setResponseData] = useState(null);
@@ -30,7 +31,7 @@ export const PaymentSuccess = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["create-order"],
-    mutationFn: OrderService.createInvoice,
+    mutationFn: OrderService.createInvoiceBuyNow,
     onMutate: () => {
       setIsLoadingPage(true);
     },
@@ -53,19 +54,10 @@ export const PaymentSuccess = () => {
     }
   };
   useEffect(() => {
-    if (
-      !orderReq ||
-      !orderReq.fullname ||
-      !orderReq.cartId ||
-      !orderReq.total
-    ) {
-      navigate("/cart");
-    } else {
-      try {
-        createOrder();
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      createOrder();
+    } catch (error) {
+      console.log(error);
     }
   }, []);
   const formatPrice = (price) =>

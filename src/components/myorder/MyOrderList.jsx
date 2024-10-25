@@ -91,15 +91,15 @@ export const MyOrderList = () => {
         <>
           {myOrders.map((order) => (
             <Link
-              key={order.orders.orderId}
-              to={`/dashboard/myorder/detail/${order.orders.orderId}`}
+              key={order.order.orderId}
+              to={`/dashboard/myorder/detail/${order.order.orderId}`}
             >
               <div>
                 <strong>My Order</strong>
                 <p>{order.orders.orderDetails.length} items</p>
               </div>
-              <p>{formatPrice(order.orders.total)}</p>
-              <span className={handleOrderStatusClassName(order.orders.status)}>
+              <p>{formatPrice(order.order.total)}</p>
+              <span className={handleOrderStatusClassName(order.order.status)}>
                 Status: {handleStatusTitle(order.orders.status)}
               </span>
             </Link>

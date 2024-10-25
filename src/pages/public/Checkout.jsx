@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import SyncLoader from "react-spinners/SyncLoader";
 import { useNavigate } from "react-router-dom";
@@ -9,17 +8,11 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/checkout/checkout.css";
 // import components
 import { Checkoutnav } from "../../components/navbar/Checkoutnav";
-// import assets
-import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
-// import slices
-import { setOrderRequest } from "../../redux/slices/order/order";
 
 export const Checkout = () => {
-  // dispatch
-  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -44,7 +37,6 @@ export const Checkout = () => {
   const {
     data: cartData = {},
     isFetching,
-    isError,
     isLoading,
   } = useQuery({
     queryKey: ["my-cart", userId],

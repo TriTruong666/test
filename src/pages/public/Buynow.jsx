@@ -11,6 +11,7 @@ import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import service
 import * as ProductService from "../../service/product/productService";
 import * as PaypalService from "../../service/paypal/paypal";
+import SyncLoader from "react-spinners/SyncLoader";
 export const Buynow = () => {
   // param
   const { productId } = useParams();
@@ -52,7 +53,6 @@ export const Buynow = () => {
     },
     onSuccess: () => {
       setLoadingPayment(false);
-
       queryClient.invalidateQueries(["products"]);
     },
   });
@@ -125,6 +125,7 @@ export const Buynow = () => {
         ...submitData,
         total: totalPrice || "0",
       };
+      localStorage.setItem("orderReqBuy", JSON.stringify(updatedSubmitData));
       await mutation.mutateAsync(updatedSubmitData);
     } catch (error) {
       console.log(error);
@@ -132,6 +133,13 @@ export const Buynow = () => {
   };
   return (
     <div className="buynow-container">
+      {isLoadingPayment && (
+        <>
+          <div className="loading-payment">
+            <SyncLoader color="#ffffff" size={20} />
+          </div>
+        </>
+      )}
       <Checkoutnav />
       <div className="buynow">
         <div className="buynow-main">

@@ -59,11 +59,6 @@ export const ProductDetail = () => {
     queryFn: () => CartService.getCartByMember(userId),
   });
   useEffect(() => {
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }

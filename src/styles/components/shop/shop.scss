@@ -100,6 +100,16 @@
                     display: flex;
                     column-gap: 20px;
 
+                    .login-first {
+                        padding: 8px 30px;
+                        border-radius: 10px;
+                        background: $second-color;
+                        color: black;
+                        font-weight: 700;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
+                    }
+
                     .buynow {
                         display: flex;
                         align-items: center;
@@ -171,6 +181,16 @@
                 div {
                     display: flex;
                     column-gap: 20px;
+
+                    .login-first {
+                        padding: 8px 30px;
+                        border-radius: 10px;
+                        background: $second-color;
+                        color: black;
+                        font-weight: 700;
+                        font-family: $main-font;
+                        font-size: 0.8rem;
+                    }
 
                     .buynow {
                         display: flex;

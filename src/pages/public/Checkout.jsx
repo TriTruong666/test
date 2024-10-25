@@ -16,6 +16,7 @@ import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
 // import slices
 import { setOrderRequest } from "../../redux/slices/order/order";
+
 export const Checkout = () => {
   // dispatch
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export const Checkout = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+
   // state
   const [requiredField, setRequiredField] = useState(null);
   const [cartList, setCartList] = useState([]);
@@ -37,9 +39,7 @@ export const Checkout = () => {
     cartId: "",
     total: "",
   });
-  const [guestCartList, setGuestCartList] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
+
   // query
   const {
     data: cartData = {},
@@ -51,10 +51,11 @@ export const Checkout = () => {
     queryFn: () => CartService.getCartByMember(userId),
     refetchOnWindowFocus: false,
   });
+
   // mutation
   const queryClient = useQueryClient();
   const paypalMutation = useMutation({
-    mutationKey: ["paypal"],
+    mutationKey: ["checkout"],
     mutationFn: PaypalService.createPayment,
     onMutate: () => {
       setLoadingPayment(true);
@@ -64,6 +65,7 @@ export const Checkout = () => {
       queryClient.invalidateQueries(["my-cart"]);
     },
   });
+
   useEffect(() => {
     if (token && user) {
       setSubmitData({
@@ -86,11 +88,10 @@ export const Checkout = () => {
         }
       }
     } else {
-      if (guestCartList.length === 0) {
-        navigate("/shop");
-      }
+      navigate("/shop");
     }
   }, [isFetching, isLoading, cartData]);
+
   // handle func
   const handlePayNow = async () => {
     if (
@@ -104,8 +105,7 @@ export const Checkout = () => {
     }
     setRequiredField(null);
     try {
-      const totalPrice =
-        token && user ? calculateTotalPrice() : calculateTotalPriceGuest();
+      const totalPrice = calculateTotalPrice();
       const updatedSubmitData = {
         ...submitData,
         total: totalPrice || "0",
@@ -116,6 +116,7 @@ export const Checkout = () => {
       console.log(error);
     }
   };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -123,6 +124,7 @@ export const Checkout = () => {
       [name]: value,
     });
   };
+
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -130,19 +132,13 @@ export const Checkout = () => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
-  const calculateItemPrice = (unitPrice, quantity) => {
-    return unitPrice * quantity;
-  };
+
   const calculateTotalPrice = () => {
     return cartList.reduce((total, item) => {
       return total + item.product.unitPrice * item.quantity;
     }, 0);
   };
-  const calculateTotalPriceGuest = () => {
-    return guestCartList.reduce((total, item) => {
-      return total + item.unitPrice * item.quantity;
-    }, 0);
-  };
+
   return (
     <div className="checkout-container">
       {isLoadingPayment && (
@@ -206,92 +202,44 @@ export const Checkout = () => {
         </div>
         <div className="cart-review">
           {isLoadingPage ? (
-            <>
-              <div className="loading">
-                <ClipLoader color="#ffffff" size={40} />
-              </div>
-            </>
+            <div className="loading">
+              <ClipLoader color="#ffffff" size={40} />
+            </div>
           ) : (
             <>
-              {token && user ? (
-                <>
-                  <div className="cart-review-header">
-                    <h2>Review Your Cart</h2>
-                  </div>
-                  <div className="cart-list">
-                    {cartList.map((item) => (
-                      <div key={item.cartItemId} className="cart-item">
-                        <img src={item.product.image} alt="" />
-                        <div className="info">
-                          <div>
-                            <strong>{item.product.productName}</strong>
-                            <small>x{item.quantity}</small>
-                          </div>
-                          <p>{item.product.category.cateName}</p>
-
-                          <span>{formatPrice(item.product.unitPrice)}</span>
-                        </div>
+              <div className="cart-review-header">
+                <h2>Review Your Cart</h2>
+              </div>
+              <div className="cart-list">
+                {cartList.map((item) => (
+                  <div key={item.cartItemId} className="cart-item">
+                    <img src={item.product.image} alt="" />
+                    <div className="info">
+                      <div>
+                        <strong>{item.product.productName}</strong>
+                        <small>x{item.quantity}</small>
                       </div>
-                    ))}
-                  </div>
-                  <div className="cart-summary">
-                    <div className="summary-item">
-                      <p>Subtotal</p>
-                      <p>{formatPrice(calculateTotalPrice())}</p>
-                    </div>
-                    <div className="summary-item">
-                      <p>Shipping</p>
-                      <p>Free</p>
-                    </div>
-                    <div className="summary-total">
-                      <strong>Total</strong>
-                      <strong>{formatPrice(calculateTotalPrice())}</strong>
+                      <p>{item.product.category.cateName}</p>
+                      <span>{formatPrice(item.product.unitPrice)}</span>
                     </div>
                   </div>
-                  <Link onClick={handlePayNow}>Pay Now</Link>
-                </>
-              ) : (
-                <>
-                  <div className="cart-review-header">
-                    <h2>Review Your Cart</h2>
-                  </div>
-                  <div className="cart-list">
-                    {guestCartList.map((item) => (
-                      <div key={item.productId} className="cart-item">
-                        <img src={item.image} alt="" />
-                        <div className="info">
-                          <div>
-                            <strong>{item.productName}</strong>
-                            <small>x{item.quantity}</small>
-                          </div>
-                          <p>{item.category.cateName}</p>
-
-                          <span>
-                            {formatPrice(
-                              calculateItemPrice(item.unitPrice, item.quantity)
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="cart-summary">
-                    <div className="summary-item">
-                      <p>Subtotal</p>
-                      <p>{formatPrice(calculateTotalPriceGuest())}</p>
-                    </div>
-                    <div className="summary-item">
-                      <p>VAT</p>
-                      <p>20</p>
-                    </div>
-                    <div className="summary-total">
-                      <strong>Total</strong>
-                      <strong>{formatPrice(calculateTotalPriceGuest())}</strong>
-                    </div>
-                  </div>
-                  <Link to="/payment">Pay Now</Link>
-                </>
-              )}
+                ))}
+              </div>
+              <div className="cart-summary">
+                <div className="summary-item">
+                  <p>Subtotal</p>
+                  <p>{formatPrice(calculateTotalPrice())}</p>
+                </div>
+                <div className="summary-item">
+                  <p>Shipping</p>
+                  <p>Free</p>
+                </div>
+                <div className="summary-total">
+                  <strong>Total</strong>
+                  <strong>{formatPrice(calculateTotalPrice())}</strong>
+                </div>
+              </div>
+              <Link onClick={handlePayNow}>Pay Now</Link>
             </>
           )}
         </div>

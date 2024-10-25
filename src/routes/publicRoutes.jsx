@@ -1,4 +1,3 @@
-import React from "react";
 // import pages
 import { Homepage } from "../Homepage";
 import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
@@ -25,6 +24,7 @@ import {
   ResetPassWrapper,
   VerifyEmailForgetWrapper,
   VerifyEmailSignupWrapper,
+  GuestWrapper,
 } from "./LoggedWrapper";
 export const publicRoutes = [
   {
@@ -117,15 +117,27 @@ export const publicRoutes = [
   },
   {
     path: "/cart",
-    element: <Cart />,
+    element: (
+      <GuestWrapper>
+        <Cart />
+      </GuestWrapper>
+    ),
   },
   {
     path: "/checkout",
-    element: <Checkout />,
+    element: (
+      <GuestWrapper>
+        <Checkout />
+      </GuestWrapper>
+    ),
   },
   {
     path: "/buynow/:productId",
-    element: <Buynow />,
+    element: (
+      <GuestWrapper>
+        <Buynow />
+      </GuestWrapper>
+    ),
   },
   {
     path: "*",

@@ -8,8 +8,6 @@ import { useParams } from "react-router-dom";
 import "../../styles/buynow/buynow.css";
 // import components
 import { Checkoutnav } from "../../components/navbar/Checkoutnav";
-// import assets
-import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as ProductService from "../../service/product/productService";
 import * as PaypalService from "../../service/paypal/paypal";
@@ -23,11 +21,42 @@ export const Buynow = () => {
   const userId = user?.userId || null;
   //   state
   const [quantity, setQuantity] = useState(1);
+  const [requiredField, setRequiredField] = useState(null);
+  const [isLoadingPayment, setLoadingPayment] = useState(false);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [submitData, setSubmitData] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    address: "",
+    total: "",
+    productId: "",
+    quantity: "",
+  });
   // query
-  const { data: productInfo = {} } = useQuery({
+  const {
+    data: productInfo = {},
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["product-detail", productId],
     queryFn: () => ProductService.detailProductService(productId),
   });
+  //
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationKey: ["buynow"],
+    mutationFn: PaypalService.buyNow,
+    onMutate: () => {
+      setLoadingPayment(true);
+    },
+    onSuccess: () => {
+      setLoadingPayment(false);
+
+      queryClient.invalidateQueries(["products"]);
+    },
+  });
+  // handle func
   const handlePlus = () => {
     setQuantity(quantity + 1);
   };
@@ -38,6 +67,36 @@ export const Buynow = () => {
       setQuantity(quantity - 1);
     }
   };
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitData({
+      ...submitData,
+      [name]: value,
+    });
+  };
+  useEffect(() => {
+    if (token && user) {
+      setSubmitData({
+        ...submitData,
+        fullname: user.fullname || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        productId: productInfo.productId || "",
+        quantity: quantity || 1,
+      });
+    }
+    if (isFetching || isLoading) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+      setSubmitData({
+        ...submitData,
+        productId: productInfo.productId || "",
+        quantity: quantity || "",
+      });
+    }
+  }, [isLoading, isFetching, productInfo, quantity]);
   //   calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -47,6 +106,29 @@ export const Buynow = () => {
     }).format(price);
   const handleTotalPrice = (price, quantity) => {
     return price * quantity;
+  };
+  const handlePayNow = async (e) => {
+    e.preventDefault();
+    if (
+      !submitData.address ||
+      !submitData.email ||
+      !submitData.fullname ||
+      !submitData.phone
+    ) {
+      setRequiredField("You have to input all fields");
+      return;
+    }
+    setRequiredField(null);
+    try {
+      const totalPrice = handleTotalPrice(productInfo.unitPrice, quantity);
+      const updatedSubmitData = {
+        ...submitData,
+        total: totalPrice || "0",
+      };
+      await mutation.mutateAsync(updatedSubmitData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="buynow-container">
@@ -69,6 +151,7 @@ export const Buynow = () => {
                 name="fullname"
                 defaultValue={user.fullname || ""}
                 placeholder="Enter full name"
+                onChange={handleOnChange}
               />
             </div>
             <div className="input-item">
@@ -79,6 +162,7 @@ export const Buynow = () => {
                 defaultValue={user.email || ""}
                 name="email"
                 placeholder="Enter your email"
+                onChange={handleOnChange}
               />
             </div>
             <div className="input-item">
@@ -89,6 +173,7 @@ export const Buynow = () => {
                 defaultValue={user.phone || ""}
                 name="phone"
                 placeholder="Enter your phone number"
+                onChange={handleOnChange}
               />
             </div>
             <div className="input-item">
@@ -99,8 +184,10 @@ export const Buynow = () => {
                 name="address"
                 id="address"
                 placeholder="Enter your address"
+                onChange={handleOnChange}
               />
             </div>
+            {requiredField && <p className="error">{requiredField}</p>}
           </form>
         </div>
         <div className="cart-review">
@@ -145,7 +232,7 @@ export const Buynow = () => {
               </strong>
             </div>
           </div>
-          <Link to="/payment">Pay Now</Link>
+          <Link onClick={handlePayNow}>Pay Now</Link>
         </div>
       </div>
     </div>

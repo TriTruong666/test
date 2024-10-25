@@ -94,16 +94,10 @@ export const Navbar = () => {
       {token && user ? (
         <>
           <div className="navbar-main">
-            <Link to="/?section=contact">
-              <img src={logo} alt="" />
-            </Link>
-            <Link onClick={() => handleScrollTo("homepage")}>
-              What Is Izumiya?
-            </Link>
+            <img src={logo} alt="" onClick={() => navigate("/")} />
+            <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
-            <Link onClick={() => handleScrollTo("solutions")}>Solutions</Link>
-            <Link to="/About">About</Link>
-            <Link onClick={() => handleScrollTo("contact")}>Contact</Link>
+            <a href="">About</a>
             <Link to="/blog">Blog</Link>
           </div>
           {isAuth ? (
@@ -143,26 +137,10 @@ export const Navbar = () => {
             <img src={logo} alt="" onClick={() => navigate("/")} />
             <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
-            <Link to="/#solution">Solutions</Link>
             <a href="">About</a>
-            <a href="/Contact">Contact</a>
             <Link to="/blog">Blog</Link>
           </div>
           <div className="navbar-second">
-            {isEmptyCartGuest ? (
-              <>
-                <Link to="/cart">
-                  <i className="bx bx-cart"></i>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/cart">
-                  <i className="bx bxs-cart"></i>
-                  <p>{totalItemInCart}</p>
-                </Link>
-              </>
-            )}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>

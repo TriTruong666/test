@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { React, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,8 +9,6 @@ import * as CategoryService from "../../service/category/categoryService";
 import * as ProductService from "../../service/product/productService";
 // import styles
 import "../../styles/components/shop/shop.css";
-// import slice
-import { setQuantityItemInCart } from "../../redux/slices/navbar/navbar";
 
 export const Shoplist = ({
   isLoadingList,
@@ -20,12 +17,8 @@ export const Shoplist = ({
   isColumn,
   filterOption,
 }) => {
-  // navigate
-  const navigate = useNavigate();
   // param
   const { cateId } = useParams();
-  // dispatch
-  const dispatch = useDispatch();
   //
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -231,7 +224,11 @@ export const Shoplist = ({
                                   className="shop-item"
                                   key={product.productId}
                                 >
-                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
+                                  >
+                                    <img src={product.image} alt="image" />
+                                  </Link>
                                   <Link
                                     to={`/productdetail/${product.productId}`}
                                   >
@@ -239,18 +236,33 @@ export const Shoplist = ({
                                   </Link>
                                   <p>{formatPrice(product.unitPrice)}</p>
                                   <div>
-                                    <Link
-                                      className="buynow"
-                                      to={`/buynow/${product.productId}`}
-                                    >
-                                      Buy now
-                                    </Link>
-                                    <button
-                                      disabled={isPreventSubmit}
-                                      onClick={() => handleAddToCart(product)}
-                                    >
-                                      Add to cart
-                                    </button>
+                                    {user && token ? (
+                                      <>
+                                        <Link
+                                          className="buynow"
+                                          to={`/buynow/${product.productId}`}
+                                        >
+                                          Buy now
+                                        </Link>
+                                        <button
+                                          disabled={isPreventSubmit}
+                                          onClick={() =>
+                                            handleAddToCart(product)
+                                          }
+                                        >
+                                          Add to cart
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Link
+                                          className="login-first"
+                                          to="/login"
+                                        >
+                                          You have to login first
+                                        </Link>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -265,7 +277,11 @@ export const Shoplist = ({
                                   className="shop-item"
                                   key={product.productId}
                                 >
-                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
+                                  >
+                                    <img src={product.image} alt="image" />
+                                  </Link>
                                   <Link
                                     to={`/productdetail/${product.productId}`}
                                   >
@@ -273,18 +289,33 @@ export const Shoplist = ({
                                   </Link>
                                   <p>{formatPrice(product.unitPrice)}</p>
                                   <div>
-                                    <Link
-                                      className="buynow"
-                                      to={`/buynow/${product.productId}`}
-                                    >
-                                      Buy now
-                                    </Link>
-                                    <button
-                                      disabled={isPreventSubmit}
-                                      onClick={() => handleAddToCart(product)}
-                                    >
-                                      Add to cart
-                                    </button>
+                                    {user && token ? (
+                                      <>
+                                        <Link
+                                          className="buynow"
+                                          to={`/buynow/${product.productId}`}
+                                        >
+                                          Buy now
+                                        </Link>
+                                        <button
+                                          disabled={isPreventSubmit}
+                                          onClick={() =>
+                                            handleAddToCart(product)
+                                          }
+                                        >
+                                          Add to cart
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Link
+                                          className="login-first"
+                                          to="/login"
+                                        >
+                                          You have to login first
+                                        </Link>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -302,7 +333,11 @@ export const Shoplist = ({
                                   className="shop-item"
                                   key={product.productId}
                                 >
-                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
+                                  >
+                                    <img src={product.image} alt="image" />
+                                  </Link>
                                   <Link
                                     to={`/productdetail/${product.productId}`}
                                   >
@@ -310,18 +345,33 @@ export const Shoplist = ({
                                   </Link>
                                   <p>{formatPrice(product.unitPrice)}</p>
                                   <div>
-                                    <Link
-                                      className="buynow"
-                                      to={`/buynow/${product.productId}`}
-                                    >
-                                      Buy now
-                                    </Link>
-                                    <button
-                                      disabled={isPreventSubmit}
-                                      onClick={() => handleAddToCart(product)}
-                                    >
-                                      Add to cart
-                                    </button>
+                                    {user && token ? (
+                                      <>
+                                        <Link
+                                          className="buynow"
+                                          to={`/buynow/${product.productId}`}
+                                        >
+                                          Buy now
+                                        </Link>
+                                        <button
+                                          disabled={isPreventSubmit}
+                                          onClick={() =>
+                                            handleAddToCart(product)
+                                          }
+                                        >
+                                          Add to cart
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Link
+                                          className="login-first"
+                                          to="/login"
+                                        >
+                                          You have to login first
+                                        </Link>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -336,7 +386,11 @@ export const Shoplist = ({
                                   className="shop-item"
                                   key={product.productId}
                                 >
-                                  <img src={product.image} alt="image" />
+                                  <Link
+                                    to={`/productdetail/${product.productId}`}
+                                  >
+                                    <img src={product.image} alt="image" />
+                                  </Link>
                                   <Link
                                     to={`/productdetail/${product.productId}`}
                                   >
@@ -344,18 +398,33 @@ export const Shoplist = ({
                                   </Link>
                                   <p>{formatPrice(product.unitPrice)}</p>
                                   <div>
-                                    <Link
-                                      className="buynow"
-                                      to={`/buynow/${product.productId}`}
-                                    >
-                                      Buy now
-                                    </Link>
-                                    <button
-                                      disabled={isPreventSubmit}
-                                      onClick={() => handleAddToCart(product)}
-                                    >
-                                      Add to cart
-                                    </button>
+                                    {user && token ? (
+                                      <>
+                                        <Link
+                                          className="buynow"
+                                          to={`/buynow/${product.productId}`}
+                                        >
+                                          Buy now
+                                        </Link>
+                                        <button
+                                          disabled={isPreventSubmit}
+                                          onClick={() =>
+                                            handleAddToCart(product)
+                                          }
+                                        >
+                                          Add to cart
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Link
+                                          className="login-first"
+                                          to="/login"
+                                        >
+                                          You have to login first
+                                        </Link>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}

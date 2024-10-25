@@ -1,17 +1,29 @@
-import { faker } from "@faker-js/faker";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { Link } from "react-router-dom";
+// charts
 import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestSellerProducstsChart";
 import { TopUserContributorChart } from "../../../chart/adminSummaryCharts/TopUserContributorChart";
 import { Dashnav } from "../../../components/navbar/Dashnav";
+//services
+import * as UserService from "../../../service/account/AccountService";
 import * as BlogService from "../../../service/blog/blogService";
 import * as OrderService from "../../../service/order/order";
 import * as ProductService from "../../../service/product/productService";
+//img
+import adminImg from "../../../assets/kois.png";
+import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
 import "../../../styles/dashboard/adminsummary/adminsummary.css";
 
 export const Summary = () => {
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(price);
+
   const statusClassName = {
     pending: "pending",
     success: "success",
@@ -53,6 +65,12 @@ export const Summary = () => {
     queryFn: ProductService.getAllProductAdmin,
   });
 
+  //query
+  const { data: users = [] } = useQuery({
+    queryKey: ["all-users"],
+    queryFn: UserService.getUserListAdmin,
+  });
+
   // handle func
   const handleOrderStatusClassName = (status) => {
     if (status === "PENDING") {
@@ -83,124 +101,10 @@ export const Summary = () => {
     }
   }, [isLoading, isFetching]);
 
-  const formatPrice = (price) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(price);
-
   // calculate funcs
   const lowStockProducts = products
     .sort((a, b) => a.stock - b.stock)
     .slice(0, 5);
-
-  const bestSellerProducts = products
-    .map((product) => {
-      const totalQuantity = product.orderDetails.reduce(
-        (sum, detail) => sum + detail.quantity,
-        0
-      );
-      return { ...product, totalQuantity };
-    })
-    .sort((a, b) => b.totalQuantity - a.totalQuantity)
-    .slice(0, 5);
-
-  const userContributions = blogs.reduce((acc, blog) => {
-    acc[blog.fullname] = (acc[blog.fullname] || 0) + 1;
-    return acc;
-  }, {});
-
-  // Prepare the data for the donut chart
-  const topContributors = Object.entries(userContributions)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 5)
-    .map(([fullname, count]) => {
-      const firstName = fullname.split(" ")[0];
-      return { firstName, count };
-    });
-
-  const generateFakeRevenueData = () => {
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-      data.push({
-        date: faker.date.past().toLocaleDateString(),
-        revenue: faker.number.int({ min: 1000, max: 5000 }),
-        totalOrders: faker.number.int({ min: 10, max: 100 }),
-        newCustomers: faker.number.int({ min: 5, max: 50 }),
-        refund: faker.number.int({ min: 50, max: 500 }),
-      });
-    }
-    return data;
-  };
-
-  const chartData = generateFakeRevenueData();
-
-  const [revenueChartOptions, setRevenueChartOptions] = useState({
-    chart: {
-      type: "area",
-      id: "revenue-chart",
-      toolbar: {
-        show: false,
-      },
-      animations: {
-        enabled: true,
-        easing: "easeinout",
-        speed: 800,
-      },
-    },
-    xaxis: {
-      categories: chartData.map((data) => data.date),
-    },
-    colors: ["#00E396", "#0090FF", "#FF4560", "#775DD0"],
-    stroke: {
-      curve: "smooth",
-      width: 2,
-    },
-    grid: {
-      borderColor: "#f1f1f1",
-    },
-    tooltip: {
-      enabled: true,
-      theme: "dark",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    yaxis: [
-      {
-        title: {
-          text: "Revenue",
-        },
-      },
-      {
-        opposite: true,
-        title: {
-          text: "Total Orders / New Customers",
-        },
-      },
-    ],
-  });
-
-  const [revenueChartSeries, setRevenueChartSeries] = useState([
-    {
-      name: "Revenue",
-      data: chartData.map((data) => data.revenue),
-    },
-    {
-      name: "Total Orders",
-      data: chartData.map((data) => data.totalOrders),
-    },
-    {
-      name: "New Customers",
-      data: chartData.map((data) => data.newCustomers),
-    },
-    {
-      name: "Refund",
-      data: chartData.map((data) => data.refund),
-    },
-  ]);
-
   const [accountChartOptions, setAccountChartOptions] = useState({
     chart: {
       type: "pie",
@@ -221,12 +125,9 @@ export const Summary = () => {
       },
     ],
   });
-
   const [accountChartSeries, setAccountChartSeries] = useState([10, 30, 60]);
-
   const totalSales = orders.reduce((acc, order) => acc + order.order.total, 0);
   const formattedTotalSales = formatPrice(totalSales);
-
   return (
     <div className="admin-summary-container">
       <Dashnav />
@@ -236,13 +137,21 @@ export const Summary = () => {
         </div>
         <div className="section1">
           <div className="item">
-            <strong>Welcome admin</strong>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem,
-              minima aliquam totam sint cupiditate voluptas minus facere, veniam
-              quasi autem voluptates libero ea recusandae numquam suscipit
-              mollitia nam rem maiores.
-            </p>
+            <div className="item1">
+              <strong>Welcome admin</strong>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem,
+                minima aliquam totam sint cupiditate voluptas minus facere,
+                veniam quasi autem voluptates libero ea recusandae numquam
+                suscipit mollitia nam rem maiores.
+              </p>
+
+              <Link to={"https://www.facebook.com/"}>👉 FaceBook</Link>
+            </div>
+
+            <div className="item2">
+              <img src={adminImg} alt="admin profile pic" />
+            </div>
           </div>
           <div className="info">
             <div className="small-item">
@@ -263,17 +172,17 @@ export const Summary = () => {
         </div>
         <div className="section2">
           <div className="item">
-            <BestSellerProductsChart bestSellerProducts={bestSellerProducts} />
+            <BestSellerProductsChart products={products} />
           </div>
           <div className="item"></div>
           <div className="item">
-            <TopUserContributorChart topContributors={topContributors} />
+            <TopUserContributorChart blogs={blogs} />
           </div>
         </div>
         <div className="chart-container">
           <div className="charts">
             <div className="left-chart">
-              <h3>Account Distribution</h3>
+              <h3>Refund request</h3>
               <Chart
                 options={accountChartOptions}
                 series={accountChartSeries}
@@ -283,21 +192,14 @@ export const Summary = () => {
               />
             </div>
             <div className="right-chart">
-              <h3>Revenue</h3>
-              <Chart
-                options={revenueChartOptions}
-                series={revenueChartSeries}
-                type="area"
-                width="100%"
-                height="300"
-              />
+              <RevenueChart orders={orders} users={users} />
             </div>
           </div>
         </div>
 
         <div className="summary-bottom">
           <div className="left-bottom">
-            <strong>Recently orders</strong>
+            <strong>Recent orders</strong>
             <table>
               <thead>
                 <tr>
@@ -338,7 +240,7 @@ export const Summary = () => {
           </div>
 
           <div className="right-bottom">
-            <strong>Out of stock</strong>
+            <strong>Have less stocks</strong>
             <table>
               <thead>
                 <tr>

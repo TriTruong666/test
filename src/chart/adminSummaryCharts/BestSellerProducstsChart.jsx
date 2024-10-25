@@ -1,58 +1,52 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
-export const BestSellerProductsChart = ({ bestSellerProducts }) => {
+export const BestSellerProductsChart = ({ products }) => {
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: "bar",
       id: "best-seller-chart",
-      toolbar: {
-        show: true,
-      },
+      toolbar: { show: true },
     },
-    xaxis: {
-      categories: [],
-    },
+    xaxis: { categories: [] },
     colors: ["#FF5733"],
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "55%",
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    tooltip: {
-      enabled: true,
-      theme: "dark",
-    },
+    plotOptions: { bar: { horizontal: false, columnWidth: "55%" } },
+    dataLabels: { enabled: false },
+    tooltip: { enabled: true, theme: "dark" },
   });
 
   const [chartSeries, setChartSeries] = useState([]);
 
   useEffect(() => {
-    if (bestSellerProducts && bestSellerProducts.length > 0) {
-      const categories = bestSellerProducts.map(
-        (product) => product.productName
-      );
-      const data = bestSellerProducts.map((product) => product.totalQuantity);
+    if (products && products.length > 0) {
+      // Process products to get the best-selling ones
+      const bestSellerProducts = products
+        .map((product) => ({
+          ...product,
+          totalQuantity: product.orderDetails.reduce(
+            (sum, detail) => sum + detail.quantity,
+            0
+          ),
+        }))
+        .sort((a, b) => b.totalQuantity - a.totalQuantity)
+        .slice(0, 5);
 
+      // Set chart data
       setChartOptions((prevOptions) => ({
         ...prevOptions,
         xaxis: {
-          categories,
+          categories: bestSellerProducts.map((product) => product.productName),
         },
       }));
-
+      
       setChartSeries([
         {
           name: "Total Quantity Sold",
-          data,
+          data: bestSellerProducts.map((product) => product.totalQuantity),
         },
       ]);
     }
-  }, [bestSellerProducts]);
+  }, [products]);
 
   return (
     <>

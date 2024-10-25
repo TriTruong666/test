@@ -108,7 +108,7 @@ select option {
     padding: 0 40px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 200px;
+    height: 300px;
     -moz-column-gap: 25px;
          column-gap: 25px;
   }
@@ -128,7 +128,7 @@ select option {
     color: rgba(0, 0, 0, 0.9);
   }
   .admin-summary-container .summary .chart-container {
-    margin-top: 300px;
+    margin-top: 200px;
     padding: 0 40px;
   }
   .admin-summary-container .summary .chart-container .charts {
@@ -161,7 +161,7 @@ select option {
     font-size: 0.9rem;
   }
   .admin-summary-container .summary .summary-bottom {
-    margin-top: 50px;
+    margin-top: 30px;
     padding: 0 40px;
     display: flex;
     justify-content: space-between;
@@ -172,6 +172,7 @@ select option {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 15px;
     background: white;
+    margin-right: 10px;
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table {
     width: 100%;
@@ -185,6 +186,12 @@ select option {
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table th {
     background-color: #f4f4f4;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table span {
+    font-weight: 600;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .pending {
+    color: rgb(213, 213, 15);
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table button {
     background-color: #1e90ff;

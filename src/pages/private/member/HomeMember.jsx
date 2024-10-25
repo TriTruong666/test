@@ -92,7 +92,7 @@ export const HomeMember = () => {
       type: "bar",
       id: "blog-chart",
       toolbar: {
-        show: false,
+        show: true,
       },
     },
     xaxis: {

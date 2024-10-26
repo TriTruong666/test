@@ -78,9 +78,8 @@ export const MyOrderList = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
-  // Filter orders based on search term
   const filteredOrders = myOrders.filter((order) =>
-    order.order.orderId.toLowerCase().includes(searchTerm.toLowerCase())
+    order.order?.orderId?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -118,18 +117,18 @@ export const MyOrderList = () => {
             ) : (
               filteredOrders.map((order) => (
                 <Link
-                  key={order.order.orderId}
-                  to={`/dashboard/myorder/detail/${order.order.orderId}`}
+                  key={order.order?.orderId}
+                  to={`/dashboard/myorder/detail/${order.order?.orderId}`}
                 >
                   <div>
-                    <strong>{order.order.orderId}</strong>
-                    <p>{order.order.orderDetails.length} items</p>
+                    <strong>{order.order?.orderId}</strong>
+                    <p>{order.order?.orderDetails?.length || 0} items</p>
                   </div>
-                  <p>{formatPrice(order.order.total)}</p>
+                  <p>{formatPrice(order.order?.total || 0)}</p>
                   <span
-                    className={handleOrderStatusClassName(order.order.status)}
+                    className={handleOrderStatusClassName(order.order?.status)}
                   >
-                    Status: {handleStatusTitle(order.order.status)}
+                    Status: {handleStatusTitle(order.order?.status)}
                   </span>
                 </Link>
               ))

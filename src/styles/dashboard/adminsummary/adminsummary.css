@@ -158,7 +158,7 @@ select option {
     text-align: center;
   }
   .admin-summary-container .summary .chart-container {
-    margin-top: 200px;
+    margin-top: 150px;
     padding: 0 40px;
   }
   .admin-summary-container .summary .chart-container .charts {
@@ -206,6 +206,11 @@ select option {
     background: white;
     margin-right: 10px;
   }
+  .admin-summary-container .summary .summary-bottom .left-bottom strong {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+    text-align: center;
+  }
   .admin-summary-container .summary .summary-bottom .left-bottom table {
     width: 100%;
     border-collapse: collapse;
@@ -238,6 +243,11 @@ select option {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 15px;
     background: white;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom strong {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+    text-align: center;
   }
   .admin-summary-container .summary .summary-bottom .right-bottom table {
     width: 100%;

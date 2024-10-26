@@ -7,13 +7,14 @@ import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestS
 import { TopUserContributorChart } from "../../../chart/adminSummaryCharts/TopUserContributorChart";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 //services
+import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
 import * as UserService from "../../../service/account/AccountService";
 import * as BlogService from "../../../service/blog/blogService";
 import * as OrderService from "../../../service/order/order";
 import * as ProductService from "../../../service/product/productService";
 //img
 import adminImg from "../../../assets/kois.png";
-import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
+//styles
 import "../../../styles/dashboard/adminsummary/adminsummary.css";
 
 export const Summary = () => {

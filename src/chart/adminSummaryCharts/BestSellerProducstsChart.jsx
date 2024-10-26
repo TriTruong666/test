@@ -39,7 +39,9 @@ export const BestSellerProductsChart = ({ products }) => {
       setChartOptions((prevOptions) => ({
         ...prevOptions,
         xaxis: {
-          categories: bestSellerProducts.map((product) => product.productName),
+          categories: bestSellerProducts.map(
+            (product) => product.productName.split(" ")[0]
+          ),
         },
       }));
 

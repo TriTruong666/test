@@ -2,13 +2,35 @@ import React from "react";
 import Chart from "react-apexcharts";
 
 export const TotalOrdersPrice = ({ orders }) => {
-  const dates = orders.map((order) =>
-    new Date(order.order.createDate).toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-    })
-  );
-  const totals = orders.map((order) => order.order.total);
+  // Helper function to group orders by date and sum totals
+  const getDailyTotals = () => {
+    const dailyTotals = {};
+
+    // Grouping orders by date
+    orders.forEach((order) => {
+      const dateKey = new Date(order.order.createDate).toLocaleDateString(
+        "en-US",
+        {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }
+      );
+      dailyTotals[dateKey] = (dailyTotals[dateKey] || 0) + order.order.total;
+    });
+
+    // Convert grouped data into sorted arrays
+    const sortedDates = Object.keys(dailyTotals).sort(
+      (a, b) => new Date(a) - new Date(b)
+    );
+
+    return {
+      dates: sortedDates,
+      totals: sortedDates.map((date) => dailyTotals[date]),
+    };
+  };
+
+  const { dates, totals } = getDailyTotals();
 
   const options = {
     chart: {
@@ -25,7 +47,7 @@ export const TotalOrdersPrice = ({ orders }) => {
     xaxis: {
       categories: dates,
       title: {
-        text: "Date (Day/Month)",
+        text: "Date (Day/Month/Year)",
       },
     },
     yaxis: {
@@ -38,6 +60,11 @@ export const TotalOrdersPrice = ({ orders }) => {
     },
     stroke: {
       curve: "smooth",
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yyyy",
+      },
     },
   };
 

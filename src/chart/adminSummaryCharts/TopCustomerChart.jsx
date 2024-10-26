@@ -41,7 +41,6 @@ export const TopCustomerChart = ({ users, orders }) => {
 
   const { names, quantities } = getTopCustomers();
 
-  // Step 2: Define bar chart options
   const chartOptions = {
     chart: {
       id: "top-customers-bar-chart",
@@ -55,15 +54,13 @@ export const TopCustomerChart = ({ users, orders }) => {
     },
     xaxis: {
       categories: names,
-
       labels: {
         rotate: -45,
         rotateAlways: true,
       },
     },
     yaxis: {
-      title: { text: "Total Products Bought" },
-      min: 0,
+      min: 1,
     },
     tooltip: {
       enabled: true,
@@ -77,6 +74,12 @@ export const TopCustomerChart = ({ users, orders }) => {
     },
     dataLabels: {
       enabled: true,
+    },
+    plotOptions: {
+      bar: {
+        // Adjust bar width based on the number of users
+        columnWidth: names.length < 5 ? `${100 / names.length}%` : "70%",
+      },
     },
   };
 
@@ -92,7 +95,7 @@ export const TopCustomerChart = ({ users, orders }) => {
       options={chartOptions}
       series={chartSeries}
       type="bar"
-      height={350}
+      height="350"
       width="100%"
     />
   );

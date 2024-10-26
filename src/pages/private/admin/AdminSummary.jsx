@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 // charts
 import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestSellerProducstsChart";
 import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
+import { TopCustomerChart } from "../../../chart/adminSummaryCharts/TopCustomerChart";
 import { TopUserContributorChart } from "../../../chart/adminSummaryCharts/TopUserContributorChart";
+import { TotalOrdersPrice } from "../../../chart/adminSummaryCharts/TotalOrdersPrice";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 //services
 import * as UserService from "../../../service/account/AccountService";
@@ -14,8 +16,7 @@ import * as ProductService from "../../../service/product/productService";
 //img
 import adminImg from "../../../assets/kois.png";
 //styles
-import { TopCustomerChart } from "../../../chart/adminSummaryCharts/TopCustomerChart";
-import { TotalOrdersPrice } from "../../../chart/adminSummaryCharts/TotalOrdersPrice";
+
 import "../../../styles/dashboard/adminsummary/adminsummary.css";
 
 export const Summary = () => {

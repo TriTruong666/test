@@ -5,7 +5,7 @@ export const TopUserContributorChart = ({ blogs }) => {
   const [chartOptions, setChartOptions] = useState({
     chart: { type: "donut" },
     title: {
-      text: "Top User contributes Blogs",
+      text: "Top User Contributes Blogs",
       align: "center",
     },
     labels: [],
@@ -17,7 +17,10 @@ export const TopUserContributorChart = ({ blogs }) => {
 
   useEffect(() => {
     if (blogs && blogs.length > 0) {
-      const userContributions = blogs.reduce((acc, blog) => {
+      // Filter out blogs contributed by admin users
+      const validBlogs = blogs.filter((blog) => blog.role !== "ADMIN");
+
+      const userContributions = validBlogs.reduce((acc, blog) => {
         acc[blog.fullname] = (acc[blog.fullname] || 0) + 1;
         return acc;
       }, {});

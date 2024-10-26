@@ -4,11 +4,15 @@ import Chart from "react-apexcharts";
 export const TopUserContributorChart = ({ blogs }) => {
   const [chartOptions, setChartOptions] = useState({
     chart: { type: "donut" },
+    title: {
+      text: "Top User contributes Blogs",
+      align: "center",
+    },
     labels: [],
     colors: ["#FF4500", "#32CD32", "#1E90FF", "#FFD700", "#FF6347"],
     tooltip: { enabled: true, theme: "dark" },
   });
-  
+
   const [chartSeries, setChartSeries] = useState([]);
 
   useEffect(() => {
@@ -26,7 +30,9 @@ export const TopUserContributorChart = ({ blogs }) => {
           return { firstName, count };
         });
 
-      const labels = topContributors.map((contributor) => contributor.firstName);
+      const labels = topContributors.map(
+        (contributor) => contributor.firstName
+      );
       const series = topContributors.map((contributor) => contributor.count);
 
       setChartOptions((prevOptions) => ({ ...prevOptions, labels }));
@@ -36,7 +42,6 @@ export const TopUserContributorChart = ({ blogs }) => {
 
   return (
     <>
-      <strong>Top User Blogs</strong>
       <Chart
         options={chartOptions}
         series={chartSeries}

@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import Chart from "react-apexcharts";
 import { Link } from "react-router-dom";
 // charts
 import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestSellerProducstsChart";
+import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
 import { TopUserContributorChart } from "../../../chart/adminSummaryCharts/TopUserContributorChart";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 //services
-import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
 import * as UserService from "../../../service/account/AccountService";
 import * as BlogService from "../../../service/blog/blogService";
 import * as OrderService from "../../../service/order/order";
@@ -15,6 +14,8 @@ import * as ProductService from "../../../service/product/productService";
 //img
 import adminImg from "../../../assets/kois.png";
 //styles
+import { TopCustomerChart } from "../../../chart/adminSummaryCharts/TopCustomerChart";
+import { TotalOrdersPrice } from "../../../chart/adminSummaryCharts/TotalOrdersPrice";
 import "../../../styles/dashboard/adminsummary/adminsummary.css";
 
 export const Summary = () => {
@@ -104,29 +105,9 @@ export const Summary = () => {
 
   // calculate funcs
   const lowStockProducts = products
+    .filter((product) => product.stock < 50)
     .sort((a, b) => a.stock - b.stock)
     .slice(0, 5);
-  const [accountChartOptions, setAccountChartOptions] = useState({
-    chart: {
-      type: "pie",
-    },
-    labels: ["Admin", "Member", "Guest"],
-    colors: ["#1E90FF", "#32CD32", "#FF6347"],
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 150,
-          },
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
-    ],
-  });
-  const [accountChartSeries, setAccountChartSeries] = useState([10, 30, 60]);
   const totalSales = orders.reduce((acc, order) => acc + order.order.total, 0);
   const formattedTotalSales = formatPrice(totalSales);
   return (
@@ -175,7 +156,9 @@ export const Summary = () => {
           <div className="item">
             <BestSellerProductsChart products={products} />
           </div>
-          <div className="item"></div>
+          <div className="item">
+            <TopCustomerChart orders={orders} users={users} />
+          </div>
           <div className="item">
             <TopUserContributorChart blogs={blogs} />
           </div>
@@ -183,14 +166,7 @@ export const Summary = () => {
         <div className="chart-container">
           <div className="charts">
             <div className="left-chart">
-              <h3>Refund request</h3>
-              <Chart
-                options={accountChartOptions}
-                series={accountChartSeries}
-                type="pie"
-                width="100%"
-                height="300"
-              />
+              <TotalOrdersPrice orders={orders} />
             </div>
             <div className="right-chart">
               <RevenueChart orders={orders} users={users} />
@@ -242,22 +218,26 @@ export const Summary = () => {
 
           <div className="right-bottom">
             <strong>Have less stocks</strong>
-            <table>
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Stocks</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lowStockProducts.map((product) => (
-                  <tr key={products.productId}>
-                    <td>{product.productName}</td>
-                    <td>{product.stock}</td>
+            {lowStockProducts.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Stocks</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {lowStockProducts.map((product) => (
+                    <tr key={product.productId}>
+                      <td>{product.productName}</td>
+                      <td>{product.stock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No products have less in stock</p>
+            )}
           </div>
         </div>
       </div>

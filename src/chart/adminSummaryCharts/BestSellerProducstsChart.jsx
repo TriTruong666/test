@@ -8,6 +8,10 @@ export const BestSellerProductsChart = ({ products }) => {
       id: "best-seller-chart",
       toolbar: { show: true },
     },
+    title: {
+      text: "Top 5 best seller products",
+      align: "center",
+    },
     xaxis: { categories: [] },
     colors: ["#FF5733"],
     plotOptions: { bar: { horizontal: false, columnWidth: "55%" } },
@@ -23,7 +27,7 @@ export const BestSellerProductsChart = ({ products }) => {
       const bestSellerProducts = products
         .map((product) => ({
           ...product,
-          totalQuantity: product.orderDetails.reduce(
+          totalQuantity: (product.orderDetails || []).reduce(
             (sum, detail) => sum + detail.quantity,
             0
           ),
@@ -38,7 +42,7 @@ export const BestSellerProductsChart = ({ products }) => {
           categories: bestSellerProducts.map((product) => product.productName),
         },
       }));
-      
+
       setChartSeries([
         {
           name: "Total Quantity Sold",
@@ -50,7 +54,6 @@ export const BestSellerProductsChart = ({ products }) => {
 
   return (
     <>
-      <strong>Best Seller Products</strong>
       <Chart
         options={chartOptions}
         series={chartSeries}

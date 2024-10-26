@@ -180,10 +180,14 @@
           border-radius: 15px;
           background: white;
           margin-right: 10px;
+
           strong {
             font-size: 0.9rem;
             color: $fade-black;
+            align-items: center;
             text-align: center;
+            justify-content: center;
+            margin-bottom: 10px;
           }
           table {
             width: 100%;
@@ -228,6 +232,7 @@
             font-size: 0.9rem;
             color: $fade-black;
             text-align: center;
+            margin-bottom: 10px;
           }
           table {
             width: 100%;

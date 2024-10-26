@@ -209,7 +209,10 @@ select option {
   .admin-summary-container .summary .summary-bottom .left-bottom strong {
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.9);
+    align-items: center;
     text-align: center;
+    justify-content: center;
+    margin-bottom: 10px;
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table {
     width: 100%;
@@ -248,6 +251,7 @@ select option {
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.9);
     text-align: center;
+    margin-bottom: 10px;
   }
   .admin-summary-container .summary .summary-bottom .right-bottom table {
     width: 100%;

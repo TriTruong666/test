@@ -79,16 +79,16 @@ export const AdminOrderList = () => {
         <>
           {orders.map((order) => (
             <Link
-              key={order.orders.orderId}
-              to={`/dashboard/admin/order/detail/${order.orders.orderId}`}
+              key={order.order.orderId}
+              to={`/dashboard/admin/order/detail/${order.order.orderId}`}
             >
               <div>
-                <strong>{order.orders.fullname}'s Order</strong>
-                <p>{order.orders.orderDetails.length} items</p>
+                <strong>{order.order.fullname}'s Order</strong>
+                <p>{order.order.orderDetails.length} items</p>
               </div>
-              <p>{formatPrice(order.orders.total)}</p>
-              <span className={handleOrderStatusClassName(order.orders.status)}>
-                Status: {handleStatusTitle(order.orders.status)}
+              <p>{formatPrice(order.order.total)}</p>
+              <span className={handleOrderStatusClassName(order.order.status)}>
+                Status: {handleStatusTitle(order.order.status)}
               </span>
             </Link>
           ))}

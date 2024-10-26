@@ -38,3 +38,48 @@ export const buyNow = async (data) => {
     return error;
   }
 };
+export const successOrder = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/payment/capture";
+    const res = await axios.post(api, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const rejectOrder = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/payment/void";
+    const res = await axios.post(api, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const refundOrder = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = "http://localhost:8080/refund/create";
+    const res = await axios.post(api, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

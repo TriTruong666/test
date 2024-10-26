@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 // import styles
 import "../../../styles/dashboard/myorderdetail/myorderdetail.css";
 // import slices
-import { toggleCancelMyOrderModal } from "../../../redux/slices/modal/modal";
+import { toggleRejectOrderModal } from "../../../redux/slices/modal/modal";
+import { setPaymentId } from "../../../redux/slices/order/order";
 // import redux
 import { useDispatch } from "react-redux";
 // import service
@@ -37,8 +38,9 @@ export const MyOrderDetail = () => {
     queryFn: () => OrderService.getOrderById(orderId),
   });
   // handle func
-  const handleToggleCancelMyOrderModal = () => {
-    dispatch(toggleCancelMyOrderModal());
+  const handleToggleCancelMyOrderModal = (paymentId) => {
+    dispatch(setPaymentId(paymentId));
+    dispatch(toggleRejectOrderModal());
   };
   useEffect(() => {
     if (isLoading || isFetching) {
@@ -167,7 +169,12 @@ export const MyOrderDetail = () => {
                 </div>
               </div>
             </div>
-            <button className="cancel" onClick={handleToggleCancelMyOrderModal}>
+            <button
+              className="cancel"
+              onClick={() =>
+                handleToggleCancelMyOrderModal(orderInfo.paymentId)
+              }
+            >
               Cancel this order
             </button>
           </div>

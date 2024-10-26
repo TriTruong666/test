@@ -63,7 +63,7 @@ export const UpdatePond = () => {
         setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["update-pond"],
+        queryKey: ["ponds"],
       });
     },
   });
@@ -316,7 +316,7 @@ export const UpdatePond = () => {
 
           <div className="submit">
             <button onClick={handleToggleUpdatePondModal}>Cancel</button>
-            <button>Create confirm</button>
+            <button>Update confirm</button>
           </div>
         </form>
       </div>

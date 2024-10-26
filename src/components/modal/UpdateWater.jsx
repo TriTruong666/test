@@ -92,7 +92,7 @@ export const UpdateWater = () => {
         setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["update-water"],
+        queryKey: ["pond-detail"],
       });
     },
   });

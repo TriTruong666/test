@@ -32,7 +32,6 @@ export const AddKoi = () => {
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFlag, setSelectedFlag] = useState("");
-  const [isValidName, setIsValidName] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [submitData, setSubmitData] = useState({
     name: "",
@@ -114,31 +113,6 @@ export const AddKoi = () => {
     }));
   };
 
-  const handleOnChangeName = (e) => {
-    const { name, value } = e.target;
-    if (!isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    if (value.length < 10) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    setSubmitData({
-      ...submitData,
-      [name]: value,
-    });
-    setIsValidName(false);
-  };
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -162,27 +136,22 @@ export const AddKoi = () => {
       });
       return;
     }
-    if (isValidName) {
-      toast.error("Koi name must at least 10 characters and not a number", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
+    const updatedCreateDate = submitData.createDate
+      ? submitData.createDate
+      : new Date().toISOString().split("T")[0];
+
+    const updatedSubmitData = {
+      ...submitData,
+      createDate: updatedCreateDate,
+    };
     if (
-      !submitData.image ||
-      !submitData.name ||
-      !submitData.origin ||
-      !submitData.pondId ||
-      !submitData.sex ||
-      !submitData.type ||
-      !submitData.createDate
+      !updatedSubmitData.image ||
+      !updatedSubmitData.name ||
+      !updatedSubmitData.origin ||
+      !updatedSubmitData.pondId ||
+      !updatedSubmitData.sex ||
+      !updatedSubmitData.type ||
+      !updatedSubmitData.createDate
     ) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -196,8 +165,9 @@ export const AddKoi = () => {
       });
       return;
     }
+
     try {
-      await mutation.mutateAsync(submitData);
+      await mutation.mutateAsync(updatedSubmitData);
     } catch (error) {
       console.error(error);
     }
@@ -243,7 +213,7 @@ export const AddKoi = () => {
               type="text"
               id="koiname"
               placeholder="Koi name"
-              onChange={handleOnChangeName}
+              onChange={handleOnChange}
               name="name"
             />
           </div>

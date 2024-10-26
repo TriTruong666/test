@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 export const OrderManage = () => {
   // selector
   const isToggleCancelMyOrderModal = useSelector(
-    (state) => state.modal.cancelMyOrderModal.isToggleModal
+    (state) => state.modal.rejectOrderModal.isToggleModal
   );
   return (
     <div className="order-manage-container">
@@ -21,27 +21,8 @@ export const OrderManage = () => {
         <div className="order-manage-header">
           <strong>My Order</strong>
         </div>
-        <div className="order-manage-utils">
-          <div className="search-order">
-            <i className="bx bx-search"></i>
-            <input type="text" placeholder="Search order..." />
-          </div>
-          <div className="filter">
-            <select name="" id="">
-              <option value="">Filter</option>
-              <option value="">By Date</option>
-              <option value="">By Price</option>
-              <option value="">By Number of Items</option>
-            </select>
-            <i className="bx bx-chevron-down"></i>
-          </div>
-        </div>
         <MyOrderList />
       </div>
-      {/* <div className="my-order-empty">
-        <strong>No order was selected</strong>
-        <p>You can click to a order to see detail</p>
-      </div> */}
       <Outlet />
     </div>
   );

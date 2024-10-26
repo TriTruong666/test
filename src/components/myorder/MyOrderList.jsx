@@ -6,6 +6,7 @@ import "../../styles/components/myorder/myorder.css";
 // import service
 import * as OrderService from "../../service/order/order";
 import ClipLoader from "react-spinners/ClipLoader";
+
 export const MyOrderList = () => {
   const statusClassName = {
     pending: "pending",
@@ -19,10 +20,13 @@ export const MyOrderList = () => {
     cancel: "Cancel",
     delivering: "Delivering",
   };
+
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
   // query
   const {
     data: myOrders = [],
@@ -33,6 +37,7 @@ export const MyOrderList = () => {
     queryKey: ["my-orders"],
     queryFn: OrderService.getOwnOrders,
   });
+
   // handle func
   const handleOrderStatusClassName = (status) => {
     if (status === "PENDING") {
@@ -44,6 +49,10 @@ export const MyOrderList = () => {
       return statusTitle.pending;
     }
   };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -56,56 +65,78 @@ export const MyOrderList = () => {
       setServerError(null);
     }
     if (myOrders && myOrders.length === 0) {
-      setEmptyList("Your orders is empty");
+      setEmptyList("Your orders are empty");
     } else {
       setEmptyList(null);
     }
-  }, [isFetching, isLoading, isError]);
+  }, [isFetching, isLoading, isError, myOrders]);
+
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
+  // Filter orders based on search term
+  const filteredOrders = myOrders.filter((order) =>
+    order.order.orderId.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="myorder-list">
-      {isLoadingPage ? (
-        <>
+    <>
+      <div className="order-manage-utils">
+        <div className="search-order">
+          <i className="bx bx-search"></i>
+          <input
+            type="text"
+            placeholder="Search order by ID..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+      </div>
+      <div className="myorder-list">
+        {isLoadingPage ? (
           <div className="loading">
             <ClipLoader color="#000000" size={40} />
           </div>
-        </>
-      ) : serverError ? (
-        <>
+        ) : serverError ? (
           <div className="server-error">
             <p>{serverError}</p>
           </div>
-        </>
-      ) : emptyList ? (
-        <>
+        ) : emptyList ? (
           <div className="empty">
             <p>{emptyList}</p>
           </div>
-        </>
-      ) : (
-        <>
-          {myOrders.map((order) => (
-            <Link
-              key={order.order.orderId}
-              to={`/dashboard/myorder/detail/${order.order.orderId}`}
-            >
-              <div>
-                <strong>My Order</strong>
-                <p>{order.orders.orderDetails.length} items</p>
+        ) : (
+          <>
+            {filteredOrders.length === 0 ? (
+              <div className="empty">
+                <p>No orders match your search</p>
               </div>
-              <p>{formatPrice(order.order.total)}</p>
-              <span className={handleOrderStatusClassName(order.order.status)}>
-                Status: {handleStatusTitle(order.orders.status)}
-              </span>
-            </Link>
-          ))}
-        </>
-      )}
-    </div>
+            ) : (
+              filteredOrders.map((order) => (
+                <Link
+                  key={order.order.orderId}
+                  to={`/dashboard/myorder/detail/${order.order.orderId}`}
+                >
+                  <div>
+                    <strong>{order.order.orderId}</strong>
+                    <p>{order.order.orderDetails.length} items</p>
+                  </div>
+                  <p>{formatPrice(order.order.total)}</p>
+                  <span
+                    className={handleOrderStatusClassName(order.order.status)}
+                  >
+                    Status: {handleStatusTitle(order.order.status)}
+                  </span>
+                </Link>
+              ))
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };

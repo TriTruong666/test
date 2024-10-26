@@ -225,15 +225,6 @@ export const KoiDetail = () => {
                   </div>
                   <span>{importantGuides(koiAge)}</span>
                 </div>
-                <div className="recommendation-product">
-                  <div>
-                    <strong>Recommended Product</strong>
-                    <p>We suggest some product for you</p>
-                  </div>
-                  <span onClick={handeToggleKoiHistoryModalOn}>
-                    View product suggest
-                  </span>
-                </div>
                 <div className="utils">
                   <button onClick={handleToggleUpdateKoiModal}>Update</button>
                   <button onClick={handleToggleDelKoiModal}>Delete</button>

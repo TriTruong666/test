@@ -49,12 +49,7 @@ export const PondManage = () => {
   const isToggleKoiLogModal = useSelector(
     (state) => state.modal.addKoiLogModal.isToggleModal
   );
-  // dispatch
-  const dispatch = useDispatch();
-  // handle func
-  const handleToggleAddPondModal = () => {
-    dispatch(toggleAddPondModal());
-  };
+
   return (
     <div className="pondmanage-container">
       <Dashnav />
@@ -71,25 +66,6 @@ export const PondManage = () => {
       <div className="pondmanage">
         <div className="pondmanage-header">
           <strong>Pond Management</strong>
-        </div>
-        <div className="pondmanage-utils">
-          <div className="search-pond">
-            <i className="bx bx-search"></i>
-            <input type="text" placeholder="Search pond..." />
-          </div>
-          <div className="filter">
-            <select name="" id="">
-              <option value="">Filter</option>
-              <option value="">By Status</option>
-              <option value="">By size</option>
-              <option value="">By Number of Koi</option>
-            </select>
-            <i className="bx bx-chevron-down"></i>
-          </div>
-          <div className="add" onClick={handleToggleAddPondModal}>
-            <i className="bx bx-plus"></i>
-            <p>Create new pond</p>
-          </div>
         </div>
         <PondList />
       </div>

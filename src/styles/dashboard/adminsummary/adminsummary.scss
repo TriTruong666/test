@@ -33,6 +33,38 @@
           border-radius: 15px;
           box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+          display: flex;
+          .item1 {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            padding: 20px;
+
+            strong {
+              color: black;
+              font-size: 1.2rem;
+            }
+            p {
+              font-size: 0.9rem;
+              font-weight: 300;
+              color: $fade-black;
+            }
+          }
+
+          .item2 {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 30%;
+            padding: 20px;
+
+            img {
+              width: 200px;
+              height: auto;
+              border-radius: 10px;
+            }
+          }
         }
         .info {
           width: 30%;
@@ -77,10 +109,10 @@
         padding: 0 40px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        height: 200px;
+        height: 300px;
         column-gap: 25px;
         .item {
-          padding: 20px 30px;
+          padding: 10px;
           width: 100%;
           height: 100%;
           border-radius: 15px;
@@ -92,12 +124,13 @@
             strong {
               font-size: 0.9rem;
               color: $fade-black;
+              text-align: center;
             }
           }
         }
       }
       .chart-container {
-        margin-top: 300px;
+        margin-top: 150px;
         padding: 0 40px;
         .charts {
           display: flex;
@@ -113,6 +146,7 @@
             border-radius: 15px;
             h3 {
               font-size: 0.9rem;
+              text-align: center;
             }
           }
           .right-chart {
@@ -126,13 +160,14 @@
             border-radius: 15px;
             h3 {
               font-size: 0.9rem;
+              text-align: center;
             }
           }
         }
       }
 
       .summary-bottom {
-        margin-top: 50px;
+        margin-top: 30px;
         padding: 0 40px;
         display: flex;
         justify-content: space-between;
@@ -144,6 +179,16 @@
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           border-radius: 15px;
           background: white;
+          margin-right: 10px;
+
+          strong {
+            font-size: 0.9rem;
+            color: $fade-black;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 10px;
+          }
           table {
             width: 100%;
             border-collapse: collapse;
@@ -157,6 +202,13 @@
 
             th {
               background-color: #f4f4f4;
+            }
+            span {
+              font-weight: 600;
+            }
+
+            .pending {
+              color: rgb(213, 213, 15);
             }
 
             button {
@@ -176,6 +228,12 @@
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           border-radius: 15px;
           background: white;
+          strong {
+            font-size: 0.9rem;
+            color: $fade-black;
+            text-align: center;
+            margin-bottom: 10px;
+          }
           table {
             width: 100%;
             border-collapse: collapse;

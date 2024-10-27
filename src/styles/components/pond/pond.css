@@ -113,10 +113,20 @@ select option {
     color: black;
     font-weight: 600;
   }
-  .pond-list a .pond-info span {
-    font-size: 0.9rem;
-    color: green;
-    font-weight: 600;
+  .pond-list a .pond-info .good {
+    color: green !important;
+    font-weight: 600 !important;
+  }
+  .pond-list a .pond-info .moderate {
+    color: rgb(148, 148, 46) !important;
+    font-weight: 600 !important;
+  }
+  .pond-list a .pond-info .poor {
+    color: red !important;
+    font-weight: 600 !important;
+  }
+  .pond-list a .pond-info .careful {
+    color: yellow !important;
   }
   .pond-list a:hover {
     background: rgba(0, 0, 0, 0.049);

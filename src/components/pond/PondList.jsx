@@ -1,13 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/pond/pond.css";
 // import service
-import * as PondService from "../../service/pond/pondService";
-import { toggleAddPondModal } from "../../redux/slices/modal/modal";
 import { useDispatch } from "react-redux";
+import { toggleAddPondModal } from "../../redux/slices/modal/modal";
+import * as PondService from "../../service/pond/pondService";
 
 export const PondList = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -84,19 +84,15 @@ export const PondList = () => {
       </div>
       <div className="pond-list">
         {serverError ? (
-          <>
-            <div className="error-page">
-              <p>Server is closed now</p>
-            </div>
-          </>
+          <div className="error-page">
+            <p>Server is closed now</p>
+          </div>
         ) : (
           <>
             {isLoadingPage ? (
-              <>
-                <div className="loading">
-                  <ClipLoader color="#000000" size={40} />
-                </div>
-              </>
+              <div className="loading">
+                <ClipLoader color="#000000" size={40} />
+              </div>
             ) : (
               <>
                 {emptyList && (
@@ -109,29 +105,32 @@ export const PondList = () => {
                     <p>No ponds match your search</p>
                   </div>
                 )}
-                {filteredPonds.map((pond) => (
-                  <Link
-                    key={pond && pond.pondId}
-                    to={`/dashboard/mypond/detail/info/${pond && pond.pondId}`}
-                  >
-                    <img src={pond && pond.image} alt="" />
-                    <div className="pond-info">
-                      <div>
-                        <strong>{pond && pond.pondName}</strong>
-                        <p>{pond && pond.size}m²</p>
-                        <p>
-                          {pond &&
-                            Intl.NumberFormat("de-DE").format(pond.volume)}
-                          L
-                        </p>
+                {filteredPonds.map((pond) => {
+                  const pondStatus = localStorage.getItem(
+                    `pondStatus-${pond.pondId}`
+                  );
+
+                  return (
+                    <Link
+                      key={pond.pondId}
+                      to={`/dashboard/mypond/detail/info/${pond.pondId}`}
+                      className={`pond-item `}
+                    >
+                      <img src={pond.image} alt="" />
+                      <div className="pond-info">
+                        <div>
+                          <strong>{pond.pondName}</strong>
+                          <p>{pond.size}m²</p>
+                          <p>
+                            {Intl.NumberFormat("de-DE").format(pond.volume)} L
+                          </p>
+                        </div>
+                        <p>{pond.kois ? pond.kois.length : "0"} Kois</p>
+                        <span className={pondStatus}>Status: {pondStatus}</span>
                       </div>
-                      <p>
-                        {(pond && pond.kois && pond.kois.length) || "0"} Kois
-                      </p>
-                      <span>Status: Good</span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </>
             )}
           </>

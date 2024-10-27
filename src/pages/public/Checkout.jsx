@@ -213,6 +213,16 @@ export const Checkout = () => {
                       </div>
                       <p>{item.product.category.cateName}</p>
                       <span>{formatPrice(item.product.unitPrice)}</span>
+                      {!item.product.status && (
+                      <p style={{ color: "red", marginTop: "5px" }}>
+                        This product is not available for sale now.
+                      </p>
+                    )}
+                    {item.product.stock < item.quantity && (
+                      <p style={{ color: "orange", marginTop: "5px" }}>
+                        This product is not enough stock.
+                      </p>
+                    )}
                     </div>
                   </div>
                 ))}

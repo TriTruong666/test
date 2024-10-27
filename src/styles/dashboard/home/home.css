@@ -211,6 +211,21 @@ select option {
     width: 100%;
     border-collapse: collapse;
   }
+  .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table .good {
+    color: green !important;
+    font-weight: 600 !important;
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table .moderate {
+    color: rgb(148, 148, 46) !important;
+    font-weight: 600 !important;
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table .poor {
+    color: red !important;
+    font-weight: 600 !important;
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table .careful {
+    color: yellow !important;
+  }
   .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table th,
   .homemem-dashboard-container .dashboard .summary-bottom .right-bottom table td {
     padding: 10px;

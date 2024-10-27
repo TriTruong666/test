@@ -1,14 +1,67 @@
-import { faker } from "@faker-js/faker";
-import React, { useState } from "react";
-import Chart from "react-apexcharts";
-//import image
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import member from "../../../assets/kois.png";
-// import styles
-import "../../../styles/dashboard/home/home.css";
-// import components
+import { SizeAndWeightChart } from "../../../chart/member/SizeAndWeightChart";
 import { Dashnav } from "../../../components/navbar/Dashnav";
+import * as BlogService from "../../../service/blog/blogService";
+import * as KoiService from "../../../service/koi/koiService";
+import * as OrderService from "../../../service/order/order";
+import * as PondService from "../../../service/pond/pondService";
+import "../../../styles/dashboard/home/home.css";
 
 export const HomeMember = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.userId;
+  const statusClassName = {
+    pending: "pending",
+    success: "success",
+    cancel: "cancel",
+    delivering: "delivering",
+  };
+  const statusTitle = {
+    pending: "Pending",
+    success: "Success",
+    cancel: "Cancel",
+    delivering: "Delivering",
+  };
+
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
+
+  // Queries
+  const {
+    data: orders = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useQuery({
+    queryKey: ["member-orders", userId],
+    queryFn: OrderService.getOwnOrders,
+  });
+
+  const { data: blogs = [] } = useQuery({
+    queryKey: ["member-blogs", userId],
+    queryFn: () => BlogService.getUserBlogs(userId),
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: ponds = [] } = useQuery({
+    queryKey: ["member-ponds", userId],
+    queryFn: () => PondService.getUserPondService(userId),
+    refetchOnWindowFocus: false,
+  });
+
+  const { data: kois = [] } = useQuery({
+    queryKey: ["member-kois"],
+    queryFn: KoiService.detailKoiService,
+  });
+
+  const handleOrderStatusClassName = (status) =>
+    statusClassName[status.toLowerCase()];
+  const handleStatusTitle = (status) => statusTitle[status.toLowerCase()];
+
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -16,174 +69,42 @@ export const HomeMember = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
-  const generateFakeOrders = () => {
-    const orders = [];
-    for (let i = 0; i < 5; i++) {
-      orders.push({
-        invoiceId: faker.finance.accountNumber(),
-        category: faker.commerce.department(),
-        price: faker.commerce.price(),
-        status: faker.helpers.arrayElement([
-          "Pending",
-          "Completed",
-          "Cancelled",
-        ]),
-        action: "View",
-      });
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
     }
-    return orders;
-  };
-
-  const orderData = generateFakeOrders();
-
-  const generateBestSellerProducts = () => {
-    const products = [];
-    for (let i = 0; i < 3; i++) {
-      products.push({
-        name: faker.commerce.productName(),
-        sales: faker.number.int({ min: 50, max: 300 }),
-      });
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
     }
-    return products;
-  };
-
-  const bestSellerProducts = generateBestSellerProducts();
-
-  const generateBlogMetrics = () => {
-    return {
-      views: faker.number.int({ min: 100, max: 1000 }),
-      shares: faker.number.int({ min: 10, max: 100 }),
-      readMinutes: faker.number.int({ min: 50, max: 500 }),
-    };
-  };
-
-  const blogMetrics = generateBlogMetrics();
-
-  const generatePondData = () => {
-    const pondData = [];
-    for (let i = 0; i < 3; i++) {
-      pondData.push({
-        pondId: faker.finance.accountNumber(),
-        pondName: `Pond ${i + 1}`,
-        pondStatus: faker.helpers.arrayElement(["Good", "Bad", "Moderate"]),
-      });
+    if (orders && orders.length === 0) {
+      setEmptyList("Empty order list");
+    } else {
+      setEmptyList(null);
     }
-    return pondData;
+  }, [isLoading, isFetching, isError, orders]);
+
+  const generateKoiLogs = (ponds, newest = true) => {
+    if (!ponds?.length) return { logs: [], pondLabel: "" };
+
+    // Sort ponds by creation date or ID to get newest/oldest
+    const sortedPonds = ponds.sort((a, b) =>
+      newest ? b.createdAt - a.createdAt : a.createdAt - b.createdAt
+    );
+    const targetPond = sortedPonds[0];
+
+    if (!targetPond?.kois?.length) return { logs: [], pondLabel: "" };
+
+    const koiLogs = targetPond.kois[0].koiGrowthLogs;
+    const pondLabel = newest ? "Newest Pond" : "Oldest Pond";
+
+    return { logs: koiLogs || [], pondLabel };
   };
 
-  const pondData = generatePondData();
-
-  const generateKoiLogs = () => {
-    const logs = [];
-    for (let i = 0; i < 12; i++) {
-      logs.push({
-        month: `Month ${i + 1}`,
-        weight: faker.number.float({ min: 1, max: 5, precision: 0.1 }),
-        growth: faker.number.float({ min: 2, max: 10, precision: 0.1 }),
-      });
-    }
-    return logs;
-  };
-
-  const koiLogs = generateKoiLogs();
-
-  const [blogChartOptions, setBlogChartOptions] = useState({
-    chart: {
-      type: "bar",
-      id: "blog-chart",
-      toolbar: {
-        show: true,
-      },
-    },
-    xaxis: {
-      categories: ["Views", "Shares", "Read Minutes"],
-    },
-    colors: ["#FF5733", "#C70039", "#900C3F"],
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "55%",
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    tooltip: {
-      enabled: true,
-      theme: "dark",
-    },
-  });
-
-  const [blogChartSeries, setBlogChartSeries] = useState([
-    {
-      name: "Metrics",
-      data: [blogMetrics.views, blogMetrics.shares, blogMetrics.readMinutes],
-    },
-  ]);
-
-  const [koiChartOptions, setKoiChartOptions] = useState({
-    chart: {
-      type: "line",
-      id: "koi-log-chart",
-      toolbar: {
-        show: false,
-      },
-    },
-    xaxis: {
-      categories: koiLogs.map((log) => log.month),
-    },
-    colors: ["#581845", "#FFC300"],
-    stroke: {
-      curve: "smooth",
-      width: 2,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    tooltip: {
-      enabled: true,
-      theme: "dark",
-      y: {
-        formatter: function (value) {
-          return value.toFixed(1);
-        },
-      },
-    },
-    yaxis: [
-      {
-        title: {
-          text: "Koi Weight (kg)",
-        },
-        labels: {
-          formatter: function (value) {
-            return value.toFixed(1);
-          },
-        },
-      },
-      {
-        opposite: true,
-        title: {
-          text: "Koi Growth (cm)",
-        },
-        labels: {
-          formatter: function (value) {
-            return value.toFixed(1); // Format y-axis labels to 1 decimal place
-          },
-        },
-      },
-    ],
-  });
-
-  const [koiChartSeries, setKoiChartSeries] = useState([
-    {
-      name: "Weight",
-      data: koiLogs.map((log) => log.weight),
-    },
-    {
-      name: "Growth",
-      data: koiLogs.map((log) => log.growth),
-    },
-  ]);
+  const { logs: koiLogs, pondLabel } = generateKoiLogs(ponds, true); // Set 'true' for the newest pond or 'false' for the oldest
 
   return (
     <div className="homemem-dashboard-container">
@@ -195,25 +116,25 @@ export const HomeMember = () => {
         <div className="section1">
           <div className="item">
             <div className="item1">
-              <strong>Welcome back username</strong>
+              <strong>Welcome back {user.username}</strong>
               <p>IZUMIYA is the Simplest Manage System of Koi</p>
             </div>
             <div className="item2">
-              <img src={member} />
+              <img src={member} alt="Member" />
             </div>
           </div>
 
           <div className="info">
             <div className="small-item">
               <div>
-                <strong>20 blogs</strong>
+                <strong>{blogs.length} blogs</strong>
                 <p> Contributed</p>
               </div>
               <i className="bx bx-news"></i>
             </div>
             <div className="small-item">
               <div>
-                <strong>20</strong>
+                <strong>{orders.length}</strong>
                 <p>Total orders</p>
               </div>
               <i className="bx bx-package"></i>
@@ -225,49 +146,47 @@ export const HomeMember = () => {
           <div className="charts">
             <div className="left-chart">
               <h3>Blog Metrics</h3>
-              <Chart
-                options={blogChartOptions}
-                series={blogChartSeries}
-                type="bar"
-                width="100%"
-                height="300"
-              />
             </div>
             <div className="right-chart">
-              <h3>Koi Growth and Weight Logs</h3>
-              <Chart
-                options={koiChartOptions}
-                series={koiChartSeries}
-                type="line"
-                width="100%"
-                height="300"
-              />
+              <h3>Koi Growth and Weight Logs {pondLabel}</h3>
+              <SizeAndWeightChart koiGrowthLogs={koiLogs} />
             </div>
           </div>
         </div>
-
         <div className="summary-bottom">
           <div className="left-bottom">
             <h3>Recent Orders</h3>
             <table>
               <thead>
                 <tr>
-                  <th>InvoiceId</th>
-                  <th>Category</th>
+                  <th>OrderId</th>
+                  <th>Total items</th>
                   <th>Price</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {orderData.map((order, index) => (
-                  <tr key={index}>
-                    <td>{order.invoiceId}</td>
-                    <td>{order.category}</td>
-                    <td>{formatPrice(order.price)}</td>
-                    <td>{order.status}</td>
+                {orders.map((order) => (
+                  <tr key={order.order.orderId}>
+                    <td>{order.order.orderId}</td>
+                    <td>{order.order.orderDetails.length} </td>
+                    <td>{formatPrice(order.order.total)}</td>
                     <td>
-                      <button>{order.action}</button>
+                      <span
+                        className={handleOrderStatusClassName(
+                          order.order.status
+                        )}
+                      >
+                        {handleStatusTitle(order.order.status)}
+                      </span>
+                    </td>
+                    <td>
+                      <Link
+                        to={`/dashboard/myorder/detail/${order.order.orderId}`}
+                      >
+                        Details
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -286,13 +205,18 @@ export const HomeMember = () => {
                 </tr>
               </thead>
               <tbody>
-                {pondData.map((pond, index) => (
-                  <tr key={index}>
-                    <td>{pond.pondId}</td>
-                    <td>{pond.pondName}</td>
-                    <td>{pond.pondStatus}</td>
-                  </tr>
-                ))}
+                {ponds.map((pond) => {
+                  const pondStatus = localStorage.getItem(
+                    `pondStatus-${pond.pondId}`
+                  );
+                  return (
+                    <tr key={pond.pondId}>
+                      <td>{pond.pondId}</td>
+                      <td>{pond.pondName}</td>
+                      <td className={pondStatus}>{pondStatus}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -193,7 +193,24 @@
           table {
             width: 100%;
             border-collapse: collapse;
+            .good {
+              color: green !important;
+              font-weight: 600 !important;
+            }
 
+            .moderate {
+              color: rgb(148, 148, 46) !important;
+              font-weight: 600 !important;
+            }
+
+            .poor {
+              color: red !important;
+              font-weight: 600 !important;
+            }
+
+            .careful {
+              color: yellow !important;
+            }
             th,
             td {
               padding: 10px;

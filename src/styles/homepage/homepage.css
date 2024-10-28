@@ -426,4 +426,8 @@ select option {
     font-weight: 300;
     color: rgba(255, 255, 255, 0.7);
   }
+  .homepage-container .contact-form {
+    display: flex;
+    background: #131313;
+  }
 }/*# sourceMappingURL=homepage.css.map */

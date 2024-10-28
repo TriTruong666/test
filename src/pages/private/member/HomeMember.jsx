@@ -34,6 +34,10 @@ export const HomeMember = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const [inputPondId, setInputPondId] = useState("");
+  const [koiName, setKoiName] = useState("");
+  const [koiLogs, setKoiLogs] = useState([]);
+  const [pondLabel, setPondLabel] = useState("");
 
   // Queries
   const {
@@ -77,12 +81,6 @@ export const HomeMember = () => {
     }
   });
 
-  // Check if ponds are empty or not found
-  const noPondsMessage =
-    ponds.length === 0 || pondStatus === null
-      ? "You have not created any ponds. Please create ponds to receive product recommendations."
-      : null;
-
   const handleOrderStatusClassName = (status) =>
     statusClassName[status.toLowerCase()];
   const handleStatusTitle = (status) => statusTitle[status.toLowerCase()];
@@ -94,6 +92,28 @@ export const HomeMember = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
+  const handleSearchKoi = () => {
+    const trimmedPondId = inputPondId.trim(); // Trim any whitespace
+    const pond = ponds.find((pond) => pond.pondId.toString() === trimmedPondId); // Ensure comparison is correct
+
+    if (!pond) {
+      setPondLabel("Pond not found");
+      setKoiLogs([]);
+      return;
+    }
+
+    const koi = pond.kois.find(
+      (koi) => koi.name.toLowerCase() === koiName.toLowerCase()
+    );
+    if (!koi) {
+      setPondLabel("Koi not found in the specified pond");
+      setKoiLogs([]);
+      return;
+    }
+
+    setKoiLogs(koi.koiGrowthLogs || []);
+    setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${trimmedPondId}`);
+  };
   useEffect(() => {
     if (isLoading || isFetching) {
       setIsLoadingPage(true);
@@ -111,33 +131,6 @@ export const HomeMember = () => {
       setEmptyList(null);
     }
   }, [isLoading, isFetching, isError, orders]);
-
-  const generateKoiLogs = (ponds) => {
-    if (!ponds?.length) return { logs: [], pondLabel: "" };
-
-    // Filter ponds with "poor" status stored in localStorage
-    const poorStatusPonds = ponds.filter((pond) => {
-      const pondStatus = localStorage.getItem(`pondStatus-${pond.pondId}`);
-      return pondStatus === "poor";
-    });
-
-    if (!poorStatusPonds.length)
-      return { logs: [], pondLabel: "No 'Poor' Ponds Found" };
-
-    // Sort filtered ponds by oldest created date
-    const sortedPonds = poorStatusPonds.sort(
-      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-    );
-    const targetPond = sortedPonds[0]; // Get the oldest "poor" pond
-
-    if (!targetPond?.kois?.length)
-      return { logs: [], pondLabel: "No Koi Logs" };
-
-    const koiLogs = targetPond.kois[0].koiGrowthLogs;
-    return { logs: koiLogs || [], pondLabel: "Oldest Pond with 'Poor' Status" };
-  };
-
-  const { logs: koiLogs, pondLabel } = generateKoiLogs(ponds);
 
   return (
     <div className="homemem-dashboard-container">
@@ -217,7 +210,29 @@ export const HomeMember = () => {
                 </div>
                 <div className="right-chart">
                   <h3>Koi Growth and Weight Logs </h3>
-                  <SizeAndWeightChart koiGrowthLogs={koiLogs} />
+                  <div className="koi-search">
+                    <input
+                      type="text"
+                      placeholder="Enter Pond ID"
+                      value={inputPondId}
+                      onChange={(e) => setInputPondId(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Enter Koi Name"
+                      value={koiName}
+                      onChange={(e) => setKoiName(e.target.value)}
+                    />
+                    <button onClick={handleSearchKoi}>Search</button>
+                  </div>
+                  <p>
+                    <span className="koi-label">{pondLabel}</span>
+                  </p>
+                  {koiLogs.length ? (
+                    <SizeAndWeightChart koiGrowthLogs={koiLogs} />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

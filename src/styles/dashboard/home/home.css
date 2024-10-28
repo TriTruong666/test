@@ -212,6 +212,50 @@ select option {
   .homemem-dashboard-container .dashboard .chart-container .charts .right-chart h3 {
     font-size: 0.9rem;
   }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: border-color 0.3s;
+    color: black;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input:focus {
+    border-color: #4b87e0;
+    outline: none;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input::-moz-placeholder {
+    color: #aaa;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input::placeholder {
+    color: #aaa;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button {
+    padding: 10px 15px;
+    background-color: #131313;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search .koi-label {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: "Roboto Mono", monospace;
+  }
   .homemem-dashboard-container .dashboard .summary-bottom {
     margin-top: 20px;
     padding: 0 40px;

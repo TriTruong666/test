@@ -237,14 +237,24 @@ select option {
     color: #aaa;
   }
   .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button {
-    padding: 10px 15px;
+    padding: 10px 20px;
     background-color: #131313;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button:hover {
+    background-color: black;
+    transform: scale(1.05);
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button i {
+    font-size: 18px;
   }
   .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search .koi-label {
     font-weight: bold;
@@ -275,6 +285,15 @@ select option {
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table {
     width: 100%;
     border-collapse: collapse;
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .pending {
+    color: rgb(213, 213, 15);
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .success {
+    color: rgb(15, 213, 22);
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .cancel {
+    color: rgb(213, 15, 15);
   }
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table th,
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table td {

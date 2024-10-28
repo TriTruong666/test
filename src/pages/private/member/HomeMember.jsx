@@ -32,7 +32,6 @@ export const HomeMember = () => {
 
   //states
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
   const [pondName, setPondName] = useState("");
   const [koiName, setKoiName] = useState("");
@@ -112,7 +111,7 @@ export const HomeMember = () => {
       return;
     }
 
-    setKoiLogs(koi.koiGrowthLogs || []);
+    setKoiLogs(koi.koiGrowthLogs);
     setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${pondName}`);
   };
   useEffect(() => {
@@ -125,11 +124,6 @@ export const HomeMember = () => {
       setServerError("Server is closed now");
     } else {
       setServerError(null);
-    }
-    if (orders && orders.length === 0) {
-      setEmptyList("Empty order list");
-    } else {
-      setEmptyList(null);
     }
   }, [isLoading, isFetching, isError, orders]);
 
@@ -153,7 +147,9 @@ export const HomeMember = () => {
             <div className="section1">
               <div className="item">
                 <div className="item1">
+                  <i className="bx bx-smile"></i>
                   <strong>Welcome back {user.fullname}</strong>
+
                   <p>IZUMIYA is the Simplest Manage System of Koi</p>
                 </div>
                 <div className="item2">
@@ -182,7 +178,7 @@ export const HomeMember = () => {
             <div className="chart-container">
               <div className="charts">
                 <div className="left-chart">
-                  <h3>Recommend Products for your ponds</h3>
+                  Recommend Products for your ponds
                   {recommendedProducts.length === 0 ? (
                     <p>You have not created any ponds</p>
                   ) : (
@@ -224,7 +220,10 @@ export const HomeMember = () => {
                       value={koiName}
                       onChange={(e) => setKoiName(e.target.value)}
                     />
-                    <button onClick={handleSearchKoi}>Search</button>
+                    <button onClick={handleSearchKoi}>
+                      Search
+                      <i className="bx bx-search"></i>
+                    </button>
                   </div>
                   {pondLabel ? (
                     <p
@@ -252,7 +251,8 @@ export const HomeMember = () => {
                   <div className="no-orders-message">
                     <p>You have not created any orders yet.</p>
                     <Link to="/shop" className="shop-link">
-                      Go to Shop
+                      Shop now
+                      <i className="bx bx-cart"></i>
                     </Link>
                   </div>
                 ) : (

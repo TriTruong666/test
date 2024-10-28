@@ -212,6 +212,62 @@ select option {
   .homemem-dashboard-container .dashboard .chart-container .charts .right-chart h3 {
     font-size: 0.9rem;
   }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: border-color 0.3s;
+    color: black;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input:focus {
+    border-color: #4b87e0;
+    outline: none;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input::-moz-placeholder {
+    color: #aaa;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search input::placeholder {
+    color: #aaa;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button {
+    padding: 10px 20px;
+    background-color: #131313;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button:hover {
+    background-color: black;
+    transform: scale(1.05);
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search button i {
+    font-size: 18px;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search .koi-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  .homemem-dashboard-container .dashboard .chart-container .charts .right-chart .koi-search .error-message {
+    color: #d9534f;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+  }
   .homemem-dashboard-container .dashboard .summary-bottom {
     margin-top: 20px;
     padding: 0 40px;
@@ -229,6 +285,15 @@ select option {
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table {
     width: 100%;
     border-collapse: collapse;
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .pending {
+    color: rgb(213, 213, 15);
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .success {
+    color: rgb(15, 213, 22);
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .cancel {
+    color: rgb(213, 15, 15);
   }
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table th,
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table td {

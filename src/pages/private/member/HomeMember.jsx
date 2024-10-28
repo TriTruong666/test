@@ -32,8 +32,11 @@ export const HomeMember = () => {
 
   //states
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const [pondName, setPondName] = useState("");
+  const [koiName, setKoiName] = useState("");
+  const [koiLogs, setKoiLogs] = useState([]);
+  const [pondLabel, setPondLabel] = useState("");
 
   // Queries
   const {
@@ -68,7 +71,6 @@ export const HomeMember = () => {
     return status === "poor" || status === "moderate";
   });
 
-  // Determine recommended products based on pond status
   const recommendedProducts = products.filter((product) => {
     if (!pondStatus) {
       return product.category.cateName === "Koi Health Treatment";
@@ -76,12 +78,6 @@ export const HomeMember = () => {
       return product.category.cateName === "Water Parameter Improvement";
     }
   });
-
-  // Check if ponds are empty or not found
-  const noPondsMessage =
-    ponds.length === 0 || pondStatus === null
-      ? "You have not created any ponds. Please create ponds to receive product recommendations."
-      : null;
 
   const handleOrderStatusClassName = (status) =>
     statusClassName[status.toLowerCase()];
@@ -94,6 +90,30 @@ export const HomeMember = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
+  const handleSearchKoi = () => {
+    const trimmedPondName = pondName.trim().toLowerCase();
+    const pond = ponds.find(
+      (pond) => pond.pondName.toLowerCase() === trimmedPondName
+    );
+
+    if (!pond) {
+      setPondLabel("Pond not found");
+      setKoiLogs([]);
+      return;
+    }
+
+    const koi = pond.kois.find(
+      (koi) => koi.name.toLowerCase() === koiName.toLowerCase()
+    );
+    if (!koi) {
+      setPondLabel(`${koiName} not found in the pond with name: ${pondName}`);
+      setKoiLogs([]);
+      return;
+    }
+
+    setKoiLogs(koi.koiGrowthLogs);
+    setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${pondName}`);
+  };
   useEffect(() => {
     if (isLoading || isFetching) {
       setIsLoadingPage(true);
@@ -105,39 +125,7 @@ export const HomeMember = () => {
     } else {
       setServerError(null);
     }
-    if (orders && orders.length === 0) {
-      setEmptyList("Empty order list");
-    } else {
-      setEmptyList(null);
-    }
   }, [isLoading, isFetching, isError, orders]);
-
-  const generateKoiLogs = (ponds) => {
-    if (!ponds?.length) return { logs: [], pondLabel: "" };
-
-    // Filter ponds with "poor" status stored in localStorage
-    const poorStatusPonds = ponds.filter((pond) => {
-      const pondStatus = localStorage.getItem(`pondStatus-${pond.pondId}`);
-      return pondStatus === "poor";
-    });
-
-    if (!poorStatusPonds.length)
-      return { logs: [], pondLabel: "No 'Poor' Ponds Found" };
-
-    // Sort filtered ponds by oldest created date
-    const sortedPonds = poorStatusPonds.sort(
-      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-    );
-    const targetPond = sortedPonds[0]; // Get the oldest "poor" pond
-
-    if (!targetPond?.kois?.length)
-      return { logs: [], pondLabel: "No Koi Logs" };
-
-    const koiLogs = targetPond.kois[0].koiGrowthLogs;
-    return { logs: koiLogs || [], pondLabel: "Oldest Pond with 'Poor' Status" };
-  };
-
-  const { logs: koiLogs, pondLabel } = generateKoiLogs(ponds);
 
   return (
     <div className="homemem-dashboard-container">
@@ -159,7 +147,9 @@ export const HomeMember = () => {
             <div className="section1">
               <div className="item">
                 <div className="item1">
+                  <i className="bx bx-smile"></i>
                   <strong>Welcome back {user.fullname}</strong>
+
                   <p>IZUMIYA is the Simplest Manage System of Koi</p>
                 </div>
                 <div className="item2">
@@ -188,9 +178,9 @@ export const HomeMember = () => {
             <div className="chart-container">
               <div className="charts">
                 <div className="left-chart">
-                  <h3>Recommend Products for your ponds</h3>
+                  Recommend Products for your ponds
                   {recommendedProducts.length === 0 ? (
-                    <p>You have not create any ponds</p>
+                    <p>You have not created any ponds</p>
                   ) : (
                     <ul className="recommended-products-list">
                       {recommendedProducts.slice(0, 3).map((product) => (
@@ -217,7 +207,40 @@ export const HomeMember = () => {
                 </div>
                 <div className="right-chart">
                   <h3>Koi Growth and Weight Logs </h3>
-                  <SizeAndWeightChart koiGrowthLogs={koiLogs} />
+                  <div className="koi-search">
+                    <input
+                      type="text"
+                      placeholder="Enter Pond Name"
+                      value={pondName}
+                      onChange={(e) => setPondName(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Enter Koi Name"
+                      value={koiName}
+                      onChange={(e) => setKoiName(e.target.value)}
+                    />
+                    <button onClick={handleSearchKoi}>
+                      Search
+                      <i className="bx bx-search"></i>
+                    </button>
+                  </div>
+                  {pondLabel ? (
+                    <p
+                      className={
+                        pondLabel.includes("not found")
+                          ? "error-message"
+                          : "koi-label"
+                      }
+                    >
+                      {pondLabel}
+                    </p>
+                  ) : null}
+                  {koiLogs.length ? (
+                    <SizeAndWeightChart koiGrowthLogs={koiLogs} />
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -228,7 +251,8 @@ export const HomeMember = () => {
                   <div className="no-orders-message">
                     <p>You have not created any orders yet.</p>
                     <Link to="/shop" className="shop-link">
-                      Go to Shop
+                      Shop now
+                      <i className="bx bx-cart"></i>
                     </Link>
                   </div>
                 ) : (

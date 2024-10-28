@@ -120,6 +120,7 @@ export const PondList = () => {
                             {Intl.NumberFormat("de-DE").format(pond.volume)} L
                           </p>
                         </div>
+                        <span className={pondStatus}>Status: {pondStatus}</span>
                         <p>{pond.kois ? pond.kois.length : "0"} Kois</p>
                       </div>
                     </Link>

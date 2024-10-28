@@ -193,6 +193,67 @@
             h3 {
               font-size: 0.9rem;
             }
+            .koi-search {
+              display: flex;
+              align-items: center;
+              margin: 20px 0;
+
+              input {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+                margin-right: 10px;
+                transition: border-color 0.3s;
+                color: black;
+
+                &:focus {
+                  border-color: #4b87e0;
+                  outline: none;
+                }
+
+                &::placeholder {
+                  color: #aaa;
+                }
+              }
+
+              button {
+                padding: 10px 20px; // Add more padding for icon spacing
+                background-color: $main-color;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: background-color 0.3s, transform 0.2s;
+
+                &:hover {
+                  background-color: darken($main-color, 10%);
+                  transform: scale(1.05);
+                }
+
+                i {
+                  font-size: 18px;
+                }
+              }
+
+              .koi-label {
+                font-weight: bold;
+                color: #333;
+                font-size: 16px;
+                margin-top: 10px;
+              }
+
+              .error-message {
+                color: #d9534f;
+                font-weight: bold;
+                font-size: 14px;
+                margin-top: 10px;
+              }
+            }
           }
         }
       }
@@ -214,6 +275,17 @@
           table {
             width: 100%;
             border-collapse: collapse;
+            .pending {
+              color: rgb(213, 213, 15);
+            }
+
+            .success {
+              color: rgb(15, 213, 22);
+            }
+
+            .cancel {
+              color: rgb(213, 15, 15);
+            }
 
             th,
             td {

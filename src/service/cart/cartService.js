@@ -8,7 +8,7 @@ export const addToCartByMember = async (cartId, productId, quantity) => {
   try {
     const api = `http://localhost:8080/cart/${cartId}/add/${productId}`;
 
-    const res = await axios.post(api, quantity, {
+    const res = await axios.put(api, quantity, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

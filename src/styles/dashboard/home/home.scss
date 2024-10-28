@@ -230,13 +230,16 @@
 
               .koi-label {
                 font-weight: bold;
-                font-size: 1.2em;
-                color: #2c3e50;
-                background-color: #ecf0f1;
-                padding: 5px 10px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                font-family: $main-font;
+                color: #333;
+                font-size: 16px;
+                margin-top: 10px;
+              }
+
+              .error-message {
+                color: #d9534f;
+                font-weight: bold;
+                font-size: 14px;
+                margin-top: 10px;
               }
             }
           }

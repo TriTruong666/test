@@ -34,7 +34,7 @@ export const HomeMember = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
-  const [inputPondId, setInputPondId] = useState("");
+  const [pondName, setPondName] = useState("");
   const [koiName, setKoiName] = useState("");
   const [koiLogs, setKoiLogs] = useState([]);
   const [pondLabel, setPondLabel] = useState("");
@@ -72,7 +72,6 @@ export const HomeMember = () => {
     return status === "poor" || status === "moderate";
   });
 
-  // Determine recommended products based on pond status
   const recommendedProducts = products.filter((product) => {
     if (!pondStatus) {
       return product.category.cateName === "Koi Health Treatment";
@@ -93,8 +92,10 @@ export const HomeMember = () => {
     }).format(price);
 
   const handleSearchKoi = () => {
-    const trimmedPondId = inputPondId.trim(); // Trim any whitespace
-    const pond = ponds.find((pond) => pond.pondId.toString() === trimmedPondId); // Ensure comparison is correct
+    const trimmedPondName = pondName.trim().toLowerCase();
+    const pond = ponds.find(
+      (pond) => pond.pondName.toLowerCase() === trimmedPondName
+    );
 
     if (!pond) {
       setPondLabel("Pond not found");
@@ -106,13 +107,13 @@ export const HomeMember = () => {
       (koi) => koi.name.toLowerCase() === koiName.toLowerCase()
     );
     if (!koi) {
-      setPondLabel("Koi not found in the specified pond");
+      setPondLabel(`${koiName} not found in the pond with name: ${pondName}`);
       setKoiLogs([]);
       return;
     }
 
     setKoiLogs(koi.koiGrowthLogs || []);
-    setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${trimmedPondId}`);
+    setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${pondName}`);
   };
   useEffect(() => {
     if (isLoading || isFetching) {
@@ -213,9 +214,9 @@ export const HomeMember = () => {
                   <div className="koi-search">
                     <input
                       type="text"
-                      placeholder="Enter Pond ID"
-                      value={inputPondId}
-                      onChange={(e) => setInputPondId(e.target.value)}
+                      placeholder="Enter Pond Name"
+                      value={pondName}
+                      onChange={(e) => setPondName(e.target.value)}
                     />
                     <input
                       type="text"
@@ -225,9 +226,17 @@ export const HomeMember = () => {
                     />
                     <button onClick={handleSearchKoi}>Search</button>
                   </div>
-                  <p>
-                    <span className="koi-label">{pondLabel}</span>
-                  </p>
+                  {pondLabel ? (
+                    <p
+                      className={
+                        pondLabel.includes("not found")
+                          ? "error-message"
+                          : "koi-label"
+                      }
+                    >
+                      {pondLabel}
+                    </p>
+                  ) : null}
                   {koiLogs.length ? (
                     <SizeAndWeightChart koiGrowthLogs={koiLogs} />
                   ) : (

@@ -77,6 +77,12 @@ export const HomeMember = () => {
     }
   });
 
+  // Check if ponds are empty or not found
+  const noPondsMessage =
+    ponds.length === 0 || pondStatus === null
+      ? "You have not created any ponds. Please create ponds to receive product recommendations."
+      : null;
+
   const handleOrderStatusClassName = (status) =>
     statusClassName[status.toLowerCase()];
   const handleStatusTitle = (status) => statusTitle[status.toLowerCase()];
@@ -218,44 +224,52 @@ export const HomeMember = () => {
             <div className="summary-bottom">
               <div className="left-bottom">
                 <h3>Recent Orders</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>OrderId</th>
-                      <th>Total items</th>
-                      <th>Price</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders.map((order) => (
-                      <tr key={order.order.orderId}>
-                        <td>{order.order.orderId}</td>
-                        <td>{order.order.orderDetails.length} </td>
-                        <td>{formatPrice(order.order.total)}</td>
-                        <td>
-                          <span
-                            className={handleOrderStatusClassName(
-                              order.order.status
-                            )}
-                          >
-                            {handleStatusTitle(order.order.status)}
-                          </span>
-                        </td>
-                        <td>
-                          <Link
-                            to={`/dashboard/myorder/detail/${order.order.orderId}`}
-                          >
-                            Details
-                          </Link>
-                        </td>
+                {orders.length === 0 ? (
+                  <div className="no-orders-message">
+                    <p>You have not created any orders yet.</p>
+                    <Link to="/shop" className="shop-link">
+                      Go to Shop
+                    </Link>
+                  </div>
+                ) : (
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>OrderId</th>
+                        <th>Total items</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr key={order.order.orderId}>
+                          <td>{order.order.orderId}</td>
+                          <td>{order.order.orderDetails.length}</td>
+                          <td>{formatPrice(order.order.total)}</td>
+                          <td>
+                            <span
+                              className={handleOrderStatusClassName(
+                                order.order.status
+                              )}
+                            >
+                              {handleStatusTitle(order.order.status)}
+                            </span>
+                          </td>
+                          <td>
+                            <Link
+                              to={`/dashboard/myorder/detail/${order.order.orderId}`}
+                            >
+                              Details
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
-
               <div className="right-bottom">
                 {ponds.length === 0 ? (
                   <>

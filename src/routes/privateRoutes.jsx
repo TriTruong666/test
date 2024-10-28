@@ -145,7 +145,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/admin/refund/detail/:orderId",
+        path: "/dashboard/admin/refund/detail/:refundId/:orderId",
         element: (
           <AuthWrapper allowedRoles={["ADMIN"]}>
             <AdminOrderRefundDetail />

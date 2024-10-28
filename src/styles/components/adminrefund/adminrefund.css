@@ -30,44 +30,43 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
-  .myorder-list {
+  .admin-refund-list {
     display: flex;
     flex-direction: column;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
-  .myorder-list .loading {
+  .admin-refund-list .empty-list {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 500px;
   }
-  .myorder-list .empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 500px;
-  }
-  .myorder-list .empty p {
+  .admin-refund-list .empty-list p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
     font-weight: 600;
+  }
+  .admin-refund-list .loading {
+    display: flex;
+    width: 100%;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-refund-list .server-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .admin-refund-list .server-error p {
     font-size: 1.1rem;
     color: rgba(0, 0, 0, 0.9);
   }
-  .myorder-list .server-error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 500px;
-  }
-  .myorder-list .server-error p {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: rgba(0, 0, 0, 0.9);
-  }
-  .myorder-list a {
+  .admin-refund-list a {
     display: flex;
     flex-direction: column;
     padding: 10px 40px;
@@ -77,39 +76,36 @@ select option {
     row-gap: 5px;
     transition: 0.4s;
   }
-  .myorder-list a div {
+  .admin-refund-list a div {
     display: flex;
     -moz-column-gap: 30px;
          column-gap: 30px;
     align-items: center;
   }
-  .myorder-list a div strong {
+  .admin-refund-list a div strong {
     color: black;
     font-size: 1rem;
   }
-  .myorder-list a div p {
+  .admin-refund-list a div p {
     font-size: 0.7rem;
   }
-  .myorder-list a p {
+  .admin-refund-list a p {
     font-size: 0.9rem;
     color: black;
   }
-  .myorder-list a span {
+  .admin-refund-list a span {
     font-weight: 600;
   }
-  .myorder-list a .pending {
+  .admin-refund-list a .pending {
     color: rgb(213, 213, 15);
   }
-  .myorder-list a .success {
+  .admin-refund-list a .success {
     color: rgb(15, 213, 22);
   }
-  .myorder-list a .cancel {
+  .admin-refund-list a .cancel {
     color: rgb(213, 15, 15);
   }
-  .myorder-list a .refund {
-    color: rgb(177, 15, 213);
-  }
-  .myorder-list a:hover {
+  .admin-refund-list a:hover {
     background: rgba(0, 0, 0, 0.049);
   }
-}/*# sourceMappingURL=myorder.css.map */
+}/*# sourceMappingURL=adminrefund.css.map */

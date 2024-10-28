@@ -138,10 +138,11 @@
                             object-fit: cover;
                         }
 
-                        strong {
+                        .name {
                             font-family: $main-font;
                             color: white;
                             font-size: 1rem;
+                            cursor: pointer;
                         }
 
                         p {
@@ -152,11 +153,12 @@
                             color: $fade-white !important;
                         }
 
-                        button {
+                        .buynow {
                             padding: 7px 30px;
                             color: black;
                             background: $second-color;
                             border-radius: 10px;
+                            font-size: 0.9rem;
                         }
                     }
                 }

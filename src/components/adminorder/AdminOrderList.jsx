@@ -12,13 +12,13 @@ export const AdminOrderList = () => {
     pending: "pending",
     success: "success",
     cancel: "cancel",
-    delivering: "delivering",
+    refund: "refund",
   };
   const statusTitle = {
     pending: "Pending",
     success: "Success",
     cancel: "Cancel",
-    delivering: "Delivering",
+    refund: "Refunded",
   };
 
   // state
@@ -39,7 +39,10 @@ export const AdminOrderList = () => {
   });
   // handle func
   const filteredOrders = orders.filter((order) =>
-    order.order.orderId.toString().includes(searchTerm)
+    (order.order.fullname || "")
+      .toString()
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   const handleSearchChange = (e) => {
@@ -50,14 +53,14 @@ export const AdminOrderList = () => {
     if (status === "PENDING") return statusClassName.pending;
     if (status === "APPROVED") return statusClassName.success;
     if (status === "REJECTED") return statusClassName.cancel;
-    if (status === "DELIVERING") return statusClassName.delivering;
+    if (status === "REFUNDED") return statusClassName.refund;
   };
 
   const handleStatusTitle = (status) => {
     if (status === "PENDING") return statusTitle.pending;
     if (status === "APPROVED") return statusTitle.success;
     if (status === "REJECTED") return statusTitle.cancel;
-    if (status === "DELIVERING") return statusTitle.delivering;
+    if (status === "REFUNDED") return statusTitle.refund;
   };
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export const AdminOrderList = () => {
           <i className="bx bx-search"></i>
           <input
             type="text"
-            placeholder="Search order by ID..."
+            placeholder="Search order by name..."
             value={searchTerm}
             onChange={handleSearchChange}
           />
@@ -94,7 +97,9 @@ export const AdminOrderList = () => {
         ) : (
           <>
             {filteredOrders.length === 0 ? (
-              <p>{emptyList || "No orders found."}</p>
+              <div className="empty-list">
+                <p>No order was found</p>
+              </div>
             ) : (
               filteredOrders.map((order) => (
                 <Link

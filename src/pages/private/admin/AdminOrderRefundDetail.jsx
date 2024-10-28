@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
-import "../../../styles/dashboard/adminorderdetail/adminorderdetail.css";
+import "../../../styles/dashboard/adminrefunddetail/adminrefunddetail.css";
 // import service
-import * as OrderService from "../../../service/order/order";
-import * as PaypalService from "../../../service/paypal/paypal";
+import * as RefundService from "../../../service/refund/refund";
 import ClipLoader from "react-spinners/ClipLoader";
 export const AdminOrderRefundDetail = () => {
   const orderStatus = {
@@ -17,32 +16,32 @@ export const AdminOrderRefundDetail = () => {
     refunded: "refunded",
   };
   // param
+  const { refundId } = useParams();
   const { orderId } = useParams();
   // state
-  const [orderListProduct, setOrderListProduct] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isNotFound, setIsNotFound] = useState(false);
   const [serverError, setServerError] = useState(null);
   // query
   const {
-    data: orderInfo = {},
+    data: refundInfo = {},
     isLoading,
     isError,
     isFetching,
   } = useQuery({
-    queryKey: ["order-detail", orderId],
-    queryFn: () => OrderService.getOrderById(orderId),
+    queryKey: ["refund-info", refundId],
+    queryFn: () => RefundService.getRefundRequestDetail(refundId),
   });
   // mutation
   const queryClient = useQueryClient();
   const rejectMutation = useMutation({
-    mutationKey: ["reject-order", orderId],
-    mutationFn: PaypalService.rejectOrder,
+    mutationKey: ["reject-refund", orderId],
+    mutationFn: RefundService.rejectedRefund,
     onMutate: () => {
       setIsLoadingPage(true);
     },
     onSuccess: () => {
-      toast.success("Updated status success", {
+      toast.success("Request refund rejected", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -53,18 +52,16 @@ export const AdminOrderRefundDetail = () => {
         theme: "dark",
       });
       setIsLoadingPage(false);
-      queryClient.invalidateQueries(["order-detail"]);
-      queryClient.invalidateQueries(["all-orders"]);
     },
   });
   const approveMutation = useMutation({
-    mutationKey: ["approve-order", orderId],
-    mutationFn: PaypalService.successOrder,
+    mutationKey: ["approve-refund", orderId],
+    mutationFn: RefundService.approvedRefund,
     onMutate: () => {
       setIsLoadingPage(true);
     },
     onSuccess: () => {
-      toast.success("Updated status success", {
+      toast.success("Request refund approved", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -75,8 +72,8 @@ export const AdminOrderRefundDetail = () => {
         theme: "dark",
       });
       setIsLoadingPage(false);
-      queryClient.invalidateQueries(["order-detail"]);
-      queryClient.invalidateQueries(["all-orders"]);
+      queryClient.invalidateQueries(["refund-info"]);
+      queryClient.invalidateQueries(["all-refund"]);
     },
   });
   // handle func
@@ -91,19 +88,19 @@ export const AdminOrderRefundDetail = () => {
       return orderStatus.rejected;
     }
   };
-  const handleApproveOrder = async () => {
+  const handleApproveRequest = async () => {
     try {
-      if (orderInfo?.orderId) {
-        await approveMutation.mutateAsync(orderInfo?.orderId);
+      if (orderId) {
+        await approveMutation.mutateAsync(orderId);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const handleRejectOrder = async () => {
+  const handleRejectRequest = async () => {
     try {
-      if (orderInfo?.orderId) {
-        await rejectMutation.mutateAsync(orderInfo?.orderId);
+      if (orderId) {
+        await rejectMutation.mutateAsync(orderId);
       }
     } catch (error) {
       console.log(error);
@@ -120,25 +117,14 @@ export const AdminOrderRefundDetail = () => {
     } else {
       setServerError(null);
     }
-    if (orderInfo && orderInfo.code === "ORDER_NOT_FOUND") {
+    if (refundInfo && refundInfo.code === "ORDER_NOT_FOUND") {
       setIsNotFound(true);
     } else {
       setIsNotFound(false);
     }
-    if (orderInfo && orderInfo.orderDetails) {
-      setOrderListProduct(orderInfo.orderDetails);
-    } else {
-      setOrderListProduct([]);
-    }
-  }, [orderInfo, isFetching, isError, isLoading]);
-  const formatPrice = (price) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(price);
+  }, [refundInfo, isFetching, isError, isLoading]);
   return (
-    <div className="admin-order-detail-container">
+    <div className="admin-refund-detail-container">
       <ToastContainer />
       {serverError ? (
         <>
@@ -155,81 +141,30 @@ export const AdminOrderRefundDetail = () => {
       ) : isNotFound ? (
         <>
           <div className="not-found">
-            <h2>Order is not found</h2>
-            <p>Please check ID of order or it had been delete !</p>
+            <h2>Request is not found</h2>
+            <p>Please check ID of request or it had been delete !</p>
           </div>
         </>
       ) : (
         <>
-          <div className="admin-order-detail-header">
-            <h2>{orderInfo.fullname}'s Order</h2>
-            <p className={handleSetClassNameStatus(orderInfo.status)}>
-              {orderInfo.status}
+          <div className="admin-refund-detail-header">
+            <h2>Refund Infomation</h2>
+            <p className={handleSetClassNameStatus(refundInfo.status)}>
+              {refundInfo.status}
             </p>
           </div>
-          <div className="admin-order-main">
-            <table className="cart">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Product</th>
-                  <th>Quantity</th>
-                  <th>Total price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderListProduct.map((product, index) => (
-                  <tr key={product.productId}>
-                    <td>{index + 1}</td>
-                    <td>{product.productName}</td>
-                    <td>{product.quantity}</td>
-                    <td>{formatPrice(product.total)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="admin-refund-main">
             <div className="info">
               <div className="header">
-                <strong>Order Information</strong>
-                <p>View all infomation when ordering</p>
+                <strong>Customer reason</strong>
+                <p>{refundInfo.refundReason}</p>
               </div>
               <div className="main">
-                <div className="info-item">
-                  <strong>Date</strong>
-                  <p>
-                    {new Date(
-                      orderInfo && orderInfo.createDate
-                    ).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="info-item">
-                  <strong>Name</strong>
-                  <p>{orderInfo.fullname}</p>
-                </div>
-                <div className="info-item">
-                  <strong>Email</strong>
-                  <p>{orderInfo.email}</p>
-                </div>
-                <div className="info-item">
-                  <strong>Phone</strong>
-                  <p>{orderInfo.phone}</p>
-                </div>
-                <div className="info-item">
-                  <strong>Payment ID</strong>
-                  <p>{orderInfo.paymentId}</p>
-                </div>
-                <div className="info-item">
-                  <strong>Payment method</strong>
-                  <p>Paypal</p>
-                </div>
-                <div className="info-item">
-                  <strong>Invoice amount</strong>
-                  <p>{formatPrice(orderInfo.total)}</p>
-                </div>
+                <img src={refundInfo.refundReasonImage} alt="" />
               </div>
             </div>
             <div className="buttons">
-              {orderInfo?.status === "APPROVED" ? (
+              {refundInfo?.status === "APPROVED" ? (
                 <>
                   <button className="marked-approved">
                     <i className="bx bx-check"></i>
@@ -239,16 +174,16 @@ export const AdminOrderRefundDetail = () => {
               ) : (
                 <>
                   <button
-                    disabled={orderInfo?.status === "REJECTED"}
-                    className={orderInfo?.status === "REJECTED" && "prevent"}
-                    onClick={handleApproveOrder}
+                    disabled={refundInfo?.status === "REJECTED"}
+                    className={refundInfo?.status === "REJECTED" && "prevent"}
+                    onClick={handleApproveRequest}
                   >
                     <i className="bx bx-check"></i>
                     <p>Mark as Approved</p>
                   </button>
                 </>
               )}
-              {orderInfo?.status === "REJECTED" ? (
+              {refundInfo?.status === "REJECTED" ? (
                 <>
                   <button className="marked-rejected">
                     <i className="bx bx-check"></i>
@@ -258,9 +193,9 @@ export const AdminOrderRefundDetail = () => {
               ) : (
                 <>
                   <button
-                    disabled={orderInfo?.status === "APPROVED"}
-                    onClick={handleRejectOrder}
-                    className={orderInfo?.status === "APPROVED" && "prevent"}
+                    disabled={refundInfo?.status === "APPROVED"}
+                    onClick={handleRejectRequest}
+                    className={refundInfo?.status === "APPROVED" && "prevent"}
                   >
                     <i className="bx bx-x"></i>
                     <p>Mark as Rejected</p>

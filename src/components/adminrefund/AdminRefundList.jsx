@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
-import "../../styles/components/adminorder/adminorder.css";
+import "../../styles/components/adminrefund/adminrefund.css";
 // import service
-import * as OrderService from "../../service/order/order";
 import * as RefundService from "../../service/refund/refund";
 export const AdminRefundList = () => {
   const statusClassName = {
@@ -16,14 +15,13 @@ export const AdminRefundList = () => {
   };
   const statusTitle = {
     pending: "Pending",
-    success: "Success",
+    success: "Approved",
     cancel: "Cancel",
     delivering: "Delivering",
   };
 
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -38,25 +36,30 @@ export const AdminRefundList = () => {
     queryFn: RefundService.getAllRefundRequest,
   });
   // handle func
-  // const filteredRefunds = refunds?.filter((refund) =>
-  //   refund.order.orderId.toString().includes(searchTerm)
-  // );
+  const filteredRefunds = refunds?.filter((refund) =>
+    refund.orderId.toString().includes(searchTerm)
+  );
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+  const handleRefundStatusClassName = (status) => {
+    if (status === "PENDING") return statusClassName.pending;
+    if (status === "APPROVED") return statusClassName.success;
+    if (status === "REJECTED") return statusClassName.cancel;
+    if (status === "DELIVERING") return statusClassName.delivering;
+  };
 
+  const handleStatusTitle = (status) => {
+    if (status === "PENDING") return statusTitle.pending;
+    if (status === "APPROVED") return statusTitle.success;
+    if (status === "REJECTED") return statusTitle.cancel;
+    if (status === "DELIVERING") return statusTitle.delivering;
+  };
   useEffect(() => {
     setIsLoadingPage(isLoading || isFetching);
     setServerError(isError ? "Server is closed now" : null);
   }, [isLoading, isFetching, isError, refunds]);
-
-  const formatPrice = (price) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(price);
 
   return (
     <>
@@ -65,19 +68,39 @@ export const AdminRefundList = () => {
           <i className="bx bx-search"></i>
           <input
             type="text"
-            placeholder="Search order by ID..."
+            placeholder="Search request by ID..."
             value={searchTerm}
             onChange={handleSearchChange}
           />
         </div>
       </div>
-      <div className="admin-order-list">
+      <div className="admin-refund-list">
         {isLoadingPage ? (
           <div className="loading">
             <ClipLoader color="#000000" size={40} />
           </div>
         ) : (
-          <></>
+          <>
+            {filteredRefunds.length === 0 ? (
+              <div className="empty-list">
+                <p>No request was found</p>
+              </div>
+            ) : (
+              filteredRefunds.map((refund) => (
+                <Link
+                  key={refund.refundRequestId}
+                  to={`/dashboard/admin/refund/detail/${refund.refundRequestId}/${refund.orderId}`}
+                >
+                  <div>
+                    <strong>{refund.refundRequestId}</strong>
+                  </div>
+                  <span className={handleRefundStatusClassName(refund.status)}>
+                    Status: {handleStatusTitle(refund.status)}
+                  </span>
+                </Link>
+              ))
+            )}
+          </>
         )}
       </div>
     </>

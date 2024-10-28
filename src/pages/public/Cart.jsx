@@ -212,12 +212,8 @@ export const Cart = () => {
                     </div>
                     {!item.product.status && (
                       <p style={{ color: "red", marginTop: "5px" }}>
-                        This product is not available for sale now.
-                      </p>
-                    )}
-                    {item.product.stock < item.quantity && (
-                      <p style={{ color: "orange", marginTop: "5px" }}>
-                        This product is not enough stock.
+                        This product is not available for sale now. Please
+                        remove from your cart!
                       </p>
                     )}
                   </div>

@@ -36,6 +36,18 @@ select option {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
+  .admin-order-list .empty-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .admin-order-list .empty-list p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 600;
+  }
   .admin-order-list .loading {
     display: flex;
     width: 100%;
@@ -103,6 +115,9 @@ select option {
   }
   .admin-order-list a .cancel {
     color: rgb(213, 15, 15);
+  }
+  .admin-order-list a .refund {
+    color: rgb(177, 15, 213);
   }
   .admin-order-list a:hover {
     background: rgba(0, 0, 0, 0.049);

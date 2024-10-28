@@ -62,15 +62,15 @@ export const Dashnav = () => {
                 to="/dashboard/myorder"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                <i className="bx bx-shopping-bag"></i>
-                <p>Order</p>
+                <i className="bx bx-notepad"></i>
+                <p>My Order</p>
               </NavLink>
               <NavLink
                 to="/dashboard/myblog"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 <i className="bx bxl-blogger"></i>
-                <p>Blog</p>
+                <p>My Blog</p>
               </NavLink>
             </div>
           )}
@@ -120,14 +120,14 @@ export const Dashnav = () => {
                   to="/dashboard/admin/order"
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                  <i className="bx bx-shopping-bag"></i>
+                  <i className="bx bx-notepad"></i>
                   <p>Order Management</p>
                 </NavLink>
                 <NavLink
                   to="/dashboard/admin/refund"
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                  <i className="bx bx-shopping-bag"></i>
+                  <i className="bx bx-x"></i>
                   <p>Refund Management</p>
                 </NavLink>
               </div>

@@ -78,6 +78,11 @@
                 background: rgba(237, 129, 129, 0.621);
                 color: rgb(223, 33, 33);
             }
+
+            .refunded {
+                background: rgba(228, 129, 237, 0.621);
+                color: rgb(201, 33, 223);
+            }
         }
 
         .my-order-main {
@@ -211,6 +216,40 @@
                 .reject-text-item {
                     font-size: 0.85rem;
                 }
+            }
+
+            .note {
+                margin: 40px 0;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                .refund-text {
+                    margin-bottom: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(43, 135, 255);
+                }
+
+                .refund-text-item {
+                    margin-top: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(0, 0, 0);
+                }
+
+                .contact {
+                    font-size: 0.85rem;
+                }
+            }
+
+            .request {
+                margin-bottom: 40px;
+                padding: 10px 20px;
+                background: red;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: white;
+                border-radius: 15px;
+                cursor: pointer;
             }
 
             .cancel {

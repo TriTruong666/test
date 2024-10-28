@@ -4,6 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/buynow/buynow.css";
 // import components
@@ -51,14 +53,41 @@ export const Buynow = () => {
     onMutate: () => {
       setLoadingPayment(true);
     },
-    onSuccess: () => {
-      setLoadingPayment(false);
-      queryClient.invalidateQueries(["products"]);
+    onSuccess: (response) => {
+      if (response?.code === "PRODUCT_IS_INACTIVE") {
+        toast.error("This product is not available for sale now!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setLoadingPayment(false);
+      } else {
+        setLoadingPayment(false);
+        queryClient.invalidateQueries(["products"]);
+      }
     },
   });
   // handle func
   const handlePlus = () => {
-    setQuantity(quantity + 1);
+    if (quantity < productInfo?.stock) {
+      setQuantity(quantity + 1);
+    } else {
+      toast.error("Sorry, our stock is not enough!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
   const handleMinus = () => {
     if (quantity <= 1) {
@@ -75,6 +104,9 @@ export const Buynow = () => {
     });
   };
   useEffect(() => {
+    if (!productInfo?.productId) {
+      navigate("/shop");
+    }
     if (token && user) {
       setSubmitData({
         ...submitData,
@@ -133,6 +165,7 @@ export const Buynow = () => {
   };
   return (
     <div className="buynow-container">
+      <ToastContainer />
       {isLoadingPayment && (
         <>
           <div className="loading-payment">
@@ -213,6 +246,7 @@ export const Buynow = () => {
                 <p>{productInfo?.category?.cateName}</p>
                 <div className="quantity">
                   <span>{formatPrice(productInfo.unitPrice)}</span>
+
                   <div>
                     <p onClick={handlePlus}>+</p>
                     <p>{quantity}</p>

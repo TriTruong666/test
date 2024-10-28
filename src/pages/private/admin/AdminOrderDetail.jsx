@@ -90,6 +90,9 @@ export const AdminOrderDetail = () => {
     if (status === "REJECTED") {
       return orderStatus.rejected;
     }
+    if (status === "REFUNDED") {
+      return orderStatus.refunded;
+    }
   };
   const handleApproveOrder = async () => {
     try {
@@ -229,42 +232,52 @@ export const AdminOrderDetail = () => {
               </div>
             </div>
             <div className="buttons">
-              {orderInfo?.status === "APPROVED" ? (
-                <>
-                  <button className="marked-approved">
-                    <i className="bx bx-check"></i>
-                    <p>Marked as Approved</p>
-                  </button>
-                </>
+              {orderInfo?.status === "REFUNDED" ? (
+                <></>
               ) : (
                 <>
-                  <button
-                    disabled={orderInfo?.status === "REJECTED"}
-                    className={orderInfo?.status === "REJECTED" && "prevent"}
-                    onClick={handleApproveOrder}
-                  >
-                    <i className="bx bx-check"></i>
-                    <p>Mark as Approved</p>
-                  </button>
-                </>
-              )}
-              {orderInfo?.status === "REJECTED" ? (
-                <>
-                  <button className="marked-rejected">
-                    <i className="bx bx-check"></i>
-                    <p>Marked as Rejected</p>
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    disabled={orderInfo?.status === "APPROVED"}
-                    onClick={handleRejectOrder}
-                    className={orderInfo?.status === "APPROVED" && "prevent"}
-                  >
-                    <i className="bx bx-x"></i>
-                    <p>Mark as Rejected</p>
-                  </button>
+                  {orderInfo?.status === "APPROVED" ? (
+                    <>
+                      <button className="marked-approved">
+                        <i className="bx bx-check"></i>
+                        <p>Marked as Approved</p>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        disabled={orderInfo?.status === "REJECTED"}
+                        className={
+                          orderInfo?.status === "REJECTED" && "prevent"
+                        }
+                        onClick={handleApproveOrder}
+                      >
+                        <i className="bx bx-check"></i>
+                        <p>Mark as Approved</p>
+                      </button>
+                    </>
+                  )}
+                  {orderInfo?.status === "REJECTED" ? (
+                    <>
+                      <button className="marked-rejected">
+                        <i className="bx bx-check"></i>
+                        <p>Marked as Rejected</p>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        disabled={orderInfo?.status === "APPROVED"}
+                        onClick={handleRejectOrder}
+                        className={
+                          orderInfo?.status === "APPROVED" && "prevent"
+                        }
+                      >
+                        <i className="bx bx-x"></i>
+                        <p>Mark as Rejected</p>
+                      </button>
+                    </>
+                  )}
                 </>
               )}
             </div>

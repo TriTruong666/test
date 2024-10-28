@@ -10,7 +10,22 @@ export const getAllRefundRequest = async () => {
         "Content-Type": "application/json",
       },
     });
-    return res.data;
+    return res.data.result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export const getRefundRequestDetail = async (refundId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/refund/${refundId}`;
+    const res = await axios.get(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data.result;
   } catch (error) {
     return error.response.data;
   }

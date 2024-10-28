@@ -12,13 +12,13 @@ export const MyOrderList = () => {
     pending: "pending",
     success: "success",
     cancel: "cancel",
-    delivering: "delivering",
+    refund: "refund",
   };
   const statusTitle = {
     pending: "Pending",
     success: "Success",
     cancel: "Cancel",
-    delivering: "Delivering",
+    refund: "Refunded",
   };
 
   // state
@@ -43,14 +43,14 @@ export const MyOrderList = () => {
     if (status === "PENDING") return statusClassName.pending;
     if (status === "APPROVED") return statusClassName.success;
     if (status === "REJECTED") return statusClassName.cancel;
-    if (status === "DELIVERING") return statusClassName.delivering;
+    if (status === "REFUNDED") return statusClassName.refund;
   };
 
   const handleStatusTitle = (status) => {
     if (status === "PENDING") return statusTitle.pending;
     if (status === "APPROVED") return statusTitle.success;
     if (status === "REJECTED") return statusTitle.cancel;
-    if (status === "DELIVERING") return statusTitle.delivering;
+    if (status === "REFUNDED") return statusTitle.refund;
   };
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

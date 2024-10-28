@@ -1,9 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as ProductService from "../../service/product/productService";
@@ -15,7 +14,6 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
-// import slices
 
 // convert to plain text
 const stripHtmlTags = (html) => {
@@ -33,10 +31,9 @@ const stripHtmlTags = (html) => {
 };
 
 export const ProductDetail = () => {
-  // dispatch
   // param
   const { productId } = useParams();
-
+  //
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
@@ -58,6 +55,10 @@ export const ProductDetail = () => {
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
   });
+  const { data: relatedProductList = [] } = useQuery({
+    queryKey: ["related-products"],
+    queryFn: ProductService.getAllProductShop,
+  });
   useEffect(() => {
     if (cartInfo) {
       setCartId(cartInfo.cartId);
@@ -70,23 +71,34 @@ export const ProductDetail = () => {
   }, [isLoading, isFetching, isError, cartInfo]);
 
   // mutation
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["add-item-to-cart"],
     mutationFn: ({ cartId, productId, quantity }) =>
       CartService.addToCartByMember(cartId, productId, quantity),
-    onSuccess: () => {
-      toast.success("Product added", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      queryClient.invalidateQueries(["productDetail"]);
+    onSuccess: (response) => {
+      if (response?.code === "QUANTITY_GREATER_THAN_STOCK") {
+        toast.error("Sorry, our stock is not enough!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        toast.success("Product added", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     },
   });
 
@@ -150,30 +162,27 @@ export const ProductDetail = () => {
         <div className="product-detail-related">
           <strong>Explore Related Products</strong>
           <div className="product-detail-related-list">
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
+            {relatedProductList
+              ?.filter(
+                (relatedProduct) =>
+                  relatedProduct.productId !== numericProductId
+              )
+              .slice(0, 4)
+              .map((product) => (
+                <div key={product.productId} className="product-related-item">
+                  <img src={product.image} alt="" />
+                  <Link
+                    className="name"
+                    to={`/productdetail/${product.productId}`}
+                  >
+                    {product.productName}
+                  </Link>
+                  <p>{formatPrice(product.unitPrice)}</p>
+                  <Link className="buynow" to={`/buynow/${product.productId}`}>
+                    Buy now
+                  </Link>
+                </div>
+              ))}
           </div>
         </div>
       </div>

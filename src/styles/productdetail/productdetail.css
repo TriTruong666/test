@@ -157,10 +157,11 @@ select option {
     -o-object-fit: cover;
        object-fit: cover;
   }
-  .product-detail-container .product-detail .product-detail-related .product-detail-related-list .product-related-item strong {
+  .product-detail-container .product-detail .product-detail-related .product-detail-related-list .product-related-item .name {
     font-family: "Roboto Mono", monospace;
     color: white;
     font-size: 1rem;
+    cursor: pointer;
   }
   .product-detail-container .product-detail .product-detail-related .product-detail-related-list .product-related-item p {
     line-height: 1 !important;
@@ -169,10 +170,11 @@ select option {
     letter-spacing: normal !important;
     color: rgba(255, 255, 255, 0.7) !important;
   }
-  .product-detail-container .product-detail .product-detail-related .product-detail-related-list .product-related-item button {
+  .product-detail-container .product-detail .product-detail-related .product-detail-related-list .product-related-item .buynow {
     padding: 7px 30px;
     color: black;
     background: #BCAB6F;
     border-radius: 10px;
+    font-size: 0.9rem;
   }
 }/*# sourceMappingURL=productdetail.css.map */

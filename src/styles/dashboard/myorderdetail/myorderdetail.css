@@ -97,6 +97,10 @@ select option {
     background: rgba(237, 129, 129, 0.621);
     color: rgb(223, 33, 33);
   }
+  .my-order-detail-container .my-order-detail-header .refunded {
+    background: rgba(228, 129, 237, 0.621);
+    color: rgb(201, 33, 223);
+  }
   .my-order-detail-container .my-order-main {
     display: flex;
     flex-direction: column;
@@ -197,6 +201,35 @@ select option {
   }
   .my-order-detail-container .my-order-main .reject-list .reject-text-item {
     font-size: 0.85rem;
+  }
+  .my-order-detail-container .my-order-main .note {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .my-order-detail-container .my-order-main .note .refund-text {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: rgb(43, 135, 255);
+  }
+  .my-order-detail-container .my-order-main .note .refund-text-item {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: rgb(0, 0, 0);
+  }
+  .my-order-detail-container .my-order-main .note .contact {
+    font-size: 0.85rem;
+  }
+  .my-order-detail-container .my-order-main .request {
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    background: red;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
   }
   .my-order-detail-container .my-order-main .cancel {
     margin: 40px 0;

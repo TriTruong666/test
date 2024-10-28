@@ -86,6 +86,9 @@ export const MyOrderDetail = () => {
     if (status === "REJECTED") {
       return orderStatus.rejected;
     }
+    if (status === "REFUNDED") {
+      return orderStatus.refunded;
+    }
   };
 
   const formatPrice = (price) =>
@@ -185,51 +188,82 @@ export const MyOrderDetail = () => {
                 </div>
               </div>
             </div>
-            {orderInfo?.status === "REJECTED" ? (
-              <>
-                <div className="reject-list">
-                  <strong className="reject-text">
-                    Sorry, your order has been rejected due to some reasons:
-                  </strong>
-                  <p className="reject-text-item">
-                    1. The item is out of stock.
-                  </p>
-                  <p className="reject-text-item">
-                    2. The shipping address provided is incomplete or invalid.
-                  </p>
-                  <p className="reject-text-item">
-                    3. There was a discrepancy in billing details.
-                  </p>
-                  <p className="reject-text-item">
-                    4. Products are error for shipping.
-                  </p>
-                  <strong className="reject-text-sorry">
-                    Izumiya apologizes for the inconvenience. We have refunded
-                    your money. We apologize again.
-                  </strong>
-                </div>
-              </>
+            {orderInfo?.status === "REFUNDED" ? (
+              <></>
             ) : (
               <>
-                {orderInfo?.status === "APPROVED" ? (
+                {orderInfo?.status === "REJECTED" ? (
                   <>
-                    <button
-                      className="cancel"
-                      onClick={handleToggleCreateRefundModal}
-                    >
-                      Request refund this order
-                    </button>
+                    <div className="reject-list">
+                      <strong className="reject-text">
+                        Sorry, your order has been rejected due to some reasons:
+                      </strong>
+                      <p className="reject-text-item">
+                        1. The item is out of stock.
+                      </p>
+                      <p className="reject-text-item">
+                        2. The shipping address provided is incomplete or
+                        invalid.
+                      </p>
+                      <p className="reject-text-item">
+                        3. There was a discrepancy in billing details.
+                      </p>
+                      <p className="reject-text-item">
+                        4. Products are error for shipping.
+                      </p>
+                      <strong className="reject-text-sorry">
+                        Izumiya apologizes for the inconvenience. We have
+                        refunded your money. We apologize again.
+                      </strong>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <button
-                      className="cancel"
-                      onClick={() =>
-                        handleToggleCancelMyOrderModal(orderInfo.paymentId)
-                      }
-                    >
-                      Cancel this order
-                    </button>
+                    {orderInfo?.status === "APPROVED" ? (
+                      <>
+                        <div className="note">
+                          <strong className="refund-text">
+                            If you had requested a refund, here is some
+                            infomation:
+                          </strong>
+                          <p className="refund-text-item">
+                            1. We will handle your refund request within 2-3
+                            days
+                          </p>
+                          <p className="refund-text-item">
+                            2. If your request is approved, we will refund to
+                            your paypal account within 1 day.
+                          </p>
+                          <p className="refund-text-item">
+                            3. But if your request is rejected, your order
+                            status still 'APPROVED', we will send to your email
+                            the reason of rejection.
+                          </p>
+                          <strong className="contact">
+                            If you have any questions, please contact email:
+                            izumiyakoi686@gmail.com. We will resolve it as soon
+                            as possible
+                          </strong>
+                        </div>
+                        <button
+                          className="request"
+                          onClick={handleToggleCreateRefundModal}
+                        >
+                          Request refund this order
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="cancel"
+                          onClick={() =>
+                            handleToggleCancelMyOrderModal(orderInfo.paymentId)
+                          }
+                        >
+                          Cancel this order
+                        </button>
+                      </>
+                    )}
                   </>
                 )}
               </>

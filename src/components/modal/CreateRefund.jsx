@@ -47,30 +47,41 @@ export const CreateRefund = () => {
     );
   };
   // mutation
-  const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["create-refund"],
     mutationFn: RefundService.createRefundRequest,
     onMutate: () => {
       setIsPreventSubmit(true);
     },
-    onSuccess: () => {
-      toast.success("Request create success", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setTimeout(() => {
-        // location.reload();
-      }, 1500);
-      //   queryCilent.invalidateQueries({
-      //     queryKey: ["myBlogs", "adminBlogs"],
-      //   });
+    onSuccess: (response) => {
+      if (response?.code === "ALREADY_REQUESTED_REFUND") {
+        toast.error("You have requested refund before", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setIsPreventSubmit(false);
+      } else {
+        toast.success("Request create success", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          location.reload();
+          setIsPreventSubmit(false);
+        }, 1500);
+      }
     },
   });
   //   handle func

@@ -16,7 +16,7 @@ export const createPayment = async (data) => {
     return res.data;
   } catch (error) {
     console.error(error);
-    return error;
+    return error.response.data;
   }
 };
 export const buyNow = async (data) => {
@@ -35,7 +35,7 @@ export const buyNow = async (data) => {
     }
     return res.data;
   } catch (error) {
-    return error;
+    return error.response.data;
   }
 };
 export const successOrder = async (data) => {

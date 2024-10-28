@@ -4,6 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ClipLoader from "react-spinners/ClipLoader";
 import SyncLoader from "react-spinners/SyncLoader";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/checkout/checkout.css";
 // import components
@@ -52,13 +54,33 @@ export const Checkout = () => {
     onMutate: () => {
       setLoadingPayment(true);
     },
-    onSuccess: () => {
-      setLoadingPayment(false);
-      queryClient.invalidateQueries(["my-cart"]);
+    onSuccess: (response) => {
+      if (response?.code === "PRODUCT_IS_INACTIVE") {
+        toast.error(
+          "Some products are not available for sale, please remove first!",
+          {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+        setLoadingPayment(false);
+      } else {
+        setLoadingPayment(false);
+        queryClient.invalidateQueries(["my-cart"]);
+      }
     },
   });
 
   useEffect(() => {
+    if (cartData?.cartItems.length === 0) {
+      navigate("/cart");
+    }
     if (token && user) {
       setSubmitData({
         ...submitData,
@@ -133,6 +155,7 @@ export const Checkout = () => {
 
   return (
     <div className="checkout-container">
+      <ToastContainer />
       {isLoadingPayment && (
         <div className="loading-payment">
           <SyncLoader color="#ffffff" size={20} />
@@ -214,15 +237,10 @@ export const Checkout = () => {
                       <p>{item.product.category.cateName}</p>
                       <span>{formatPrice(item.product.unitPrice)}</span>
                       {!item.product.status && (
-                      <p style={{ color: "red", marginTop: "5px" }}>
-                        This product is not available for sale now.
-                      </p>
-                    )}
-                    {item.product.stock < item.quantity && (
-                      <p style={{ color: "orange", marginTop: "5px" }}>
-                        This product is not enough stock.
-                      </p>
-                    )}
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          This product is not available for sale now.
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}

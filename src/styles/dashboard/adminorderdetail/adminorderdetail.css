@@ -97,6 +97,10 @@ select option {
     background: rgba(237, 129, 129, 0.621);
     color: rgb(223, 33, 33);
   }
+  .admin-order-detail-container .admin-order-detail-header .refunded {
+    background: rgba(228, 129, 237, 0.621);
+    color: rgb(201, 33, 223);
+  }
   .admin-order-detail-container .admin-order-main {
     display: flex;
     flex-direction: column;

@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "./styles/homepage/homepage.css";
 // import components
-import { Navbar } from "./components/navbar/Navbar";
 import { Footer } from "./components/footer/Footer";
+import { Navbar } from "./components/navbar/Navbar";
 import { Settingnav } from "./components/navbar/Settingnav";
 // import assets
-import introVideo from "./assets/koivideo.mp4";
 import feature1 from "./assets/feature1.png";
 import feature2 from "./assets/feature2.png";
 import feature3 from "./assets/feature3.png";
+import group from "./assets/group.png";
+import introVideo from "./assets/koivideo.mp4";
 import shopheader1 from "./assets/shopheader1.jpg";
 import shopheader2 from "./assets/shopheader2.jpg";
-import group from "./assets/group.png";
 // import service
+import { scroller } from "react-scroll";
+import { ContactForm } from "./components/contact/ContactForm";
 import * as AccountService from "./service/account/AccountService";
 import * as BlogService from "./service/blog/blogService";
-import * as ProductService from "./service/product/productService";
 import * as CartService from "./service/cart/cartService";
-import * as CategoryService from "./service/category/categoryService";
-import { scroller } from "react-scroll";
+import * as ProductService from "./service/product/productService";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -285,6 +285,9 @@ export const Homepage = () => {
           <strong>Truong Hoang Tri - Leader</strong>
           <span>Group 8</span>
         </div>
+      </div>
+      <div className="contact-form">
+        <ContactForm />
       </div>
       <Footer />
     </div>

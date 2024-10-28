@@ -36,11 +36,7 @@ export const PondInfo = () => {
     } else {
       setServerError(null);
     }
-
-
-
-
-  }, [isFetching, isLoading,isError]);
+  }, [isFetching, isLoading, isError]);
   return (
     <div className="pond-info-container">
       {serverError ? (
@@ -51,54 +47,54 @@ export const PondInfo = () => {
         </>
       ) : (
         <>
-    {isLoadingPage ? (
-        <>
-          <div className="loading">
-            <ClipLoader color="#000000" size={40} />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="pond-info-image">
-            <img src={pondInfo && pondInfo.image} alt="" />
-          </div>
-          <div className="pond-info-header">
-            <strong>Pond infomation</strong>
-            <p>See detail about pond infomation</p>
-          </div>
-          <div className="pond-info-main">
-            <div className="info-item">
-              <strong>Name</strong>
-              <p>{(pondInfo && pondInfo.pondName) || "null"}</p>
-            </div>
-            <div className="info-item">
-              <strong>Pump power</strong>
-              <p>{(pondInfo && pondInfo.pumpPower) || "null"}W</p>
-            </div>
-            <div className="info-item">
-              <strong>Size</strong>
-              <p>{(pondInfo && pondInfo.size) || "null"}m²</p>
-            </div>
-            <div className="info-item">
-              <strong>Depth</strong>
-              <p>{(pondInfo && pondInfo.depth) || "null"}m</p>
-            </div>
-            <div className="info-item">
-              <strong>Volumn</strong>
-              <p>
-                {(pondInfo &&
-                  Intl.NumberFormat("de-DE").format(pondInfo.volume)) ||
-                  "null"}
-                L
-              </p>
-            </div>
-            <div className="info-item">
-              <strong>Veins</strong>
-              <p>{(pondInfo && pondInfo.vein) || "null"} veins</p>
-            </div>
-          </div>
-        </>
-      )}
+          {isLoadingPage ? (
+            <>
+              <div className="loading">
+                <ClipLoader color="#000000" size={40} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="pond-info-image">
+                <img src={pondInfo && pondInfo.image} alt="" />
+              </div>
+              <div className="pond-info-header">
+                <strong>Pond infomation</strong>
+                <p>See detail about pond infomation</p>
+              </div>
+              <div className="pond-info-main">
+                <div className="info-item">
+                  <strong>Name</strong>
+                  <p>{(pondInfo && pondInfo.pondName) || "null"}</p>
+                </div>
+                <div className="info-item">
+                  <strong>Pump power</strong>
+                  <p>{(pondInfo && pondInfo.pumpPower) || "null"}W</p>
+                </div>
+                <div className="info-item">
+                  <strong>Size</strong>
+                  <p>{(pondInfo && pondInfo.size) || "null"}m²</p>
+                </div>
+                <div className="info-item">
+                  <strong>Depth</strong>
+                  <p>{(pondInfo && pondInfo.depth) || "null"}m</p>
+                </div>
+                <div className="info-item">
+                  <strong>Volumn</strong>
+                  <p>
+                    {(pondInfo &&
+                      Intl.NumberFormat("de-DE").format(pondInfo.volume)) ||
+                      "null"}
+                    m&sup3;
+                  </p>
+                </div>
+                <div className="info-item">
+                  <strong>Veins</strong>
+                  <p>{(pondInfo && pondInfo.vein) || "null"} veins</p>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

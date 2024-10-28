@@ -1,0 +1,75 @@
+@import "../../global/global.scss";
+$fade-white: rgba(255, 255, 255, 0.7);
+
+.contact-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  background: $main-color;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+
+  .contact-form-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $fade-white !important;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-family: $main-font;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &-label {
+      display: flex;
+      flex-direction: column;
+      font-family: $main-font;
+
+      &-text {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #ffffff;
+        font-family: $main-font;
+      }
+    }
+
+    &-input {
+      padding: 0.75rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5rem;
+      color: #ffffff;
+      font-size: 1rem;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &-button {
+      padding: 0.75rem 1.5rem;
+      background-color: $second-color;
+      color: black;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: $main-font;
+
+      &:hover {
+        background-color: #2980b9;
+      }
+
+      &:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

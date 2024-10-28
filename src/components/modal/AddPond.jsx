@@ -315,11 +315,11 @@ export const AddPond = () => {
 
             <div className="input-two-fields">
               <div className="input-field">
-                <label htmlFor="volume">Volume (L)</label>
+                <label htmlFor="volume">Volume (m&sup3;)</label>
                 <input
                   type="text"
                   id="volume"
-                  placeholder="Volume (L)"
+                  placeholder="Volume (m&sup3;)"
                   name="volume"
                   onChange={handleInputFloatPond}
                 />

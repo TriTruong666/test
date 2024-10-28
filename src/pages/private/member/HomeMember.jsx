@@ -2,12 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import member from "../../../assets/kois.png";
+//charts
 import { SizeAndWeightChart } from "../../../chart/member/SizeAndWeightChart";
 import { Dashnav } from "../../../components/navbar/Dashnav";
+// Services
 import * as BlogService from "../../../service/blog/blogService";
-import * as KoiService from "../../../service/koi/koiService";
 import * as OrderService from "../../../service/order/order";
 import * as PondService from "../../../service/pond/pondService";
+//styles
 import "../../../styles/dashboard/home/home.css";
 
 export const HomeMember = () => {
@@ -26,6 +28,7 @@ export const HomeMember = () => {
     delivering: "Delivering",
   };
 
+  //states
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
@@ -51,11 +54,6 @@ export const HomeMember = () => {
     queryKey: ["member-ponds", userId],
     queryFn: () => PondService.getUserPondService(userId),
     refetchOnWindowFocus: false,
-  });
-
-  const { data: kois = [] } = useQuery({
-    queryKey: ["member-kois"],
-    queryFn: KoiService.detailKoiService,
   });
 
   const handleOrderStatusClassName = (status) =>
@@ -87,24 +85,32 @@ export const HomeMember = () => {
     }
   }, [isLoading, isFetching, isError, orders]);
 
-  const generateKoiLogs = (ponds, newest = true) => {
+  const generateKoiLogs = (ponds) => {
     if (!ponds?.length) return { logs: [], pondLabel: "" };
 
-    // Sort ponds by creation date or ID to get newest/oldest
-    const sortedPonds = ponds.sort((a, b) =>
-      newest ? b.createdAt - a.createdAt : a.createdAt - b.createdAt
-    );
-    const targetPond = sortedPonds[0];
+    // Filter ponds with "poor" status stored in localStorage
+    const poorStatusPonds = ponds.filter((pond) => {
+      const pondStatus = localStorage.getItem(`pondStatus-${pond.pondId}`);
+      return pondStatus === "poor";
+    });
 
-    if (!targetPond?.kois?.length) return { logs: [], pondLabel: "" };
+    if (!poorStatusPonds.length)
+      return { logs: [], pondLabel: "No 'Poor' Ponds Found" };
+
+    // Sort filtered ponds by oldest created date
+    const sortedPonds = poorStatusPonds.sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+    const targetPond = sortedPonds[0]; // Get the oldest "poor" pond
+
+    if (!targetPond?.kois?.length)
+      return { logs: [], pondLabel: "No Koi Logs" };
 
     const koiLogs = targetPond.kois[0].koiGrowthLogs;
-    const pondLabel = newest ? "Newest Pond" : "Oldest Pond";
-
-    return { logs: koiLogs || [], pondLabel };
+    return { logs: koiLogs || [], pondLabel: "Oldest Pond with 'Poor' Status" };
   };
 
-  const { logs: koiLogs, pondLabel } = generateKoiLogs(ponds, true); // Set 'true' for the newest pond or 'false' for the oldest
+  const { logs: koiLogs, pondLabel } = generateKoiLogs(ponds);
 
   return (
     <div className="homemem-dashboard-container">
@@ -116,7 +122,7 @@ export const HomeMember = () => {
         <div className="section1">
           <div className="item">
             <div className="item1">
-              <strong>Welcome back {user.username}</strong>
+              <strong>Welcome back {user.fullname}</strong>
               <p>IZUMIYA is the Simplest Manage System of Koi</p>
             </div>
             <div className="item2">
@@ -145,7 +151,7 @@ export const HomeMember = () => {
         <div className="chart-container">
           <div className="charts">
             <div className="left-chart">
-              <h3>Blog Metrics</h3>
+              <h3>The ponds charts</h3>
             </div>
             <div className="right-chart">
               <h3>Koi Growth and Weight Logs {pondLabel}</h3>

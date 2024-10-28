@@ -11,27 +11,17 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import service
 import * as CartService from "../../service/cart/cartService";
-import { useSelector } from "react-redux";
 
 export const Cart = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   const token = localStorage.getItem("token");
-  // selector
-  const totalItemInCart = useSelector(
-    (state) => state.navbar.itemInCart.quantity
-  );
   // state
   const [cartList, setCartList] = useState([]);
   const [isEmptyCart, setIsEmptyCart] = useState(false);
   const [serverError, setServerError] = useState(null);
   // query
-  const {
-    data: cartData = {},
-    isFetching,
-    isError,
-    isLoading,
-  } = useQuery({
+  const { data: cartData = {}, isError } = useQuery({
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
     refetchOnWindowFocus: false,
@@ -44,8 +34,31 @@ export const Cart = () => {
     mutationFn: ({ cartId, cartItemId, quantity }) => {
       return CartService.updateQuantity(cartId, cartItemId, quantity);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["my-cart"]);
+    onSuccess: (response) => {
+      if (response?.code === "QUANTITY_GREATER_THAN_STOCK") {
+        toast.error("Sorry, our stock is not enough!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        toast.success("Quantity updated", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        queryClient.invalidateQueries(["my-cart"]);
+      }
     },
   });
   const deleteMutation = useMutation({
@@ -110,8 +123,6 @@ export const Cart = () => {
   };
 
   useEffect(() => {
-    document.title = "Cart";
-    // logged-user
     if (token && user) {
       if (cartData && Array.isArray(cartData.cartItems)) {
         setCartList(cartData.cartItems);

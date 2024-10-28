@@ -198,7 +198,7 @@ export const UpdateKoi = () => {
       !submitData.name ||
       !submitData.type ||
       !submitData.origin ||
-      submitData.sex
+      !submitData.sex
     ) {
       toast.error("Please input all fields", {
         position: "top-right",

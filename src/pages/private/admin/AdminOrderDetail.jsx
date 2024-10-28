@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../../styles/dashboard/adminorderdetail/adminorderdetail.css";
 // import service
 import * as OrderService from "../../../service/order/order";
+import * as PaypalService from "../../../service/paypal/paypal";
 import ClipLoader from "react-spinners/ClipLoader";
 export const AdminOrderDetail = () => {
   const orderStatus = {
@@ -30,10 +33,80 @@ export const AdminOrderDetail = () => {
     queryKey: ["order-detail", orderId],
     queryFn: () => OrderService.getOrderById(orderId),
   });
+  // mutation
+  const queryClient = useQueryClient();
+  const rejectMutation = useMutation({
+    mutationKey: ["reject-order", orderId],
+    mutationFn: PaypalService.rejectOrder,
+    onMutate: () => {
+      setIsLoadingPage(true);
+    },
+    onSuccess: () => {
+      toast.success("Updated status success", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoadingPage(false);
+      queryClient.invalidateQueries(["order-detail"]);
+      queryClient.invalidateQueries(["all-orders"]);
+    },
+  });
+  const approveMutation = useMutation({
+    mutationKey: ["approve-order", orderId],
+    mutationFn: PaypalService.successOrder,
+    onMutate: () => {
+      setIsLoadingPage(true);
+    },
+    onSuccess: () => {
+      toast.success("Updated status success", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoadingPage(false);
+      queryClient.invalidateQueries(["order-detail"]);
+      queryClient.invalidateQueries(["all-orders"]);
+    },
+  });
   // handle func
   const handleSetClassNameStatus = (status) => {
     if (status === "PENDING") {
       return orderStatus.pending;
+    }
+    if (status === "APPROVED") {
+      return orderStatus.approved;
+    }
+    if (status === "REJECTED") {
+      return orderStatus.rejected;
+    }
+  };
+  const handleApproveOrder = async () => {
+    try {
+      if (orderInfo?.orderId) {
+        await approveMutation.mutateAsync(orderInfo?.orderId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleRejectOrder = async () => {
+    try {
+      if (orderInfo?.orderId) {
+        await rejectMutation.mutateAsync(orderInfo?.orderId);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -66,6 +139,7 @@ export const AdminOrderDetail = () => {
     }).format(price);
   return (
     <div className="admin-order-detail-container">
+      <ToastContainer />
       {serverError ? (
         <>
           <div className="error-page">
@@ -117,7 +191,7 @@ export const AdminOrderDetail = () => {
             <div className="info">
               <div className="header">
                 <strong>Order Information</strong>
-                <p>View all my infomation when ordering</p>
+                <p>View all infomation when ordering</p>
               </div>
               <div className="main">
                 <div className="info-item">
@@ -155,14 +229,44 @@ export const AdminOrderDetail = () => {
               </div>
             </div>
             <div className="buttons">
-              <button>
-                <i className="bx bx-check"></i>
-                <p>Mark as Approved</p>
-              </button>
-              <button>
-                <i className="bx bx-x"></i>
-                <p>Mark as Rejected</p>
-              </button>
+              {orderInfo?.status === "APPROVED" ? (
+                <>
+                  <button className="marked-approved">
+                    <i className="bx bx-check"></i>
+                    <p>Marked as Approved</p>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    disabled={orderInfo?.status === "REJECTED"}
+                    className={orderInfo?.status === "REJECTED" && "prevent"}
+                    onClick={handleApproveOrder}
+                  >
+                    <i className="bx bx-check"></i>
+                    <p>Mark as Approved</p>
+                  </button>
+                </>
+              )}
+              {orderInfo?.status === "REJECTED" ? (
+                <>
+                  <button className="marked-rejected">
+                    <i className="bx bx-check"></i>
+                    <p>Marked as Rejected</p>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    disabled={orderInfo?.status === "APPROVED"}
+                    onClick={handleRejectOrder}
+                    className={orderInfo?.status === "APPROVED" && "prevent"}
+                  >
+                    <i className="bx bx-x"></i>
+                    <p>Mark as Rejected</p>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </>

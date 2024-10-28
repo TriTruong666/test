@@ -123,6 +123,13 @@ export const Dashnav = () => {
                   <i className="bx bx-shopping-bag"></i>
                   <p>Order Management</p>
                 </NavLink>
+                <NavLink
+                  to="/dashboard/admin/refund"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-shopping-bag"></i>
+                  <p>Refund Management</p>
+                </NavLink>
               </div>
             </>
           )}

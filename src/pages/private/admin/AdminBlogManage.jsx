@@ -13,8 +13,6 @@ import { Dashnav } from "../../../components/navbar/Dashnav";
 import { toggleAddBlogModal } from "../../../redux/slices/modal/modal";
 
 export const AdminBlogManage = () => {
-  // dispatch
-  const dispatch = useDispatch();
   // selector
   const isToggleAddBlogModal = useSelector(
     (state) => state.modal.addBlogModal.isToggleModal
@@ -26,19 +24,6 @@ export const AdminBlogManage = () => {
     (state) => state.modal.deleteBlogModal.isToggleModal
   );
 
-  // New state for filter
-  const [filterOption, setFilterOption] = useState("default");
-
-  // handle func
-  const handleToggleAddBlogModal = () => {
-    dispatch(toggleAddBlogModal());
-  };
-
-  // New function to handle filter change
-  const handleFilterChange = (e) => {
-    setFilterOption(e.target.value);
-  };
-
   return (
     <div className="admin-blog-container">
       <Dashnav />
@@ -49,22 +34,7 @@ export const AdminBlogManage = () => {
         <div className="admin-blog-header">
           <strong>My Blog</strong>
         </div>
-        <div className="admin-blog-utils">
-          <div className="filter">
-            <select name="filter" id="filter" value={filterOption} onChange={handleFilterChange}>
-              <option value="default">Filter</option>
-              <option value="date">By Date</option>
-              <option value="blogName">By Blog Name</option>
-              <option value="author">By Author</option>
-            </select>
-            <i className="bx bx-chevron-down"></i>
-          </div>
-          <div className="add" onClick={handleToggleAddBlogModal}>
-            <i className="bx bx-plus"></i>
-            <p>Create new blog</p>
-          </div>
-        </div>
-        <AdminBlogList filterOption={filterOption} />
+        <AdminBlogList />
       </div>
       <Outlet />
     </div>

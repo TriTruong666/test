@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { React, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import service
@@ -81,19 +81,33 @@ export const Shoplist = ({
     onMutate: () => {
       setIsPreventSubmit(true);
     },
-    onSuccess: () => {
-      toast.success("Product added", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      queryClient.invalidateQueries(["products"]);
-      setIsPreventSubmit(false);
+    onSuccess: (response) => {
+      if (response?.code === "QUANTITY_GREATER_THAN_STOCK") {
+        toast.error("Sorry, our stock is not enough!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setIsPreventSubmit(false);
+      } else {
+        toast.success("Product added", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        queryClient.invalidateQueries(["products"]);
+        setIsPreventSubmit(false);
+      }
     },
   });
   const debounce = (func, delay) => {

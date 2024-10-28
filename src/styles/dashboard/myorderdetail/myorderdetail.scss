@@ -5,7 +5,7 @@
         width: calc(100% - 40% - 220px);
         display: flex;
         flex-direction: column;
-        overflow-y: hidden;
+        overflow-y: auto;
 
         .error-page {
             width: 100%;
@@ -67,7 +67,16 @@
             .pending {
                 background: rgba(231, 237, 129, 0.621);
                 color: rgb(116, 119, 17);
+            }
 
+            .approved {
+                background: rgba(129, 237, 141, 0.621);
+                color: rgb(17, 119, 20);
+            }
+
+            .rejected {
+                background: rgba(237, 129, 129, 0.621);
+                color: rgb(223, 33, 33);
             }
         }
 
@@ -178,6 +187,29 @@
                             color: rgba(0, 0, 0, .7);
                         }
                     }
+                }
+            }
+
+            .reject-list {
+                margin: 40px 0;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                .reject-text {
+                    margin-bottom: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(255, 43, 43);
+                }
+
+                .reject-text-sorry {
+                    margin-top: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(0, 0, 0);
+                }
+
+                .reject-text-item {
+                    font-size: 0.85rem;
                 }
             }
 

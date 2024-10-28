@@ -25,7 +25,7 @@ export const getUserListAdmin = async () => {
     });
     return res.data.result;
   } catch (error) {
-    return err.response.data;
+    return error.response.data;
   }
 };
 export const getMyUserInfo = async () => {
@@ -40,7 +40,7 @@ export const getMyUserInfo = async () => {
     });
     return res.data.result;
   } catch (error) {
-    return err.response.data;
+    return error.response.data;
   }
 };
 export const verifyEmailSignup = async (userData) => {
@@ -53,7 +53,6 @@ export const verifyEmailSignup = async (userData) => {
     });
     return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 };

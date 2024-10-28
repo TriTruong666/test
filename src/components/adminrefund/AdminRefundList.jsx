@@ -6,8 +6,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../styles/components/adminorder/adminorder.css";
 // import service
 import * as OrderService from "../../service/order/order";
-
-export const AdminOrderList = () => {
+import * as RefundService from "../../service/refund/refund";
+export const AdminRefundList = () => {
   const statusClassName = {
     pending: "pending",
     success: "success",
@@ -29,42 +29,27 @@ export const AdminOrderList = () => {
 
   // query
   const {
-    data: orders = [],
+    data: refunds = [],
     isLoading,
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ["all-orders"],
-    queryFn: OrderService.getAllOrders,
+    queryKey: ["all-refund"],
+    queryFn: RefundService.getAllRefundRequest,
   });
   // handle func
-  const filteredOrders = orders.filter((order) =>
-    order.order.orderId.toString().includes(searchTerm)
-  );
+  // const filteredRefunds = refunds?.filter((refund) =>
+  //   refund.order.orderId.toString().includes(searchTerm)
+  // );
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleOrderStatusClassName = (status) => {
-    if (status === "PENDING") return statusClassName.pending;
-    if (status === "APPROVED") return statusClassName.success;
-    if (status === "REJECTED") return statusClassName.cancel;
-    if (status === "DELIVERING") return statusClassName.delivering;
-  };
-
-  const handleStatusTitle = (status) => {
-    if (status === "PENDING") return statusTitle.pending;
-    if (status === "APPROVED") return statusTitle.success;
-    if (status === "REJECTED") return statusTitle.cancel;
-    if (status === "DELIVERING") return statusTitle.delivering;
-  };
-
   useEffect(() => {
     setIsLoadingPage(isLoading || isFetching);
     setServerError(isError ? "Server is closed now" : null);
-    setEmptyList(orders && orders.length === 0 ? "Empty order list" : null);
-  }, [isLoading, isFetching, isError, orders]);
+  }, [isLoading, isFetching, isError, refunds]);
 
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -92,29 +77,7 @@ export const AdminOrderList = () => {
             <ClipLoader color="#000000" size={40} />
           </div>
         ) : (
-          <>
-            {filteredOrders.length === 0 ? (
-              <p>{emptyList || "No orders found."}</p>
-            ) : (
-              filteredOrders.map((order) => (
-                <Link
-                  key={order.order.orderId}
-                  to={`/dashboard/admin/order/detail/${order.order.orderId}`}
-                >
-                  <div>
-                    <strong>{order.order.fullname}'s Order</strong>
-                    <p>{order.order.orderDetails.length} items</p>
-                  </div>
-                  <p>{formatPrice(order.order.total)}</p>
-                  <span
-                    className={handleOrderStatusClassName(order.order.status)}
-                  >
-                    Status: {handleStatusTitle(order.order.status)}
-                  </span>
-                </Link>
-              ))
-            )}
-          </>
+          <></>
         )}
       </div>
     </>

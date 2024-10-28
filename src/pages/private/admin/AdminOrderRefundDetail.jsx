@@ -4,21 +4,12 @@ import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
-import "../../../styles/dashboard/myorderdetail/myorderdetail.css";
-
-// import slices
-import {
-  toggleRejectOrderModal,
-  toggleCreateRefundModal,
-} from "../../../redux/slices/modal/modal";
-import { setPaymentId } from "../../../redux/slices/order/order";
-// import redux
-import { useDispatch } from "react-redux";
+import "../../../styles/dashboard/adminorderdetail/adminorderdetail.css";
 // import service
 import * as OrderService from "../../../service/order/order";
 import * as PaypalService from "../../../service/paypal/paypal";
 import ClipLoader from "react-spinners/ClipLoader";
-export const MyOrderDetail = () => {
+export const AdminOrderRefundDetail = () => {
   const orderStatus = {
     pending: "pending",
     approved: "approved",
@@ -27,8 +18,6 @@ export const MyOrderDetail = () => {
   };
   // param
   const { orderId } = useParams();
-  // dispatch
-  const dispatch = useDispatch();
   // state
   const [orderListProduct, setOrderListProduct] = useState([]);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
@@ -44,13 +33,81 @@ export const MyOrderDetail = () => {
     queryKey: ["order-detail", orderId],
     queryFn: () => OrderService.getOrderById(orderId),
   });
+  // mutation
+  const queryClient = useQueryClient();
+  const rejectMutation = useMutation({
+    mutationKey: ["reject-order", orderId],
+    mutationFn: PaypalService.rejectOrder,
+    onMutate: () => {
+      setIsLoadingPage(true);
+    },
+    onSuccess: () => {
+      toast.success("Updated status success", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoadingPage(false);
+      queryClient.invalidateQueries(["order-detail"]);
+      queryClient.invalidateQueries(["all-orders"]);
+    },
+  });
+  const approveMutation = useMutation({
+    mutationKey: ["approve-order", orderId],
+    mutationFn: PaypalService.successOrder,
+    onMutate: () => {
+      setIsLoadingPage(true);
+    },
+    onSuccess: () => {
+      toast.success("Updated status success", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoadingPage(false);
+      queryClient.invalidateQueries(["order-detail"]);
+      queryClient.invalidateQueries(["all-orders"]);
+    },
+  });
   // handle func
-  const handleToggleCancelMyOrderModal = (paymentId) => {
-    dispatch(setPaymentId(paymentId));
-    dispatch(toggleRejectOrderModal());
+  const handleSetClassNameStatus = (status) => {
+    if (status === "PENDING") {
+      return orderStatus.pending;
+    }
+    if (status === "APPROVED") {
+      return orderStatus.approved;
+    }
+    if (status === "REJECTED") {
+      return orderStatus.rejected;
+    }
   };
-  const handleToggleCreateRefundModal = () => {
-    dispatch(toggleCreateRefundModal());
+  const handleApproveOrder = async () => {
+    try {
+      if (orderInfo?.orderId) {
+        await approveMutation.mutateAsync(orderInfo?.orderId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleRejectOrder = async () => {
+    try {
+      if (orderInfo?.orderId) {
+        await rejectMutation.mutateAsync(orderInfo?.orderId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     if (isLoading || isFetching) {
@@ -74,29 +131,15 @@ export const MyOrderDetail = () => {
       setOrderListProduct([]);
     }
   }, [orderInfo, isFetching, isError, isLoading]);
-
-  // handle func
-  const handleSetClassNameStatus = (status) => {
-    if (status === "PENDING") {
-      return orderStatus.pending;
-    }
-    if (status === "APPROVED") {
-      return orderStatus.approved;
-    }
-    if (status === "REJECTED") {
-      return orderStatus.rejected;
-    }
-  };
-
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
-
   return (
-    <div className="my-order-detail-container">
+    <div className="admin-order-detail-container">
+      <ToastContainer />
       {serverError ? (
         <>
           <div className="error-page">
@@ -118,13 +161,13 @@ export const MyOrderDetail = () => {
         </>
       ) : (
         <>
-          <div className="my-order-detail-header">
-            <h2>My Order</h2>
+          <div className="admin-order-detail-header">
+            <h2>{orderInfo.fullname}'s Order</h2>
             <p className={handleSetClassNameStatus(orderInfo.status)}>
               {orderInfo.status}
             </p>
           </div>
-          <div className="my-order-main">
+          <div className="admin-order-main">
             <table className="cart">
               <thead>
                 <tr>
@@ -148,7 +191,7 @@ export const MyOrderDetail = () => {
             <div className="info">
               <div className="header">
                 <strong>Order Information</strong>
-                <p>View all my infomation when ordering</p>
+                <p>View all infomation when ordering</p>
               </div>
               <div className="main">
                 <div className="info-item">
@@ -185,55 +228,46 @@ export const MyOrderDetail = () => {
                 </div>
               </div>
             </div>
-            {orderInfo?.status === "REJECTED" ? (
-              <>
-                <div className="reject-list">
-                  <strong className="reject-text">
-                    Sorry, your order has been rejected due to some reasons:
-                  </strong>
-                  <p className="reject-text-item">
-                    1. The item is out of stock.
-                  </p>
-                  <p className="reject-text-item">
-                    2. The shipping address provided is incomplete or invalid.
-                  </p>
-                  <p className="reject-text-item">
-                    3. There was a discrepancy in billing details.
-                  </p>
-                  <p className="reject-text-item">
-                    4. Products are error for shipping.
-                  </p>
-                  <strong className="reject-text-sorry">
-                    Izumiya apologizes for the inconvenience. We have refunded
-                    your money. We apologize again.
-                  </strong>
-                </div>
-              </>
-            ) : (
-              <>
-                {orderInfo?.status === "APPROVED" ? (
-                  <>
-                    <button
-                      className="cancel"
-                      onClick={handleToggleCreateRefundModal}
-                    >
-                      Request refund this order
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="cancel"
-                      onClick={() =>
-                        handleToggleCancelMyOrderModal(orderInfo.paymentId)
-                      }
-                    >
-                      Cancel this order
-                    </button>
-                  </>
-                )}
-              </>
-            )}
+            <div className="buttons">
+              {orderInfo?.status === "APPROVED" ? (
+                <>
+                  <button className="marked-approved">
+                    <i className="bx bx-check"></i>
+                    <p>Marked as Approved</p>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    disabled={orderInfo?.status === "REJECTED"}
+                    className={orderInfo?.status === "REJECTED" && "prevent"}
+                    onClick={handleApproveOrder}
+                  >
+                    <i className="bx bx-check"></i>
+                    <p>Mark as Approved</p>
+                  </button>
+                </>
+              )}
+              {orderInfo?.status === "REJECTED" ? (
+                <>
+                  <button className="marked-rejected">
+                    <i className="bx bx-check"></i>
+                    <p>Marked as Rejected</p>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    disabled={orderInfo?.status === "APPROVED"}
+                    onClick={handleRejectOrder}
+                    className={orderInfo?.status === "APPROVED" && "prevent"}
+                  >
+                    <i className="bx bx-x"></i>
+                    <p>Mark as Rejected</p>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </>
       )}

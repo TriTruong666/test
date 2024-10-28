@@ -34,7 +34,7 @@ select option {
     width: calc(60% - 220px);
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
+    overflow-y: auto;
   }
   .my-order-detail-container .error-page {
     width: 100%;
@@ -88,6 +88,14 @@ select option {
   .my-order-detail-container .my-order-detail-header .pending {
     background: rgba(231, 237, 129, 0.621);
     color: rgb(116, 119, 17);
+  }
+  .my-order-detail-container .my-order-detail-header .approved {
+    background: rgba(129, 237, 141, 0.621);
+    color: rgb(17, 119, 20);
+  }
+  .my-order-detail-container .my-order-detail-header .rejected {
+    background: rgba(237, 129, 129, 0.621);
+    color: rgb(223, 33, 33);
   }
   .my-order-detail-container .my-order-main {
     display: flex;
@@ -170,6 +178,25 @@ select option {
   .my-order-detail-container .my-order-main .info .main .info-item p {
     font-size: 0.85rem;
     color: rgba(0, 0, 0, 0.7);
+  }
+  .my-order-detail-container .my-order-main .reject-list {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .my-order-detail-container .my-order-main .reject-list .reject-text {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: rgb(255, 43, 43);
+  }
+  .my-order-detail-container .my-order-main .reject-list .reject-text-sorry {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: rgb(0, 0, 0);
+  }
+  .my-order-detail-container .my-order-main .reject-list .reject-text-item {
+    font-size: 0.85rem;
   }
   .my-order-detail-container .my-order-main .cancel {
     margin: 40px 0;

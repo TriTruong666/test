@@ -53,11 +53,6 @@ export const PondList = () => {
     } else {
       setServerError(null);
     }
-    if (ponds.length === 0) {
-      setEmptyList("Pond list is empty");
-    } else {
-      setEmptyList(null);
-    }
   }, [isFetching, isLoading, isError, ponds.length]);
 
   // Filter ponds based on search term
@@ -102,7 +97,7 @@ export const PondList = () => {
                 )}
                 {filteredPonds.length === 0 && (
                   <div className="empty-list">
-                    <p>No ponds match your search</p>
+                    <p>No ponds was found!</p>
                   </div>
                 )}
                 {filteredPonds.map((pond) => {
@@ -126,7 +121,6 @@ export const PondList = () => {
                           </p>
                         </div>
                         <p>{pond.kois ? pond.kois.length : "0"} Kois</p>
-                        <span className={pondStatus}>Status: {pondStatus}</span>
                       </div>
                     </Link>
                   );

@@ -199,6 +199,15 @@ const AddAccountModalSlice = createSlice({
     },
   },
 });
+const createRefundSlice = createSlice({
+  name: "createRefundModal",
+  initialState: { isToggleModal: false },
+  reducers: {
+    toggleCreateRefundModal: (state) => {
+      state.isToggleModal = !state.isToggleModal;
+    },
+  },
+});
 // Export the action
 export const { toggleSuccessModal } = SuccessModalSlice.actions;
 export const { toggleAddPondModal } = AddPondModalSlice.actions;
@@ -224,6 +233,7 @@ export const { toggleDeleteProductModal } = DeleteProductModalSlice.actions;
 export const { toggleKoiLogModal } = AddKoiLogModalSlice.actions;
 export const { toggleDeleteAccountModal } = DeleteAccountModalSlice.actions;
 export const { toggleAccountModal } = AddAccountModalSlice.actions;
+export const { toggleCreateRefundModal } = createRefundSlice.actions;
 
 // Combine reducers
 const ModalReducer = combineReducers({
@@ -248,6 +258,7 @@ const ModalReducer = combineReducers({
   addKoiLogModal: AddKoiLogModalSlice.reducer,
   deleteAccountModal: DeleteAccountModalSlice.reducer,
   addAccountModal: AddAccountModalSlice.reducer,
+  createRefundModal: createRefundSlice.reducer,
 });
 
 export default ModalReducer;

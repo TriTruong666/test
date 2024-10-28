@@ -98,6 +98,12 @@ select option {
   .admin-order-list a .pending {
     color: rgb(213, 213, 15);
   }
+  .admin-order-list a .success {
+    color: rgb(15, 213, 22);
+  }
+  .admin-order-list a .cancel {
+    color: rgb(213, 15, 15);
+  }
   .admin-order-list a:hover {
     background: rgba(0, 0, 0, 0.049);
   }

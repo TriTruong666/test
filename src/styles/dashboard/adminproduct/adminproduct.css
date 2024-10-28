@@ -81,6 +81,7 @@ select option {
     color: rgba(0, 0, 0, 0.9);
   }
   .admin-product-container .admin-product .admin-product-utils .filter {
+    width: 200px;
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.1);
@@ -88,6 +89,7 @@ select option {
     position: relative;
   }
   .admin-product-container .admin-product .admin-product-utils .filter select {
+    cursor: pointer;
     font-size: 0.7rem;
     width: 100%;
     padding: 5px 15px;

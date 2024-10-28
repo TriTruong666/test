@@ -55,6 +55,29 @@ select option {
     padding: 20px 40px;
     justify-content: space-between;
   }
+  .admin-blog-container .admin-blog .admin-blog-utils .search-blog {
+    display: flex;
+    padding: 5px 10px;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -moz-column-gap: 10px;
+         column-gap: 10px;
+    border-radius: 10px;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .search-blog i {
+    font-size: 0.85rem;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .search-blog ::-moz-placeholder {
+    font-size: 0.7rem;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .search-blog ::placeholder {
+    font-size: 0.7rem;
+  }
+  .admin-blog-container .admin-blog .admin-blog-utils .search-blog input {
+    width: 170px;
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
   .admin-blog-container .admin-blog .admin-blog-utils .filter {
     width: 200px;
     display: flex;

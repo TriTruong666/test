@@ -28,6 +28,29 @@
                 padding: 20px 40px;
                 justify-content: space-between;
 
+                .search-blog {
+                    display: flex;
+                    padding: 5px 10px;
+                    align-items: center;
+                    border: 1px solid rgba(0, 0, 0, .2);
+                    column-gap: 10px;
+                    border-radius: 10px;
+
+                    i {
+                        font-size: 0.85rem;
+                    }
+
+                    ::placeholder {
+                        font-size: 0.7rem;
+                    }
+
+                    input {
+                        width: 170px;
+                        font-size: 0.7rem;
+                        color: $fade-black;
+                    }
+                }
+
                 .filter {
                     width: 200px;
                     display: flex;

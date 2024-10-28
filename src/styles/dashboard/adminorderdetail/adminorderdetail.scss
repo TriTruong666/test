@@ -67,7 +67,16 @@
             .pending {
                 background: rgba(231, 237, 129, 0.621);
                 color: rgb(116, 119, 17);
+            }
 
+            .approved {
+                background: rgba(129, 237, 141, 0.621);
+                color: rgb(17, 119, 20);
+            }
+
+            .rejected {
+                background: rgba(237, 129, 129, 0.621);
+                color: rgb(223, 33, 33);
             }
         }
 
@@ -187,13 +196,46 @@
                 justify-content: space-between;
                 column-gap: 25px;
 
+                .marked-approved {
+                    cursor: not-allowed;
+                    color: green;
+                    border: 1px solid green;
+
+                    p {
+                        font-weight: 600;
+                    }
+                }
+
+                .marked-approved:hover,
+                .marked-rejected:hover {
+                    background: none;
+                }
+
+                .marked-rejected {
+                    cursor: not-allowed;
+                    color: rgb(214, 44, 44);
+                    border: 1px solid rgb(214, 44, 44);
+
+                    p {
+                        font-weight: 600;
+                    }
+                }
+
+                .prevent {
+                    cursor: not-allowed;
+                }
+
+                .prevent:hover {
+                    background: none;
+                }
+
                 button {
                     width: 50%;
                     padding: 10px 20px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: black;
+                    color: rgb(0, 0, 0);
                     border: 1px solid black;
                     border-radius: 15px;
                     column-gap: 10px;

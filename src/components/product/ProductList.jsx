@@ -8,16 +8,20 @@ import "../../styles/components/product/product.css";
 import * as ProductService from "../../service/product/productService";
 // import slices
 import {
+  toggleAddProductModal,
   toggleDeleteProductModal,
   toggleUpdateProductModal,
 } from "../../redux/slices/modal/modal";
 import { setProductId } from "../../redux/slices/product/product";
 
-export const ProductList = ({ searchTerm, filterBy }) => {
+export const ProductList = () => {
   const dispatch = useDispatch();
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
+
   // query
   const {
     data: products = [],
@@ -43,27 +47,38 @@ export const ProductList = ({ searchTerm, filterBy }) => {
     }
 
     setIsLoadingPage(isFetching || isLoading);
-  }, [isFetching, isLoading, isError]);
+  }, [isFetching, isLoading, isError, products.length]);
 
-  // Filter and sort products based on searchTerm and filterBy
-  const filteredProducts = products.filter((product) =>
-    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
-  ).sort((a, b) => {
-    if (filterBy === "stock") {
-      return a.stock - b.stock;
-    } else if (filterBy === "name") {
-      return a.productName.localeCompare(b.productName);
-    } else if (filterBy === "price") {
-      return a.unitPrice - b.unitPrice;
-    }
-    return 0;
-  });
+  const filteredProducts = products
+    .filter((product) =>
+      product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (filterBy === "stock") {
+        return a.stock - b.stock;
+      } else if (filterBy === "name") {
+        return a.productName.localeCompare(b.productName);
+      } else if (filterBy === "price") {
+        return a.unitPrice - b.unitPrice;
+      }
+      return 0;
+    });
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
 
   const handleToggleUpdateProductModal = (id) => {
     dispatch(setProductId(id));
     dispatch(toggleUpdateProductModal());
   };
-
+  const handleToggleAddProductModal = () => {
+    dispatch(toggleAddProductModal());
+  };
   const handleToggleDelProductModal = (id) => {
     dispatch(setProductId(id));
     dispatch(toggleDeleteProductModal());
@@ -78,6 +93,35 @@ export const ProductList = ({ searchTerm, filterBy }) => {
 
   return (
     <>
+      <div className="admin-product-utils">
+        <div className="search-product">
+          <i className="bx bx-search"></i>
+          <input
+            type="text"
+            placeholder="Search product..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <div className="filter">
+          <select
+            name="filterBy"
+            id="filterBy"
+            value={filterBy}
+            onChange={handleFilterChange}
+          >
+            <option value="">Filter</option>
+            <option value="stock">By Stock</option>
+            <option value="name">By Name</option>
+            <option value="price">By Price</option>
+          </select>
+          <i className="bx bx-chevron-down"></i>
+        </div>
+        <div className="add" onClick={handleToggleAddProductModal}>
+          <i className="bx bx-plus"></i>
+          <p>Create new product</p>
+        </div>
+      </div>
       <table className="product-list-table">
         <thead>
           <tr>
@@ -127,12 +171,12 @@ export const ProductList = ({ searchTerm, filterBy }) => {
                       handleToggleUpdateProductModal(product.productId)
                     }
                   ></i>
-                  <i
+                  {/* <i
                     className="bx bxs-trash-alt"
                     onClick={() =>
                       handleToggleDelProductModal(product.productId)
                     }
-                  ></i>
+                  ></i> */}
                 </td>
               </tr>
             ))

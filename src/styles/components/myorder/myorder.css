@@ -100,6 +100,12 @@ select option {
   .myorder-list a .pending {
     color: rgb(213, 213, 15);
   }
+  .myorder-list a .success {
+    color: rgb(15, 213, 22);
+  }
+  .myorder-list a .cancel {
+    color: rgb(213, 15, 15);
+  }
   .myorder-list a:hover {
     background: rgba(0, 0, 0, 0.049);
   }

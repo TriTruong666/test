@@ -79,6 +79,14 @@
             .pending {
                 color: rgb(213, 213, 15);
             }
+
+            .success {
+                color: rgb(15, 213, 22);
+            }
+
+            .cancel {
+                color: rgb(213, 15, 15);
+            }
         }
 
         a:hover {

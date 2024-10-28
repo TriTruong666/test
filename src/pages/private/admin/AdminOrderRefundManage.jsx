@@ -2,18 +2,18 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 // import components
 import { Dashnav } from "../../../components/navbar/Dashnav";
-import { AdminOrderList } from "../../../components/adminorder/AdminOrderList";
+import { AdminRefundList } from "../../../components/adminrefund/AdminRefundList";
 // import styles
 import "../../../styles/dashboard/adminorder/adminorder.css";
-export const AdminOrderManage = () => {
+export const AdminOrderRefundManage = () => {
   return (
     <div className="admin-order-container">
       <Dashnav />
       <div className="admin-order">
         <div className="admin-order-header">
-          <strong>Order Manager</strong>
+          <strong>Refund Request List</strong>
         </div>
-        <AdminOrderList />
+        <AdminRefundList />
       </div>
       <Outlet />
     </div>

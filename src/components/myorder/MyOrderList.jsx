@@ -40,14 +40,17 @@ export const MyOrderList = () => {
 
   // handle func
   const handleOrderStatusClassName = (status) => {
-    if (status === "PENDING") {
-      return statusClassName.pending;
-    }
+    if (status === "PENDING") return statusClassName.pending;
+    if (status === "APPROVED") return statusClassName.success;
+    if (status === "REJECTED") return statusClassName.cancel;
+    if (status === "DELIVERING") return statusClassName.delivering;
   };
+
   const handleStatusTitle = (status) => {
-    if (status === "PENDING") {
-      return statusTitle.pending;
-    }
+    if (status === "PENDING") return statusTitle.pending;
+    if (status === "APPROVED") return statusTitle.success;
+    if (status === "REJECTED") return statusTitle.cancel;
+    if (status === "DELIVERING") return statusTitle.delivering;
   };
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

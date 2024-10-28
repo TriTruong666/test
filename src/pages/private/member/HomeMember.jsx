@@ -190,7 +190,7 @@ export const HomeMember = () => {
                 <div className="left-chart">
                   <h3>Recommend Products for your ponds</h3>
                   {recommendedProducts.length === 0 ? (
-                    <p>You have not create any ponds</p>
+                    <p>You have not created any ponds</p>
                   ) : (
                     <ul className="recommended-products-list">
                       {recommendedProducts.slice(0, 3).map((product) => (

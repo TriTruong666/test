@@ -104,7 +104,7 @@ export const Buynow = () => {
     });
   };
   useEffect(() => {
-    if (!productInfo?.productId) {
+    if (!productId) {
       navigate("/shop");
     }
     if (token && user) {

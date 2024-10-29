@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
@@ -11,6 +11,7 @@ import { setUserId } from "../../redux/slices/account/account";
 import {
   toggleAccountModal,
   toggleDeleteAccountModal,
+  toggleUnlockAccountModal,
 } from "../../redux/slices/modal/modal";
 
 export const AccountList = () => {
@@ -23,7 +24,9 @@ export const AccountList = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [submitData, setSubmitData] = useState({
+    status: true,
+  });
   // query
   const {
     data: users = [],
@@ -36,7 +39,6 @@ export const AccountList = () => {
     refetchOnWindowFocus: false,
   });
 
-  // Search handler
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -51,7 +53,10 @@ export const AccountList = () => {
     dispatch(setUserId(userId));
     dispatch(toggleDeleteAccountModal());
   };
-
+  const handleToggleUnlockAccountModal = (userId) => {
+    dispatch(setUserId(userId));
+    dispatch(toggleUnlockAccountModal());
+  };
   const handleToggleAddAccountModal = () => {
     dispatch(toggleAccountModal());
   };
@@ -120,16 +125,33 @@ export const AccountList = () => {
                 <td>{user.phone || "NULL"}</td>
                 <td>{user.address || "NULL"}</td>
                 <td>{user.role}</td>
-                <td>
-                  {user.userId === ownUserId ? (
-                    ""
-                  ) : (
-                    <i
-                      className="bx bxs-trash"
-                      onClick={() => handleToggleDelAccountModal(user.userId)}
-                    ></i>
-                  )}
-                </td>
+                {!user.status ? (
+                  <>
+                    <td>
+                      <i
+                        className="bx bx-lock-open-alt"
+                        onClick={() =>
+                          handleToggleUnlockAccountModal(user.userId)
+                        }
+                      ></i>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>
+                      {user.role === "ADMIN" ? (
+                        ""
+                      ) : (
+                        <i
+                          className="bx bx-block"
+                          onClick={() =>
+                            handleToggleDelAccountModal(user.userId)
+                          }
+                        ></i>
+                      )}
+                    </td>
+                  </>
+                )}
               </tr>
             ))
           )}

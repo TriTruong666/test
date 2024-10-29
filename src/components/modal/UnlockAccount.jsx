@@ -6,25 +6,31 @@ import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import slices
-import { toggleDeleteAccountModal } from "../../redux/slices/modal/modal";
+import { toggleUnlockAccountModal } from "../../redux/slices/modal/modal";
 // import service
 import * as AccountService from "../../service/account/AccountService";
-export const DelAccount = () => {
+export const UnlockAccount = () => {
   // dispatch
   const dispatch = useDispatch();
-  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   // selector
   const userId = useSelector((state) => state.account.userId.userId);
+  //   state
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
+  const [submitData, setSubmitData] = useState({
+    status: true,
+  });
   //   mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["del-account", userId],
-    mutationFn: AccountService.deleteAccount,
+    mutationKey: ["unlock-account", userId],
+    mutationFn: (updateData) => {
+      AccountService.updateStatusAccount(userId, updateData);
+    },
     onMutate: () => {
       setIsPreventSubmit(true);
     },
     onSuccess: () => {
-      toast.success("Block successfully", {
+      toast.success("Unlock successfully", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -42,10 +48,10 @@ export const DelAccount = () => {
     },
   });
   //   handle func
-  const handleToggleDelAccountModal = () => {
-    dispatch(toggleDeleteAccountModal());
+  const handleToggleUnlockAccountModal = () => {
+    dispatch(toggleUnlockAccountModal());
   };
-  const handleDeleteAccount = async (e) => {
+  const handleUnlockAccount = async (e) => {
     e.preventDefault();
     if (isPreventSubmit) {
       toast.error("On going process, try again later", {
@@ -61,24 +67,24 @@ export const DelAccount = () => {
       return;
     }
     try {
-      await mutation.mutateAsync(userId);
+      await mutation.mutateAsync(submitData);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className="del-account-containter">
+    <div className="unlock-account-containter">
       <ToastContainer />
-      <div className="del-account-modal">
-        <div className="del-account-header">
-          <strong>Block Account</strong>
-          <i className="bx bx-x" onClick={handleToggleDelAccountModal}></i>
+      <div className="unlock-account-modal">
+        <div className="unlock-account-header">
+          <strong>Unlock Account</strong>
+          <i className="bx bx-x" onClick={handleToggleUnlockAccountModal}></i>
         </div>
-        <div className="del-account-main">
-          <p>Are you sure to block this account #{userId}</p>
+        <div className="unlock-account-main">
+          <p>Are you sure to unlock this account #{userId}</p>
         </div>
         <div className="submit">
-          <button onClick={handleDeleteAccount}>Block Confirm</button>
+          <button onClick={handleUnlockAccount}>Unlock Confirm</button>
         </div>
       </div>
     </div>

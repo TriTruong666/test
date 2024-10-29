@@ -1,9 +1,8 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import SyncLoader from "react-spinners/SyncLoader";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -15,6 +14,7 @@ import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
 
 export const Checkout = () => {
+  const phoneRegex = "/^(()?d{3}())?(-|s)?d{3}(-|s)d{4}$/";
   // navigate
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -118,6 +118,19 @@ export const Checkout = () => {
       return;
     }
     setRequiredField(null);
+    if (!phoneRegex.test(submitData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       const totalPrice = calculateTotalPrice();
       const updatedSubmitData = {

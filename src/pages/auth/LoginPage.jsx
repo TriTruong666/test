@@ -37,6 +37,7 @@ export const LoginPage = () => {
   const [wrongPassEmail, setWrongPassEmail] = useState(null);
   const [requiredField, setRequiredField] = useState(null);
   const [existedEmail, setExistedEmail] = useState(null);
+  const [blockedAccount, setBlockedAccount] = useState(null);
 
   // mutation
   const queryCilent = useQueryClient();
@@ -50,6 +51,10 @@ export const LoginPage = () => {
       setResponseData(responseData);
       if (responseData && responseData.code === "LOGIN_FAIL") {
         setWrongPassEmail("Wrong email or password");
+      } else if (responseData && responseData.code === "USER_INACTIVE") {
+        setBlockedAccount(
+          "Your account had been blocked, please contact to izumiyakoi686@gmail.com to resolve the problem!"
+        );
       } else {
         setWrongPassEmail(null);
         dispatch(toggleSuccessModal());
@@ -109,7 +114,12 @@ export const LoginPage = () => {
       setIsLoading(false);
       if (responseData && responseData.code === "EMAIL_EXISTED") {
         setExistedEmail("This email have existed, please try another one");
+      } else if (responseData && responseData.code === "USER_INACTIVE") {
+        setBlockedAccount(
+          "Your account had been blocked, please contact to izumiyakoi686@gmail.com to resolve the problem!"
+        );
       } else {
+        setBlockedAccount(null);
         setExistedEmail(null);
         dispatch(toggleSuccessModal());
         setTimeout(() => {
@@ -197,6 +207,7 @@ export const LoginPage = () => {
             {validEmail && <p className="fail">{validEmail}</p>}
             {wrongPassEmail && <p className="fail">{wrongPassEmail}</p>}
             {existedEmail && <p className="fail">{existedEmail}</p>}
+            {blockedAccount && <p className="fail">{blockedAccount}</p>}
             <Link to="/forget">Forget password?</Link>
             <input type="submit" value="Login To Izumiya" />
           </form>

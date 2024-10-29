@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import slices
@@ -8,16 +10,37 @@ import { toggleRejectOrderModal } from "../../redux/slices/modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 // import service
 import * as PaypalService from "../../service/paypal/paypal";
+import ClipLoader from "react-spinners/ClipLoader";
 export const CancelOrder = () => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const paymentId = useSelector((state) => state.order.paymentId.paymentId);
+  const orderId = useSelector((state) => state.order.orderId.orderId);
+  // state
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
   // mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["rejectOrder"],
+    mutationKey: ["reject-order", orderId],
     mutationFn: PaypalService.rejectOrder,
+    onMutate: () => {
+      setIsLoadingModal(true);
+    },
+    onSuccess: () => {
+      toast.success("Cancel order success", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoadingModal(false);
+      queryClient.invalidateQueries(["order-detail"]);
+      queryClient.invalidateQueries(["all-orders"]);
+    },
   });
   // handle func
   const handleToggleCancelMyOrderModal = () => {
@@ -26,24 +49,38 @@ export const CancelOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await mutation.mutateAsync(paymentId);
+      await mutation.mutateAsync(orderId);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="cancel-order-containter">
+      <ToastContainer />
       <div className="cancel-order-modal">
-        <div className="cancel-order-header">
-          <strong>Cancel Order</strong>
-          <i className="bx bx-x" onClick={handleToggleCancelMyOrderModal}></i>
-        </div>
-        <div className="cancel-order-main">
-          <p>Are you sure to cancel order {paymentId}?</p>
-        </div>
-        <div className="submit">
-          <button onClick={handleSubmit}>Cancel this order</button>
-        </div>
+        {isLoadingModal ? (
+          <>
+            <div className="loading">
+              <ClipLoader color="#000000" size={40} />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="cancel-order-header">
+              <strong>Cancel Order</strong>
+              <i
+                className="bx bx-x"
+                onClick={handleToggleCancelMyOrderModal}
+              ></i>
+            </div>
+            <div className="cancel-order-main">
+              <p>Are you sure to cancel order {orderId}?</p>
+            </div>
+            <div className="submit">
+              <button onClick={handleSubmit}>Cancel this order</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

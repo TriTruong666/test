@@ -11,12 +11,12 @@ import {
   toggleRejectOrderModal,
   toggleCreateRefundModal,
 } from "../../../redux/slices/modal/modal";
-import { setPaymentId } from "../../../redux/slices/order/order";
+import { setOrderId } from "../../../redux/slices/order/order";
 // import redux
 import { useDispatch } from "react-redux";
 // import service
 import * as OrderService from "../../../service/order/order";
-import * as PaypalService from "../../../service/paypal/paypal";
+
 import ClipLoader from "react-spinners/ClipLoader";
 export const MyOrderDetail = () => {
   const orderStatus = {
@@ -45,8 +45,8 @@ export const MyOrderDetail = () => {
     queryFn: () => OrderService.getOrderById(orderId),
   });
   // handle func
-  const handleToggleCancelMyOrderModal = (paymentId) => {
-    dispatch(setPaymentId(paymentId));
+  const handleToggleCancelMyOrderModal = (orderId) => {
+    dispatch(setOrderId(orderId));
     dispatch(toggleRejectOrderModal());
   };
   const handleToggleCreateRefundModal = () => {
@@ -257,7 +257,7 @@ export const MyOrderDetail = () => {
                         <button
                           className="cancel"
                           onClick={() =>
-                            handleToggleCancelMyOrderModal(orderInfo.paymentId)
+                            handleToggleCancelMyOrderModal(orderInfo.orderId)
                           }
                         >
                           Cancel this order

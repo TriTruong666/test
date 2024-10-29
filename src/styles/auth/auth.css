@@ -58,7 +58,7 @@ select option {
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 1;
-  padding: 80px 150px;
+  padding: 50px 150px;
   display: flex;
   -moz-column-gap: 50px;
        column-gap: 50px;
@@ -71,7 +71,7 @@ select option {
   justify-content: space-between;
   background: #131313;
   border-radius: 15px;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 .cover .login-container .login-main .login-header {
   display: flex;
@@ -143,6 +143,7 @@ select option {
   position: absolute;
   left: 93%;
   color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
 }
 .cover .login-container .login-main .login-form a {
   font-size: 0.7rem;

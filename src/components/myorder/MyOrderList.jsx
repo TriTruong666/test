@@ -23,9 +23,9 @@ export const MyOrderList = () => {
 
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
 
   // query
   const {
@@ -55,7 +55,9 @@ export const MyOrderList = () => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -67,11 +69,6 @@ export const MyOrderList = () => {
     } else {
       setServerError(null);
     }
-    if (myOrders && myOrders.length === 0) {
-      setEmptyList("Your orders are empty");
-    } else {
-      setEmptyList(null);
-    }
   }, [isFetching, isLoading, isError, myOrders]);
 
   const formatPrice = (price) =>
@@ -81,10 +78,21 @@ export const MyOrderList = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
-  const filteredOrders = myOrders.filter((order) =>
-    order.order?.orderId?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const filteredOrders = myOrders
+    .filter((order) =>
+      (order.order.fullname || "")
+        .toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (filterBy === "status") {
+        return a.order.status.localeCompare(b.order.status);
+      } else if (filterBy === "price") {
+        return a.order.total - b.order.total;
+      }
+      return 0;
+    });
   return (
     <>
       <div className="order-manage-utils">
@@ -97,6 +105,19 @@ export const MyOrderList = () => {
             onChange={handleSearchChange}
           />
         </div>
+        <div className="filter">
+          <select
+            name="filterBy"
+            id="filterBy"
+            value={filterBy}
+            onChange={handleFilterChange}
+          >
+            <option value="">Filter</option>
+            <option value="status">By Status</option>
+            <option value="price">By Order Value</option>
+          </select>
+          <i className="bx bx-chevron-down"></i>
+        </div>
       </div>
       <div className="myorder-list">
         {isLoadingPage ? (
@@ -106,10 +127,6 @@ export const MyOrderList = () => {
         ) : serverError ? (
           <div className="server-error">
             <p>{serverError}</p>
-          </div>
-        ) : emptyList ? (
-          <div className="empty">
-            <p>{emptyList}</p>
           </div>
         ) : (
           <>

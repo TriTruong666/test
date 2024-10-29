@@ -22,8 +22,10 @@ export const AdminRefundList = () => {
 
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [serverError, setServerError] = useState(null);
+  const [isServerError, setIsServerError] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
 
   // query
   const {
@@ -35,13 +37,25 @@ export const AdminRefundList = () => {
     queryKey: ["all-refund"],
     queryFn: RefundService.getAllRefundRequest,
   });
-  // handle func
-  const filteredRefunds = refunds?.filter((refund) =>
-    refund.orderId.toString().includes(searchTerm)
-  );
 
+  const filteredRefunds = refunds
+    .filter((refund) =>
+      (refund.refundRequestId || "")
+        .toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (filterBy === "status") {
+        return a.status.localeCompare(b.status);
+      }
+      return 0;
+    });
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+  };
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
   };
   const handleRefundStatusClassName = (status) => {
     if (status === "PENDING") return statusClassName.pending;
@@ -58,7 +72,7 @@ export const AdminRefundList = () => {
   };
   useEffect(() => {
     setIsLoadingPage(isLoading || isFetching);
-    setServerError(isError ? "Server is closed now" : null);
+    setIsServerError(isError);
   }, [isLoading, isFetching, isError, refunds]);
 
   return (
@@ -73,12 +87,30 @@ export const AdminRefundList = () => {
             onChange={handleSearchChange}
           />
         </div>
+        <div className="filter">
+          <select
+            name="filterBy"
+            id="filterBy"
+            value={filterBy}
+            onChange={handleFilterChange}
+          >
+            <option value="">Filter</option>
+            <option value="status">By Status</option>
+          </select>
+          <i className="bx bx-chevron-down"></i>
+        </div>
       </div>
       <div className="admin-refund-list">
         {isLoadingPage ? (
           <div className="loading">
             <ClipLoader color="#000000" size={40} />
           </div>
+        ) : isServerError ? (
+          <>
+            <div className="server-error">
+              <p>Server is closed now</p>
+            </div>
+          </>
         ) : (
           <>
             {filteredRefunds.length === 0 ? (

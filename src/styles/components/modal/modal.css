@@ -1579,6 +1579,63 @@ select option {
     color: white;
     cursor: pointer;
   }
+  .unlock-account-containter {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .unlock-account-containter ::-webkit-scrollbar {
+    width: 0;
+  }
+  .unlock-account-containter .unlock-account-modal {
+    width: 500px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header strong {
+    font-size: 1.3rem;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-main {
+    margin: 30px 0;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-main p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .unlock-account-containter .unlock-account-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .unlock-account-containter .unlock-account-modal .submit button:nth-child(1) {
+    width: 100%;
+    padding: 10px 50px;
+    background: rgb(0, 255, 13);
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .del-product-containter {
     position: fixed;
     width: 100vw;
@@ -1714,6 +1771,13 @@ select option {
     border-radius: 15px;
     padding: 40px;
     overflow-y: auto;
+  }
+  .cancel-order-containter .cancel-order-modal .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .cancel-order-containter .cancel-order-modal .cancel-order-header {
     display: flex;

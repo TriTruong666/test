@@ -23,9 +23,9 @@ export const AdminOrderList = () => {
 
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
-  const [serverError, setServerError] = useState(null);
+  const [isServerError, setIsServerError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
 
   // query
   const {
@@ -37,17 +37,33 @@ export const AdminOrderList = () => {
     queryKey: ["all-orders"],
     queryFn: OrderService.getAllOrders,
   });
-  // handle func
-  const filteredOrders = orders.filter((order) =>
-    (order.order.fullname || "")
-      .toString()
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
 
+  // handle func
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
+
+  const filteredOrders = orders
+    .filter((order) =>
+      (order.order.fullname || "")
+        .toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (filterBy === "status") {
+        return a.order.status.localeCompare(b.order.status);
+      } else if (filterBy === "name") {
+        return a.order.fullname.localeCompare(b.order.fullname);
+      } else if (filterBy === "price") {
+        return a.order.total - b.order.total;
+      }
+      return 0;
+    });
 
   const handleOrderStatusClassName = (status) => {
     if (status === "PENDING") return statusClassName.pending;
@@ -65,8 +81,7 @@ export const AdminOrderList = () => {
 
   useEffect(() => {
     setIsLoadingPage(isLoading || isFetching);
-    setServerError(isError ? "Server is closed now" : null);
-    setEmptyList(orders && orders.length === 0 ? "Empty order list" : null);
+    setIsServerError(isError);
   }, [isLoading, isFetching, isError, orders]);
 
   const formatPrice = (price) =>
@@ -88,12 +103,32 @@ export const AdminOrderList = () => {
             onChange={handleSearchChange}
           />
         </div>
+        <div className="filter">
+          <select
+            name="filterBy"
+            id="filterBy"
+            value={filterBy}
+            onChange={handleFilterChange}
+          >
+            <option value="">Filter</option>
+            <option value="status">By Status</option>
+            <option value="name">By Name</option>
+            <option value="price">By Price</option>
+          </select>
+          <i className="bx bx-chevron-down"></i>
+        </div>
       </div>
       <div className="admin-order-list">
         {isLoadingPage ? (
           <div className="loading">
             <ClipLoader color="#000000" size={40} />
           </div>
+        ) : isServerError ? (
+          <>
+            <div className="server-error">
+              <p>Server is closed now</p>
+            </div>
+          </>
         ) : (
           <>
             {filteredOrders.length === 0 ? (

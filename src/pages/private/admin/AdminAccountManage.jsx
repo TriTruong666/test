@@ -5,6 +5,7 @@ import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
 import { AccountList } from "../../../components/account/AccountList";
 import { DelAccount } from "../../../components/modal/DelAccount";
+import { UnlockAccount } from "../../../components/modal/UnlockAccount";
 import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AddAccountAdmin } from "../../../components/modal/AddAccountAdmin";
 export const AdminAccountManage = () => {
@@ -14,8 +15,12 @@ export const AdminAccountManage = () => {
   const isToggleAddAccountModal = useSelector(
     (state) => state.modal.addAccountModal.isToggleModal
   );
+  const isToggleUnlockAccountModal = useSelector(
+    (state) => state.modal.unlockAccountModal.isToggleModal
+  );
   return (
     <div className="admin-account-container">
+      {isToggleUnlockAccountModal && <UnlockAccount />}
       {isToggleAddAccountModal && <AddAccountAdmin />}
       {isToggleDelAccountModal && <DelAccount />}
       <Dashnav />

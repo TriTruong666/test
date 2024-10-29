@@ -37,6 +37,7 @@ export const ProductDetail = () => {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+  const userRole = user?.role || null;
   // state
   const [serverError, setServerError] = useState(null);
   const [cartId, setCartId] = useState(null);
@@ -148,7 +149,16 @@ export const ProductDetail = () => {
                   }}
                 />
                 <div>
-                  <Link to={`/buynow/${productId}`}>BUY PRODUCT</Link>
+                  {!user && !token ? (
+                    <>
+                      <Link to="/login">Login to buy this product!</Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link to={`/buynow/${productId}`}>BUY PRODUCT</Link>
+                    </>
+                  )}
+
                   {token && user && (
                     <button onClick={() => handleAddToCartMember(product)}>
                       ADD TO CART
@@ -178,9 +188,22 @@ export const ProductDetail = () => {
                     {product.productName}
                   </Link>
                   <p>{formatPrice(product.unitPrice)}</p>
-                  <Link className="buynow" to={`/buynow/${product.productId}`}>
-                    Buy now
-                  </Link>
+                  {user && token ? (
+                    <>
+                      <Link
+                        className="buynow"
+                        to={`/buynow/${product.productId}`}
+                      >
+                        Buy now
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link className="buynow" to="/login">
+                        You have to login first
+                      </Link>
+                    </>
+                  )}
                 </div>
               ))}
           </div>

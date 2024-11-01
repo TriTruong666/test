@@ -14,7 +14,6 @@ import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
 
 export const Checkout = () => {
-  const phoneRegex = "/^(()?d{3}())?(-|s)?d{3}(-|s)d{4}$/";
   // navigate
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -78,7 +77,7 @@ export const Checkout = () => {
   });
 
   useEffect(() => {
-    if (cartData?.cartItems.length === 0) {
+    if (cartData?.cartItems?.length === 0) {
       navigate("/cart");
     }
     if (token && user) {
@@ -252,6 +251,11 @@ export const Checkout = () => {
                       {!item.product.status && (
                         <p style={{ color: "red", marginTop: "5px" }}>
                           This product is not available for sale now.
+                        </p>
+                      )}
+                      {item.product.stock < item.quantity && (
+                        <p style={{ color: "orange", marginTop: "5px" }}>
+                          This product is not enough stock.
                         </p>
                       )}
                     </div>

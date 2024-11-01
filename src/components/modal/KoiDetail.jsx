@@ -45,6 +45,7 @@ export const KoiDetail = () => {
       typeof recommendedFoodAmount === "number"
         ? recommendedFoodAmount.toFixed(2)
         : "0.00";
+    localStorage.setItem(`koi-food-for-${koiId}`, foodAmount);
 
     if (age < 1) {
       return `For koi under 1 year of age, we recommend feeding them approximately ${foodAmount} grams of high-protein pellets per day. Younger koi are growing rapidly, so providing them with a nutrient-dense diet is essential.`;

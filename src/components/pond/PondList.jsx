@@ -60,6 +60,15 @@ export const PondList = () => {
     pond.pondName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const getTotalFoodAmountForPond = (koiList) => {
+    return koiList
+      .reduce((total, koi) => {
+        const foodAmount =
+          parseFloat(localStorage.getItem(`koi-food-for-${koi.koiId}`)) || 0;
+        return total + foodAmount;
+      }, 0)
+      .toFixed(2);
+  };
   return (
     <>
       <div className="pondmanage-utils">
@@ -122,6 +131,9 @@ export const PondList = () => {
                         </div>
                         <span className={pondStatus}>Status: {pondStatus}</span>
                         <p>{pond.kois ? pond.kois.length : "0"} Kois</p>
+                        <p>
+                          Total food: {getTotalFoodAmountForPond(pond.kois)} g
+                        </p>
                       </div>
                     </Link>
                   );

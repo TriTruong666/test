@@ -188,6 +188,24 @@ select option {
     padding: 20px 40px;
     border-radius: 15px;
   }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container label {
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container select {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
   .admin-summary-container .summary .chart-container .charts .right-chart h3 {
     font-size: 0.9rem;
     text-align: center;

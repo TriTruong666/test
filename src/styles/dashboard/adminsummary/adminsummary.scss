@@ -158,6 +158,26 @@
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             padding: 20px 40px;
             border-radius: 15px;
+            .filter-container {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 15px;
+
+              label {
+                margin-right: 10px;
+                font-size: 0.9rem;
+                color: $fade-black;
+              }
+
+              select {
+                padding: 5px 10px;
+                font-size: 0.9rem;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+                cursor: pointer;
+              }
+            }
             h3 {
               font-size: 0.9rem;
               text-align: center;

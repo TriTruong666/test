@@ -1,7 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 
 export const RevenueChart = ({ orders }) => {
+  const [timeRange, setTimeRange] = useState("day");
+
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -9,31 +11,46 @@ export const RevenueChart = ({ orders }) => {
       minimumFractionDigits: 2,
     }).format(price);
 
-  // Process data to get daily revenue and total orders
+  const formatDate = (date) => {
+    switch (timeRange) {
+      case "day":
+        return date.toLocaleDateString();
+      case "month":
+        return `${date.getMonth() + 1}-${date.getFullYear()}`;
+      case "year":
+        return date.getFullYear().toString();
+      default:
+        return date.toLocaleDateString();
+    }
+  };
+
+  // Process data to get revenue based on the selected time range
   const chartData = useMemo(() => {
-    const dailyData = orders.reduce((acc, order) => {
-      const orderDate = new Date(order.order.createDate).toLocaleDateString();
-      if (!acc[orderDate]) {
-        acc[orderDate] = {
+    const filteredData = orders.reduce((acc, order) => {
+      const orderDate = new Date(order.order.createDate);
+      const formattedDate = formatDate(orderDate);
+
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = {
           revenue: 0,
           totalOrders: 0,
         };
       }
-      acc[orderDate].revenue += order.order.total;
-      acc[orderDate].totalOrders += 1;
+
+      acc[formattedDate].revenue += order.order.total;
+      acc[formattedDate].totalOrders += 1;
       return acc;
     }, {});
 
-    return Object.entries(dailyData)
+    return Object.entries(filteredData)
       .map(([date, { revenue, totalOrders }]) => ({
         date,
         revenue,
         totalOrders,
       }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
-  }, [orders]);
+  }, [orders, timeRange]);
 
-  // Configure chart options and series
   const chartOptions = {
     chart: {
       type: "area",
@@ -63,6 +80,17 @@ export const RevenueChart = ({ orders }) => {
   return (
     <>
       <h3>Revenue and Total Orders</h3>
+      <div className="filter-container">
+        <label>View by: </label>
+        <select
+          onChange={(e) => setTimeRange(e.target.value)}
+          value={timeRange}
+        >
+          <option value="day">Day</option>
+          <option value="month">Month</option>
+          <option value="year">Year</option>
+        </select>
+      </div>
       <Chart
         options={chartOptions}
         series={chartSeries}

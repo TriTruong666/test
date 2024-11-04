@@ -140,7 +140,7 @@ export const PondWater = () => {
         : statusClassName.poor;
 
     // Save average status in localStorage
-    localStorage.setItem(`pondStatus-${pondId}`, avgStatus);
+    // localStorage.setItem(`pondStatus-${pondId}`, avgStatus);
     return avgStatus;
   };
 

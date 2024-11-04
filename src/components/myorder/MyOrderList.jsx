@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import styles
 import "../../styles/components/myorder/myorder.css";
 // import service
-import * as OrderService from "../../service/order/order";
 import ClipLoader from "react-spinners/ClipLoader";
+import * as OrderService from "../../service/order/order";
 
 export const MyOrderList = () => {
   const statusClassName = {
@@ -78,6 +78,15 @@ export const MyOrderList = () => {
       minimumFractionDigits: 2,
     }).format(price);
 
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  };
+
   const filteredOrders = myOrders
     .filter((order) =>
       (order.order.fullname || "")
@@ -141,7 +150,7 @@ export const MyOrderList = () => {
                   to={`/dashboard/myorder/detail/${order.order?.orderId}`}
                 >
                   <div>
-                    <strong>{order.order?.orderId}</strong>
+                    <strong>{formatDate(order.order?.createDate)}</strong>
                     <p>{order.order?.orderDetails?.length || 0} items</p>
                   </div>
                   <p>{formatPrice(order.order?.total || 0)}</p>

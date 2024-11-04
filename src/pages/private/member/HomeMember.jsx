@@ -21,13 +21,27 @@ export const HomeMember = () => {
     pending: "pending",
     success: "success",
     cancel: "cancel",
-    delivering: "delivering",
+    refund: "refund",
   };
   const statusTitle = {
     pending: "Pending",
     success: "Success",
     cancel: "Cancel",
-    delivering: "Delivering",
+    refund: "Refunded",
+  };
+
+  const handleOrderStatusClassName = (status) => {
+    if (status === "PENDING") return statusClassName.pending;
+    if (status === "APPROVED") return statusClassName.success;
+    if (status === "REJECTED") return statusClassName.cancel;
+    if (status === "REFUNDED") return statusClassName.refund;
+  };
+
+  const handleStatusTitle = (status) => {
+    if (status === "PENDING") return statusTitle.pending;
+    if (status === "APPROVED") return statusTitle.success;
+    if (status === "REJECTED") return statusTitle.cancel;
+    if (status === "REFUNDED") return statusTitle.refund;
   };
 
   //states
@@ -79,10 +93,6 @@ export const HomeMember = () => {
     }
   });
 
-  const handleOrderStatusClassName = (status) =>
-    statusClassName[status.toLowerCase()];
-  const handleStatusTitle = (status) => statusTitle[status.toLowerCase()];
-
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -114,6 +124,16 @@ export const HomeMember = () => {
     setKoiLogs(koi.koiGrowthLogs);
     setPondLabel(`Koi Growth Logs for ${koi.name} in Pond ${pondName}`);
   };
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  };
+
   useEffect(() => {
     if (isLoading || isFetching) {
       setIsLoadingPage(true);
@@ -259,7 +279,7 @@ export const HomeMember = () => {
                   <table>
                     <thead>
                       <tr>
-                        <th>OrderId</th>
+                        <th>Order Date</th>
                         <th>Total items</th>
                         <th>Price</th>
                         <th>Status</th>
@@ -269,7 +289,7 @@ export const HomeMember = () => {
                     <tbody>
                       {orders.map((order) => (
                         <tr key={order.order.orderId}>
-                          <td>{order.order.orderId}</td>
+                          <td>{formatDate(order.order.createDate)}</td>
                           <td>{order.order.orderDetails.length}</td>
                           <td>{formatPrice(order.order.total)}</td>
                           <td>

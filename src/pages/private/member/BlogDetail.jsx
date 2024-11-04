@@ -69,18 +69,18 @@ export const BlogDetail = () => {
     } else {
       setServerError(null);
     }
-  }, [isFetching, isLoading, blog,isError]);
+  }, [isFetching, isLoading, blog, isError]);
   return (
     <div className="my-blog-detail-container">
-     {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : (
+      {serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <div className="loading">
+          <ClipLoader color="#000000" size={40} />
+        </div>
+      ) : (
         <>
           {isNotFoundBlog ? (
             <>
@@ -127,17 +127,12 @@ export const BlogDetail = () => {
                         <i className="bx bxl-instagram-alt"></i>
                       </div>
                     </div>
-                    <div className="blog-detail-content">
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            blog &&
-                            stripHtmlTags(
-                              blog.content || "No content available"
-                            ),
-                        }}
-                      ></p>
-                    </div>
+                    <div
+                      className="blog-detail-content"
+                      dangerouslySetInnerHTML={{
+                        __html: blog.content || "No content available",
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>

@@ -145,6 +145,7 @@
 
                     .blog-detail-content {
                         display: flex;
+                        flex-direction: column;
 
                         p {
                             line-height: 2;

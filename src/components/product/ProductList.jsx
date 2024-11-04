@@ -35,11 +35,6 @@ export const ProductList = () => {
   });
 
   useEffect(() => {
-    if (products.length === 0) {
-      setEmptyList("Product list is empty");
-    } else {
-      setEmptyList(null);
-    }
     if (isError) {
       setServerError("Server is closed now");
     } else {
@@ -47,7 +42,12 @@ export const ProductList = () => {
     }
 
     setIsLoadingPage(isFetching || isLoading);
-  }, [isFetching, isLoading, isError, products.length]);
+    if (filteredProducts.length === 0) {
+      setEmptyList("Product list is empty");
+    } else {
+      setEmptyList(null);
+    }
+  }, [isFetching, isLoading, isError]);
 
   const filteredProducts = products
     .filter((product) =>
@@ -171,12 +171,6 @@ export const ProductList = () => {
                       handleToggleUpdateProductModal(product.productId)
                     }
                   ></i>
-                  {/* <i
-                    className="bx bxs-trash-alt"
-                    onClick={() =>
-                      handleToggleDelProductModal(product.productId)
-                    }
-                  ></i> */}
                 </td>
               </tr>
             ))

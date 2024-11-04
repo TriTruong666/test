@@ -90,15 +90,12 @@ export const BlogDetail = () => {
                       <i className="bx bxl-instagram-alt"></i>
                     </div>
                   </div>
-                  <div className="blog-detail-content">
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          blog &&
-                          stripHtmlTags(blog.content || "No content available"),
-                      }}
-                    />
-                  </div>
+                  <div
+                    className="blog-detail-content"
+                    dangerouslySetInnerHTML={{
+                      __html: blog.content || "No content available",
+                    }}
+                  ></div>
                 </div>
               </>
             )}

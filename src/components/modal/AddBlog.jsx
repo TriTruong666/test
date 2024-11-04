@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import FileResizer from "react-image-file-resizer";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,8 +23,6 @@ export const AddBlog = () => {
     title: "",
     content: "",
   });
-
-  // Quill modules for toolbar customization
   const quillModules = {
     toolbar: {
       container: [

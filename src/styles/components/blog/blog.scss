@@ -18,6 +18,21 @@
             padding-right: 40px;
         }
 
+        .error-message {
+            width: 100vw;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+
+            p {
+                font-family: $main-font;
+                font-size: 1.2rem;
+                padding-right: 40px;
+            }
+        }
+
         .blog-item {
             padding: 20px 25px;
             display: flex;

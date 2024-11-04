@@ -37,6 +37,7 @@ select option {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    font-family: "Roboto Mono", monospace;
   }
   .admin-blog-detail-container .loading {
     width: 100%;
@@ -138,34 +139,34 @@ select option {
          column-gap: 40px;
     padding: 0 20px;
   }
-  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .share {
-    display: flex;
-    flex-direction: column;
-    row-gap: 5px;
-  }
-  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .share strong {
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 600;
-  }
-  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .share div {
-    display: flex;
-    -moz-column-gap: 10px;
-         column-gap: 10px;
-  }
-  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .share div i {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-  }
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content {
+    width: 100%;
     display: flex;
     flex-direction: column;
     color: white;
   }
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content a,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content u,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content h1,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content h2,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content strong,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content em,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content p {
+    font-family: "Roboto Mono", monospace;
+    line-height: 2rem;
+    font-size: 0.8rem;
+  }
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content a {
+    color: rgb(12, 86, 154);
+  }
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content img {
     width: 100%;
-    height: 400px;
+    height: 250px;
     -o-object-fit: cover;
        object-fit: cover;
+  }
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content iframe {
+    width: 100%;
+    height: 300px;
   }
 }/*# sourceMappingURL=adminblogdetail.css.map */

@@ -1,26 +1,7 @@
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Alignment,
-  BlockQuote,
-  Bold,
-  ClassicEditor,
-  Essentials,
-  Font,
-  Heading,
-  Image,
-  ImageResize,
-  ImageStyle,
-  ImageToolbar,
-  Italic,
-  Link,
-  List,
-  Paragraph,
-  Table,
-  TableToolbar,
-} from "ckeditor5";
-import "ckeditor5/ckeditor5.css";
-import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useState } from "react";
 import FileResizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -48,7 +29,18 @@ export const AddProduct = () => {
   });
   const [isValidName, setIsValidName] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
-
+  const quillModules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image", "video"],
+        [{ align: [] }],
+        ["clean"],
+      ],
+    },
+  };
   //   file resizer
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
@@ -323,70 +315,14 @@ export const AddProduct = () => {
           </div>
           <div className="input-field-des">
             <label>Description</label>
-            <CKEditor
-              editor={ClassicEditor}
-              config={{
-                plugins: [
-                  Essentials,
-                  Bold,
-                  Italic,
-                  Paragraph,
-                  Heading,
-                  Link,
-                  List,
-                  BlockQuote,
-                  Alignment,
-                  Image,
-                  ImageToolbar,
-                  ImageStyle,
-                  ImageResize,
-                  Table,
-                  TableToolbar,
-                  Font,
-                ],
-                toolbar: [
-                  "heading",
-                  "|",
-                  "bold",
-                  "italic",
-                  "link",
-                  "bulletedList",
-                  "numberedList",
-                  "|",
-                  "blockQuote",
-                  "alignment",
-                  "fontSize",
-                  "|",
-                  "imageUpload",
-                  "insertTable",
-                  "|",
-                  "undo",
-                  "redo",
-                ],
-                image: {
-                  toolbar: [
-                    "imageTextAlternative",
-                    "imageStyle:full",
-                    "imageStyle:side",
-                  ],
-                  styles: ["full", "side"],
-                },
-                table: {
-                  contentToolbar: [
-                    "tableColumn",
-                    "tableRow",
-                    "mergeTableCells",
-                  ],
-                },
-              }}
-              data=""
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                setSubmitData({
-                  ...submitData,
-                  description: data,
-                });
-              }}
+            <ReactQuill
+              theme="snow"
+              value={submitData.description}
+              onChange={(description) =>
+                setSubmitData({ ...submitData, description })
+              }
+              modules={quillModules}
+              placeholder="Write product description..."
             />
           </div>
 

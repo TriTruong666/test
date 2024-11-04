@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import FileResizer from "react-image-file-resizer";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -32,7 +32,6 @@ export const UpdateBlog = () => {
     content: blogInfo.content,
   });
 
-  // Quill modules for toolbar customization
   const quillModules = {
     toolbar: {
       container: [

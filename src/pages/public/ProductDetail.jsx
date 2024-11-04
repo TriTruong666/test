@@ -141,13 +141,6 @@ export const ProductDetail = () => {
                 <small>{product.category && product.category.cateName}</small>
                 <h2>{product.productName}</h2>
                 <strong>{formatPrice(product.unitPrice)}</strong>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      product &&
-                      stripHtmlTags(product.description || "No description"),
-                  }}
-                />
                 <div>
                   {!user && !token ? (
                     <>
@@ -168,6 +161,15 @@ export const ProductDetail = () => {
               </div>
             </>
           )}
+        </div>
+        <div className="description">
+          <strong className="header">Product Description</strong>
+          <div
+            className="product-description-content"
+            dangerouslySetInnerHTML={{
+              __html: product?.description || "No description available",
+            }}
+          ></div>
         </div>
         <div className="product-detail-related">
           <strong>Explore Related Products</strong>

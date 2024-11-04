@@ -16,6 +16,7 @@ export const DelKoi = () => {
   const navigate = useNavigate();
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfo = useSelector((state) => state.koi.koiInfo.koiInfo);
   // dispatch
   const dispatch = useDispatch();
   // mutation
@@ -23,7 +24,7 @@ export const DelKoi = () => {
   //use State
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const mutation = useMutation({
-    mutationKey: ["del-koi", koiId],
+    mutationKey: ["del-koi", koiInfo?.koiId],
     mutationFn: KoiService.deleteKoiService,
     onMutate: () => {
       setIsPreventSubmit(true);
@@ -67,7 +68,7 @@ export const DelKoi = () => {
       return;
     }
     try {
-      await mutation.mutateAsync(koiId);
+      await mutation.mutateAsync(koiInfo?.koiId);
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +85,7 @@ export const DelKoi = () => {
           <i className="bx bx-x" onClick={handleToggleDelKoiModal}></i>
         </div>
         <div className="del-koi-main">
-          <p>Are you sure to delete Koi #{koiId}</p>
+          <p>Are you sure to delete {koiInfo?.name}</p>
         </div>
         <div className="submit">
           <button onClick={handleSubmit}>Delete Confirm</button>

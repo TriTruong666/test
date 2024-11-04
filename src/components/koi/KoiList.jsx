@@ -9,7 +9,7 @@ import "../../styles/components/koi/koi.css";
 // import redux
 import { useDispatch } from "react-redux";
 // import slices
-import { setKoiId } from "../../redux/slices/koi/koi";
+import { setKoiInfo } from "../../redux/slices/koi/koi";
 import {
   toggleDetailKoiModal,
   toggleKoiHistoryOff,
@@ -26,8 +26,8 @@ export const KoiList = () => {
   const [emptyList, setEmptyList] = useState(null);
   const [serverError, setServerError] = useState(null);
   // handle func
-  const handleToggleKoiDetailModal = (koiId) => {
-    dispatch(setKoiId(koiId));
+  const handleToggleKoiDetailModal = (koi) => {
+    dispatch(setKoiInfo(koi));
     dispatch(toggleDetailKoiModal());
     dispatch(toggleKoiHistoryOff());
   };
@@ -71,7 +71,7 @@ export const KoiList = () => {
     } else {
       setServerError(null);
     }
-  }, [isFetching, isLoading,isError]);
+  }, [isFetching, isLoading, isError]);
   return (
     <table className="koi-list-table">
       <thead>
@@ -84,51 +84,51 @@ export const KoiList = () => {
         </tr>
       </thead>
       <tbody>
-      {serverError ? (
-        <>
-          <div className="error-page">
-            <p>Server is closed now</p>
-          </div>
-        </>
-      ) :(
-        <>
-{isLoadingPage ? (
+        {serverError ? (
           <>
-            <div className="loading">
-              <ClipLoader color="#000000" size={35} />
+            <div className="error-page">
+              <p>Server is closed now</p>
             </div>
           </>
         ) : (
           <>
-            {emptyList && (
-              <div className="empty-list">
-                <p>{emptyList}</p>
-              </div>
+            {isLoadingPage ? (
+              <>
+                <div className="loading">
+                  <ClipLoader color="#000000" size={35} />
+                </div>
+              </>
+            ) : (
+              <>
+                {emptyList && (
+                  <div className="empty-list">
+                    <p>{emptyList}</p>
+                  </div>
+                )}
+                {pondInfo &&
+                  pondInfo.kois &&
+                  pondInfo.kois.map((koi) => (
+                    <tr
+                      key={koi.koiId}
+                      onClick={() => handleToggleKoiDetailModal(koi)}
+                    >
+                      <th>
+                        <img src={koi.image} alt="" />
+                        <div>
+                          <strong>{koi.name}</strong>
+                          <p>#{koi.koiId}</p>
+                        </div>
+                      </th>
+                      <th>{calculateAge(koi.createDate)} years</th>
+                      <th>{koi.sex ? "Male" : "Female"}</th>
+                      <th>{koi.type}</th>
+                      <th>{koi.origin}</th>
+                    </tr>
+                  ))}
+              </>
             )}
-            {pondInfo &&
-              pondInfo.kois &&
-              pondInfo.kois.map((koi) => (
-                <tr
-                  key={koi.koiId}
-                  onClick={() => handleToggleKoiDetailModal(koi.koiId)}
-                >
-                  <th>
-                    <img src={koi.image} alt="" />
-                    <div>
-                      <strong>{koi.name}</strong>
-                      <p>#{koi.koiId}</p>
-                    </div>
-                  </th>
-                  <th>{calculateAge(koi.createDate)} years</th>
-                  <th>{koi.sex ? "Male" : "Female"}</th>
-                  <th>{koi.type}</th>
-                  <th>{koi.origin}</th>
-                </tr>
-              ))}
           </>
         )}
-        </>
-      )}
       </tbody>
     </table>
   );

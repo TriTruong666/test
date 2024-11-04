@@ -24,6 +24,7 @@ export const KoiDetail = () => {
     (state) => state.modal.koiHistoryModal.isToggleModal
   );
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
@@ -35,8 +36,8 @@ export const KoiDetail = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["koi-detail", koiId],
-    queryFn: () => KoiService.detailKoiService(koiId),
+    queryKey: ["koi-detail", koiInfoNew?.koiId],
+    queryFn: () => KoiService.detailKoiService(koiInfoNew?.koiId),
   });
 
   // recommendation
@@ -174,7 +175,7 @@ export const KoiDetail = () => {
         ) : (
           <>
             <div className="koi-detail-header">
-              <strong>Koi Detail #{koiInfo.koiId}</strong>
+              <strong>Koi Detail {koiInfo.name}</strong>
               <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
             </div>
             <div className="koi-detail-info">

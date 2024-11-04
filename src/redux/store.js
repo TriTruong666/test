@@ -7,6 +7,7 @@ import KoiReducer from "./slices/koi/koi";
 import ModalReducer from "./slices/modal/modal";
 import NavbarReducer from "./slices/navbar/navbar";
 import OrderReducer from "./slices/order/order";
+import PondReducer from "./slices/pond/pond";
 import ProductReducer from "./slices/product/product";
 export default configureStore({
   reducer: {
@@ -26,5 +27,7 @@ export default configureStore({
     order: OrderReducer,
     //blog
     blog: BlogReducer,
+    //pond
+    pond: PondReducer,
   },
 });

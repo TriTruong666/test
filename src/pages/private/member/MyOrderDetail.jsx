@@ -1,17 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../../styles/dashboard/myorderdetail/myorderdetail.css";
 
 // import slices
 import {
-  toggleRejectOrderModal,
   toggleCreateRefundModal,
+  toggleRejectOrderModal,
 } from "../../../redux/slices/modal/modal";
-import { setOrderId } from "../../../redux/slices/order/order";
+import { setOrderInfo } from "../../../redux/slices/order/order";
 // import redux
 import { useDispatch } from "react-redux";
 // import service
@@ -45,8 +44,8 @@ export const MyOrderDetail = () => {
     queryFn: () => OrderService.getOrderById(orderId),
   });
   // handle func
-  const handleToggleCancelMyOrderModal = (orderId) => {
-    dispatch(setOrderId(orderId));
+  const handleToggleCancelMyOrderModal = (orderInfo) => {
+    dispatch(setOrderInfo(orderInfo));
     dispatch(toggleRejectOrderModal());
   };
   const handleToggleCreateRefundModal = () => {
@@ -257,7 +256,7 @@ export const MyOrderDetail = () => {
                         <button
                           className="cancel"
                           onClick={() =>
-                            handleToggleCancelMyOrderModal(orderInfo.orderId)
+                            handleToggleCancelMyOrderModal(orderInfo)
                           }
                         >
                           Cancel this order

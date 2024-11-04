@@ -93,7 +93,7 @@ export const BlogDetail = () => {
                   <div
                     className="blog-detail-content"
                     dangerouslySetInnerHTML={{
-                      __html: blog.content || "No content available",
+                      __html: blog?.content || "No content available",
                     }}
                   ></div>
                 </div>

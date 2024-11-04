@@ -42,11 +42,6 @@ export const ProductList = () => {
     }
 
     setIsLoadingPage(isFetching || isLoading);
-    if (filteredProducts.length === 0) {
-      setEmptyList("Product list is empty");
-    } else {
-      setEmptyList(null);
-    }
   }, [isFetching, isLoading, isError]);
 
   const filteredProducts = products

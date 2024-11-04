@@ -1,26 +1,7 @@
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  Alignment,
-  BlockQuote,
-  Bold,
-  ClassicEditor,
-  Essentials,
-  Font,
-  Heading,
-  Image,
-  ImageResize,
-  ImageStyle,
-  ImageToolbar,
-  Italic,
-  Link,
-  List,
-  Paragraph,
-  Table,
-  TableToolbar,
-} from "ckeditor5";
-import "ckeditor5/ckeditor5.css";
 import FileResizer from "react-image-file-resizer";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -30,6 +11,7 @@ import "../../styles/components/modal/modal.css";
 import { useEffect, useState } from "react";
 import { toggleUpdateBlogModal } from "../../redux/slices/modal/modal";
 // import service
+
 import * as BlogService from "../../service/blog/blogService";
 export const UpdateBlog = () => {
   // param
@@ -49,6 +31,20 @@ export const UpdateBlog = () => {
     title: blogInfo.title,
     content: blogInfo.content,
   });
+
+  // Quill modules for toolbar customization
+  const quillModules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image", "video"],
+        [{ align: [] }],
+        ["clean"],
+      ],
+    },
+  };
   useEffect(() => {
     if (blogInfo && blogInfo.image) {
       setPreviewImage(blogInfo.image);
@@ -201,73 +197,12 @@ export const UpdateBlog = () => {
           </div>
           <div className="input-item">
             <label htmlFor="blog-content">Blog Content</label>
-            <CKEditor
-              editor={ClassicEditor}
-              config={{
-                plugins: [
-                  Essentials,
-                  Bold,
-                  Italic,
-                  Paragraph,
-                  Heading,
-                  Link,
-                  List,
-                  BlockQuote,
-                  Alignment,
-                  Image,
-                  ImageToolbar,
-                  ImageStyle,
-                  ImageResize,
-                  Table,
-                  TableToolbar,
-                  Font,
-                ],
-                toolbar: [
-                  "heading",
-                  "|",
-                  "bold",
-                  "italic",
-                  "link",
-                  "bulletedList",
-                  "numberedList",
-                  "|",
-                  "blockQuote",
-                  "alignment",
-                  "fontSize",
-                  "|",
-                  "imageUpload",
-                  "insertTable",
-                  "|",
-                  "undo",
-                  "redo",
-                ],
-                image: {
-                  toolbar: [
-                    "imageTextAlternative",
-                    "imageStyle:full",
-                    "imageStyle:side",
-                  ],
-                  styles: ["full", "side"],
-                },
-                table: {
-                  contentToolbar: [
-                    "tableColumn",
-                    "tableRow",
-                    "mergeTableCells",
-                  ],
-                },
-              }}
-              data={submitData.content || ""}
-              onReady={(editor) => {
-                console.log("Editor is ready to use!", editor);
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                setSubmitData({
-                  ...submitData,
-                  content: data,
-                });
-              }}
+            <ReactQuill
+              theme="snow"
+              value={submitData.content}
+              onChange={(content) => setSubmitData({ ...submitData, content })}
+              modules={quillModules}
+              placeholder="Write your blog content here..."
             />
           </div>
 

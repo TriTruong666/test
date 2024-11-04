@@ -12,6 +12,7 @@ import {
   toggleUpdateBlogModal,
 } from "../../../redux/slices/modal/modal";
 // import service
+import { setBlogInfo } from "../../../redux/slices/blog/blog";
 import * as BlogService from "../../../service/blog/blogService";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
@@ -38,7 +39,8 @@ export const BlogDetail = () => {
   const handleToggleUpdateBlogModal = () => {
     dispatch(toggleUpdateBlogModal());
   };
-  const handleToggleDelBlogModal = () => {
+  const handleToggleDelBlogModal = (blogInfo) => {
+    dispatch(setBlogInfo(blogInfo));
     dispatch(toggleDeleteBlogModal());
   };
   // query
@@ -100,7 +102,7 @@ export const BlogDetail = () => {
                   ></i>
                   <i
                     className="bx bx-trash-alt"
-                    onClick={handleToggleDelBlogModal}
+                    onClick={() => handleToggleDelBlogModal(blog)}
                   ></i>
                 </div>
               </div>

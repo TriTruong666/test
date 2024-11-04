@@ -8,6 +8,7 @@ import * as BlogService from "../../../service/blog/blogService";
 // import styles
 import "../../../styles/dashboard/adminblogdetail/adminblogdetail.css";
 // import slices
+import { setBlogInfo } from "../../../redux/slices/blog/blog";
 import {
   toggleDeleteBlogModal,
   toggleUpdateBlogModal,
@@ -51,7 +52,8 @@ export const AdminBlogDetail = () => {
   const handleToggleUpdateBlogModal = () => {
     dispatch(toggleUpdateBlogModal());
   };
-  const handleToggleDelBlogModal = () => {
+  const handleToggleDelBlogModal = (blogInfo) => {
+    dispatch(setBlogInfo(blogInfo));
     dispatch(toggleDeleteBlogModal());
   };
   useEffect(() => {
@@ -115,7 +117,7 @@ export const AdminBlogDetail = () => {
                       )}
                       <i
                         className="bx bx-trash-alt"
-                        onClick={handleToggleDelBlogModal}
+                        onClick={() => handleToggleDelBlogModal(blog)}
                       ></i>
                     </div>
                   </div>

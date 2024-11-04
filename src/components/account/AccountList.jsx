@@ -7,7 +7,7 @@ import "../../styles/components/account/account.css";
 // import service
 import * as AccountService from "../../service/account/AccountService";
 // import slices
-import { setUserId } from "../../redux/slices/account/account";
+import { setAccountInfoNew } from "../../redux/slices/account/account";
 import {
   toggleAccountModal,
   toggleDeleteAccountModal,
@@ -49,12 +49,12 @@ export const AccountList = () => {
   );
 
   // handle func
-  const handleToggleDelAccountModal = (userId) => {
-    dispatch(setUserId(userId));
+  const handleToggleDelAccountModal = (accountInfo) => {
+    dispatch(setAccountInfoNew(accountInfo));
     dispatch(toggleDeleteAccountModal());
   };
-  const handleToggleUnlockAccountModal = (userId) => {
-    dispatch(setUserId(userId));
+  const handleToggleUnlockAccountModal = (accountInfo) => {
+    dispatch(setAccountInfoNew(accountInfo));
     dispatch(toggleUnlockAccountModal());
   };
   const handleToggleAddAccountModal = () => {
@@ -130,9 +130,7 @@ export const AccountList = () => {
                     <td>
                       <i
                         className="bx bx-lock-open-alt"
-                        onClick={() =>
-                          handleToggleUnlockAccountModal(user.userId)
-                        }
+                        onClick={() => handleToggleUnlockAccountModal(user)}
                       ></i>
                     </td>
                   </>
@@ -144,9 +142,7 @@ export const AccountList = () => {
                       ) : (
                         <i
                           className="bx bx-block"
-                          onClick={() =>
-                            handleToggleDelAccountModal(user.userId)
-                          }
+                          onClick={() => handleToggleDelAccountModal(user)}
                         ></i>
                       )}
                     </td>

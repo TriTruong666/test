@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import slices
 import { toggleDeleteBlogModal } from "../../redux/slices/modal/modal";
 // import service
 import * as BlogService from "../../service/blog/blogService";
 export const DelBlog = () => {
   // param
-  const { blogId } = useParams();
+
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   // navigate
   const navigate = useNavigate();
@@ -20,8 +20,9 @@ export const DelBlog = () => {
   const dispatch = useDispatch();
   // mutation
   const queryCilent = useQueryClient();
+  const blogInfo = useSelector((state) => state.blog.blogInfo.blogInfo);
   const mutation = useMutation({
-    mutationKey: ["del-blog", blogId],
+    mutationKey: ["del-blog", blogInfo?.blogId],
     mutationFn: BlogService.deleteBlogService,
     onMutate: () => {
       setIsPreventSubmit(true);
@@ -63,7 +64,7 @@ export const DelBlog = () => {
       return;
     }
     try {
-      await mutation.mutateAsync(blogId);
+      await mutation.mutateAsync(blogInfo?.blogId);
     } catch (error) {
       console.error(error);
     }
@@ -77,7 +78,7 @@ export const DelBlog = () => {
           <i className="bx bx-x" onClick={handleToggleDelBlogModal}></i>
         </div>
         <div className="del-blog-main">
-          <p>Are you sure to delete Blog #{blogId}</p>
+          <p>Are you sure to delete {blogInfo?.title}</p>
         </div>
         <div className="submit" onClick={handleSubmit}>
           <button>Delete Confirm</button>

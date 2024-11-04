@@ -14,6 +14,9 @@ export const UnlockAccount = () => {
   const dispatch = useDispatch();
   // selector
   const userId = useSelector((state) => state.account.userId.userId);
+  const accountInfo = useSelector(
+    (state) => state.account.accountInfoNew.accountInfoNew
+  );
   //   state
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
@@ -22,9 +25,9 @@ export const UnlockAccount = () => {
   //   mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["unlock-account", userId],
+    mutationKey: ["unlock-account", accountInfo?.userId],
     mutationFn: (updateData) => {
-      AccountService.updateStatusAccount(userId, updateData);
+      AccountService.updateStatusAccount(accountInfo?.userId, updateData);
     },
     onMutate: () => {
       setIsPreventSubmit(true);
@@ -81,7 +84,7 @@ export const UnlockAccount = () => {
           <i className="bx bx-x" onClick={handleToggleUnlockAccountModal}></i>
         </div>
         <div className="unlock-account-main">
-          <p>Are you sure to unlock this account #{userId}</p>
+          <p>Are you sure to unlock this account {accountInfo?.fullname}</p>
         </div>
         <div className="submit">
           <button onClick={handleUnlockAccount}>Unlock Confirm</button>

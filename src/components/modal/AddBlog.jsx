@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import FileResizer from "react-image-file-resizer";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import FileResizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../styles/components/modal/modal.css";
 import { toggleAddBlogModal } from "../../redux/slices/modal/modal";
 import * as BlogService from "../../service/blog/blogService";
+import "../../styles/components/modal/modal.css";
 
 export const AddBlog = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -18,9 +18,9 @@ export const AddBlog = () => {
   const [isValidName, setIsValidName] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
-    title: "",
     userId: userId,
     image: "",
+    title: "",
     content: "",
   });
 

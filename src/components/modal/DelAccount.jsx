@@ -15,10 +15,13 @@ export const DelAccount = () => {
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   // selector
   const userId = useSelector((state) => state.account.userId.userId);
+  const accountInfo = useSelector(
+    (state) => state.account.accountInfoNew.accountInfoNew
+  );
   //   mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["del-account", userId],
+    mutationKey: ["del-account", accountInfo?.userId],
     mutationFn: AccountService.deleteAccount,
     onMutate: () => {
       setIsPreventSubmit(true);
@@ -61,7 +64,7 @@ export const DelAccount = () => {
       return;
     }
     try {
-      await mutation.mutateAsync(userId);
+      await mutation.mutateAsync(accountInfo?.userId);
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +78,7 @@ export const DelAccount = () => {
           <i className="bx bx-x" onClick={handleToggleDelAccountModal}></i>
         </div>
         <div className="del-account-main">
-          <p>Are you sure to block this account #{userId}</p>
+          <p>Are you sure to block this account {accountInfo?.fullname}</p>
         </div>
         <div className="submit">
           <button onClick={handleDeleteAccount}>Block Confirm</button>

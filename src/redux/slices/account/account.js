@@ -1,4 +1,4 @@
-import { createSlice, combineReducers } from "@reduxjs/toolkit";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
 
 const accountInfomationSlice = createSlice({
   name: "accountInfo",
@@ -14,6 +14,18 @@ const accountInfomationSlice = createSlice({
     },
     getAccountInfo: (state) => {
       return state.accountInfo;
+    },
+  },
+});
+
+const accountInfomationNewSlice = createSlice({
+  name: "accountInfoNew",
+  initialState: {
+    accountInfoNew: {},
+  },
+  reducers: {
+    setAccountInfoNew: (state, action) => {
+      state.accountInfoNew = action.payload;
     },
   },
 });
@@ -62,6 +74,7 @@ export const { setAccountInfo, getAccountInfo } =
 export const { setEmail } = emailSlice.actions;
 export const { setOtp } = otpSlice.actions;
 export const { setUserId } = userIdSlice.actions;
+export const { setAccountInfoNew } = accountInfomationNewSlice.actions;
 
 // Combine reducers
 const AccountReducer = combineReducers({
@@ -69,6 +82,7 @@ const AccountReducer = combineReducers({
   email: emailSlice.reducer,
   otp: otpSlice.reducer,
   userId: userIdSlice.reducer,
+  accountInfoNew: accountInfomationNewSlice.reducer,
 });
 
 export default AccountReducer;

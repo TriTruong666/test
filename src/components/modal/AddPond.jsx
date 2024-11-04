@@ -73,6 +73,10 @@ export const AddPond = () => {
         progress: undefined,
         theme: "dark",
       });
+
+      // Calculate pond status and store it in localStorage
+      calculateAndStorePondStatus(submitPondData.pondName, submitWaterData);
+
       setTimeout(() => {
         location.reload();
         setIsPreventSubmit(false);
@@ -246,6 +250,46 @@ export const AddPond = () => {
       });
     }
   }, [submitWaterData.pondId]);
+
+  const calculateAndStorePondStatus = (pondName, waterParams) => {
+    const calculateParamStatus = (param, idealMin, idealMax) => {
+      if (param >= idealMin && param <= idealMax) return "good";
+      if (
+        (param >= idealMin - 1 && param < idealMin) ||
+        (param > idealMax && param <= idealMax + 1)
+      )
+        return "moderate";
+      return "poor";
+    };
+
+    const parameters = [
+      calculateParamStatus(waterParams.o2, 7, 9),
+      calculateParamStatus(waterParams.no2, 0, 0.5),
+      calculateParamStatus(waterParams.no3, 0, 20),
+      calculateParamStatus(waterParams.nh4, 0, 0.2),
+      calculateParamStatus(waterParams.temperature, 20, 28),
+      calculateParamStatus(waterParams.salt, 0.1, 0.3),
+      calculateParamStatus(waterParams.ph, 7, 8),
+    ];
+
+    const statusCount = parameters.reduce(
+      (acc, status) => {
+        acc[status]++;
+        return acc;
+      },
+      { good: 0, moderate: 0, poor: 0 }
+    );
+
+    const avgStatus =
+      statusCount.good >= statusCount.moderate &&
+      statusCount.good >= statusCount.poor
+        ? "good"
+        : statusCount.moderate >= statusCount.poor
+        ? "moderate"
+        : "poor";
+
+    localStorage.setItem(`status-of-ponds-${pondName}`, avgStatus);
+  };
 
   return (
     <div className="add-pond-container">

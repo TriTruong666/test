@@ -111,7 +111,7 @@ export const PondList = () => {
                 )}
                 {filteredPonds.map((pond) => {
                   const pondStatus = localStorage.getItem(
-                    `pondStatus-${pond.pondId}`
+                    `status-of-ponds-${pond.pondName}`
                   );
 
                   return (

@@ -17,14 +17,14 @@ export const UpdateWater = () => {
   const { pondId } = useParams();
   // state
   const [submitData, setSubmitData] = useState({
-    waterParamId: "",
-    o2: "",
-    temperature: "",
-    nh4: "",
-    salt: "",
-    ph: "",
-    no2: "",
-    no3: "",
+    waterParamId: 0,
+    o2: 0,
+    temperature: 0,
+    nh4: 0,
+    salt: 0,
+    ph: 0,
+    no2: 0,
+    no3: 0,
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);

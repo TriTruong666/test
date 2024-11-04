@@ -24,7 +24,6 @@ export const RevenueChart = ({ orders }) => {
     }
   };
 
-  // Process data to get revenue based on the selected time range
   const chartData = useMemo(() => {
     const filteredData = orders.reduce((acc, order) => {
       const orderDate = new Date(order.order.createDate);
@@ -46,7 +45,7 @@ export const RevenueChart = ({ orders }) => {
       .map(([date, { revenue, totalOrders }]) => ({
         date,
         revenue: parseFloat(revenue.toFixed(2)),
-        totalOrders: Math.floor(totalOrders), // Ensure totalOrders is an integer
+        totalOrders: parseInt(totalOrders, 10),
       }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [orders, timeRange]);
@@ -69,14 +68,10 @@ export const RevenueChart = ({ orders }) => {
       theme: "dark",
       y: [
         {
-          formatter: function (value) {
-            return formatPrice(value);
-          },
+          formatter: (value) => `$${value.toFixed(2)}`,
         },
         {
-          formatter: function (value) {
-            return Math.floor(value); // Format total orders as integer in tooltip
-          },
+          formatter: (value) => Math.round(value),
         },
       ],
     },
@@ -84,39 +79,15 @@ export const RevenueChart = ({ orders }) => {
     yaxis: [
       {
         title: { text: "Revenue" },
-        labels: {
-          formatter: function (value) {
-            return formatPrice(value);
-          },
-        },
+        labels: { formatter: (value) => `$${value}` },
       },
-      {
-        opposite: true,
-        title: { text: "Total Orders" },
-        labels: {
-          formatter: function (value) {
-            return Math.floor(value); // Format y-axis labels as integers
-          },
-        },
-        forceNiceScale: true,
-        min: 0,
-        tickAmount: 5,
-        decimalsInFloat: 0, // Ensure no decimal places in y-axis
-      },
+      { opposite: true, title: { text: "Total Orders" } },
     ],
   };
 
   const chartSeries = [
-    {
-      name: "Revenue",
-      data: chartData.map((data) => data.revenue),
-      type: "area",
-    },
-    {
-      name: "Total Orders",
-      data: chartData.map((data) => data.totalOrders),
-      type: "area",
-    },
+    { name: "Revenue", data: chartData.map((data) => data.revenue) },
+    { name: "Total Orders", data: chartData.map((data) => data.totalOrders) },
   ];
 
   return (
@@ -124,6 +95,7 @@ export const RevenueChart = ({ orders }) => {
       <h3>Revenue and Total Orders</h3>
       <div className="filter-container">
         <label>View by: </label>
+
         <select
           onChange={(e) => setTimeRange(e.target.value)}
           value={timeRange}

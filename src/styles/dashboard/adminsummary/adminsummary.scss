@@ -49,6 +49,7 @@
               font-size: 0.9rem;
               font-weight: 300;
               color: $fade-black;
+              font-family: $main-font;
             }
           }
 
@@ -175,6 +176,7 @@
                 font-size: 0.9rem;
                 border-radius: 5px;
                 border: 1px solid #ddd;
+                color: $fade-black;
                 cursor: pointer;
               }
             }

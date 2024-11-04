@@ -17,7 +17,7 @@ import { setProductId } from "../../redux/slices/product/product";
 export const ProductList = () => {
   const dispatch = useDispatch();
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
+
   const [serverError, setServerError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState("");
@@ -142,10 +142,6 @@ export const ProductList = () => {
           ) : isLoadingPage ? (
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : emptyList ? (
-            <div className="empty-list">
-              <p>{emptyList}</p>
             </div>
           ) : (
             filteredProducts.map((product) => (

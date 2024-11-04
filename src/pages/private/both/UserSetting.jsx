@@ -32,6 +32,10 @@ export const UserSetting = () => {
     phone: myInfo && myInfo.phone,
     address: myInfo && myInfo.address,
   });
+
+  // regex
+  const vietnamPhoneRegex =
+    /^(?:\+84|0)(?:3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])\d{7}$/;
   const [submitPassData, setSubmitPassData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -159,6 +163,7 @@ export const UserSetting = () => {
       });
       return;
     }
+
     if (submitPassData.newPassword !== submitPassData.confirmPassword) {
       toast.error("Password and Confirm Password must be the same", {
         position: "top-right",
@@ -180,6 +185,20 @@ export const UserSetting = () => {
   };
   const handleOnSubmitInfo = async (e) => {
     e.preventDefault();
+    if (!vietnamPhoneRegex.test(submitData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {

@@ -33,6 +33,9 @@ export const Checkout = () => {
     cartId: "",
     total: "",
   });
+  // regex
+  const vietnamPhoneRegex =
+    /^(?:\+84|0)(?:3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])\d{7}$/;
 
   // query
   const {
@@ -117,19 +120,19 @@ export const Checkout = () => {
       return;
     }
     setRequiredField(null);
-    // if (!phoneRegex.test(submitData.phone)) {
-    //   toast.error("Invalid phone number", {
-    //     position: "top-right",
-    //     autoClose: 1500,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "dark",
-    //   });
-    //   return;
-    // }
+    if (!vietnamPhoneRegex.test(submitData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       const totalPrice = calculateTotalPrice();
       const updatedSubmitData = {

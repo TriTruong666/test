@@ -123,13 +123,13 @@ export const Summary = () => {
             <div className="item1">
               <strong>Welcome admin</strong>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem,
-                minima aliquam totam sint cupiditate voluptas minus facere,
-                veniam quasi autem voluptates libero ea recusandae numquam
-                suscipit mollitia nam rem maiores.
+                Whatever your life’s work is, do it well. A man should do his
+                job so well that the living, the dead, and the unborn could do
+                it no better.” —Martin Luther King, Jr. “Nothing ever comes to
+                one, that is worth having, except as a result of hard work
               </p>
 
-              <Link to={"https://www.facebook.com/"}>👉 FaceBook</Link>
+              <Link to={"https://www.facebook.com/"}> FaceBook</Link>
             </div>
 
             <div className="item2">

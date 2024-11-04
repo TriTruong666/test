@@ -1,9 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ClipLoader from "react-spinners/ClipLoader";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -11,9 +8,9 @@ import "../../styles/buynow/buynow.css";
 // import components
 import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import service
-import * as ProductService from "../../service/product/productService";
-import * as PaypalService from "../../service/paypal/paypal";
 import SyncLoader from "react-spinners/SyncLoader";
+import * as PaypalService from "../../service/paypal/paypal";
+import * as ProductService from "../../service/product/productService";
 export const Buynow = () => {
   // param
   const { productId } = useParams();
@@ -72,6 +69,10 @@ export const Buynow = () => {
       }
     },
   });
+  // regex
+  const vietnamPhoneRegex =
+    /^(?:\+84|0)(?:3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])\d{7}$/;
+
   // handle func
   const handlePlus = () => {
     if (quantity < productInfo?.stock) {
@@ -151,6 +152,20 @@ export const Buynow = () => {
       return;
     }
     setRequiredField(null);
+
+    if (!vietnamPhoneRegex.test(submitData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       const totalPrice = handleTotalPrice(productInfo.unitPrice, quantity);
       const updatedSubmitData = {

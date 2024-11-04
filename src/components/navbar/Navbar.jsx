@@ -97,7 +97,7 @@ export const Navbar = () => {
             <img src={logo} alt="" onClick={() => navigate("/")} />
             <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
-            <a href="">About</a>
+            <a href="/About">About</a>
             <Link to="/blog">Blog</Link>
           </div>
           {isAuth ? (

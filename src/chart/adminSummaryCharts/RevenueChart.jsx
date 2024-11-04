@@ -45,8 +45,8 @@ export const RevenueChart = ({ orders }) => {
     return Object.entries(filteredData)
       .map(([date, { revenue, totalOrders }]) => ({
         date,
-        revenue,
-        totalOrders,
+        revenue: parseFloat(revenue.toFixed(2)),
+        totalOrders: parseInt(totalOrders, 10),
       }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [orders, timeRange]);

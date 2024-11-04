@@ -9,6 +9,7 @@ import { KoiHistory } from "./KoiHistory";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 // import slices
+import { setKoiInfo } from "../../redux/slices/koi/koi";
 import {
   toggleDelKoiModal,
   toggleDetailKoiModal,
@@ -144,7 +145,8 @@ export const KoiDetail = () => {
     }
   }, [isFetching, isLoading, isError, guideText]);
   // handle func
-  const handeToggleKoiHistoryModalOn = () => {
+  const handeToggleKoiHistoryModalOn = (koiInfo) => {
+    dispatch(setKoiInfo(koiInfo));
     dispatch(toggleKoiHistoryOn());
   };
   const handleToggleKoiDetailModal = () => {
@@ -154,7 +156,8 @@ export const KoiDetail = () => {
     dispatch(toggleDelKoiModal());
     // dispatch(toggleDetailKoiModalOff());
   };
-  const handleToggleUpdateKoiModal = () => {
+  const handleToggleUpdateKoiModal = (koiInfo) => {
+    dispatch(setKoiInfo(koiInfo));
     dispatch(toggleUpdateKoiModal());
     // dispatch(toggleDetailKoiModalOff());
   };
@@ -185,7 +188,7 @@ export const KoiDetail = () => {
                   <strong>Koi Infomation</strong>
                   <p>View all infomation of your koi</p>
                 </div>
-                <span onClick={handeToggleKoiHistoryModalOn}>
+                <span onClick={() => handeToggleKoiHistoryModalOn(koiInfo)}>
                   View info history
                 </span>
               </div>
@@ -228,7 +231,9 @@ export const KoiDetail = () => {
                   <span>{importantGuides(koiAge)}</span>
                 </div>
                 <div className="utils">
-                  <button onClick={handleToggleUpdateKoiModal}>Update</button>
+                  <button onClick={() => handleToggleUpdateKoiModal(koiInfo)}>
+                    Update
+                  </button>
                   <button onClick={handleToggleDelKoiModal}>Delete</button>
                 </div>
               </div>

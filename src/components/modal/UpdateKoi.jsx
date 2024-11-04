@@ -33,14 +33,15 @@ export const UpdateKoi = () => {
   const dispatch = useDispatch();
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // query
   const {
     data: koiInfo = {},
     isFetching,
     isLoading,
   } = useQuery({
-    queryKey: ["koi-detail", koiId],
-    queryFn: () => KoiService.detailKoiService(koiId),
+    queryKey: ["koi-detail", koiInfoNew?.koiId],
+    queryFn: () => KoiService.detailKoiService(koiInfoNew?.koiId),
   });
   // state
   const [previewImage, setPreviewImage] = useState(null);
@@ -98,9 +99,9 @@ export const UpdateKoi = () => {
   // mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["update-koi", koiId],
+    mutationKey: ["update-koi", koiInfoNew?.koiId],
     mutationFn: (updateData) => {
-      KoiService.updateKoiService(koiId, updateData);
+      KoiService.updateKoiService(koiInfoNew?.koiId, updateData);
     },
     onMutate: () => {
       setIsPreventSubmit(true);

@@ -164,7 +164,6 @@ export const AddPond = () => {
       return;
     }
 
-    // Validate pond data (these shouldn't be zero)
     if (
       isNaN(submitPondData.depth) ||
       isNaN(submitPondData.pumpPower) ||
@@ -190,7 +189,6 @@ export const AddPond = () => {
       return;
     }
 
-    // Validate water parameters (can be zero)
     if (
       submitWaterData.nh4 === "" ||
       submitWaterData.no2 === "" ||

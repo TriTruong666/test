@@ -13,12 +13,13 @@ import * as KoiLogService from "../../service/koiLog/koiLog";
 export const AddKoiLog = () => {
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfo = useSelector((state) => state.koi.koiInfo.koiInfo);
   // state
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [submitData, setSubmitData] = useState({
     size: "",
     weight: "",
-    koiId: koiId,
+    koiId: koiInfo?.koiId,
   });
   // dispatch
   const dispatch = useDispatch();

@@ -201,6 +201,13 @@ export const SizeAndWeightChart = ({ koiGrowthLogs }) => {
 
   return (
     <div>
+      <p>
+        <br />
+        <span style={{ color: "#581845" }}>●</span> Weight (kg)
+        <br />
+        <span style={{ color: "#FFC300" }}>●</span> Size (cm)
+        <br />
+      </p>
       <Chart
         options={chartOptions}
         series={series}

@@ -46,7 +46,7 @@ export const RevenueChart = ({ orders }) => {
       .map(([date, { revenue, totalOrders }]) => ({
         date,
         revenue: parseFloat(revenue.toFixed(2)),
-        totalOrders: parseInt(totalOrders, 10),
+        totalOrders: Math.floor(totalOrders), // Ensure totalOrders is an integer
       }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [orders, timeRange]);
@@ -64,17 +64,59 @@ export const RevenueChart = ({ orders }) => {
     colors: ["#00E396", "#0090FF"],
     stroke: { curve: "smooth", width: 2 },
     grid: { borderColor: "#f1f1f1" },
-    tooltip: { enabled: true, theme: "dark" },
+    tooltip: {
+      enabled: true,
+      theme: "dark",
+      y: [
+        {
+          formatter: function (value) {
+            return formatPrice(value);
+          },
+        },
+        {
+          formatter: function (value) {
+            return Math.floor(value); // Format total orders as integer in tooltip
+          },
+        },
+      ],
+    },
     dataLabels: { enabled: false },
     yaxis: [
-      { title: { text: "Revenue" } },
-      { opposite: true, title: { text: "Total Orders" } },
+      {
+        title: { text: "Revenue" },
+        labels: {
+          formatter: function (value) {
+            return formatPrice(value);
+          },
+        },
+      },
+      {
+        opposite: true,
+        title: { text: "Total Orders" },
+        labels: {
+          formatter: function (value) {
+            return Math.floor(value); // Format y-axis labels as integers
+          },
+        },
+        forceNiceScale: true,
+        min: 0,
+        tickAmount: 5,
+        decimalsInFloat: 0, // Ensure no decimal places in y-axis
+      },
     ],
   };
 
   const chartSeries = [
-    { name: "Revenue", data: chartData.map((data) => data.revenue) },
-    { name: "Total Orders", data: chartData.map((data) => data.totalOrders) },
+    {
+      name: "Revenue",
+      data: chartData.map((data) => data.revenue),
+      type: "area",
+    },
+    {
+      name: "Total Orders",
+      data: chartData.map((data) => data.totalOrders),
+      type: "area",
+    },
   ];
 
   return (

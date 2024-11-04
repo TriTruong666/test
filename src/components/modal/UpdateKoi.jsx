@@ -29,7 +29,7 @@ export const UpdateKoi = () => {
     Vietnam: "VN",
     "South Korea": "KR",
   };
-  //   dispatch
+  // dispatch
   const dispatch = useDispatch();
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
@@ -97,7 +97,7 @@ export const UpdateKoi = () => {
     );
   };
   // mutation
-  const queryCilent = useQueryClient();
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["update-koi", koiInfoNew?.koiId],
     mutationFn: (updateData) => {
@@ -120,7 +120,7 @@ export const UpdateKoi = () => {
       setTimeout(() => {
         location.reload();
       }, 1500);
-      queryCilent.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["update-koi"],
       });
     },
@@ -289,7 +289,7 @@ export const UpdateKoi = () => {
               <label htmlFor="koi-sex">Select Gender</label>
               <select
                 name="sex"
-                defaultValue={koiInfo.sex ? "true" : "false"}
+                defaultValue={koiInfo.sex}
                 onChange={handleOnChange}
                 id="koi-sex"
               >

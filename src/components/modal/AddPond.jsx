@@ -1,21 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import FileResizer from "react-image-file-resizer";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import styles
-import FileResizer from "react-image-file-resizer";
-import "../../styles/components/modal/modal.css";
-// import slices
 import { toggleAddPondModal } from "../../redux/slices/modal/modal";
-// import dispatch
-import { useDispatch } from "react-redux";
-// import service
 import * as PondService from "../../service/pond/pondService";
 import * as WaterService from "../../service/waterParams/waterParamsService";
+import "../../styles/components/modal/modal.css";
+
 export const AddPond = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.userId;
-  // state
+
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [isMutatePond, setIsMutatePond] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
@@ -40,10 +37,9 @@ export const AddPond = () => {
     pondId: "",
   });
 
-  // dispatch
   const dispatch = useDispatch();
-  // mutation
   const queryCilent = useQueryClient();
+
   const pondMutation = useMutation({
     mutationFn: PondService.createPondService,
     onMutate: () => {
@@ -60,6 +56,7 @@ export const AddPond = () => {
       });
     },
   });
+
   const waterMutation = useMutation({
     mutationFn: WaterService.createWaterService,
     onMutate: () => {
@@ -85,7 +82,7 @@ export const AddPond = () => {
       });
     },
   });
-  //   file resizer
+
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
       file,
@@ -106,7 +103,7 @@ export const AddPond = () => {
       250
     );
   };
-  //   handle func
+
   const removeChooseImage = () => {
     setPreviewImage(null);
     setSubmitPondData({
@@ -114,9 +111,11 @@ export const AddPond = () => {
       image: "",
     });
   };
+
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddPondModal());
   };
+
   const handleOnChangeName = (e) => {
     const { name, value } = e.target;
     setSubmitPondData({
@@ -124,6 +123,7 @@ export const AddPond = () => {
       [name]: value,
     });
   };
+
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
     setSubmitPondData({
@@ -131,6 +131,7 @@ export const AddPond = () => {
       [name]: parseInt(value),
     });
   };
+
   const handleInputFloatPond = (e) => {
     const { name, value } = e.target;
     setSubmitPondData({
@@ -138,12 +139,12 @@ export const AddPond = () => {
       [name]: parseFloat(value),
     });
   };
+
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
-
     setSubmitWaterData({
       ...submitWaterData,
-      [name]: parseFloat(value),
+      [name]: value === "" ? "" : parseFloat(value),
     });
   };
 
@@ -163,21 +164,20 @@ export const AddPond = () => {
       return;
     }
 
+    // Validate pond data (these shouldn't be zero)
     if (
       isNaN(submitPondData.depth) ||
       isNaN(submitPondData.pumpPower) ||
       isNaN(submitPondData.size) ||
       isNaN(submitPondData.vein) ||
       isNaN(submitPondData.volume) ||
-      isNaN(submitWaterData.nh4) ||
-      isNaN(submitWaterData.no2) ||
-      isNaN(submitWaterData.no3) ||
-      isNaN(submitWaterData.o2) ||
-      isNaN(submitWaterData.ph) ||
-      isNaN(submitWaterData.salt) ||
-      isNaN(submitWaterData.temperature)
+      !submitPondData.depth ||
+      !submitPondData.pumpPower ||
+      !submitPondData.size ||
+      !submitPondData.vein ||
+      !submitPondData.volume
     ) {
-      toast.error("Pond and water data fields must be a number", {
+      toast.error("Pond measurements must be valid numbers greater than 0", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -190,22 +190,24 @@ export const AddPond = () => {
       return;
     }
 
+    // Validate water parameters (can be zero)
     if (
-      !submitPondData.depth ||
-      !submitPondData.image ||
-      !submitPondData.pondName ||
-      !submitPondData.size ||
-      !submitPondData.vein ||
-      !submitPondData.volume ||
-      !submitWaterData.nh4 ||
-      !submitWaterData.no2 ||
-      !submitWaterData.no3 ||
-      !submitWaterData.o2 ||
-      !submitWaterData.ph ||
-      !submitWaterData.salt ||
-      !submitWaterData.temperature
+      submitWaterData.nh4 === "" ||
+      submitWaterData.no2 === "" ||
+      submitWaterData.no3 === "" ||
+      submitWaterData.o2 === "" ||
+      submitWaterData.ph === "" ||
+      submitWaterData.salt === "" ||
+      submitWaterData.temperature === "" ||
+      isNaN(submitWaterData.nh4) ||
+      isNaN(submitWaterData.no2) ||
+      isNaN(submitWaterData.no3) ||
+      isNaN(submitWaterData.o2) ||
+      isNaN(submitWaterData.ph) ||
+      isNaN(submitWaterData.salt) ||
+      isNaN(submitWaterData.temperature)
     ) {
-      toast.error("All fields are required", {
+      toast.error("Water parameters must be valid numbers", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -217,12 +219,28 @@ export const AddPond = () => {
       });
       return;
     }
+
+    if (!submitPondData.image || !submitPondData.pondName) {
+      toast.error("Pond name and image are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
     try {
       await pondMutation.mutateAsync(submitPondData);
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (submitWaterData.pondId) {
       waterMutation.mutateAsync(submitWaterData).catch((error) => {
@@ -230,6 +248,7 @@ export const AddPond = () => {
       });
     }
   }, [submitWaterData.pondId]);
+
   return (
     <div className="add-pond-container">
       <ToastContainer />

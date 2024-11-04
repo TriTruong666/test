@@ -1,34 +1,29 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import styles
-import "../../styles/components/modal/modal.css";
-// import slices
 import { toggleUpdateWaterModal } from "../../redux/slices/modal/modal";
-// import redux
-import { useDispatch } from "react-redux";
-// import service
 import * as PondService from "../../service/pond/pondService";
 import * as WaterService from "../../service/waterParams/waterParamsService";
+import "../../styles/components/modal/modal.css";
+
 export const UpdateWater = () => {
-  // param
   const { pondId } = useParams();
-  // state
   const [submitData, setSubmitData] = useState({
-    waterParamId: 0,
-    o2: 0,
-    temperature: 0,
-    nh4: 0,
-    salt: 0,
-    ph: 0,
-    no2: 0,
-    no3: 0,
+    waterParamId: "",
+    o2: "",
+    temperature: "",
+    nh4: "",
+    salt: "",
+    ph: "",
+    no2: "",
+    no3: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
-  // const query
+
   const {
     data: pondInfo = {},
     isFetching,
@@ -37,6 +32,7 @@ export const UpdateWater = () => {
     queryKey: ["pond-detail", pondId],
     queryFn: () => PondService.detailPondService(pondId),
   });
+
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -47,21 +43,24 @@ export const UpdateWater = () => {
       setSubmitData({
         waterParamId:
           (pondInfo.waterParam && pondInfo.waterParam.waterParamId) || "",
-        o2: (pondInfo.waterParam && pondInfo.waterParam.o2) || "",
+        o2: (pondInfo.waterParam && pondInfo.waterParam.o2?.toString()) || "",
         temperature:
-          (pondInfo.waterParam && pondInfo.waterParam.temperature) || "",
-        nh4: (pondInfo.waterParam && pondInfo.waterParam.nh4) || "",
-        salt: (pondInfo.waterParam && pondInfo.waterParam.salt) || "",
-        ph: (pondInfo.waterParam && pondInfo.waterParam.ph) || "",
-        no2: (pondInfo.waterParam && pondInfo.waterParam.no2) || "",
-        no3: (pondInfo.waterParam && pondInfo.waterParam.no3) || "",
+          (pondInfo.waterParam &&
+            pondInfo.waterParam.temperature?.toString()) ||
+          "",
+        nh4: (pondInfo.waterParam && pondInfo.waterParam.nh4?.toString()) || "",
+        salt:
+          (pondInfo.waterParam && pondInfo.waterParam.salt?.toString()) || "",
+        ph: (pondInfo.waterParam && pondInfo.waterParam.ph?.toString()) || "",
+        no2: (pondInfo.waterParam && pondInfo.waterParam.no2?.toString()) || "",
+        no3: (pondInfo.waterParam && pondInfo.waterParam.no3?.toString()) || "",
       });
     }
   }, [pondInfo, isFetching, isLoading]);
-  // dispatch
+
   const dispatch = useDispatch();
-  // mutation
   const queryCilent = useQueryClient();
+
   const mutation = useMutation({
     mutationKey: [
       "update-water",
@@ -97,17 +96,30 @@ export const UpdateWater = () => {
     },
   });
 
-  //   handle func
   const handleToggleUpdateWaterModal = () => {
     dispatch(toggleUpdateWaterModal());
   };
+
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
-    setSubmitData({
-      ...submitData,
-      [name]: parseFloat(value),
-    });
+    // Allow empty string for initial input
+    if (value === "") {
+      setSubmitData({
+        ...submitData,
+        [name]: value,
+      });
+      return;
+    }
+
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue)) {
+      setSubmitData({
+        ...submitData,
+        [name]: parsedValue,
+      });
+    }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isPreventSubmit) {
@@ -124,15 +136,35 @@ export const UpdateWater = () => {
       return;
     }
 
-    if (
-      isNaN(submitData.nh4) ||
-      isNaN(submitData.no2) ||
-      isNaN(submitData.no3) ||
-      isNaN(submitData.o2) ||
-      isNaN(submitData.ph) ||
-      isNaN(submitData.salt) ||
-      isNaN(submitData.temperature)
-    ) {
+    // Check if any field is empty string (allowing 0 values)
+    const hasEmptyFields = Object.entries(submitData).some(([key, value]) => {
+      if (key === "waterParamId") return false; // Skip waterParamId check
+      return value === "";
+    });
+
+    if (hasEmptyFields) {
+      toast.error("Fields cannot be empty", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    // Check if any field is NaN
+    const hasInvalidNumbers = Object.entries(submitData).some(
+      ([key, value]) => {
+        if (key === "waterParamId") return false; // Skip waterParamId check
+        return isNaN(value);
+      }
+    );
+
+    if (hasInvalidNumbers) {
       toast.error("Invalid number, please enter a number", {
         position: "top-right",
         autoClose: 1500,
@@ -145,27 +177,7 @@ export const UpdateWater = () => {
       });
       return;
     }
-    if (
-      !submitData.nh4 ||
-      !submitData.no2 ||
-      !submitData.no3 ||
-      !submitData.o2 ||
-      !submitData.ph ||
-      !submitData.salt ||
-      !submitData.temperature
-    ) {
-      toast.error("Fields is not empty", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
+
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {
@@ -194,9 +206,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="no2"
                 name="no2"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.no2
-                }
+                value={submitData.no2}
                 placeholder="NO2 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -207,9 +217,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="no3"
                 name="no3"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.no3
-                }
+                value={submitData.no3}
                 placeholder="NO3 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -222,9 +230,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="nh4"
                 name="nh4"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.nh4
-                }
+                value={submitData.nh4}
                 placeholder="NH3/NH4 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -235,9 +241,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="o2"
                 name="o2"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.o2
-                }
+                value={submitData.o2}
                 placeholder="O2 (mg/l)"
                 onChange={handleInputFloatWater}
               />
@@ -250,9 +254,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="salt"
                 name="salt"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.salt
-                }
+                value={submitData.salt}
                 placeholder="Salt (%)"
                 onChange={handleInputFloatWater}
               />
@@ -263,9 +265,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="ph"
                 name="ph"
-                defaultValue={
-                  pondInfo && pondInfo.waterParam && pondInfo.waterParam.ph
-                }
+                value={submitData.ph}
                 placeholder="pH"
                 onChange={handleInputFloatWater}
               />
@@ -277,18 +277,14 @@ export const UpdateWater = () => {
               type="text"
               id="temperature"
               name="temperature"
-              defaultValue={
-                pondInfo &&
-                pondInfo.waterParam &&
-                pondInfo.waterParam.temperature
-              }
+              value={submitData.temperature}
               placeholder="Temperature (℃)"
               onChange={handleInputFloatWater}
             />
           </div>
           <div className="submit">
             <button onClick={handleToggleUpdateWaterModal}>Cancel</button>
-            <button>Create confirm</button>
+            <button type="submit">Create confirm</button>
           </div>
         </form>
       </div>

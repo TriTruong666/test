@@ -131,9 +131,9 @@ export const PondList = () => {
                         </div>
                         <span className={pondStatus}>Status: {pondStatus}</span>
                         <p>{pond.kois ? pond.kois.length : "0"} Kois</p>
-                        <p>
+                        {/* <p>
                           Total food: {getTotalFoodAmountForPond(pond.kois)} g
-                        </p>
+                        </p> */}
                       </div>
                     </Link>
                   );

@@ -7,6 +7,7 @@ import "../../styles/components/blog/blog.css";
 // import API
 import { useQuery } from "@tanstack/react-query";
 import * as BlogService from "../../service/blog/blogService";
+
 // convert to plain text
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
@@ -21,6 +22,7 @@ const stripHtmlTags = (html) => {
   });
   return doc.body.innerHTML;
 };
+
 export const Bloglist = ({ infinityScroll, isLoadingList }) => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const {
@@ -33,8 +35,9 @@ export const Bloglist = ({ infinityScroll, isLoadingList }) => {
     queryFn: BlogService.getAllBlog,
     refetchOnWindowFocus: false,
   });
+
   useEffect(() => {
-    if (isFetching) {
+    if (isFetching || isLoading) {
       setIsLoadingPage(true);
     } else {
       setIsLoadingPage(false);
@@ -44,27 +47,30 @@ export const Bloglist = ({ infinityScroll, isLoadingList }) => {
   return (
     <div className="bloglist-container">
       {isLoadingPage || isLoadingList ? (
-        <>
-          <div className="loading">
-            <ClipLoader color="#ffffff" size={50} />
-          </div>
-        </>
+        <div className="loading">
+          <ClipLoader color="#ffffff" size={50} />
+        </div>
+      ) : isError ? (
+        <div className="error-message">
+          <p>Failed to load blogs. Please try again later.</p>
+        </div>
+      ) : blogs.length === 0 ? (
+        <div className="empty-list-message">
+          <p>No blogs available at the moment. Check back later!</p>
+        </div>
       ) : (
-        <>
-          {blogs.slice(0, infinityScroll).map((blog) => (
-            <Link
-              to={`/blogdetail/${blog.blogId}`}
-              className="blog-item"
-              key={blog.blogId}
-            >
-              <img src={blog.image} alt="" />
-              <small>Created at {blog.createDate}</small>
-              <strong>{blog.title}</strong>
-
-              <span>By {blog.fullname}</span>
-            </Link>
-          ))}
-        </>
+        blogs.slice(0, infinityScroll).map((blog) => (
+          <Link
+            to={`/blogdetail/${blog.blogId}`}
+            className="blog-item"
+            key={blog.blogId}
+          >
+            <img src={blog.image} alt={blog.title} />
+            <small>Created at {blog.createDate}</small>
+            <strong>{blog.title}</strong>
+            <span>By {blog.fullname}</span>
+          </Link>
+        ))
       )}
     </div>
   );

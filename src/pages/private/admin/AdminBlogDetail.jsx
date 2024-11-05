@@ -103,7 +103,7 @@ export const AdminBlogDetail = () => {
               ) : (
                 <>
                   <div className="admin-blog-detail-header">
-                    <strong>Blog #{blog.blogId || "N/A"} </strong>
+                    <strong>{blog?.fullname}'s Blog</strong>
                     <div>
                       {blog.userId === ownUserId ? (
                         <>
@@ -143,14 +143,6 @@ export const AdminBlogDetail = () => {
                         <p>No image available</p>
                       )}
                       <div className="blog-detail-main">
-                        <div className="share">
-                          <strong>Share Article</strong>
-                          <div>
-                            <i className="bx bx-link-alt"></i>
-                            <i className="bx bxl-facebook-circle"></i>
-                            <i className="bx bxl-instagram-alt"></i>
-                          </div>
-                        </div>
                         <div
                           className="blog-detail-content"
                           dangerouslySetInnerHTML={{

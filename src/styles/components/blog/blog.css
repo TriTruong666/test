@@ -47,6 +47,19 @@ select option {
     justify-content: center;
     padding-right: 40px;
   }
+  .bloglist-container .error-message {
+    width: 100vw;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  .bloglist-container .error-message p {
+    font-family: "Roboto Mono", monospace;
+    font-size: 1.2rem;
+    padding-right: 40px;
+  }
   .bloglist-container .blog-item {
     padding: 20px 25px;
     display: flex;

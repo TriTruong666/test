@@ -334,7 +334,7 @@ export const HomeMember = () => {
                       <tbody>
                         {ponds.map((pond) => {
                           const pondStatus = localStorage.getItem(
-                            `pondStatus-${pond.pondId}`
+                            `status-of-ponds-${pond.pondName}`
                           );
                           return (
                             <tr key={pond.pondId}>

@@ -96,7 +96,7 @@ export const UserSetting = () => {
           theme: "dark",
         });
         setTimeout(() => {
-          location.reload();
+          // location.reload();
         }, 1500);
       }
     },

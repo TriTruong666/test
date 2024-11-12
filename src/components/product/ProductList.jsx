@@ -74,11 +74,6 @@ export const ProductList = () => {
   const handleToggleAddProductModal = () => {
     dispatch(toggleAddProductModal());
   };
-  const handleToggleDelProductModal = (id) => {
-    dispatch(setProductId(id));
-    dispatch(toggleDeleteProductModal());
-  };
-
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",

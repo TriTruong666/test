@@ -24,6 +24,7 @@ export const AccountList = () => {
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
   const [submitData, setSubmitData] = useState({
     status: true,
   });
@@ -42,7 +43,9 @@ export const AccountList = () => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
   // Filtered users based on search term
   const filteredUsers = users.filter((user) =>
     user.fullname.toLowerCase().includes(searchTerm.toLowerCase())

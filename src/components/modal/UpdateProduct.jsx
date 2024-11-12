@@ -227,13 +227,13 @@ export const UpdateProduct = () => {
     }
     // empty validation
     if (
-      !submitData.name ||
-      !submitData.categoryId ||
-      !submitData.image ||
-      !submitData.stock ||
-      !submitData.unitprice ||
-      !submitData.description ||
-      !submitData.status
+      submitData.name === "" ||
+      submitData.categoryId === "" ||
+      submitData.image === "" ||
+      submitData.stock === "" ||
+      submitData.unitprice === "" ||
+      submitData.description === "" ||
+      submitData.status === ""
     ) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -339,7 +339,7 @@ export const UpdateProduct = () => {
                 <label htmlFor="description">Description</label>
                 <ReactQuill
                   theme="snow"
-                  value={submitData.description}
+                  defaultValue={submitData.description}
                   onChange={(description) =>
                     setSubmitData({ ...submitData, description })
                   }

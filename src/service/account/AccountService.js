@@ -180,7 +180,7 @@ export const updatePassword = async (data) => {
   const token = localStorage.getItem("token");
   try {
     const api = "http://localhost:8080/users/update-password";
-    const res = await axios.post(api, data, {
+    const res = await axios.put(api, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

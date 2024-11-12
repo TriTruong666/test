@@ -10,12 +10,14 @@
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: auto;
+    overflow-y: hidden;
+
     .dashboard {
       width: calc(100% - 220px);
       height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow: auto;
 
       .error-page {
         width: 100%;
@@ -40,17 +42,20 @@
 
       .dashboard-header {
         padding: 25px 40px;
+
         strong {
           font-size: 1.1rem;
           font-weight: 700;
         }
       }
+
       .section1 {
         padding: 0 40px;
         display: flex;
         height: 300px;
         column-gap: 25px;
         justify-content: space-between;
+
         .item {
           width: 70%;
           height: 100%;
@@ -62,6 +67,7 @@
           align-items: center;
           justify-content: space-between;
           padding: 20px;
+
           .item1 {
             width: 50%;
             display: flex;
@@ -72,6 +78,7 @@
               color: black;
               font-size: 1.2rem;
             }
+
             p {
               font-size: 0.9rem;
               font-weight: 300;
@@ -92,11 +99,13 @@
             }
           }
         }
+
         .info {
           width: 30%;
           display: flex;
           flex-direction: column;
           row-gap: 25px;
+
           .small-item {
             padding: 0 30px;
             display: flex;
@@ -108,21 +117,25 @@
             background: black;
             box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
             div {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
               row-gap: 20px;
+
               strong {
                 color: white;
                 font-size: 1.2rem;
               }
+
               p {
                 font-size: 0.9rem;
                 font-weight: 300;
                 color: $fade-white;
               }
             }
+
             i {
               font-size: 90px;
               color: rgba(255, 255, 255, 0.5);
@@ -134,9 +147,11 @@
       .chart-container {
         margin-top: 20px;
         padding: 0 40px;
+
         .charts {
           display: flex;
           column-gap: 25px;
+
           .left-chart {
             width: 33%;
             display: flex;
@@ -146,9 +161,11 @@
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             padding: 20px 15px;
             border-radius: 15px;
+
             h3 {
               font-size: 0.9rem;
             }
+
             .recommended-products-list {
               list-style-type: none;
               padding: 0;
@@ -177,10 +194,12 @@
                 margin-right: 10px;
               }
             }
+
             .recommended-product-details {
               flex-grow: 1;
             }
           }
+
           .right-chart {
             width: 67%;
             display: flex;
@@ -190,9 +209,11 @@
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             padding: 20px 40px;
             border-radius: 15px;
+
             h3 {
               font-size: 0.9rem;
             }
+
             .koi-search {
               display: flex;
               align-items: center;
@@ -272,9 +293,11 @@
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           border-radius: 15px;
           background: white;
+
           table {
             width: 100%;
             border-collapse: collapse;
+
             .pending {
               color: rgb(213, 213, 15);
             }
@@ -289,6 +312,10 @@
 
             .refund {
               color: rgb(177, 15, 213);
+            }
+
+            span {
+              font-weight: 600;
             }
 
             th,
@@ -319,9 +346,11 @@
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           border-radius: 15px;
           background: white;
+
           table {
             width: 100%;
             border-collapse: collapse;
+
             .good {
               color: green !important;
               font-weight: 600 !important;
@@ -340,6 +369,7 @@
             .careful {
               color: yellow !important;
             }
+
             th,
             td {
               padding: 10px;

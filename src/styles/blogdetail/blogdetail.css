@@ -100,9 +100,17 @@ select option {
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content h2,
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content strong,
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content em,
-  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p {
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content li {
     font-family: "Roboto Mono", monospace;
     line-height: 3rem;
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content strong {
+    font-size: 1.1rem;
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content a {
+    text-decoration: underline;
+    color: white;
   }
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content iframe {
     width: 100%;

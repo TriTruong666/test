@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -39,21 +39,16 @@ export const UpdateWater = () => {
     } else {
       setIsLoadingPage(false);
     }
-    if (pondInfo && pondInfo.waterParam) {
+    if (pondInfo?.waterParam) {
       setSubmitData({
-        waterParamId:
-          (pondInfo.waterParam && pondInfo.waterParam.waterParamId) || "",
-        o2: (pondInfo.waterParam && pondInfo.waterParam.o2?.toString()) || "",
-        temperature:
-          (pondInfo.waterParam &&
-            pondInfo.waterParam.temperature?.toString()) ||
-          "",
-        nh4: (pondInfo.waterParam && pondInfo.waterParam.nh4?.toString()) || "",
-        salt:
-          (pondInfo.waterParam && pondInfo.waterParam.salt?.toString()) || "",
-        ph: (pondInfo.waterParam && pondInfo.waterParam.ph?.toString()) || "",
-        no2: (pondInfo.waterParam && pondInfo.waterParam.no2?.toString()) || "",
-        no3: (pondInfo.waterParam && pondInfo.waterParam.no3?.toString()) || "",
+        waterParamId: pondInfo?.waterParam?.waterParamId || 0,
+        salt: pondInfo?.waterParam?.salt || "",
+        temperature: pondInfo?.waterParam?.temperature || 0,
+        ph: pondInfo?.waterParam?.ph || 0,
+        o2: pondInfo?.waterParam?.o2 || 0,
+        no3: pondInfo?.waterParam?.no3 || 0,
+        no2: pondInfo?.waterParam?.no2 || 0,
+        nh4: pondInfo?.waterParam?.nh4 || 0,
       });
     }
   }, [pondInfo, isFetching, isLoading]);
@@ -102,22 +97,10 @@ export const UpdateWater = () => {
 
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
-    // Allow empty string for initial input
-    if (value === "") {
-      setSubmitData({
-        ...submitData,
-        [name]: value,
-      });
-      return;
-    }
-
-    const parsedValue = parseFloat(value);
-    if (!isNaN(parsedValue)) {
-      setSubmitData({
-        ...submitData,
-        [name]: parsedValue,
-      });
-    }
+    setSubmitData({
+      ...submitData,
+      [name]: parseFloat(value),
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -136,16 +119,18 @@ export const UpdateWater = () => {
       return;
     }
 
-    // Check if any field is empty string (allowing 0 values)
-    const hasEmptyFields = Object.entries(submitData).some(([key, value]) => {
-      if (key === "waterParamId") return false; // Skip waterParamId check
-      return value === "";
-    });
-
-    if (hasEmptyFields) {
-      toast.error("Fields cannot be empty", {
+    if (
+      submitData.nh4 === "" ||
+      submitData.no2 === "" ||
+      submitData.no3 === "" ||
+      submitData.o2 === "" ||
+      submitData.ph === "" ||
+      submitData.salt === "" ||
+      submitData.temperature === ""
+    ) {
+      toast.error("Please input all fields", {
         position: "top-right",
-        autoClose: 1500,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -155,19 +140,10 @@ export const UpdateWater = () => {
       });
       return;
     }
-
-    // Check if any field is NaN
-    const hasInvalidNumbers = Object.entries(submitData).some(
-      ([key, value]) => {
-        if (key === "waterParamId") return false; // Skip waterParamId check
-        return isNaN(value);
-      }
-    );
-
-    if (hasInvalidNumbers) {
-      toast.error("Invalid number, please enter a number", {
+    if (isNaN(submitData.nh4)) {
+      toast.error("NH3/NH4 must be number", {
         position: "top-right",
-        autoClose: 1500,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -177,52 +153,89 @@ export const UpdateWater = () => {
       });
       return;
     }
-
+    if (isNaN(submitData.no2)) {
+      toast.error("NO2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.no3)) {
+      toast.error("NO3 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.o2)) {
+      toast.error("O2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.ph)) {
+      toast.error("pH must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.salt)) {
+      toast.error("Salt must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.temperature)) {
+      toast.error("Temperature must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const calculateAndStorePondStatus = (pondName, waterParams) => {
-    const calculateParamStatus = (param, idealMin, idealMax) => {
-      if (param >= idealMin && param <= idealMax) return "good";
-      if (
-        (param >= idealMin - 1 && param < idealMin) ||
-        (param > idealMax && param <= idealMax + 1)
-      )
-        return "moderate";
-      return "poor";
-    };
-
-    const parameters = [
-      calculateParamStatus(waterParams.o2, 7, 9),
-      calculateParamStatus(waterParams.no2, 0, 0.5),
-      calculateParamStatus(waterParams.no3, 0, 20),
-      calculateParamStatus(waterParams.nh4, 0, 0.2),
-      calculateParamStatus(waterParams.temperature, 20, 28),
-      calculateParamStatus(waterParams.salt, 0.1, 0.3),
-      calculateParamStatus(waterParams.ph, 7, 8),
-    ];
-
-    const statusCount = parameters.reduce(
-      (acc, status) => {
-        acc[status]++;
-        return acc;
-      },
-      { good: 0, moderate: 0, poor: 0 }
-    );
-
-    const avgStatus =
-      statusCount.good >= statusCount.moderate &&
-      statusCount.good >= statusCount.poor
-        ? "good"
-        : statusCount.moderate >= statusCount.poor
-        ? "moderate"
-        : "poor";
-
-    localStorage.setItem(`status-of-ponds-${pondName}`, avgStatus);
   };
 
   return (
@@ -246,7 +259,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="no2"
                 name="no2"
-                value={submitData.no2}
+                defaultValue={submitData.no2}
                 placeholder="NO2 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -257,7 +270,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="no3"
                 name="no3"
-                value={submitData.no3}
+                defaultValue={submitData.no3}
                 placeholder="NO3 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -270,7 +283,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="nh4"
                 name="nh4"
-                value={submitData.nh4}
+                defaultValue={submitData.nh4}
                 placeholder="NH3/NH4 (ppm)"
                 onChange={handleInputFloatWater}
               />
@@ -281,7 +294,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="o2"
                 name="o2"
-                value={submitData.o2}
+                defaultValue={submitData.o2}
                 placeholder="O2 (mg/l)"
                 onChange={handleInputFloatWater}
               />
@@ -294,7 +307,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="salt"
                 name="salt"
-                value={submitData.salt}
+                defaultValue={submitData.salt}
                 placeholder="Salt (%)"
                 onChange={handleInputFloatWater}
               />
@@ -305,7 +318,7 @@ export const UpdateWater = () => {
                 type="text"
                 id="ph"
                 name="ph"
-                value={submitData.ph}
+                defaultValue={submitData.ph}
                 placeholder="pH"
                 onChange={handleInputFloatWater}
               />
@@ -317,7 +330,7 @@ export const UpdateWater = () => {
               type="text"
               id="temperature"
               name="temperature"
-              value={submitData.temperature}
+              defaultValue={submitData.temperature}
               placeholder="Temperature (℃)"
               onChange={handleInputFloatWater}
             />

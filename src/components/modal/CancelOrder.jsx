@@ -84,10 +84,7 @@ export const CancelOrder = () => {
               ></i>
             </div>
             <div className="cancel-order-main">
-              <p>
-                Are you sure to cancel order of date{" "}
-                {formatDate(orderInfo.createDate)} ?
-              </p>
+              <p>Are you sure to cancel your order?</p>
             </div>
             <div className="submit">
               <button onClick={handleSubmit}>Cancel this order</button>

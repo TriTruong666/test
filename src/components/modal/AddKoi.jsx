@@ -145,13 +145,13 @@ export const AddKoi = () => {
       createDate: updatedCreateDate,
     };
     if (
-      !updatedSubmitData.image ||
-      !updatedSubmitData.name ||
-      !updatedSubmitData.origin ||
-      !updatedSubmitData.pondId ||
-      !updatedSubmitData.sex ||
-      !updatedSubmitData.type ||
-      !updatedSubmitData.createDate
+      updatedSubmitData.image === "" ||
+      updatedSubmitData.name === "" ||
+      updatedSubmitData.origin === "" ||
+      updatedSubmitData.pondId === "" ||
+      updatedSubmitData.sex === "" ||
+      updatedSubmitData.type === "" ||
+      updatedSubmitData.createDate === ""
     ) {
       toast.error("All fields are required", {
         position: "top-right",

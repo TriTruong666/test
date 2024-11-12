@@ -156,9 +156,17 @@ select option {
   .product-detail-container .product-detail .description .product-description-content h2,
   .product-detail-container .product-detail .description .product-description-content strong,
   .product-detail-container .product-detail .description .product-description-content em,
-  .product-detail-container .product-detail .description .product-description-content p {
+  .product-detail-container .product-detail .description .product-description-content p,
+  .product-detail-container .product-detail .description .product-description-content li {
     font-family: "Roboto Mono", monospace;
     line-height: 3rem;
+  }
+  .product-detail-container .product-detail .description .product-description-content strong {
+    font-size: 1.1rem;
+  }
+  .product-detail-container .product-detail .description .product-description-content a {
+    text-decoration: underline;
+    color: white;
   }
   .product-detail-container .product-detail .description .product-description-content iframe {
     width: 100%;

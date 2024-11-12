@@ -178,7 +178,7 @@ export const KoiDetail = () => {
         ) : (
           <>
             <div className="koi-detail-header">
-              <strong>Koi Detail {koiInfo.name}</strong>
+              <strong>{koiInfo.name}'s Infomation</strong>
               <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
             </div>
             <div className="koi-detail-info">

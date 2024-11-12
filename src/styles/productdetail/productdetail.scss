@@ -138,9 +138,19 @@
                     h2,
                     strong,
                     em,
-                    p {
+                    p,
+                    li {
                         font-family: $main-font;
                         line-height: 3rem;
+                    }
+
+                    strong {
+                        font-size: 1.1rem;
+                    }
+
+                    a {
+                        text-decoration: underline;
+                        color: white;
                     }
 
                     iframe {

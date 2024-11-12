@@ -82,10 +82,6 @@ export const MyBlogList = () => {
           <div className="loading">
             <ClipLoader color="#000000" size={50} />
           </div>
-        ) : emptyList ? (
-          <div className="empty-list">
-            <p>{emptyList}</p>
-          </div>
         ) : (
           <>
             {filteredBlogs.length > 0 ? (
@@ -100,7 +96,7 @@ export const MyBlogList = () => {
               ))
             ) : (
               <div className="empty-list">
-                <p>No blogs was found</p>
+                <p>No blogs were found</p>
               </div>
             )}
           </>

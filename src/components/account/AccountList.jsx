@@ -111,6 +111,10 @@ export const AccountList = () => {
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
             </div>
+          ) : filteredUsers?.length === 0 ? (
+            <div className="empty-list">
+              <p>No accounts were found!</p>
+            </div>
           ) : (
             filteredUsers.map((user, index) => (
               <tr key={user.userId}>

@@ -62,13 +62,13 @@ export const PondWater = () => {
     if (param < idealMin) {
       return {
         adjustment: idealMin - param,
-        message: `You need to increase by ${idealMin - param}`,
+        message: `Need to increase by ${idealMin - param}`,
       };
     }
     if (param > idealMax) {
       return {
         adjustment: param - idealMax,
-        message: `You need to decrease by ${param - idealMax}`,
+        message: `Need to decrease by ${param - idealMax}`,
       };
     }
   };
@@ -254,7 +254,7 @@ export const PondWater = () => {
               <strong>
                 O2 ({calculateParamTitle(pondInfo?.waterParam?.o2, 7, 9)})
               </strong>
-              <p>{oxygenAdjustment?.message}</p>
+              <p>{oxygenAdjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -266,7 +266,7 @@ export const PondWater = () => {
               <strong>
                 NO2 ({calculateParamTitle(pondInfo?.waterParam?.no2, 0, 0.5)})
               </strong>
-              <p>{no2Adjustment?.message}</p>
+              <p>{no2Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -278,7 +278,7 @@ export const PondWater = () => {
               <strong>
                 NO3 ({calculateParamTitle(pondInfo?.waterParam?.no3, 0, 20)})
               </strong>
-              <p>{no3Adjustment?.message}</p>
+              <p>{no3Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -291,7 +291,7 @@ export const PondWater = () => {
                 NH3/NH4 (
                 {calculateParamTitle(pondInfo?.waterParam?.nh4, 0, 0.2)})
               </strong>
-              <p>{nh4Adjustment?.message}</p>
+              <p>{nh4Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -305,7 +305,7 @@ export const PondWater = () => {
                 {calculateParamTitle(pondInfo?.waterParam?.temperature, 20, 28)}
                 )
               </strong>
-              <p>{temperatureAdjustment?.message}</p>
+              <p>{temperatureAdjustment?.message}℃</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -318,7 +318,7 @@ export const PondWater = () => {
                 Salt (
                 {calculateParamTitle(pondInfo?.waterParam?.salt, 0.1, 0.3)})
               </strong>
-              <p>{saltAdjustment?.message}</p>
+              <p>{saltAdjustment?.message}%</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(

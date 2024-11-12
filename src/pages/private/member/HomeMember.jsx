@@ -194,76 +194,6 @@ export const HomeMember = () => {
                 </div>
               </div>
             </div>
-
-            <div className="chart-container">
-              <div className="charts">
-                <div className="left-chart">
-                  Recommend Products for your ponds
-                  {recommendedProducts.length === 0 ? (
-                    <p>You have not created any ponds</p>
-                  ) : (
-                    <ul className="recommended-products-list">
-                      {recommendedProducts.slice(0, 3).map((product) => (
-                        <li
-                          key={product.productId}
-                          className="recommended-product-item"
-                        >
-                          <img
-                            src={product.image}
-                            alt={product.productName}
-                            className="recommended-product-image"
-                          />
-                          <div className="recommended-product-details">
-                            <strong>{product.productName}</strong>
-                            <p>{formatPrice(product.unitPrice)}</p>
-                            <Link to={`/productdetail/${product.productId}`}>
-                              Details
-                            </Link>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                <div className="right-chart">
-                  <h3>Koi Growth and Weight Logs </h3>
-                  <div className="koi-search">
-                    <input
-                      type="text"
-                      placeholder="Enter Pond Name"
-                      value={pondName}
-                      onChange={(e) => setPondName(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Enter Koi Name"
-                      value={koiName}
-                      onChange={(e) => setKoiName(e.target.value)}
-                    />
-                    <button onClick={handleSearchKoi}>
-                      Search
-                      <i className="bx bx-search"></i>
-                    </button>
-                  </div>
-                  {pondLabel ? (
-                    <p
-                      className={
-                        pondLabel.includes("not found")
-                          ? "error-message"
-                          : "koi-label"
-                      }
-                    >
-                      {pondLabel}
-                    </p>
-                  ) : null}
-                  {koiLogs.length ? (
-                    <SizeAndWeightChart koiGrowthLogs={koiLogs} />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            </div>
             <div className="summary-bottom">
               <div className="left-bottom">
                 <h3>Recent Orders</h3>
@@ -303,6 +233,7 @@ export const HomeMember = () => {
                           </td>
                           <td>
                             <Link
+                              style={{ color: "blue", fontSize: "1rem" }}
                               to={`/dashboard/myorder/detail/${order.order.orderId}`}
                             >
                               Details
@@ -332,18 +263,20 @@ export const HomeMember = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {ponds.slice(0, 5).map((pond) => {
-                          const pondStatus = localStorage.getItem(
-                            `status-of-ponds-${pond.pondName}`
-                          );
-                          return (
-                            <tr key={pond.pondId}>
-                              <td>{pond.pondId}</td>
-                              <td>{pond.pondName}</td>
-                              <td className={pondStatus}>{pondStatus}</td>
-                            </tr>
-                          );
-                        })}
+                        {ponds.slice(0, 5).map((pond) => (
+                          <tr key={pond.pondId}>
+                            <td>{pond.pondId}</td>
+                            <td>{pond.pondName}</td>
+                            <td>
+                              <Link
+                                style={{ color: "green", fontSize: "1rem" }}
+                                to={`/dashboard/mypond/detail/info/${pond.pondId}`}
+                              >
+                                Details
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>

@@ -38,13 +38,14 @@ select option {
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
   .homemem-dashboard-container .dashboard {
     width: calc(100% - 220px);
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: auto;
   }
   .homemem-dashboard-container .dashboard .error-page {
     width: 100%;
@@ -297,6 +298,9 @@ select option {
   }
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table .refund {
     color: rgb(177, 15, 213);
+  }
+  .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table span {
+    font-weight: 600;
   }
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table th,
   .homemem-dashboard-container .dashboard .summary-bottom .left-bottom table td {

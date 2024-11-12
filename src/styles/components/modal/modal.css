@@ -664,58 +664,10 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-datepicker {
-    color: black;
-    padding: 10px 25px;
-    width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar {
-    background-color: white;
-    /* Background color of the datepicker */
-    border: 1px solid #ddd;
-    /* Border */
-    border-radius: 5px;
-    /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Shadow effect */
-    z-index: 1000;
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar react-datepicker__header {
-    background-color: #007bff;
-    /* Header background color */
-    color: white;
-    /* Header text color */
-    border-bottom: none;
-    /* Remove bottom border */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__current-month {
-    font-weight: bold;
-    /* Bold month name */
-    font-size: 1.2rem;
-    /* Increase font size */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day {
-    line-height: 2;
-    /* Increase line height for spacing */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day:hover {
-    background-color: #007bff;
-    /* Change background on hover */
-    color: white;
-    /* Change text color on hover */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--selected {
-    background-color: #007bff;
-    /* Selected day background */
-    color: white;
-    /* Selected day text color */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--outside-month {
-    color: #ccc;
-    /* Color for days outside the current month */
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .note {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.9);
   }
   .add-koi-log-container .add-koi-log-modal .add-koi-log-form .submit {
     display: flex;

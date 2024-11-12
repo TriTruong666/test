@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -73,6 +73,19 @@ export const AddKoiLog = () => {
       });
       return;
     }
+    if (submitData.size === "" || submitData.weight === "") {
+      toast.error("All fields are required", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (isNaN(submitData.size) || isNaN(submitData.weight)) {
       toast.error("Koi's weight and size must be a number", {
         position: "top-right",
@@ -86,14 +99,8 @@ export const AddKoiLog = () => {
       });
       return;
     }
-
-    if (
-      !submitData.size ||
-      !submitData.size ||
-      !submitData.weight ||
-      !submitData.weight
-    ) {
-      toast.error("All fields are required", {
+    if (submitData.size < 15 || submitData.size > 100) {
+      toast.error("Minimum size of Koi is 15cm and Maximum size is 100cm ", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -105,7 +112,22 @@ export const AddKoiLog = () => {
       });
       return;
     }
-
+    if (submitData.weight < 0.2 || submitData.weight > 16) {
+      toast.error(
+        "Minimum weight of Koi is 0.2kg and Maximum weight is 16kg ",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+      return;
+    }
     try {
       await mutation.mutateAsync(submitData);
     } catch (error) {
@@ -144,14 +166,12 @@ export const AddKoiLog = () => {
               name="weight"
             />
           </div>
-          {/* <DatePicker
-            selected={startDate}
-            maxDate={new Date()}
-            endDate={new Date()}
-            dateFormat="yyyy-MM-dd"
-            className="custom-datepicker"
-            calendarClassName="custom-calendar"
-          /> */}
+          <p className="note">
+            Note: Fish tracking data cannot be deleted because the time to
+            create this data will be calculated at the time you create it,
+            please enter the exact weight and volume of the fish before
+            creating.
+          </p>
           <div className="submit">
             <button onClick={handleToggleKoiLogModal}>Cancel</button>
             <button>Add confirm</button>

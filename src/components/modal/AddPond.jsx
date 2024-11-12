@@ -74,9 +74,6 @@ export const AddPond = () => {
         theme: "dark",
       });
 
-      // Calculate pond status and store it in localStorage
-      calculateAndStorePondStatus(submitPondData.pondName, submitWaterData);
-
       setTimeout(() => {
         location.reload();
         setIsPreventSubmit(false);
@@ -167,49 +164,23 @@ export const AddPond = () => {
       });
       return;
     }
-
     if (
-      isNaN(submitPondData.depth) ||
-      isNaN(submitPondData.pumpPower) ||
-      isNaN(submitPondData.size) ||
-      isNaN(submitPondData.vein) ||
-      isNaN(submitPondData.volume) ||
-      !submitPondData.depth ||
-      !submitPondData.pumpPower ||
-      !submitPondData.size ||
-      !submitPondData.vein ||
-      !submitPondData.volume
-    ) {
-      toast.error("Pond measurements must be valid numbers greater than 0", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
-
-    if (
+      submitPondData.depth === "" ||
+      submitPondData.image === "" ||
+      submitPondData.pondName === "" ||
+      submitPondData.pumpPower === "" ||
+      submitPondData.size === "" ||
+      submitPondData.vein === "" ||
+      submitPondData.volume === "" ||
       submitWaterData.nh4 === "" ||
       submitWaterData.no2 === "" ||
       submitWaterData.no3 === "" ||
       submitWaterData.o2 === "" ||
       submitWaterData.ph === "" ||
       submitWaterData.salt === "" ||
-      submitWaterData.temperature === "" ||
-      isNaN(submitWaterData.nh4) ||
-      isNaN(submitWaterData.no2) ||
-      isNaN(submitWaterData.no3) ||
-      isNaN(submitWaterData.o2) ||
-      isNaN(submitWaterData.ph) ||
-      isNaN(submitWaterData.salt) ||
-      isNaN(submitWaterData.temperature)
+      submitWaterData.temperature === ""
     ) {
-      toast.error("Water parameters must be valid numbers", {
+      toast.error("Please input all fields", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -221,9 +192,8 @@ export const AddPond = () => {
       });
       return;
     }
-
-    if (!submitPondData.image || !submitPondData.pondName) {
-      toast.error("Pond name and image are required", {
+    if (isNaN(submitPondData.depth)) {
+      toast.error("Depth must be number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -235,7 +205,149 @@ export const AddPond = () => {
       });
       return;
     }
-
+    if (isNaN(submitPondData.pumpPower)) {
+      toast.error("Pump power must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.size)) {
+      toast.error("Size must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.vein)) {
+      toast.error("Vein must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.volume)) {
+      toast.error("Volume must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.nh4)) {
+      toast.error("NH3/NH4 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.no2)) {
+      toast.error("NO2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.no3)) {
+      toast.error("NO3 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.o2)) {
+      toast.error("O2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.ph)) {
+      toast.error("pH must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.salt)) {
+      toast.error("Salt must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.temperature)) {
+      toast.error("Temperature must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       await pondMutation.mutateAsync(submitPondData);
     } catch (error) {
@@ -250,46 +362,6 @@ export const AddPond = () => {
       });
     }
   }, [submitWaterData.pondId]);
-
-  const calculateAndStorePondStatus = (pondName, waterParams) => {
-    const calculateParamStatus = (param, idealMin, idealMax) => {
-      if (param >= idealMin && param <= idealMax) return "good";
-      if (
-        (param >= idealMin - 1 && param < idealMin) ||
-        (param > idealMax && param <= idealMax + 1)
-      )
-        return "moderate";
-      return "poor";
-    };
-
-    const parameters = [
-      calculateParamStatus(waterParams.o2, 7, 9),
-      calculateParamStatus(waterParams.no2, 0, 0.5),
-      calculateParamStatus(waterParams.no3, 0, 20),
-      calculateParamStatus(waterParams.nh4, 0, 0.2),
-      calculateParamStatus(waterParams.temperature, 20, 28),
-      calculateParamStatus(waterParams.salt, 0.1, 0.3),
-      calculateParamStatus(waterParams.ph, 7, 8),
-    ];
-
-    const statusCount = parameters.reduce(
-      (acc, status) => {
-        acc[status]++;
-        return acc;
-      },
-      { good: 0, moderate: 0, poor: 0 }
-    );
-
-    const avgStatus =
-      statusCount.good >= statusCount.moderate &&
-      statusCount.good >= statusCount.poor
-        ? "good"
-        : statusCount.moderate >= statusCount.poor
-        ? "moderate"
-        : "poor";
-
-    localStorage.setItem(`status-of-ponds-${pondName}`, avgStatus);
-  };
 
   return (
     <div className="add-pond-container">

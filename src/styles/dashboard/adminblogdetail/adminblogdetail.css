@@ -151,13 +151,18 @@ select option {
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content h2,
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content strong,
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content em,
-  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content p {
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content p,
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content li {
     font-family: "Roboto Mono", monospace;
     line-height: 2rem;
     font-size: 0.8rem;
   }
+  .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content strong {
+    font-size: 0.9rem;
+  }
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content a {
-    color: rgb(12, 86, 154);
+    text-decoration: underline;
+    color: white;
   }
   .admin-blog-detail-container .admin-blog-preview-main .main .blog-detail-main .blog-detail-content img {
     width: 100%;

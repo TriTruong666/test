@@ -105,15 +105,6 @@ export const MyOrderList = () => {
   return (
     <>
       <div className="order-manage-utils">
-        <div className="search-order">
-          <i className="bx bx-search"></i>
-          <input
-            type="text"
-            placeholder="Search order by ID..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        </div>
         <div className="filter">
           <select
             name="filterBy"
@@ -141,7 +132,7 @@ export const MyOrderList = () => {
           <>
             {filteredOrders.length === 0 ? (
               <div className="empty">
-                <p>No orders match your search</p>
+                <p>No orders were found!</p>
               </div>
             ) : (
               filteredOrders.map((order) => (

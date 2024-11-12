@@ -14,19 +14,6 @@ import {
 // import service
 import { setBlogInfo } from "../../../redux/slices/blog/blog";
 import * as BlogService from "../../../service/blog/blogService";
-const stripHtmlTags = (html) => {
-  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const elements = doc.body.querySelectorAll("*");
-
-  elements.forEach((el) => {
-    if (!allowedTags.includes(el.tagName.toLowerCase())) {
-      // Replace unwanted tags with their content
-      el.replaceWith(...el.childNodes);
-    }
-  });
-  return doc.body.innerHTML;
-};
 export const BlogDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);

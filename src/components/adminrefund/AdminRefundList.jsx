@@ -115,7 +115,7 @@ export const AdminRefundList = () => {
           <>
             {filteredRefunds.length === 0 ? (
               <div className="empty-list">
-                <p>No request was found</p>
+                <p>No requests were found</p>
               </div>
             ) : (
               filteredRefunds.map((refund) => (

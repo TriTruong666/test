@@ -53,7 +53,7 @@ select option {
   .myorder-list .empty p {
     font-weight: 600;
     font-size: 1.1rem;
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(0, 0, 0, 0.7);
   }
   .myorder-list .server-error {
     display: flex;

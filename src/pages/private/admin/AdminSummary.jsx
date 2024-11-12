@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // charts
 import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestSellerProducstsChart";
@@ -129,12 +129,6 @@ export const Summary = () => {
                 it no better.” —Martin Luther King, Jr. “Nothing ever comes to
                 one, that is worth having, except as a result of hard work
               </p>
-
-              <Link to={"https://www.facebook.com/"}> FaceBook</Link>
-            </div>
-
-            <div className="item2">
-              <img src={adminImg} alt="admin profile pic" />
             </div>
           </div>
           <div className="info">
@@ -182,17 +176,20 @@ export const Summary = () => {
             <table>
               <thead>
                 <tr>
-                  <th>OrderId</th>
-                  <th>Owner</th>
+                  <th>Order Date</th>
+                  <th>Customer</th>
                   <th>Price</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.slice(0, 5).map((order) => (
+                {orders.slice(0, 10).map((order) => (
                   <tr key={order.order.orderId}>
-                    <td>{order.order.orderId}</td>
+                    <td>
+                      {new Date(order.order.createDate).toLocaleDateString() ||
+                        "Date not available"}
+                    </td>
                     <td>{order.order.fullname} </td>
                     <td>{formatPrice(order.order.total)}</td>
                     <td>
@@ -207,6 +204,7 @@ export const Summary = () => {
                     </td>
                     <td>
                       <Link
+                        style={{ color: "blue", fontSize: "1rem" }}
                         to={`/dashboard/admin/order/detail/${order.order.orderId}`}
                       >
                         Details

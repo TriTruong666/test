@@ -98,7 +98,7 @@ export const AdminBlogList = () => {
               ))
             ) : (
               <div className="empty-list">
-                <p>No blogs was found</p>
+                <p>No blogs were found</p>
               </div>
             )}
           </>

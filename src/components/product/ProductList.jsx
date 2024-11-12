@@ -138,6 +138,10 @@ export const ProductList = () => {
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
             </div>
+          ) : filteredProducts?.length === 0 ? (
+            <div className="empty-list">
+              <p>No products were found!</p>
+            </div>
           ) : (
             filteredProducts.map((product) => (
               <tr key={product.productId}>

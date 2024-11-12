@@ -133,7 +133,7 @@ export const AdminOrderList = () => {
           <>
             {filteredOrders.length === 0 ? (
               <div className="empty-list">
-                <p>No order was found</p>
+                <p>No orders were found</p>
               </div>
             ) : (
               filteredOrders.map((order) => (

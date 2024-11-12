@@ -3,30 +3,37 @@
   ::-webkit-scrollbar {
     width: 0;
   }
+
   .admin-summary-container {
     width: 100vw;
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: auto;
+    overflow-y: hidden;
+
     .summary {
       width: calc(100% - 220px);
       height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
+
       .admin-summary-header {
         padding: 25px 40px;
+
         strong {
           font-size: 1.1rem;
           font-weight: 700;
         }
       }
+
       .section1 {
         padding: 0 40px;
         display: flex;
         height: 300px;
         column-gap: 25px;
         justify-content: space-between;
+
         .item {
           width: 70%;
           height: 100%;
@@ -34,6 +41,7 @@
           box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           display: flex;
+
           .item1 {
             width: 70%;
             display: flex;
@@ -45,6 +53,7 @@
               color: black;
               font-size: 1.2rem;
             }
+
             p {
               font-size: 0.9rem;
               font-weight: 300;
@@ -67,11 +76,13 @@
             }
           }
         }
+
         .info {
           width: 30%;
           display: flex;
           flex-direction: column;
           row-gap: 25px;
+
           .small-item {
             padding: 0 30px;
             display: flex;
@@ -83,21 +94,25 @@
             background: black;
             box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
             div {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
               row-gap: 20px;
+
               strong {
                 color: white;
                 font-size: 1.2rem;
               }
+
               p {
                 font-size: 0.9rem;
                 font-weight: 300;
                 color: $fade-white;
               }
             }
+
             i {
               font-size: 90px;
               color: rgba(255, 255, 255, 0.5);
@@ -105,6 +120,7 @@
           }
         }
       }
+
       .section2 {
         margin-top: 25px;
         padding: 0 40px;
@@ -112,6 +128,7 @@
         grid-template-columns: repeat(3, 1fr);
         height: 300px;
         column-gap: 25px;
+
         .item {
           padding: 10px;
           width: 100%;
@@ -119,9 +136,11 @@
           border-radius: 15px;
           box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
           div {
             display: flex;
             flex-direction: column;
+
             strong {
               font-size: 0.9rem;
               color: $fade-black;
@@ -130,12 +149,15 @@
           }
         }
       }
+
       .chart-container {
         margin-top: 150px;
         padding: 0 40px;
+
         .charts {
           display: flex;
           column-gap: 25px;
+
           .left-chart {
             width: 33%;
             display: flex;
@@ -145,11 +167,13 @@
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             padding: 20px 15px;
             border-radius: 15px;
+
             h3 {
               font-size: 0.9rem;
               text-align: center;
             }
           }
+
           .right-chart {
             width: 67%;
             display: flex;
@@ -159,6 +183,7 @@
               rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             padding: 20px 40px;
             border-radius: 15px;
+
             .filter-container {
               display: flex;
               align-items: center;
@@ -180,6 +205,7 @@
                 cursor: pointer;
               }
             }
+
             h3 {
               font-size: 0.9rem;
               text-align: center;
@@ -189,7 +215,7 @@
       }
 
       .summary-bottom {
-        margin-top: 30px;
+        margin: 30px 0 50px 0;
         padding: 0 40px;
         display: flex;
         justify-content: space-between;
@@ -211,9 +237,11 @@
             justify-content: center;
             margin-bottom: 10px;
           }
+
           table {
             width: 100%;
             border-collapse: collapse;
+
             .pending {
               color: rgb(213, 213, 15);
             }
@@ -240,12 +268,9 @@
             th {
               background-color: #f4f4f4;
             }
+
             span {
               font-weight: 600;
-            }
-
-            .pending {
-              color: rgb(213, 213, 15);
             }
 
             button {
@@ -265,12 +290,14 @@
             rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
           border-radius: 15px;
           background: white;
+
           strong {
             font-size: 0.9rem;
             color: $fade-black;
             text-align: center;
             margin-bottom: 10px;
           }
+
           table {
             width: 100%;
             border-collapse: collapse;

@@ -16,12 +16,7 @@ export const UpdatePond = () => {
   // param
   const { pondId } = useParams();
   // query
-  const {
-    data: pondInfo = {},
-    isFetching,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: pondInfo = {} } = useQuery({
     queryKey: ["pond-detail", pondId],
     queryFn: () => PondService.detailPondService(pondId),
   });
@@ -154,14 +149,8 @@ export const UpdatePond = () => {
       return;
     }
 
-    if (
-      isNaN(submitData.depth) ||
-      isNaN(submitData.pumpPower) ||
-      isNaN(submitData.size) ||
-      isNaN(submitData.vein) ||
-      isNaN(submitData.volume)
-    ) {
-      toast.error("Depth, Pumppower, Size, Vein and volume must be a number", {
+    if (isNaN(submitData.depth)) {
+      toast.error("Depth must be number", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -173,15 +162,66 @@ export const UpdatePond = () => {
       });
       return;
     }
-
+    if (isNaN(submitData.pumpPower)) {
+      toast.error("Pump power must be number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.size)) {
+      toast.error("Size must be number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.vein)) {
+      toast.error("Vein must be number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitData.volume)) {
+      toast.error("Volume must be number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (
-      !submitData.pondName ||
-      !submitData.image ||
-      !submitData.depth ||
-      !submitData.pumpPower ||
-      !submitData.size ||
-      !submitData.vein ||
-      !submitData.volume
+      submitData.pondName === "" ||
+      submitData.image === "" ||
+      submitData.depth === "" ||
+      submitData.pumpPower === "" ||
+      submitData.size === "" ||
+      submitData.vein === "" ||
+      submitData.volume === ""
     ) {
       toast.error("Please input all fields", {
         position: "top-right",

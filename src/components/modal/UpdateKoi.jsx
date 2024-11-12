@@ -32,7 +32,6 @@ export const UpdateKoi = () => {
   // dispatch
   const dispatch = useDispatch();
   // selector
-  const koiId = useSelector((state) => state.koi.koiId.koiId);
   const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // query
   const {
@@ -48,7 +47,6 @@ export const UpdateKoi = () => {
   const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [selectedFlag, setSelectedFlag] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [isValidName, setIsValidName] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: "",
     name: "",
@@ -134,31 +132,6 @@ export const UpdateKoi = () => {
     });
   };
 
-  const handleOnChangeName = (e) => {
-    const { name, value } = e.target;
-    if (!isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    if (value.length < 10) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    setSubmitData({
-      ...submitData,
-      [name]: value,
-    });
-    setIsValidName(false);
-  };
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -195,11 +168,11 @@ export const UpdateKoi = () => {
     }
 
     if (
-      !submitData.image ||
-      !submitData.name ||
-      !submitData.type ||
-      !submitData.origin ||
-      !submitData.sex
+      submitData.image === "" ||
+      submitData.name === "" ||
+      submitData.origin === "" ||
+      submitData.sex === "" ||
+      submitData.type === ""
     ) {
       toast.error("Please input all fields", {
         position: "top-right",
@@ -256,7 +229,7 @@ export const UpdateKoi = () => {
               id="koiname"
               name="name"
               defaultValue={koiInfo.name}
-              onChange={handleOnChangeName}
+              onChange={handleOnChange}
               placeholder="Koi name"
             />
           </div>

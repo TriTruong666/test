@@ -38,13 +38,14 @@ select option {
     max-height: 100vh;
     position: relative;
     display: flex;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
   .admin-summary-container .summary {
     width: calc(100% - 220px);
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
   .admin-summary-container .summary .admin-summary-header {
     padding: 25px 40px;
@@ -213,7 +214,7 @@ select option {
     text-align: center;
   }
   .admin-summary-container .summary .summary-bottom {
-    margin-top: 30px;
+    margin: 30px 0 50px 0;
     padding: 0 40px;
     display: flex;
     justify-content: space-between;
@@ -261,9 +262,6 @@ select option {
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table span {
     font-weight: 600;
-  }
-  .admin-summary-container .summary .summary-bottom .left-bottom table .pending {
-    color: rgb(213, 213, 15);
   }
   .admin-summary-container .summary .summary-bottom .left-bottom table button {
     background-color: #1e90ff;

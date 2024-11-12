@@ -134,14 +134,20 @@
                         h2,
                         strong,
                         em,
-                        p {
+                        p,
+                        li {
                             font-family: $main-font;
                             line-height: 2rem;
                             font-size: 0.8rem;
                         }
 
+                        strong {
+                            font-size: 0.9rem;
+                        }
+
                         a {
-                            color: rgb(12, 86, 154);
+                            text-decoration: underline;
+                            color: white;
                         }
 
                         img {

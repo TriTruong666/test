@@ -287,7 +287,7 @@ export const HomeMember = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {orders.map((order) => (
+                      {orders.slice(0, 5).map((order) => (
                         <tr key={order.order.orderId}>
                           <td>{formatDate(order.order.createDate)}</td>
                           <td>{order.order.orderDetails.length}</td>
@@ -332,7 +332,7 @@ export const HomeMember = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {ponds.map((pond) => {
+                        {ponds.slice(0, 5).map((pond) => {
                           const pondStatus = localStorage.getItem(
                             `status-of-ponds-${pond.pondName}`
                           );

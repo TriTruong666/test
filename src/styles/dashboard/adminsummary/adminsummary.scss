@@ -214,6 +214,21 @@
           table {
             width: 100%;
             border-collapse: collapse;
+            .pending {
+              color: rgb(213, 213, 15);
+            }
+
+            .success {
+              color: rgb(15, 213, 22);
+            }
+
+            .cancel {
+              color: rgb(213, 15, 15);
+            }
+
+            .refund {
+              color: rgb(177, 15, 213);
+            }
 
             th,
             td {

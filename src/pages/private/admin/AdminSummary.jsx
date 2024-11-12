@@ -74,16 +74,17 @@ export const Summary = () => {
     queryFn: UserService.getUserListAdmin,
   });
 
-  // handle func
   const handleOrderStatusClassName = (status) => {
-    if (status === "PENDING") {
-      return statusClassName.pending;
-    }
+    if (status === "PENDING") return statusClassName.pending;
+    if (status === "APPROVED") return statusClassName.success;
+    if (status === "REJECTED") return statusClassName.cancel;
+    if (status === "REFUNDED") return statusClassName.refund;
   };
   const handleStatusTitle = (status) => {
-    if (status === "PENDING") {
-      return statusTitle.pending;
-    }
+    if (status === "PENDING") return statusTitle.pending;
+    if (status === "APPROVED") return statusTitle.success;
+    if (status === "REJECTED") return statusTitle.cancel;
+    if (status === "REFUNDED") return statusTitle.refund;
   };
 
   useEffect(() => {
@@ -189,7 +190,7 @@ export const Summary = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders.slice(0, 5).map((order) => (
                   <tr key={order.order.orderId}>
                     <td>{order.order.orderId}</td>
                     <td>{order.order.fullname} </td>
@@ -228,7 +229,7 @@ export const Summary = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {lowStockProducts.map((product) => (
+                  {lowStockProducts.slice(0, 5).map((product) => (
                     <tr key={product.productId}>
                       <td>{product.productName}</td>
                       <td>{product.stock}</td>

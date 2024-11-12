@@ -238,6 +238,18 @@ select option {
     width: 100%;
     border-collapse: collapse;
   }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .pending {
+    color: rgb(213, 213, 15);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .success {
+    color: rgb(15, 213, 22);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .cancel {
+    color: rgb(213, 15, 15);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .refund {
+    color: rgb(177, 15, 213);
+  }
   .admin-summary-container .summary .summary-bottom .left-bottom table th,
   .admin-summary-container .summary .summary-bottom .left-bottom table td {
     padding: 10px;

@@ -9,8 +9,9 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 import { Shoplist } from "../../components/shop/Shoplist";
 // import service
-import * as ProductService from "../../service/product/productService";
 import * as CategoryService from "../../service/category/categoryService";
+import * as ProductService from "../../service/product/productService";
+
 export const Shop = () => {
   // param
   const { cateId } = useParams();
@@ -23,6 +24,8 @@ export const Shop = () => {
   const [isRow, setIsRow] = useState(false);
   const [isColumn, setIsColumn] = useState(true);
   const [serverError, setServerError] = useState(null);
+  const [filterOption, setFilterOption] = useState("default");
+
   // query
   const { data: products = [], isError } = useQuery({
     queryKey: ["products", cateId],
@@ -49,6 +52,7 @@ export const Shop = () => {
       setIsAuth(true);
     }
   };
+
   const handlePagination = () => {
     if (infinityScroll < products.length) {
       setIsLoadingList(true);
@@ -58,14 +62,21 @@ export const Shop = () => {
       }, 1000);
     }
   };
+
   const handleSetRow = () => {
     setIsRow(true);
     setIsColumn(false);
   };
+
   const handleSetColumn = () => {
     setIsRow(false);
     setIsColumn(true);
   };
+
+  const handleFilterChange = (e) => {
+    setFilterOption(e.target.value);
+  };
+
   useEffect(() => {
     handleSetIsAuth();
 
@@ -137,11 +148,15 @@ export const Shop = () => {
                 onClick={handleSetColumn}
               ></i>
               <i className="bx bx-grid-vertical" onClick={handleSetRow}></i>
-              <select name="" id="">
-                <option value="">Filter</option>
-                <option value="">Filter</option>
-                <option value="">Filter</option>
-                <option value="">Filter</option>
+              <select
+                name="filter"
+                id="filter"
+                onChange={handleFilterChange}
+                value={filterOption}
+              >
+                <option value="default">Default</option>
+                <option value="priceLowToHigh">Price: Low to High</option>
+                <option value="priceHighToLow">Price: High to Low</option>
               </select>
             </div>
           </div>
@@ -151,13 +166,14 @@ export const Shop = () => {
               isLoadingList={isLoadingList}
               isRow={isRow}
               isColumn={isColumn}
+              filterOption={filterOption}
             />
           </div>
 
           {serverError ? (
             <>
               <div className="error-page">
-                <p></p>
+                <p>{serverError}</p>
               </div>
             </>
           ) : (

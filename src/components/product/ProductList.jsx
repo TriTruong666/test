@@ -4,64 +4,114 @@ import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 // import styles
 import "../../styles/components/product/product.css";
-// import assets
 // import service
 import * as ProductService from "../../service/product/productService";
 // import slices
 import {
+  toggleAddProductModal,
   toggleDeleteProductModal,
   toggleUpdateProductModal,
 } from "../../redux/slices/modal/modal";
 import { setProductId } from "../../redux/slices/product/product";
+
 export const ProductList = () => {
-  // dispatch
   const dispatch = useDispatch();
-  // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [emptyList, setEmptyList] = useState(null);
-  const [propProductId, setPropProductId] = useState(null);
+
   const [serverError, setServerError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
+
   // query
   const {
     data: products = [],
     isLoading,
     isError,
     isFetching,
-    isRefetching,
   } = useQuery({
     queryKey: ["productList"],
     queryFn: ProductService.getAllProductAdmin,
     refetchOnWindowFocus: false,
   });
+
   useEffect(() => {
-    if (products.length === 0) {
-      setEmptyList("Product list is empty");
-    } else {
-      setEmptyList(null);
-    }
     if (isError) {
       setServerError("Server is closed now");
     } else {
       setServerError(null);
     }
 
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
-  }, [isFetching, isRefetching, isLoading, isError]);
-  // handle func
+    setIsLoadingPage(isFetching || isLoading);
+  }, [isFetching, isLoading, isError]);
+
+  const filteredProducts = products
+    .filter((product) =>
+      product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (filterBy === "stock") {
+        return a.stock - b.stock;
+      } else if (filterBy === "name") {
+        return a.productName.localeCompare(b.productName);
+      } else if (filterBy === "price") {
+        return a.unitPrice - b.unitPrice;
+      }
+      return 0;
+    });
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
+
   const handleToggleUpdateProductModal = (id) => {
     dispatch(setProductId(id));
     dispatch(toggleUpdateProductModal());
   };
-  const handleToggleDelProductModal = (id) => {
-    dispatch(setProductId(id));
-    dispatch(toggleDeleteProductModal());
+  const handleToggleAddProductModal = () => {
+    dispatch(toggleAddProductModal());
   };
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(price);
+
   return (
     <>
+      <div className="admin-product-utils">
+        <div className="search-product">
+          <i className="bx bx-search"></i>
+          <input
+            type="text"
+            placeholder="Search product..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <div className="filter">
+          <select
+            name="filterBy"
+            id="filterBy"
+            value={filterBy}
+            onChange={handleFilterChange}
+          >
+            <option value="">Filter</option>
+            <option value="stock">By Stock</option>
+            <option value="name">By Name</option>
+            <option value="price">By Price</option>
+          </select>
+          <i className="bx bx-chevron-down"></i>
+        </div>
+        <div className="add" onClick={handleToggleAddProductModal}>
+          <i className="bx bx-plus"></i>
+          <p>Create new product</p>
+        </div>
+      </div>
       <table className="product-list-table">
         <thead>
           <tr>
@@ -83,12 +133,12 @@ export const ProductList = () => {
             <div className="loading">
               <ClipLoader color="#000000" size={40} />
             </div>
-          ) : emptyList ? (
+          ) : filteredProducts?.length === 0 ? (
             <div className="empty-list">
-              <p>{emptyList}</p>
+              <p>No products were found!</p>
             </div>
           ) : (
-            products.map((product) => (
+            filteredProducts.map((product) => (
               <tr key={product.productId}>
                 <td>{product.productId}</td>
                 <td>
@@ -101,7 +151,7 @@ export const ProductList = () => {
                 <td>
                   <img src={product.image} alt="" />
                 </td>
-                <td>${product.unitPrice}</td>
+                <td>{formatPrice(product.unitPrice)}</td>
                 <td>{product.stock}</td>
                 <td>{product.status ? "Active" : "Inactive"}</td>
                 <td>
@@ -109,12 +159,6 @@ export const ProductList = () => {
                     className="bx bxs-edit-alt"
                     onClick={() =>
                       handleToggleUpdateProductModal(product.productId)
-                    }
-                  ></i>
-                  <i
-                    className="bx bxs-trash-alt"
-                    onClick={() =>
-                      handleToggleDelProductModal(product.productId)
                     }
                   ></i>
                 </td>

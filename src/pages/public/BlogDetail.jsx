@@ -82,23 +82,12 @@ export const BlogDetail = () => {
                 </div>
                 <img src={blog && blog.image} alt="" />
                 <div className="blog-detail-main">
-                  <div className="share">
-                    <strong>Share Article</strong>
-                    <div>
-                      <i className="bx bx-link-alt"></i>
-                      <i className="bx bxl-facebook-circle"></i>
-                      <i className="bx bxl-instagram-alt"></i>
-                    </div>
-                  </div>
-                  <div className="blog-detail-content">
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          blog &&
-                          stripHtmlTags(blog.content || "No content available"),
-                      }}
-                    />
-                  </div>
+                  <div
+                    className="blog-detail-content"
+                    dangerouslySetInnerHTML={{
+                      __html: blog?.content || "No content available",
+                    }}
+                  ></div>
                 </div>
               </>
             )}

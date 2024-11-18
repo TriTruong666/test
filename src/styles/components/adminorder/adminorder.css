@@ -36,6 +36,47 @@ select option {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
+  .admin-order-list .empty-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .admin-order-list .empty-list p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 600;
+  }
+  .admin-order-list .loading {
+    display: flex;
+    width: 100%;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-order-list .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .admin-order-list .empty p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .admin-order-list .server-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .admin-order-list .server-error p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
   .admin-order-list a {
     display: flex;
     flex-direction: column;
@@ -65,7 +106,18 @@ select option {
   }
   .admin-order-list a span {
     font-weight: 600;
-    color: rgb(13, 173, 13);
+  }
+  .admin-order-list a .pending {
+    color: rgb(213, 213, 15);
+  }
+  .admin-order-list a .success {
+    color: rgb(15, 213, 22);
+  }
+  .admin-order-list a .cancel {
+    color: rgb(213, 15, 15);
+  }
+  .admin-order-list a .refund {
+    color: rgb(177, 15, 213);
   }
   .admin-order-list a:hover {
     background: rgba(0, 0, 0, 0.049);

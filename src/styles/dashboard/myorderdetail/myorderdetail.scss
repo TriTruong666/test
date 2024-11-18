@@ -5,7 +5,47 @@
         width: calc(100% - 40% - 220px);
         display: flex;
         flex-direction: column;
-        overflow-y: hidden;
+        overflow-y: auto;
+
+        .error-page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            p {
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+        }
+
+        .not-found {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 10px;
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+                font-weight: 400;
+            }
+        }
+
+        .loading {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .my-order-detail-header {
             padding: 25px 40px;
@@ -21,9 +61,27 @@
                 font-size: 0.75rem;
                 padding: 5px 30px;
                 border-radius: 15px;
-                background: rgba(129, 237, 136, 0.621);
                 font-weight: 600;
-                color: rgb(17, 119, 26);
+            }
+
+            .pending {
+                background: rgba(231, 237, 129, 0.621);
+                color: rgb(116, 119, 17);
+            }
+
+            .approved {
+                background: rgba(129, 237, 141, 0.621);
+                color: rgb(17, 119, 20);
+            }
+
+            .rejected {
+                background: rgba(237, 129, 129, 0.621);
+                color: rgb(223, 33, 33);
+            }
+
+            .refunded {
+                background: rgba(228, 129, 237, 0.621);
+                color: rgb(201, 33, 223);
             }
         }
 
@@ -92,6 +150,7 @@
                         }
                     }
                 }
+
             }
 
             .info {
@@ -134,6 +193,63 @@
                         }
                     }
                 }
+            }
+
+            .reject-list {
+                margin: 40px 0;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                .reject-text {
+                    margin-bottom: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(255, 43, 43);
+                }
+
+                .reject-text-sorry {
+                    margin-top: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(0, 0, 0);
+                }
+
+                .reject-text-item {
+                    font-size: 0.85rem;
+                }
+            }
+
+            .note {
+                margin: 40px 0;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                .refund-text {
+                    margin-bottom: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(43, 135, 255);
+                }
+
+                .refund-text-item {
+                    margin-top: 10px;
+                    font-size: 0.9rem;
+                    color: rgb(0, 0, 0);
+                }
+
+                .contact {
+                    font-size: 0.85rem;
+                }
+            }
+
+            .request {
+                margin-bottom: 40px;
+                padding: 10px 20px;
+                background: red;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: white;
+                border-radius: 15px;
+                cursor: pointer;
             }
 
             .cancel {

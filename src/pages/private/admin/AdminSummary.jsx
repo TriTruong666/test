@@ -1,8 +1,23 @@
-import React from "react";
-// import styles
-import "../../../styles/dashboard/adminsummary/adminsummary.css";
-// import components
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+// charts
+import { BestSellerProductsChart } from "../../../chart/adminSummaryCharts/bestSellerProducstsChart";
+import { RevenueChart } from "../../../chart/adminSummaryCharts/RevenueChart";
+import { TopCustomerChart } from "../../../chart/adminSummaryCharts/TopCustomerChart";
+import { TopUserContributorChart } from "../../../chart/adminSummaryCharts/TopUserContributorChart";
+import { TotalOrdersPrice } from "../../../chart/adminSummaryCharts/TotalOrdersPrice";
 import { Dashnav } from "../../../components/navbar/Dashnav";
+//services
+import * as UserService from "../../../service/account/AccountService";
+import * as BlogService from "../../../service/blog/blogService";
+import * as OrderService from "../../../service/order/order";
+import * as ProductService from "../../../service/product/productService";
+//img
+import adminImg from "../../../assets/kois.png";
+//styles
+
+import "../../../styles/dashboard/adminsummary/adminsummary.css";
 
 export const Summary = () => {
   const formatPrice = (price) =>
@@ -11,6 +26,92 @@ export const Summary = () => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
+  const statusClassName = {
+    pending: "pending",
+    success: "success",
+    cancel: "cancel",
+    delivering: "delivering",
+  };
+  const statusTitle = {
+    pending: "Pending",
+    success: "Success",
+    cancel: "Cancel",
+    delivering: "Delivering",
+  };
+
+  // use state
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [emptyList, setEmptyList] = useState(null);
+  const [serverError, setServerError] = useState(null);
+
+  // query
+  const {
+    data: orders = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useQuery({
+    queryKey: ["all-orders"],
+    queryFn: OrderService.getAllOrders,
+  });
+
+  // query
+  const { data: blogs = [] } = useQuery({
+    queryKey: ["last-blogs"],
+    queryFn: BlogService.getAllBlog,
+  });
+
+  // query
+  const { data: products = [] } = useQuery({
+    queryKey: ["all-products"],
+    queryFn: ProductService.getAllProductAdmin,
+  });
+
+  //query
+  const { data: users = [] } = useQuery({
+    queryKey: ["all-users"],
+    queryFn: UserService.getUserListAdmin,
+  });
+
+  const handleOrderStatusClassName = (status) => {
+    if (status === "PENDING") return statusClassName.pending;
+    if (status === "APPROVED") return statusClassName.success;
+    if (status === "REJECTED") return statusClassName.cancel;
+    if (status === "REFUNDED") return statusClassName.refund;
+  };
+  const handleStatusTitle = (status) => {
+    if (status === "PENDING") return statusTitle.pending;
+    if (status === "APPROVED") return statusTitle.success;
+    if (status === "REJECTED") return statusTitle.cancel;
+    if (status === "REFUNDED") return statusTitle.refund;
+  };
+
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      setIsLoadingPage(true);
+    } else {
+      setIsLoadingPage(false);
+    }
+    if (isError) {
+      setServerError("Server is closed now");
+    } else {
+      setServerError(null);
+    }
+    if (orders && orders.length === 0) {
+      setEmptyList("Empty order list");
+    } else {
+      setEmptyList(null);
+    }
+  }, [isLoading, isFetching]);
+
+  // calculate funcs
+  const lowStockProducts = products
+    .filter((product) => product.stock < 50)
+    .sort((a, b) => a.stock - b.stock)
+    .slice(0, 5);
+  const totalSales = orders.reduce((acc, order) => acc + order.order.total, 0);
+  const formattedTotalSales = formatPrice(totalSales);
   return (
     <div className="admin-summary-container">
       <Dashnav />
@@ -20,19 +121,27 @@ export const Summary = () => {
         </div>
         <div className="section1">
           <div className="item">
-            <strong>Welcome admin</strong>
+            <div className="item1">
+              <strong>Welcome admin</strong>
+              <p>
+                Whatever your life’s work is, do it well. A man should do his
+                job so well that the living, the dead, and the unborn could do
+                it no better.” —Martin Luther King, Jr. “Nothing ever comes to
+                one, that is worth having, except as a result of hard work
+              </p>
+            </div>
           </div>
           <div className="info">
             <div className="small-item">
               <div>
-                <strong>{formatPrice(2500)}</strong>
+                <strong>{formattedTotalSales}</strong>
                 <p>Revenue</p>
               </div>
               <i className="bx bx-dollar"></i>
             </div>
             <div className="small-item">
               <div>
-                <strong>20</strong>
+                <strong>{orders.length}</strong>
                 <p>Total orders</p>
               </div>
               <i className="bx bx-credit-card"></i>
@@ -41,19 +150,94 @@ export const Summary = () => {
         </div>
         <div className="section2">
           <div className="item">
-            <div>
-              <strong>Total active account</strong>
-            </div>
+            <BestSellerProductsChart products={products} />
           </div>
           <div className="item">
-            <div>
-              <strong>Total active products</strong>
-            </div>
+            <TopCustomerChart orders={orders} users={users} />
           </div>
           <div className="item">
-            <div>
-              <strong>Total active blogs</strong>
+            <TopUserContributorChart blogs={blogs} />
+          </div>
+        </div>
+        <div className="chart-container">
+          <div className="charts">
+            <div className="left-chart">
+              <TotalOrdersPrice orders={orders} />
             </div>
+            <div className="right-chart">
+              <RevenueChart orders={orders} users={users} />
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-bottom">
+          <div className="left-bottom">
+            <strong>Recent orders</strong>
+            <table>
+              <thead>
+                <tr>
+                  <th>Order Date</th>
+                  <th>Customer</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.slice(0, 10).map((order) => (
+                  <tr key={order.order.orderId}>
+                    <td>
+                      {new Date(order.order.createDate).toLocaleDateString() ||
+                        "Date not available"}
+                    </td>
+                    <td>{order.order.fullname} </td>
+                    <td>{formatPrice(order.order.total)}</td>
+                    <td>
+                      {" "}
+                      <span
+                        className={handleOrderStatusClassName(
+                          order.order.status
+                        )}
+                      >
+                        {handleStatusTitle(order.order.status)}
+                      </span>
+                    </td>
+                    <td>
+                      <Link
+                        style={{ color: "blue", fontSize: "1rem" }}
+                        to={`/dashboard/admin/order/detail/${order.order.orderId}`}
+                      >
+                        Details
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="right-bottom">
+            <strong>Have less stocks</strong>
+            {lowStockProducts.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Stocks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {lowStockProducts.slice(0, 5).map((product) => (
+                    <tr key={product.productId}>
+                      <td>{product.productName}</td>
+                      <td>{product.stock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No products have less in stock</p>
+            )}
           </div>
         </div>
       </div>

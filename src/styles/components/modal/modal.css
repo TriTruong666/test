@@ -68,6 +68,90 @@ select option {
     font-weight: 400;
     color: rgba(0, 0, 0, 0.7);
   }
+  .add-account-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .add-account-container .add-account-modal {
+    width: 800px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .add-account-container .add-account-modal .add-account-header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .add-account-container .add-account-modal .add-account-header strong {
+    font-size: 1.3rem;
+  }
+  .add-account-container .add-account-modal .add-account-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .add-account-container .add-account-modal .add-account-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 0.8rem;
+  }
+  .add-account-container .add-account-modal .add-account-form .input-item input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .add-account-container .add-account-modal .add-account-form .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .add-pond-container {
     position: fixed;
     width: 100vw;
@@ -580,58 +664,10 @@ select option {
     font-size: 0.8rem;
     border-radius: 10px;
   }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-datepicker {
-    color: black;
-    padding: 10px 25px;
-    width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar {
-    background-color: white;
-    /* Background color of the datepicker */
-    border: 1px solid #ddd;
-    /* Border */
-    border-radius: 5px;
-    /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Shadow effect */
-    z-index: 1000;
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar react-datepicker__header {
-    background-color: #007bff;
-    /* Header background color */
-    color: white;
-    /* Header text color */
-    border-bottom: none;
-    /* Remove bottom border */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__current-month {
-    font-weight: bold;
-    /* Bold month name */
-    font-size: 1.2rem;
-    /* Increase font size */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day {
-    line-height: 2;
-    /* Increase line height for spacing */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day:hover {
-    background-color: #007bff;
-    /* Change background on hover */
-    color: white;
-    /* Change text color on hover */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--selected {
-    background-color: #007bff;
-    /* Selected day background */
-    color: white;
-    /* Selected day text color */
-  }
-  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .custom-calendar .react-datepicker__day--outside-month {
-    color: #ccc;
-    /* Color for days outside the current month */
+  .add-koi-log-container .add-koi-log-modal .add-koi-log-form .note {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.9);
   }
   .add-koi-log-container .add-koi-log-modal .add-koi-log-form .submit {
     display: flex;
@@ -1296,6 +1332,7 @@ select option {
     border: 2px solid transparent;
     font-weight: 600;
     transition: 0.4s;
+    cursor: pointer;
   }
   .koi-detail-container .koi-history-modal .empty-log button:hover {
     border-color: black;
@@ -1494,6 +1531,63 @@ select option {
     color: white;
     cursor: pointer;
   }
+  .unlock-account-containter {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .unlock-account-containter ::-webkit-scrollbar {
+    width: 0;
+  }
+  .unlock-account-containter .unlock-account-modal {
+    width: 500px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header strong {
+    font-size: 1.3rem;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-main {
+    margin: 30px 0;
+  }
+  .unlock-account-containter .unlock-account-modal .unlock-account-main p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .unlock-account-containter .unlock-account-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .unlock-account-containter .unlock-account-modal .submit button:nth-child(1) {
+    width: 100%;
+    padding: 10px 50px;
+    background: rgb(0, 255, 13);
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
   .del-product-containter {
     position: fixed;
     width: 100vw;
@@ -1629,6 +1723,13 @@ select option {
     border-radius: 15px;
     padding: 40px;
     overflow-y: auto;
+  }
+  .cancel-order-containter .cancel-order-modal .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .cancel-order-containter .cancel-order-modal .cancel-order-header {
     display: flex;
@@ -1857,6 +1958,136 @@ select option {
     cursor: pointer;
   }
   .add-blog-container .add-blog-modal .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+  }
+  .create-refund-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 50px;
+  }
+  .create-refund-container ::-webkit-scrollbar {
+    width: 0;
+  }
+  .create-refund-container .create-refund-modal {
+    width: 800px;
+    max-height: 700px;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .create-refund-container .create-refund-modal .create-refund-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .create-refund-container .create-refund-modal .create-refund-header strong {
+    font-size: 1.3rem;
+  }
+  .create-refund-container .create-refund-modal .create-refund-header i {
+    font-size: 32px;
+    cursor: pointer;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 35px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image {
+    position: relative;
+    margin-top: 30px;
+    width: 300px;
+    height: 220px;
+    border: 1px dashed rgba(0, 0, 0, 0.3);
+    align-self: center;
+    border-radius: 15px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image .bx-trash-alt {
+    position: absolute;
+    left: 110%;
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image label img {
+    width: 300px;
+    height: 220px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 15px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image label i {
+    font-size: 40px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image label p {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-image input {
+    display: none;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-item textarea {
+    height: 200px;
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+    resize: none;
+    outline: none;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-item ::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .create-refund-container .create-refund-modal .create-refund-form .input-item ::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+  }
+  .create-refund-container .create-refund-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .create-refund-container .create-refund-modal .submit button:nth-child(1) {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .create-refund-container .create-refund-modal .submit button:nth-child(2) {
     padding: 10px 50px;
     background: #4b87e0;
     font-weight: 600;
@@ -2223,18 +2454,17 @@ select option {
   .update-product-container .update-product-modal {
     width: 800px;
     max-height: 700px;
-    height: 700px;
     background: white;
     border-radius: 15px;
     padding: 40px;
     overflow-y: auto;
   }
   .update-product-container .update-product-modal .loading {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 800px;
   }
   .update-product-container .update-product-modal .update-product-header {
     display: flex;
@@ -2252,17 +2482,16 @@ select option {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    /* Error Message Styling */
   }
-  .update-product-container .update-product-modal .update-product-detail .form-group {
+  .update-product-container .update-product-modal .update-product-detail .field {
     display: flex;
     flex-direction: column;
   }
-  .update-product-container .update-product-modal .update-product-detail label {
-    font-size: 0.9rem;
-    font-weight: 600;
+  .update-product-container .update-product-modal .update-product-detail .field .field-label {
     margin-bottom: 5px;
+    font-size: 0.9rem;
     color: #333;
+    font-weight: 500;
   }
   .update-product-container .update-product-modal .update-product-detail .input-image {
     position: relative;
@@ -2276,7 +2505,6 @@ select option {
   .update-product-container .update-product-modal .update-product-detail .input-image .bx-trash-alt {
     position: absolute;
     left: 110%;
-    top: 10px;
     font-size: 24px;
     color: red;
     cursor: pointer;
@@ -2291,41 +2519,66 @@ select option {
     row-gap: 10px;
   }
   .update-product-container .update-product-modal .update-product-detail .input-image label img {
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 220px;
     -o-object-fit: cover;
        object-fit: cover;
     border-radius: 15px;
   }
   .update-product-container .update-product-modal .update-product-detail .input-image label i {
     font-size: 40px;
-    color: #555;
   }
   .update-product-container .update-product-modal .update-product-detail .input-image label p {
     font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.9);
   }
   .update-product-container .update-product-modal .update-product-detail .input-image input {
     display: none;
   }
-  .update-product-container .update-product-modal .update-product-detail input,
-  .update-product-container .update-product-modal .update-product-detail select {
+  .update-product-container .update-product-modal .update-product-detail .input-field-name {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-field-name label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-field-name input {
     padding: 12px 25px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    color: #000;
+    color: black;
     font-size: 0.8rem;
     border-radius: 10px;
-    outline: none;
-    transition: border 0.3s;
   }
-  .update-product-container .update-product-modal .update-product-detail input:focus,
-  .update-product-container .update-product-modal .update-product-detail select:focus {
-    border-color: #000;
+  .update-product-container .update-product-modal .update-product-detail .input-field-cate {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
-  .update-product-container .update-product-modal .update-product-detail .name,
-  .update-product-container .update-product-modal .update-product-detail .cate,
-  .update-product-container .update-product-modal .update-product-detail .input-two-fields input {
-    margin-top: 0;
+  .update-product-container .update-product-modal .update-product-detail .input-field-cate label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-field-cate select {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-field-des {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-field-des label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
   }
   .update-product-container .update-product-modal .update-product-detail .ck-editor__editable {
     min-height: 300px;
@@ -2335,61 +2588,57 @@ select option {
     border: 1px solid #ddd;
     border-radius: 4px;
     outline: none;
-    background-color: #fff;
-  }
-  .update-product-container .update-product-modal .update-product-detail .input-two-fields {
-    display: flex;
-    -moz-column-gap: 20px;
-         column-gap: 20px;
-  }
-  .update-product-container .update-product-modal .update-product-detail .input-two-fields .form-group {
-    flex: 1;
-  }
-  .update-product-container .update-product-modal .update-product-detail .input-two-fields input {
-    width: 100%;
-  }
-  .update-product-container .update-product-modal .update-product-detail .cate {
-    cursor: pointer;
-    background-color: #fff;
-  }
-  .update-product-container .update-product-modal .update-product-detail .cate:hover {
-    border: 1px solid #000;
-  }
-  .update-product-container .update-product-modal .update-product-detail .submit {
-    display: flex;
-    justify-content: flex-end;
-    -moz-column-gap: 10px;
-         column-gap: 10px;
-  }
-  .update-product-container .update-product-modal .update-product-detail .submit span {
-    cursor: pointer;
-    color: #555;
     font-size: 0.9rem;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  .update-product-container .update-product-modal .update-product-detail .submit span:hover {
-    background-color: #f0f0f0;
-    color: #000;
-  }
-  .update-product-container .update-product-modal .update-product-detail .submit button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .update-product-container .update-product-modal .update-product-detail .submit button:hover {
-    background-color: #0056b3;
   }
   .update-product-container .update-product-modal .update-product-detail .invalid {
     color: red;
     font-size: 0.75rem;
-    margin-top: 5px;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-two-fields {
+    display: flex;
+    justify-content: space-between;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-two-fields .input-field {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-two-fields .input-field label {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .update-product-container .update-product-modal .update-product-detail .input-two-fields .input-field input {
+    padding: 12px 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+  .update-product-container .update-product-modal .submit {
+    display: flex;
+    justify-content: end;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
+  }
+  .update-product-container .update-product-modal .submit span {
+    padding: 10px 40px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .update-product-container .update-product-modal .submit button:nth-child(2) {
+    padding: 10px 50px;
+    background: #4b87e0;
+    font-weight: 600;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
   }
 }/*# sourceMappingURL=modal.css.map */

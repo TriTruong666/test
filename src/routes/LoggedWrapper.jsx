@@ -10,6 +10,15 @@ export const LoggedWrapper = ({ children }) => {
   }
   return children;
 };
+export const GuestWrapper = ({ children }) => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  // if user login yet
+  if (!token && !user) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
 export const VerifyEmailSignupWrapper = ({ children }) => {
   const email = useSelector((state) => state.account.email.email);
   if (!email) {

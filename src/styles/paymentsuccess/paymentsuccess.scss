@@ -6,21 +6,35 @@
     }
 
     .payment-success-container {
+        position: relative;
         width: 100vw;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
 
+        .loading {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+        }
+
         .payment-success {
             width: 100%;
-            height: calc(100vh - 100px);
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             background: $main-color;
 
             .payment-success-header {
-                padding: 50px 0;
+                padding-bottom: 50px;
                 width: 40%;
                 display: flex;
                 flex-direction: column;
@@ -101,6 +115,7 @@
                 font-weight: 800;
                 border-radius: 10px;
                 font-family: $main-font;
+                cursor: pointer;
             }
         }
     }

@@ -1,29 +1,25 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import SyncLoader from "react-spinners/SyncLoader";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/checkout/checkout.css";
 // import components
 import { Checkoutnav } from "../../components/navbar/Checkoutnav";
-// import assets
-import koiproduct from "../../assets/koiproduct.png";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as PaypalService from "../../service/paypal/paypal";
-// import slices
-import { setOrderRequest } from "../../redux/slices/order/order";
+
 export const Checkout = () => {
-  // dispatch
-  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+
   // state
   const [requiredField, setRequiredField] = useState(null);
   const [cartList, setCartList] = useState([]);
@@ -37,34 +33,56 @@ export const Checkout = () => {
     cartId: "",
     total: "",
   });
-  const [guestCartList, setGuestCartList] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
+  // regex
+  const vietnamPhoneRegex =
+    /^(?:\+84|0)(?:3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])\d{7}$/;
+
   // query
   const {
     data: cartData = {},
     isFetching,
-    isError,
     isLoading,
   } = useQuery({
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
     refetchOnWindowFocus: false,
   });
+
   // mutation
   const queryClient = useQueryClient();
   const paypalMutation = useMutation({
-    mutationKey: ["paypal"],
+    mutationKey: ["checkout"],
     mutationFn: PaypalService.createPayment,
     onMutate: () => {
       setLoadingPayment(true);
     },
-    onSuccess: () => {
-      setLoadingPayment(false);
-      queryClient.invalidateQueries(["my-cart"]);
+    onSuccess: (response) => {
+      if (response?.code === "PRODUCT_IS_INACTIVE") {
+        toast.error(
+          "Some products are not available for sale, please remove first!",
+          {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+        setLoadingPayment(false);
+      } else {
+        setLoadingPayment(false);
+        queryClient.invalidateQueries(["my-cart"]);
+      }
     },
   });
+
   useEffect(() => {
+    if (cartData?.cartItems?.length === 0) {
+      navigate("/cart");
+    }
     if (token && user) {
       setSubmitData({
         ...submitData,
@@ -86,11 +104,10 @@ export const Checkout = () => {
         }
       }
     } else {
-      if (guestCartList.length === 0) {
-        navigate("/shop");
-      }
+      navigate("/shop");
     }
   }, [isFetching, isLoading, cartData]);
+
   // handle func
   const handlePayNow = async () => {
     if (
@@ -103,9 +120,21 @@ export const Checkout = () => {
       return;
     }
     setRequiredField(null);
+    if (!vietnamPhoneRegex.test(submitData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
-      const totalPrice =
-        token && user ? calculateTotalPrice() : calculateTotalPriceGuest();
+      const totalPrice = calculateTotalPrice();
       const updatedSubmitData = {
         ...submitData,
         total: totalPrice || "0",
@@ -116,6 +145,7 @@ export const Checkout = () => {
       console.log(error);
     }
   };
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSubmitData({
@@ -123,6 +153,7 @@ export const Checkout = () => {
       [name]: value,
     });
   };
+
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -130,21 +161,16 @@ export const Checkout = () => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
-  const calculateItemPrice = (unitPrice, quantity) => {
-    return unitPrice * quantity;
-  };
+
   const calculateTotalPrice = () => {
     return cartList.reduce((total, item) => {
       return total + item.product.unitPrice * item.quantity;
     }, 0);
   };
-  const calculateTotalPriceGuest = () => {
-    return guestCartList.reduce((total, item) => {
-      return total + item.unitPrice * item.quantity;
-    }, 0);
-  };
+
   return (
     <div className="checkout-container">
+      <ToastContainer />
       {isLoadingPayment && (
         <div className="loading-payment">
           <SyncLoader color="#ffffff" size={20} />
@@ -206,92 +232,54 @@ export const Checkout = () => {
         </div>
         <div className="cart-review">
           {isLoadingPage ? (
-            <>
-              <div className="loading">
-                <ClipLoader color="#ffffff" size={40} />
-              </div>
-            </>
+            <div className="loading">
+              <ClipLoader color="#ffffff" size={40} />
+            </div>
           ) : (
             <>
-              {token && user ? (
-                <>
-                  <div className="cart-review-header">
-                    <h2>Review Your Cart</h2>
-                  </div>
-                  <div className="cart-list">
-                    {cartList.map((item) => (
-                      <div key={item.cartItemId} className="cart-item">
-                        <img src={item.product.image} alt="" />
-                        <div className="info">
-                          <div>
-                            <strong>{item.product.productName}</strong>
-                            <small>x{item.quantity}</small>
-                          </div>
-                          <p>{item.product.category.cateName}</p>
-
-                          <span>{formatPrice(item.product.unitPrice)}</span>
-                        </div>
+              <div className="cart-review-header">
+                <h2>Review Your Cart</h2>
+              </div>
+              <div className="cart-list">
+                {cartList.map((item) => (
+                  <div key={item.cartItemId} className="cart-item">
+                    <img src={item.product.image} alt="" />
+                    <div className="info">
+                      <div>
+                        <strong>{item.product.productName}</strong>
+                        <small>x{item.quantity}</small>
                       </div>
-                    ))}
-                  </div>
-                  <div className="cart-summary">
-                    <div className="summary-item">
-                      <p>Subtotal</p>
-                      <p>{formatPrice(calculateTotalPrice())}</p>
-                    </div>
-                    <div className="summary-item">
-                      <p>Shipping</p>
-                      <p>Free</p>
-                    </div>
-                    <div className="summary-total">
-                      <strong>Total</strong>
-                      <strong>{formatPrice(calculateTotalPrice())}</strong>
+                      <p>{item.product.category.cateName}</p>
+                      <span>{formatPrice(item.product.unitPrice)}</span>
+                      {!item.product.status && (
+                        <p style={{ color: "red", marginTop: "5px" }}>
+                          This product is not available for sale now.
+                        </p>
+                      )}
+                      {item.product.stock < item.quantity && (
+                        <p style={{ color: "orange", marginTop: "5px" }}>
+                          This product is not enough stock.
+                        </p>
+                      )}
                     </div>
                   </div>
-                  <Link onClick={handlePayNow}>Pay Now</Link>
-                </>
-              ) : (
-                <>
-                  <div className="cart-review-header">
-                    <h2>Review Your Cart</h2>
-                  </div>
-                  <div className="cart-list">
-                    {guestCartList.map((item) => (
-                      <div key={item.productId} className="cart-item">
-                        <img src={item.image} alt="" />
-                        <div className="info">
-                          <div>
-                            <strong>{item.productName}</strong>
-                            <small>x{item.quantity}</small>
-                          </div>
-                          <p>{item.category.cateName}</p>
-
-                          <span>
-                            {formatPrice(
-                              calculateItemPrice(item.unitPrice, item.quantity)
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="cart-summary">
-                    <div className="summary-item">
-                      <p>Subtotal</p>
-                      <p>{formatPrice(calculateTotalPriceGuest())}</p>
-                    </div>
-                    <div className="summary-item">
-                      <p>VAT</p>
-                      <p>20</p>
-                    </div>
-                    <div className="summary-total">
-                      <strong>Total</strong>
-                      <strong>{formatPrice(calculateTotalPriceGuest())}</strong>
-                    </div>
-                  </div>
-                  <Link to="/payment">Pay Now</Link>
-                </>
-              )}
+                ))}
+              </div>
+              <div className="cart-summary">
+                <div className="summary-item">
+                  <p>Subtotal</p>
+                  <p>{formatPrice(calculateTotalPrice())}</p>
+                </div>
+                <div className="summary-item">
+                  <p>Shipping</p>
+                  <p>Free</p>
+                </div>
+                <div className="summary-total">
+                  <strong>Total</strong>
+                  <strong>{formatPrice(calculateTotalPrice())}</strong>
+                </div>
+              </div>
+              <Link onClick={handlePayNow}>Pay Now</Link>
             </>
           )}
         </div>

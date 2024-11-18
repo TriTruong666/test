@@ -29,24 +29,24 @@ export const UpdateKoi = () => {
     Vietnam: "VN",
     "South Korea": "KR",
   };
-  //   dispatch
+  // dispatch
   const dispatch = useDispatch();
   // selector
-  const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // query
   const {
     data: koiInfo = {},
     isFetching,
     isLoading,
   } = useQuery({
-    queryKey: ["koi-detail", koiId],
-    queryFn: () => KoiService.detailKoiService(koiId),
+    queryKey: ["koi-detail", koiInfoNew?.koiId],
+    queryFn: () => KoiService.detailKoiService(koiInfoNew?.koiId),
   });
   // state
   const [previewImage, setPreviewImage] = useState(null);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const [selectedFlag, setSelectedFlag] = useState("");
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [isValidName, setIsValidName] = useState(false);
   const [submitData, setSubmitData] = useState({
     image: "",
     name: "",
@@ -95,11 +95,14 @@ export const UpdateKoi = () => {
     );
   };
   // mutation
-  const queryCilent = useQueryClient();
+  const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationKey: ["update-koi", koiId],
+    mutationKey: ["update-koi", koiInfoNew?.koiId],
     mutationFn: (updateData) => {
-      KoiService.updateKoiService(koiId, updateData);
+      KoiService.updateKoiService(koiInfoNew?.koiId, updateData);
+    },
+    onMutate: () => {
+      setIsPreventSubmit(true);
     },
     onSuccess: () => {
       toast.success("Update successfully", {
@@ -115,7 +118,7 @@ export const UpdateKoi = () => {
       setTimeout(() => {
         location.reload();
       }, 1500);
-      queryCilent.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["update-koi"],
       });
     },
@@ -127,31 +130,6 @@ export const UpdateKoi = () => {
       ...submitData,
       image: "",
     });
-  };
-
-  const handleOnChangeName = (e) => {
-    const { name, value } = e.target;
-    if (!isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    if (value.length < 10) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    setSubmitData({
-      ...submitData,
-      [name]: value,
-    });
-    setIsValidName(false);
   };
 
   const handleOnChange = (e) => {
@@ -174,7 +152,28 @@ export const UpdateKoi = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!submitData.image || !submitData.name || !submitData.type) {
+    // validate duplicate submit
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (
+      submitData.image === "" ||
+      submitData.name === "" ||
+      submitData.origin === "" ||
+      submitData.sex === "" ||
+      submitData.type === ""
+    ) {
       toast.error("Please input all fields", {
         position: "top-right",
         autoClose: 1500,
@@ -230,7 +229,7 @@ export const UpdateKoi = () => {
               id="koiname"
               name="name"
               defaultValue={koiInfo.name}
-              onChange={handleOnChangeName}
+              onChange={handleOnChange}
               placeholder="Koi name"
             />
           </div>
@@ -263,7 +262,7 @@ export const UpdateKoi = () => {
               <label htmlFor="koi-sex">Select Gender</label>
               <select
                 name="sex"
-                defaultValue={koiInfo.sex ? "true" : "false"}
+                defaultValue={koiInfo.sex}
                 onChange={handleOnChange}
                 id="koi-sex"
               >

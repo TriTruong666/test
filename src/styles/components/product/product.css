@@ -180,8 +180,7 @@ select option {
   }
   .product-list-table tbody tr td:nth-child(7) {
     display: flex;
-    -moz-column-gap: 10px;
-         column-gap: 10px;
+    justify-content: center;
   }
   .product-list-table tbody tr td:nth-child(7) i {
     padding: 7px;

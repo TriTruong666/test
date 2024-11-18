@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 // import styles
 import "../../styles/paymentsuccess/paymentsuccess.css";
 // import components
-import { Checkoutnav } from "../../components/navbar/Checkoutnav";
 // import service
 import * as OrderService from "../../service/order/order";
+import ClipLoader from "react-spinners/ClipLoader";
 export const PaymentSuccess = () => {
   // navigation
   const navigate = useNavigate();
@@ -25,13 +25,19 @@ export const PaymentSuccess = () => {
     paymentId: paymentId || "",
   });
   const [responseData, setResponseData] = useState(null);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   // mutation
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["create-order"],
     mutationFn: OrderService.createInvoice,
+    onMutate: () => {
+      setIsLoadingPage(true);
+    },
     onSuccess: (response) => {
+      setIsLoadingPage(false);
       setResponseData(response);
+      queryClient.invalidateQueries("my-orders");
     },
   });
   // handle func
@@ -42,10 +48,17 @@ export const PaymentSuccess = () => {
   const createOrder = async () => {
     try {
       await mutation.mutateAsync(submitData);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
-    if (!orderReq) {
+    if (
+      !orderReq ||
+      !orderReq.fullname ||
+      !orderReq.cartId ||
+      !orderReq.total
+    ) {
       navigate("/cart");
     } else {
       try {
@@ -63,6 +76,13 @@ export const PaymentSuccess = () => {
     }).format(price);
   return (
     <div className="payment-success-container">
+      {isLoadingPage && (
+        <>
+          <div className="loading">
+            <ClipLoader color="#ffffff" size={70} />
+          </div>
+        </>
+      )}
       <div className="payment-success">
         <div className="payment-success-header">
           <i className="bx bxs-check-circle"></i>

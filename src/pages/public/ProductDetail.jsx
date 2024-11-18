@@ -1,10 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
 // import service
 import * as CartService from "../../service/cart/cartService";
 import * as ProductService from "../../service/product/productService";
@@ -16,8 +14,6 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Settingnav } from "../../components/navbar/Settingnav";
 // import assets
 import koiproduct from "../../assets/koiproduct.png";
-// import slices
-import { setQuantityItemInCart } from "../../redux/slices/navbar/navbar";
 
 // convert to plain text
 const stripHtmlTags = (html) => {
@@ -33,17 +29,16 @@ const stripHtmlTags = (html) => {
   });
   return doc.body.innerHTML;
 };
+
 export const ProductDetail = () => {
-  // dispatch
-  const dispatch = useDispatch();
   // param
   const { productId } = useParams();
-
+  //
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
+  const userRole = user?.role || null;
   // state
-  const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [cartId, setCartId] = useState(null);
   const numericProductId = parseInt(productId);
@@ -61,12 +56,11 @@ export const ProductDetail = () => {
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
   });
+  const { data: relatedProductList = [] } = useQuery({
+    queryKey: ["related-products"],
+    queryFn: ProductService.getAllProductShop,
+  });
   useEffect(() => {
-    if (isFetching || isLoading) {
-      setIsLoadingPage(true);
-    } else {
-      setIsLoadingPage(false);
-    }
     if (cartInfo) {
       setCartId(cartInfo.cartId);
     }
@@ -76,26 +70,39 @@ export const ProductDetail = () => {
       setServerError(null);
     }
   }, [isLoading, isFetching, isError, cartInfo]);
+
   // mutation
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["add-item-to-cart"],
     mutationFn: ({ cartId, productId, quantity }) =>
       CartService.addToCartByMember(cartId, productId, quantity),
-    onSuccess: () => {
-      toast.success("Product added", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      queryClient.invalidateQueries(["productDetail"]);
+    onSuccess: (response) => {
+      if (response?.code === "QUANTITY_GREATER_THAN_STOCK") {
+        toast.error("Sorry, our stock is not enough!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        toast.success("Product added", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     },
   });
+
   const handleAddToCartMember = async (product) => {
     try {
       await mutation.mutateAsync({
@@ -107,25 +114,7 @@ export const ProductDetail = () => {
       console.error(error);
     }
   };
-  const handleAddToCartGuest = (product) => {
-    CartService.addToCartByGuest(product);
-    const guestCart = CartService.getCartByGuest() || [];
-    toast.success("Product added", {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    if (guestCart) {
-      guestCart.reduce((total, item) => {
-        dispatch(setQuantityItemInCart(total + item.quantity || 0));
-      }, 0);
-    }
-  };
+
   // calculator
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-US", {
@@ -133,6 +122,7 @@ export const ProductDetail = () => {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(price);
+
   return (
     <div className="product-detail-container">
       <ToastContainer />
@@ -141,86 +131,83 @@ export const ProductDetail = () => {
       <div className="product-detail">
         <div className="product-detail-main">
           {serverError ? (
-            <>
-              <div className="error-page">
-                <p>Server is closed now</p>
-              </div>
-            </>
+            <div className="error-page">
+              <p>Server is closed now</p>
+            </div>
           ) : (
             <>
-              {isLoadingPage ? (
-                <div className="loading">
-                  <ClipLoader color="#ffffff" size={50} />
+              <img src={product.image} alt="" />
+              <div className="product-detail-content">
+                <small>{product.category && product.category.cateName}</small>
+                <h2>{product.productName}</h2>
+                <strong>{formatPrice(product.unitPrice)}</strong>
+                <div>
+                  {!user && !token ? (
+                    <>
+                      <Link to="/login">Login to buy this product!</Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link to={`/buynow/${productId}`}>BUY PRODUCT</Link>
+                    </>
+                  )}
+
+                  {token && user && (
+                    <button onClick={() => handleAddToCartMember(product)}>
+                      ADD TO CART
+                    </button>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <img src={product.image} alt="" />
-                  <div className="product-detail-content">
-                    <small>
-                      {product.category && product.category.cateName}
-                    </small>
-                    <h2>{product.productName}</h2>
-                    <strong>{formatPrice(product.unitPrice)}</strong>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          product &&
-                          stripHtmlTags(
-                            product.description || "No description"
-                          ),
-                      }}
-                    />
-                    <div>
-                      <button>BUY PRODUCT</button>
-                      {token && user ? (
-                        <>
-                          <button
-                            onClick={() => handleAddToCartMember(product)}
-                          >
-                            ADD TO CART
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button onClick={() => handleAddToCartGuest(product)}>
-                            ADD TO CART
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </>
-              )}
+              </div>
             </>
           )}
+        </div>
+        <div className="description">
+          <strong className="header">Product Description</strong>
+          <div
+            className="product-description-content"
+            dangerouslySetInnerHTML={{
+              __html: product?.description || "No description available",
+            }}
+          ></div>
         </div>
         <div className="product-detail-related">
           <strong>Explore Related Products</strong>
           <div className="product-detail-related-list">
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
-            <div className="product-related-item">
-              <img src={koiproduct} alt="" />
-              <strong>Mazuri Koi Diet</strong>
-              <p>$25.00</p>
-              <button>Buy now</button>
-            </div>
+            {relatedProductList
+              ?.filter(
+                (relatedProduct) =>
+                  relatedProduct.productId !== numericProductId
+              )
+              .slice(0, 4)
+              .map((product) => (
+                <div key={product.productId} className="product-related-item">
+                  <img src={product.image} alt="" />
+                  <Link
+                    className="name"
+                    to={`/productdetail/${product.productId}`}
+                  >
+                    {product.productName}
+                  </Link>
+                  <p>{formatPrice(product.unitPrice)}</p>
+                  {user && token ? (
+                    <>
+                      <Link
+                        className="buynow"
+                        to={`/buynow/${product.productId}`}
+                      >
+                        Buy now
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link className="buynow" to="/login">
+                        You have to login first
+                      </Link>
+                    </>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>

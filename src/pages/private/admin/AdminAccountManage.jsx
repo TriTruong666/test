@@ -1,44 +1,32 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import styles
 import "../../../styles/dashboard/adminaccount/adminaccount.css";
 // import components
-import { Dashnav } from "../../../components/navbar/Dashnav";
 import { AccountList } from "../../../components/account/AccountList";
 import { DelAccount } from "../../../components/modal/DelAccount";
+import { UnlockAccount } from "../../../components/modal/UnlockAccount";
+import { Dashnav } from "../../../components/navbar/Dashnav";
+import { AddAccountAdmin } from "../../../components/modal/AddAccountAdmin";
 export const AdminAccountManage = () => {
   const isToggleDelAccountModal = useSelector(
     (state) => state.modal.deleteAccountModal.isToggleModal
   );
-  useEffect(() => {
-    document.title = "Admin Dashboard";
-  }, []);
+  const isToggleAddAccountModal = useSelector(
+    (state) => state.modal.addAccountModal.isToggleModal
+  );
+  const isToggleUnlockAccountModal = useSelector(
+    (state) => state.modal.unlockAccountModal.isToggleModal
+  );
   return (
     <div className="admin-account-container">
+      {isToggleUnlockAccountModal && <UnlockAccount />}
+      {isToggleAddAccountModal && <AddAccountAdmin />}
       {isToggleDelAccountModal && <DelAccount />}
       <Dashnav />
       <div className="admin-account">
         <div className="admin-account-header">
           <strong>Account Manager</strong>
-        </div>
-        <div className="admin-account-utils">
-          <div className="search-account">
-            <i className="bx bx-search"></i>
-            <input type="text" placeholder="Search account..." />
-          </div>
-          <div className="filter">
-            <select name="" id="">
-              <option value="">Filter</option>
-              <option value="">By Status</option>
-              <option value="">By size</option>
-              <option value="">By Number of Koi</option>
-            </select>
-            <i className="bx bx-chevron-down"></i>
-          </div>
-          <div className="add">
-            <i className="bx bx-plus"></i>
-            <p>Create new account</p>
-          </div>
         </div>
         <AccountList />
       </div>

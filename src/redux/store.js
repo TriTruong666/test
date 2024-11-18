@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import reducer
+import AccountReducer from "./slices/account/account";
+import BlogReducer from "./slices/blog/blog";
+import CartReducer from "./slices/cart/cart";
+import KoiReducer from "./slices/koi/koi";
 import ModalReducer from "./slices/modal/modal";
 import NavbarReducer from "./slices/navbar/navbar";
-import AccountReducer from "./slices/account/account";
-import ProductReducer from "./slices/product/product";
-import KoiReducer from "./slices/koi/koi";
-import CartReducer from "./slices/cart/cart";
 import OrderReducer from "./slices/order/order";
+import PondReducer from "./slices/pond/pond";
+import ProductReducer from "./slices/product/product";
 export default configureStore({
   reducer: {
     // modal
@@ -23,5 +25,9 @@ export default configureStore({
     cart: CartReducer,
     // order
     order: OrderReducer,
+    //blog
+    blog: BlogReducer,
+    //pond
+    pond: PondReducer,
   },
 });

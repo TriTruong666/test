@@ -34,21 +34,34 @@ select option {
     width: 0;
   }
   .payment-success-container {
+    position: relative;
     width: 100vw;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
   }
+  .payment-success-container .loading {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+  }
   .payment-success-container .payment-success {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background: #131313;
   }
   .payment-success-container .payment-success .payment-success-header {
-    padding: 50px 0;
+    padding-bottom: 50px;
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -118,5 +131,6 @@ select option {
     font-weight: 800;
     border-radius: 10px;
     font-family: "Roboto Mono", monospace;
+    cursor: pointer;
   }
 }/*# sourceMappingURL=paymentsuccess.css.map */

@@ -12,6 +12,7 @@ import {
   toggleSettingNav,
 } from "../../redux/slices/navbar/navbar";
 // import service
+import { scroller } from "react-scroll";
 import * as CartService from "../../service/cart/cartService";
 export const Navbar = () => {
   const token = localStorage.getItem("token");
@@ -59,7 +60,7 @@ export const Navbar = () => {
 
     if (token && user) {
       if (cartInfo) {
-        setCartList(cartInfo.cartItems || []); // Default to empty array
+        setCartList(cartInfo.cartItems || []);
         setIsEmptyCart(!cartInfo.cartItems || cartInfo.cartItems.length === 0);
       }
     } else {
@@ -80,7 +81,14 @@ export const Navbar = () => {
         }, 0)
       : 0;
   };
-
+  const handleScrollTo = (section) => {
+    scroller.scrollTo(section, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -85,
+    });
+  };
   return (
     <div className="navbar-container">
       {token && user ? (
@@ -89,9 +97,7 @@ export const Navbar = () => {
             <img src={logo} alt="" onClick={() => navigate("/")} />
             <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
-            <Link to="/#solution">Solutions</Link>
-            <Link to="/About">About</Link>
-            <a href="">Contact</a>
+            <a href="/About">About</a>
             <Link to="/blog">Blog</Link>
           </div>
           {isAuth ? (
@@ -131,26 +137,10 @@ export const Navbar = () => {
             <img src={logo} alt="" onClick={() => navigate("/")} />
             <Link to="/#about">What Is Izumiya?</Link>
             <Link to="/shop">Shop</Link>
-            <Link to="/#solution">Solutions</Link>
             <a href="">About</a>
-            <a href="">Contact</a>
             <Link to="/blog">Blog</Link>
           </div>
           <div className="navbar-second">
-            {isEmptyCartGuest ? (
-              <>
-                <Link to="/cart">
-                  <i className="bx bx-cart"></i>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/cart">
-                  <i className="bx bxs-cart"></i>
-                  <p>{totalItemInCart}</p>
-                </Link>
-              </>
-            )}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>

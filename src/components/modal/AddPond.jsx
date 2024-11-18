@@ -1,21 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import FileResizer from "react-image-file-resizer";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import styles
-import FileResizer from "react-image-file-resizer";
-import "../../styles/components/modal/modal.css";
-// import slices
 import { toggleAddPondModal } from "../../redux/slices/modal/modal";
-// import dispatch
-import { useDispatch } from "react-redux";
-// import service
 import * as PondService from "../../service/pond/pondService";
 import * as WaterService from "../../service/waterParams/waterParamsService";
+import "../../styles/components/modal/modal.css";
+
 export const AddPond = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.userId;
-  // state
+
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
+  const [isMutatePond, setIsMutatePond] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [submitPondData, setSubmitPondData] = useState({
     pondName: "",
@@ -37,14 +36,10 @@ export const AddPond = () => {
     no3: "",
     pondId: "",
   });
-  const [invalidNumber, setInvalidNumber] = useState(null);
-  const [isMutatePond, setIsMutatePond] = useState(true);
-  const [isValidName, setIsValidName] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  // dispatch
+
   const dispatch = useDispatch();
-  // mutation
   const queryCilent = useQueryClient();
+
   const pondMutation = useMutation({
     mutationFn: PondService.createPondService,
     onMutate: () => {
@@ -61,8 +56,12 @@ export const AddPond = () => {
       });
     },
   });
+
   const waterMutation = useMutation({
     mutationFn: WaterService.createWaterService,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Create successfully", {
         position: "top-right",
@@ -74,16 +73,17 @@ export const AddPond = () => {
         progress: undefined,
         theme: "dark",
       });
+
       setTimeout(() => {
-        dispatch(toggleAddPondModal());
         location.reload();
+        setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
         queryKey: ["water"],
       });
     },
   });
-  //   file resizer
+
   const resizeFile = (file) => {
     FileResizer.imageFileResizer(
       file,
@@ -104,7 +104,7 @@ export const AddPond = () => {
       250
     );
   };
-  //   handle func
+
   const removeChooseImage = () => {
     setPreviewImage(null);
     setSubmitPondData({
@@ -112,130 +112,47 @@ export const AddPond = () => {
       image: "",
     });
   };
+
   const handleToggleAddPondModal = () => {
     dispatch(toggleAddPondModal());
   };
 
   const handleOnChangeName = (e) => {
     const { name, value } = e.target;
-    if (!isNaN(value)) {
-      setSubmitPondData({
-        ...submitPondData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
-    if (value.length < 10) {
-      setSubmitPondData({
-        ...submitPondData,
-        [name]: "",
-      });
-      setIsValidName(true);
-      return;
-    }
     setSubmitPondData({
       ...submitPondData,
       [name]: value,
     });
-    setIsValidName(false);
   };
 
-  const handleOnChangePond = (e) => {
-    const { name, value } = e.target;
-    setSubmitPondData({
-      ...submitPondData,
-      [name]: value,
-    });
-  };
   const handleInputNumberPond = (e) => {
     const { name, value } = e.target;
-    const numberRegex = /^\d+$/;
-
-    if (!numberRegex.test(value)) {
-      setInvalidNumber("Please input a valid integer number.");
-      setSubmitPondData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-    setSubmitPondData((prev) => ({
-      ...prev,
+    setSubmitPondData({
+      ...submitPondData,
       [name]: parseInt(value),
-    }));
-    setInvalidNumber(null);
+    });
   };
+
   const handleInputFloatPond = (e) => {
     const { name, value } = e.target;
-    const floatRegex = /^\d+(\.\d+)?$/;
-
-    if (!floatRegex.test(value)) {
-      setInvalidNumber("Please input a valid number.");
-      setSubmitPondData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-
-    const floatValue = parseFloat(value);
-    if (floatValue > 10000) {
-      setInvalidNumber("Number too large.");
-      setSubmitPondData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-
-    setSubmitPondData((prev) => ({
-      ...prev,
-      [name]: floatValue,
-    }));
-    setInvalidNumber(null);
+    setSubmitPondData({
+      ...submitPondData,
+      [name]: parseFloat(value),
+    });
   };
 
   const handleInputFloatWater = (e) => {
     const { name, value } = e.target;
-    const floatRegex = /^\d+(\.\d+)?$/;
-
-    if (!floatRegex.test(value)) {
-      setInvalidNumber("Please input a valid number.");
-      setSubmitWaterData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-
-    const floatValue = parseFloat(value);
-    if (floatValue > 10000) {
-      setInvalidNumber("Number too large.");
-      setSubmitWaterData((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-      return;
-    }
-
-    setSubmitWaterData((prev) => ({
-      ...prev,
-      [name]: floatValue,
-    }));
-    setInvalidNumber(null);
+    setSubmitWaterData({
+      ...submitWaterData,
+      [name]: value === "" ? "" : parseFloat(value),
+    });
   };
-  useEffect(() => {
-    if (submitWaterData.pondId) {
-      waterMutation.mutateAsync(submitWaterData).catch((error) => {
-        console.error(error);
-      });
-    }
-  }, [submitWaterData.pondId]);
+
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    if (isValidName) {
-      toast.error("Pond name must at least 10 characters and not a number", {
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -247,50 +164,179 @@ export const AddPond = () => {
       });
       return;
     }
-
-    if (invalidNumber != null) {
-      toast.error(invalidNumber, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
-
     if (
-      submitPondData.depth === null ||
-      submitPondData.depth === undefined ||
+      submitPondData.depth === "" ||
       submitPondData.image === "" ||
       submitPondData.pondName === "" ||
-      submitPondData.pumpPower === null ||
-      submitPondData.pumpPower === undefined ||
-      submitPondData.size === null ||
-      submitPondData.size === undefined ||
-      submitPondData.vein === null ||
-      submitPondData.vein === undefined ||
-      submitPondData.volume === null ||
-      submitPondData.volume === undefined ||
-      submitWaterData.nh4 === null ||
-      submitWaterData.nh4 === undefined ||
-      submitWaterData.no2 === null ||
-      submitWaterData.no2 === undefined ||
-      submitWaterData.no3 === null ||
-      submitWaterData.no3 === undefined ||
-      submitWaterData.o2 === null ||
-      submitWaterData.o2 === undefined ||
-      submitWaterData.ph === null ||
-      submitWaterData.ph === undefined ||
-      submitWaterData.salt === null ||
-      submitWaterData.salt === undefined ||
-      submitWaterData.temperature === null ||
-      submitWaterData.temperature === undefined
+      submitPondData.pumpPower === "" ||
+      submitPondData.size === "" ||
+      submitPondData.vein === "" ||
+      submitPondData.volume === "" ||
+      submitWaterData.nh4 === "" ||
+      submitWaterData.no2 === "" ||
+      submitWaterData.no3 === "" ||
+      submitWaterData.o2 === "" ||
+      submitWaterData.ph === "" ||
+      submitWaterData.salt === "" ||
+      submitWaterData.temperature === ""
     ) {
-      toast.error("All fields are required", {
+      toast.error("Please input all fields", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.depth)) {
+      toast.error("Depth must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.pumpPower)) {
+      toast.error("Pump power must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.size)) {
+      toast.error("Size must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.vein)) {
+      toast.error("Vein must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitPondData.volume)) {
+      toast.error("Volume must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.nh4)) {
+      toast.error("NH3/NH4 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.no2)) {
+      toast.error("NO2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.no3)) {
+      toast.error("NO3 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.o2)) {
+      toast.error("O2 must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.ph)) {
+      toast.error("pH must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.salt)) {
+      toast.error("Salt must be number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    if (isNaN(submitWaterData.temperature)) {
+      toast.error("Temperature must be number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -306,10 +352,16 @@ export const AddPond = () => {
       await pondMutation.mutateAsync(submitPondData);
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (submitWaterData.pondId) {
+      waterMutation.mutateAsync(submitWaterData).catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [submitWaterData.pondId]);
 
   return (
     <div className="add-pond-container">
@@ -396,11 +448,11 @@ export const AddPond = () => {
 
             <div className="input-two-fields">
               <div className="input-field">
-                <label htmlFor="volume">Volume (L)</label>
+                <label htmlFor="volume">Volume (m&sup3;)</label>
                 <input
                   type="text"
                   id="volume"
-                  placeholder="Volume (L)"
+                  placeholder="Volume (m&sup3;)"
                   name="volume"
                   onChange={handleInputFloatPond}
                 />
@@ -507,9 +559,7 @@ export const AddPond = () => {
 
           <div className="submit">
             <button onClick={handleToggleAddPondModal}>Cancel</button>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Create Confirm"}
-            </button>
+            <button type="submit">Confirm Create</button>
           </div>
         </form>
       </div>

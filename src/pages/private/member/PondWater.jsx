@@ -62,13 +62,13 @@ export const PondWater = () => {
     if (param < idealMin) {
       return {
         adjustment: idealMin - param,
-        message: `You need to increase by ${idealMin - param}`,
+        message: `Need to increase by ${idealMin - param}`,
       };
     }
     if (param > idealMax) {
       return {
         adjustment: param - idealMax,
-        message: `You need to decrease by ${param - idealMax}`,
+        message: `Need to decrease by ${param - idealMax}`,
       };
     }
   };
@@ -108,6 +108,50 @@ export const PondWater = () => {
     0.3
   );
   const phAdjustment = calculateAdjustment(pondInfo?.waterParam?.ph, 7, 8);
+
+  //calculate funcs
+  const calculateAverageStatus = () => {
+    const parameters = [
+      calculateParamStatus(pondInfo?.waterParam?.o2, 7, 9),
+      calculateParamStatus(pondInfo?.waterParam?.no2, 0, 0.5),
+      calculateParamStatus(pondInfo?.waterParam?.no3, 0, 20),
+      calculateParamStatus(pondInfo?.waterParam?.nh4, 0, 0.2),
+      calculateParamStatus(pondInfo?.waterParam?.temperature, 20, 28),
+      calculateParamStatus(pondInfo?.waterParam?.salt, 0.1, 0.3),
+      calculateParamStatus(pondInfo?.waterParam?.ph, 7, 8),
+    ];
+
+    // Count status occurrences
+    const statusCount = parameters.reduce(
+      (acc, status) => {
+        acc[status]++;
+        return acc;
+      },
+      { good: 0, moderate: 0, poor: 0 }
+    );
+
+    // Determine average status
+    const avgStatus =
+      statusCount.good >= statusCount.moderate &&
+      statusCount.good >= statusCount.poor
+        ? statusClassName.good
+        : statusCount.moderate >= statusCount.poor
+        ? statusClassName.moderate
+        : statusClassName.poor;
+
+    // Save average status in localStorage
+    // localStorage.setItem(`pondStatus-${pondId}`, avgStatus);
+    return avgStatus;
+  };
+
+  useEffect(() => {
+    if (!isLoadingPage && !serverError) {
+      calculateAverageStatus();
+    }
+  }, [pondInfo, isLoadingPage, serverError]);
+
+  const averageStatus = localStorage.getItem(`pondStatus-${pondId}`);
+  console.log(averageStatus);
 
   return (
     <div className="pond-water-container">
@@ -210,7 +254,7 @@ export const PondWater = () => {
               <strong>
                 O2 ({calculateParamTitle(pondInfo?.waterParam?.o2, 7, 9)})
               </strong>
-              <p>{oxygenAdjustment?.message}</p>
+              <p>{oxygenAdjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -222,7 +266,7 @@ export const PondWater = () => {
               <strong>
                 NO2 ({calculateParamTitle(pondInfo?.waterParam?.no2, 0, 0.5)})
               </strong>
-              <p>{no2Adjustment?.message}</p>
+              <p>{no2Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -234,7 +278,7 @@ export const PondWater = () => {
               <strong>
                 NO3 ({calculateParamTitle(pondInfo?.waterParam?.no3, 0, 20)})
               </strong>
-              <p>{no3Adjustment?.message}</p>
+              <p>{no3Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -247,7 +291,7 @@ export const PondWater = () => {
                 NH3/NH4 (
                 {calculateParamTitle(pondInfo?.waterParam?.nh4, 0, 0.2)})
               </strong>
-              <p>{nh4Adjustment?.message}</p>
+              <p>{nh4Adjustment?.message}mg/L</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -261,7 +305,7 @@ export const PondWater = () => {
                 {calculateParamTitle(pondInfo?.waterParam?.temperature, 20, 28)}
                 )
               </strong>
-              <p>{temperatureAdjustment?.message}</p>
+              <p>{temperatureAdjustment?.message}℃</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -271,10 +315,10 @@ export const PondWater = () => {
               )}`}
             >
               <strong>
-                Saltt (
+                Salt (
                 {calculateParamTitle(pondInfo?.waterParam?.salt, 0.1, 0.3)})
               </strong>
-              <p>{saltAdjustment?.message}</p>
+              <p>{saltAdjustment?.message}%</p>
             </div>
             <div
               className={`recommendation-param ${calculateParamStatus(
@@ -287,19 +331,6 @@ export const PondWater = () => {
                 pH ({calculateParamTitle(pondInfo?.waterParam?.ph, 7, 8)})
               </strong>
               <p>{phAdjustment?.message}</p>
-            </div>
-            <hr />
-            <div className={`recommendation-param good`}>
-              <strong>Recommend Product</strong>
-
-              <a
-                href="http://localhost:5173/shop/category/2"
-                className="product-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Water improvement
-              </a>
             </div>
           </div>
         </>

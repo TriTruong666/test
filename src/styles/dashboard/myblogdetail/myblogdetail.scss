@@ -8,6 +8,7 @@
         display: flex;
         flex-direction: column;
         overflow-y: auto;
+        font-family: $main-font;
 
         .loading {
             width: 100%;
@@ -74,7 +75,7 @@
 
                 p {
                     font-size: 0.8rem;
-                    color: rgba(0, 0, 0, .7);
+                    color: rgba(0, 0, 0, 0.7);
                 }
             }
 
@@ -121,38 +122,43 @@
                     column-gap: 40px;
                     padding: 0 20px;
 
-                    .share {
+                    .blog-detail-content {
+                        width: 100%;
                         display: flex;
                         flex-direction: column;
-                        row-gap: 5px;
+                        color: white;
+
+                        a,
+                        u,
+                        h1,
+                        h2,
+                        strong,
+                        em,
+                        p,
+                        li {
+                            font-family: $main-font;
+                            line-height: 2rem;
+                            font-size: 0.8rem;
+                        }
 
                         strong {
-                            font-size: 0.65rem;
-                            color: $fade-white;
-                            font-weight: 600;
+                            font-size: 0.9rem;
                         }
 
-                        div {
-                            display: flex;
-                            column-gap: 10px;
-
-                            i {
-                                color: $fade-white;
-                                font-size: 12px;
-                            }
+                        a {
+                            text-decoration: underline;
+                            color: white;
                         }
-                    }
 
-                    .blog-detail-content {
-                        display: flex;
+                        img {
+                            width: 100%;
+                            height: 250px;
+                            object-fit: cover;
+                        }
 
-                        p {
-                            line-height: 2;
-                            font-family: $main-font;
-                            font-size: 0.65rem;
-                            color: $fade-white;
-                            padding-left: 25px;
-                            border-left: 1px solid rgba(255, 255, 255, .2);
+                        iframe {
+                            width: 100%;
+                            height: 300px;
                         }
                     }
                 }

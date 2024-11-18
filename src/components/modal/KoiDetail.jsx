@@ -9,6 +9,7 @@ import { KoiHistory } from "./KoiHistory";
 // import redux
 import { useDispatch, useSelector } from "react-redux";
 // import slices
+import { setKoiInfo } from "../../redux/slices/koi/koi";
 import {
   toggleDelKoiModal,
   toggleDetailKoiModal,
@@ -24,6 +25,7 @@ export const KoiDetail = () => {
     (state) => state.modal.koiHistoryModal.isToggleModal
   );
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [serverError, setServerError] = useState(null);
@@ -35,8 +37,8 @@ export const KoiDetail = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["koi-detail", koiId],
-    queryFn: () => KoiService.detailKoiService(koiId),
+    queryKey: ["koi-detail", koiInfoNew?.koiId],
+    queryFn: () => KoiService.detailKoiService(koiInfoNew?.koiId),
   });
 
   // recommendation
@@ -45,6 +47,7 @@ export const KoiDetail = () => {
       typeof recommendedFoodAmount === "number"
         ? recommendedFoodAmount.toFixed(2)
         : "0.00";
+    localStorage.setItem(`koi-food-for-${koiId}`, foodAmount);
 
     if (age < 1) {
       return `For koi under 1 year of age, we recommend feeding them approximately ${foodAmount} grams of high-protein pellets per day. Younger koi are growing rapidly, so providing them with a nutrient-dense diet is essential.`;
@@ -142,7 +145,8 @@ export const KoiDetail = () => {
     }
   }, [isFetching, isLoading, isError, guideText]);
   // handle func
-  const handeToggleKoiHistoryModalOn = () => {
+  const handeToggleKoiHistoryModalOn = (koiInfo) => {
+    dispatch(setKoiInfo(koiInfo));
     dispatch(toggleKoiHistoryOn());
   };
   const handleToggleKoiDetailModal = () => {
@@ -152,7 +156,8 @@ export const KoiDetail = () => {
     dispatch(toggleDelKoiModal());
     // dispatch(toggleDetailKoiModalOff());
   };
-  const handleToggleUpdateKoiModal = () => {
+  const handleToggleUpdateKoiModal = (koiInfo) => {
+    dispatch(setKoiInfo(koiInfo));
     dispatch(toggleUpdateKoiModal());
     // dispatch(toggleDetailKoiModalOff());
   };
@@ -173,7 +178,7 @@ export const KoiDetail = () => {
         ) : (
           <>
             <div className="koi-detail-header">
-              <strong>Koi Detail #{koiInfo.koiId}</strong>
+              <strong>{koiInfo.name}'s Infomation</strong>
               <i className="bx bx-x" onClick={handleToggleKoiDetailModal}></i>
             </div>
             <div className="koi-detail-info">
@@ -183,7 +188,7 @@ export const KoiDetail = () => {
                   <strong>Koi Infomation</strong>
                   <p>View all infomation of your koi</p>
                 </div>
-                <span onClick={handeToggleKoiHistoryModalOn}>
+                <span onClick={() => handeToggleKoiHistoryModalOn(koiInfo)}>
                   View info history
                 </span>
               </div>
@@ -225,17 +230,10 @@ export const KoiDetail = () => {
                   </div>
                   <span>{importantGuides(koiAge)}</span>
                 </div>
-                <div className="recommendation-product">
-                  <div>
-                    <strong>Recommended Product</strong>
-                    <p>We suggest some product for you</p>
-                  </div>
-                  <span onClick={handeToggleKoiHistoryModalOn}>
-                    View product suggest
-                  </span>
-                </div>
                 <div className="utils">
-                  <button onClick={handleToggleUpdateKoiModal}>Update</button>
+                  <button onClick={() => handleToggleUpdateKoiModal(koiInfo)}>
+                    Update
+                  </button>
                   <button onClick={handleToggleDelKoiModal}>Delete</button>
                 </div>
               </div>

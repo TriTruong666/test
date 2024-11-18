@@ -36,6 +36,37 @@ select option {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
+  .myorder-list .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .myorder-list .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .myorder-list .empty p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .myorder-list .server-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+  .myorder-list .server-error p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
   .myorder-list a {
     display: flex;
     flex-direction: column;
@@ -65,7 +96,18 @@ select option {
   }
   .myorder-list a span {
     font-weight: 600;
-    color: rgb(13, 173, 13);
+  }
+  .myorder-list a .pending {
+    color: rgb(213, 213, 15);
+  }
+  .myorder-list a .success {
+    color: rgb(15, 213, 22);
+  }
+  .myorder-list a .cancel {
+    color: rgb(213, 15, 15);
+  }
+  .myorder-list a .refund {
+    color: rgb(177, 15, 213);
   }
   .myorder-list a:hover {
     background: rgba(0, 0, 0, 0.049);

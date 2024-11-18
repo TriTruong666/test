@@ -103,6 +103,7 @@ select option {
     top: 45px;
     font-size: 22px;
     color: rgb(197, 38, 38);
+    cursor: pointer;
   }
   .cart-container .cart .cart-main .cart-item .cart-item-info {
     display: flex;
@@ -134,6 +135,7 @@ select option {
     padding: 10px 15px;
     text-align: center;
     border-left: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
   }
   .cart-container .cart .cart-main .cart-item .cart-item-info div p:nth-child(3) {
     border-right: 2px solid rgba(255, 255, 255, 0.2);

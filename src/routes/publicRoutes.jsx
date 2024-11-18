@@ -1,4 +1,3 @@
-import React from "react";
 // import pages
 import { Homepage } from "../Homepage";
 import { EmailVerifyPage } from "../pages/auth/EmailVerifyPage";
@@ -13,16 +12,20 @@ import { BlogDetail } from "../pages/public/BlogDetail";
 import { Buynow } from "../pages/public/Buynow";
 import { Cart } from "../pages/public/Cart";
 import { Checkout } from "../pages/public/Checkout";
+import { ContactUs } from "../pages/public/ContactUs";
 import { NotFound } from "../pages/public/NotFound";
+import { PaymentFail } from "../pages/public/PaymentFail";
+import { PaymentSuccess } from "../pages/public/PaymentSuccess";
+import { PaymentSuccessPaynow } from "../pages/public/PaymentSuccessPaynow";
 import { ProductDetail } from "../pages/public/ProductDetail";
 import { Shop } from "../pages/public/Shop";
 import { Unauthorize } from "../pages/public/Unauthorize";
-import { PaymentSuccess } from "../pages/public/PaymentSuccess";
 import {
   LoggedWrapper,
   ResetPassWrapper,
   VerifyEmailForgetWrapper,
   VerifyEmailSignupWrapper,
+  GuestWrapper,
 } from "./LoggedWrapper";
 export const publicRoutes = [
   {
@@ -82,6 +85,14 @@ export const publicRoutes = [
     element: <PaymentSuccess />,
   },
   {
+    path: "/payment/successbuy",
+    element: <PaymentSuccessPaynow />,
+  },
+  {
+    path: "/payment/cancel",
+    element: <PaymentFail />,
+  },
+  {
     path: "/shop",
     element: <Shop />,
   },
@@ -98,6 +109,10 @@ export const publicRoutes = [
     element: <About />,
   },
   {
+    path: "/Contact",
+    element: <ContactUs />,
+  },
+  {
     path: "/blogdetail/:blogId",
     element: <BlogDetail />,
   },
@@ -107,15 +122,27 @@ export const publicRoutes = [
   },
   {
     path: "/cart",
-    element: <Cart />,
+    element: (
+      <GuestWrapper>
+        <Cart />
+      </GuestWrapper>
+    ),
   },
   {
     path: "/checkout",
-    element: <Checkout />,
+    element: (
+      <GuestWrapper>
+        <Checkout />
+      </GuestWrapper>
+    ),
   },
   {
     path: "/buynow/:productId",
-    element: <Buynow />,
+    element: (
+      <GuestWrapper>
+        <Buynow />
+      </GuestWrapper>
+    ),
   },
   {
     path: "*",

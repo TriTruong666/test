@@ -30,6 +30,9 @@ select option {
 }
 
 @media only screen and (max-width: 1537px) {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
   .admin-summary-container {
     width: 100vw;
     max-height: 100vh;
@@ -42,6 +45,7 @@ select option {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
   .admin-summary-container .summary .admin-summary-header {
     padding: 25px 40px;
@@ -63,6 +67,36 @@ select option {
     height: 100%;
     border-radius: 15px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    display: flex;
+  }
+  .admin-summary-container .summary .section1 .item .item1 {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 20px;
+  }
+  .admin-summary-container .summary .section1 .item .item1 strong {
+    color: black;
+    font-size: 1.2rem;
+  }
+  .admin-summary-container .summary .section1 .item .item1 p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.9);
+    font-family: "Roboto Mono", monospace;
+  }
+  .admin-summary-container .summary .section1 .item .item2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 30%;
+    padding: 20px;
+  }
+  .admin-summary-container .summary .section1 .item .item2 img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
   }
   .admin-summary-container .summary .section1 .info {
     width: 30%;
@@ -105,12 +139,12 @@ select option {
     padding: 0 40px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 200px;
+    height: 300px;
     -moz-column-gap: 25px;
          column-gap: 25px;
   }
   .admin-summary-container .summary .section2 .item {
-    padding: 20px 30px;
+    padding: 10px;
     width: 100%;
     height: 100%;
     border-radius: 15px;
@@ -123,5 +157,143 @@ select option {
   .admin-summary-container .summary .section2 .item div strong {
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.9);
+    text-align: center;
+  }
+  .admin-summary-container .summary .chart-container {
+    margin-top: 150px;
+    padding: 0 40px;
+  }
+  .admin-summary-container .summary .chart-container .charts {
+    display: flex;
+    -moz-column-gap: 25px;
+         column-gap: 25px;
+  }
+  .admin-summary-container .summary .chart-container .charts .left-chart {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+  .admin-summary-container .summary .chart-container .charts .left-chart h3 {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart {
+    width: 67%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 20px 40px;
+    border-radius: 15px;
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container label {
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart .filter-container select {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+  }
+  .admin-summary-container .summary .chart-container .charts .right-chart h3 {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .admin-summary-container .summary .summary-bottom {
+    margin: 30px 0 50px 0;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom {
+    width: 70%;
+    padding: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 15px;
+    background: white;
+    margin-right: 10px;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom strong {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .pending {
+    color: rgb(213, 213, 15);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .success {
+    color: rgb(15, 213, 22);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .cancel {
+    color: rgb(213, 15, 15);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table .refund {
+    color: rgb(177, 15, 213);
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table th,
+  .admin-summary-container .summary .summary-bottom .left-bottom table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table th {
+    background-color: #f4f4f4;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table span {
+    font-weight: 600;
+  }
+  .admin-summary-container .summary .summary-bottom .left-bottom table button {
+    background-color: #1e90ff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom {
+    width: 30%;
+    padding: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 15px;
+    background: white;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom strong {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.9);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table th,
+  .admin-summary-container .summary .summary-bottom .right-bottom table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .admin-summary-container .summary .summary-bottom .right-bottom table th {
+    background-color: #f4f4f4;
   }
 }/*# sourceMappingURL=adminsummary.css.map */

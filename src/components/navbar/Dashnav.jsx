@@ -62,67 +62,82 @@ export const Dashnav = () => {
                 to="/dashboard/myorder"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                <i className="bx bx-shopping-bag"></i>
-                <p>Order</p>
+                <i className="bx bx-notepad"></i>
+                <p>My Order</p>
               </NavLink>
               <NavLink
                 to="/dashboard/myblog"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 <i className="bx bxl-blogger"></i>
-                <p>Blog</p>
+                <p>My Blog</p>
               </NavLink>
             </div>
           )}
 
           {/* section admin */}
           {isAdmin && (
-            <div className="dashnav-list-item">
-              <div className="dashnav-list-item-header">
-                <p>Admin</p>
+            <>
+              <div className="dashnav-list-item">
+                <div className="dashnav-list-item-header">
+                  <p>Admin</p>
+                </div>
+                <NavLink
+                  to="/dashboard/admin/summary"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-home-alt"></i>
+                  <p>Summary</p>
+                </NavLink>
+                <NavLink
+                  to="/dashboard/admin/account"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-cylinder"></i>
+                  <p>Account Management</p>
+                </NavLink>
+                <NavLink
+                  to="/dashboard/admin/product"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-package"></i>
+                  <p>Product Management</p>
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard/admin/blog"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bxl-blogger"></i>
+                  <p>Blog Management</p>
+                </NavLink>
               </div>
-              <NavLink
-                to="/dashboard/admin/summary"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <i className="bx bx-home-alt"></i>
-                <p>Summary</p>
-              </NavLink>
-              <NavLink
-                to="/dashboard/admin/account"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <i className="bx bx-cylinder"></i>
-                <p>Account Management</p>
-              </NavLink>
-              <NavLink
-                to="/dashboard/admin/product"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <i className="bx bx-package"></i>
-                <p>Product Management</p>
-              </NavLink>
-              <NavLink
-                to="/dashboard/admin/order"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <i className="bx bx-shopping-bag"></i>
-                <p>Order Management</p>
-              </NavLink>
-              <NavLink
-                to="/dashboard/admin/blog"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <i className="bx bxl-blogger"></i>
-                <p>Blog Management</p>
-              </NavLink>
-            </div>
+              <div className="dashnav-list-item">
+                <div className="dashnav-list-item-header">
+                  <p>Customers</p>
+                </div>
+                <NavLink
+                  to="/dashboard/admin/order"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-notepad"></i>
+                  <p>Order Management</p>
+                </NavLink>
+                <NavLink
+                  to="/dashboard/admin/refund"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <i className="bx bx-x"></i>
+                  <p>Refund Management</p>
+                </NavLink>
+              </div>
+            </>
           )}
 
           {/* section tool */}
           <div className="dashnav-list-item">
             <div className="dashnav-list-item-header">
-              <p>Tools</p>
+              <p>Utilities</p>
             </div>
             <NavLink
               to="/dashboard/setting"
@@ -132,17 +147,13 @@ export const Dashnav = () => {
               <p>Setting</p>
             </NavLink>
             <NavLink
-              to="/dashboard/help"
+              to="/"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-              <i className="bx bx-help-circle"></i>
-              <p>Get Help</p>
+              <i className="bx bx-log-out-circle"></i>
+              <p>Return to homepage</p>
             </NavLink>
           </div>
-          {/*  */}
-          <Link className="logout" to="/">
-            Back to homepage
-          </Link>
         </div>
       </div>
     </div>

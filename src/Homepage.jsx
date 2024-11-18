@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { Link, useLocation } from "react-router-dom";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import styles
 import "./styles/homepage/homepage.css";
 // import components
-import { Navbar } from "./components/navbar/Navbar";
 import { Footer } from "./components/footer/Footer";
+import { Navbar } from "./components/navbar/Navbar";
 import { Settingnav } from "./components/navbar/Settingnav";
 // import assets
-import introVideo from "./assets/koivideo.mp4";
 import feature1 from "./assets/feature1.png";
 import feature2 from "./assets/feature2.png";
 import feature3 from "./assets/feature3.png";
+import group from "./assets/group.png";
+import introVideo from "./assets/koivideo.mp4";
 import shopheader1 from "./assets/shopheader1.jpg";
 import shopheader2 from "./assets/shopheader2.jpg";
-import koiproduct from "./assets/koiproduct.png";
-import group from "./assets/group.png";
 // import service
+import { scroller } from "react-scroll";
+import { ContactForm } from "./components/contact/ContactForm";
 import * as AccountService from "./service/account/AccountService";
 import * as BlogService from "./service/blog/blogService";
-import * as ProductService from "./service/product/productService";
 import * as CartService from "./service/cart/cartService";
+import * as ProductService from "./service/product/productService";
 const stripHtmlTags = (html) => {
   const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2"];
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -28,32 +30,31 @@ const stripHtmlTags = (html) => {
 
   elements.forEach((el) => {
     if (!allowedTags.includes(el.tagName.toLowerCase())) {
-      // Replace unwanted tags with their content
       el.replaceWith(...el.childNodes);
     }
   });
   return doc.body.innerHTML;
 };
 export const Homepage = () => {
+  // location
+  const location = useLocation();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.userId || null;
   // state
   const [isAuth, setIsAuth] = useState(false);
+
   // query
-  const {
-    data: blogs = [],
-    isLoading,
-    isFetching,
-    isError,
-  } = useQuery({
+  const { data: blogs = [] } = useQuery({
     queryKey: ["last-blogs"],
     queryFn: BlogService.getAllBlog,
   });
   const { data: products = [] } = useQuery({
-    queryKey: ["header-product"],
+    queryKey: ["products"],
     queryFn: ProductService.getAllProductShop,
+    refetchOnWindowFocus: false,
   });
+
   const { data: cartInfo = {} } = useQuery({
     queryKey: ["my-cart", userId],
     queryFn: () => CartService.getCartByMember(userId),
@@ -69,8 +70,8 @@ export const Homepage = () => {
       localStorage.removeItem("cart");
     }
   };
+
   useEffect(() => {
-    document.title = "Izumiya Koi";
     try {
       handleSetIsAuth();
     } catch (error) {
@@ -96,9 +97,17 @@ export const Homepage = () => {
       });
     },
   });
-
+  // scroll
+  const handleScrollTo = (section) => {
+    scroller.scrollTo(section, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -85,
+    });
+  };
   return (
-    <div className="homepage-container" id="about">
+    <div className="homepage-container" id="homepage">
       <Navbar />
       {isAuth && <Settingnav />}
       <div className="homepage-intro">
@@ -120,13 +129,13 @@ export const Homepage = () => {
               well-maintained environment.
             </p>
             <div className="other-link">
-              <a href="">See More</a>
+              <a onClick={() => handleScrollTo("solutions")}>See Solutions</a>
               <Link to="/dashboard/mypond">Start Using Izumiya</Link>
             </div>
           </div>
         </div>
       </div>
-      <div className="feature-intro">
+      <div className="feature-intro" id="solutions">
         <div className="feature-intro-header">
           <h2>Izumiya Solutions</h2>
         </div>
@@ -189,7 +198,7 @@ export const Homepage = () => {
                 looking to prevent disease or boost immunity, our products are
                 tailored to meet the specific needs of koi.
               </p>
-              <Link to="/shop">Explore Now</Link>
+              <Link to="/shop/category/1">Explore Now</Link>
             </div>
             <div className="shop-intro-item-list">
               <strong>Best Health Products</strong>
@@ -199,7 +208,7 @@ export const Homepage = () => {
                     <img src={product.image} alt="" />
                     <strong>{product.productName}</strong>
                     <p>${product.unitPrice}</p>
-                    <button>Buy now</button>
+                    <Link to={`/buynow/${product.productId}`}>Buy now</Link>
                   </div>
                 ))}
               </div>
@@ -220,7 +229,7 @@ export const Homepage = () => {
                 of products ensures that your pond remains a clean, safe, and
                 thriving environment for your koi.
               </p>
-              <Link to="/shop">Explore Now</Link>
+              <Link to="/shop/category/2">Explore Now</Link>
             </div>
             <div className="shop-intro-item-list">
               <strong>Best Water Products</strong>
@@ -230,7 +239,7 @@ export const Homepage = () => {
                     <img src={product.image} alt="" />
                     <strong>{product.productName}</strong>
                     <p>${product.unitPrice}</p>
-                    <button>Buy now</button>
+                    <Link to={`/buynow/${product.productId}`}>Buy now</Link>
                   </div>
                 ))}
               </div>
@@ -264,7 +273,7 @@ export const Homepage = () => {
           ))}
         </div>
       </div>
-      <div className="about-intro">
+      <div className="about-intro" id="contact">
         <div>
           <img src={group} alt="" />
           <p>
@@ -276,6 +285,9 @@ export const Homepage = () => {
           <strong>Truong Hoang Tri - Leader</strong>
           <span>Group 8</span>
         </div>
+      </div>
+      <div className="contact-form">
+        <ContactForm />
       </div>
       <Footer />
     </div>

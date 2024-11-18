@@ -1,0 +1,196 @@
+@import "../../global/global.scss";
+
+@media only screen and (max-width: 1537px) {
+    .admin-refund-detail-container {
+        width: calc(100% - 40% - 220px);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+
+        .error-page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            p {
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+        }
+
+        .not-found {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 10px;
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+                font-weight: 400;
+            }
+        }
+
+        .loading {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-refund-detail-header {
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            strong {
+                font-size: 1.1rem;
+            }
+
+            p {
+                font-size: 0.75rem;
+                padding: 5px 30px;
+                border-radius: 15px;
+                font-weight: 600;
+            }
+
+            .pending {
+                background: rgba(231, 237, 129, 0.621);
+                color: rgb(116, 119, 17);
+            }
+
+            .approved {
+                background: rgba(129, 237, 141, 0.621);
+                color: rgb(17, 119, 20);
+            }
+
+            .rejected {
+                background: rgba(237, 129, 129, 0.621);
+                color: rgb(223, 33, 33);
+            }
+
+            .refunded {
+                background: rgba(231, 129, 237, 0.621);
+                color: rgb(182, 33, 223);
+            }
+        }
+
+        .admin-refund-main {
+            display: flex;
+            flex-direction: column;
+            padding: 25px 40px;
+
+            .info {
+                margin-top: 40px;
+                display: flex;
+                flex-direction: column;
+
+                .header {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 5px;
+
+                    strong {
+                        font-size: 1.1rem;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: rgba(0, 0, 0, .7);
+                    }
+                }
+
+                .main {
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 25px;
+
+                    img {
+                        width: 100%;
+                        height: 300px;
+                        object-fit: cover;
+                    }
+                }
+            }
+
+            .buttons {
+                margin-top: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                column-gap: 25px;
+
+                .marked-approved {
+                    cursor: not-allowed;
+                    color: green;
+                    border: 1px solid green;
+
+                    p {
+                        font-weight: 600;
+                    }
+                }
+
+                .marked-approved:hover,
+                .marked-rejected:hover {
+                    background: none;
+                }
+
+                .marked-rejected {
+                    cursor: not-allowed;
+                    color: rgb(214, 44, 44);
+                    border: 1px solid rgb(214, 44, 44);
+
+                    p {
+                        font-weight: 600;
+                    }
+                }
+
+                .prevent {
+                    cursor: not-allowed;
+                }
+
+                .prevent:hover {
+                    background: none;
+                }
+
+                button {
+                    width: 50%;
+                    padding: 10px 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: rgb(0, 0, 0);
+                    border: 1px solid black;
+                    border-radius: 15px;
+                    column-gap: 10px;
+                    cursor: pointer;
+                    transition: .4s;
+
+                    i {
+                        font-size: 20px;
+                    }
+
+                    p {
+                        font-size: 0.85rem;
+                        font-weight: 500;
+                    }
+                }
+
+                button:hover {
+                    background: rgba(0, 0, 0, .1);
+                }
+            }
+        }
+    }
+}

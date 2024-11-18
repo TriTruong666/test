@@ -1,12 +1,12 @@
-import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
 import "../../styles/components/modal/modal.css";
 // import redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import slices
 import { toggleDelPondModal } from "../../redux/slices/modal/modal";
 // import service
@@ -20,8 +20,14 @@ export const DelPond = () => {
   const dispatch = useDispatch();
   // mutation
   const queryCilent = useQueryClient();
+  // use State
+  const pondInfo = useSelector((state) => state.pond.pondInfo.pondInfo);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   const mutation = useMutation({
     mutationFn: PondService.deletePondService,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Delete successfully", {
         position: "top-right",
@@ -36,6 +42,7 @@ export const DelPond = () => {
       setTimeout(() => {
         dispatch(toggleDelPondModal());
         navigate("/dashboard/mypond/");
+        setIsPreventSubmit(false);
         location.reload();
       }, 1500);
       queryCilent.invalidateQueries({
@@ -49,8 +56,21 @@ export const DelPond = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
-      await mutation.mutateAsync(pondId);
+      await mutation.mutateAsync(pondInfo?.pondId);
     } catch (error) {
       console.error(error);
     }
@@ -64,7 +84,7 @@ export const DelPond = () => {
           <i className="bx bx-x" onClick={handleToggleDelPondModal}></i>
         </div>
         <div className="del-pond-main">
-          <p>Are you sure to delete Pond #{pondId}</p>
+          <p>Are you sure to delete {pondInfo.pondName}</p>
         </div>
         <div className="submit">
           <button onClick={handleSubmit}>Delete Confirm</button>

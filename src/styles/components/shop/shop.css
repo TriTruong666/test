@@ -120,6 +120,15 @@ select option {
     -moz-column-gap: 20px;
          column-gap: 20px;
   }
+  .shoplist-container .shoplist-column .shop-item div .login-first {
+    padding: 8px 30px;
+    border-radius: 10px;
+    background: #BCAB6F;
+    color: black;
+    font-weight: 700;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.8rem;
+  }
   .shoplist-container .shoplist-column .shop-item div .buynow {
     display: flex;
     align-items: center;
@@ -134,6 +143,7 @@ select option {
   .shoplist-container .shoplist-column .shop-item div button {
     padding: 7px 30px;
     border-radius: 10px;
+    cursor: pointer;
   }
   .shoplist-container .shoplist-column .shop-item div button:nth-child(2) {
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -182,6 +192,15 @@ select option {
     display: flex;
     -moz-column-gap: 20px;
          column-gap: 20px;
+  }
+  .shoplist-container .shoplist-row .shop-item div .login-first {
+    padding: 8px 30px;
+    border-radius: 10px;
+    background: #BCAB6F;
+    color: black;
+    font-weight: 700;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.8rem;
   }
   .shoplist-container .shoplist-row .shop-item div .buynow {
     display: flex;

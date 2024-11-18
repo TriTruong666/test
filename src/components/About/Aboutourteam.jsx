@@ -17,11 +17,7 @@ export const AboutOurTeam = () => {
   return (
     <div className="memberlist-container">
       {teamMembers.map((member, index) => (
-        <Link
-          key={index}
-          to="https://www.youtube.com/youtube"
-          className="blog-item"
-        >
+        <Link key={index} to="/" className="blog-item">
           <img src={member.img} alt={member.name} />
           <small>Joined At</small>
           <strong>{member.name}</strong>

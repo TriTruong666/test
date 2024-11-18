@@ -67,21 +67,95 @@
                     }
 
                     div {
-                        margin-top: 20px;
+                        margin-top: 50px;
                         display: flex;
                         column-gap: 20px;
 
                         button {
                             padding: 10px 40px;
-                            border: 2px solid rgba(255, 255, 255, .2);
                             font-family: $main-font;
+                            cursor: pointer;
+                            transition: .4s;
                         }
 
-                        button:nth-child(1) {
+                        a {
                             background: white;
                             color: black;
                             font-weight: 600;
+                            padding: 10px 40px;
+                            font-family: $main-font;
+                            cursor: pointer;
+                            transition: .4s;
+                            font-size: 0.9rem;
                         }
+
+                        button:nth-child(2) {
+                            border: 2px solid rgba(255, 255, 255, .2);
+                            color: white;
+                            font-weight: 600;
+                        }
+
+                        button:nth-child(2):hover {
+                            background: rgba(255, 255, 255, .1);
+                        }
+                    }
+                }
+            }
+
+            .description {
+                width: 100%;
+                display: flex;
+                padding: 40px 200px;
+                background: $main-color;
+                flex-direction: column;
+                row-gap: 30px;
+
+                .header {
+                    font-family: $main-font;
+                    color: white;
+                    font-size: 1.7rem;
+                    font-weight: 600;
+                    padding-bottom: 50px;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.644);
+                }
+
+                .product-description-content {
+                    margin-top: 20px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    color: rgba(255, 255, 255, 0.644);
+
+                    img {
+                        width: 100%;
+                        height: 500px;
+                        object-fit: cover;
+                    }
+
+                    a,
+                    u,
+                    h1,
+                    h2,
+                    strong,
+                    em,
+                    p,
+                    li {
+                        font-family: $main-font;
+                        line-height: 3rem;
+                    }
+
+                    strong {
+                        font-size: 1.1rem;
+                    }
+
+                    a {
+                        text-decoration: underline;
+                        color: white;
+                    }
+
+                    iframe {
+                        width: 100%;
+                        height: 600px;
                     }
                 }
             }
@@ -122,10 +196,11 @@
                             object-fit: cover;
                         }
 
-                        strong {
+                        .name {
                             font-family: $main-font;
                             color: white;
                             font-size: 1rem;
+                            cursor: pointer;
                         }
 
                         p {
@@ -136,11 +211,12 @@
                             color: $fade-white !important;
                         }
 
-                        button {
+                        .buynow {
                             padding: 7px 30px;
                             color: black;
                             background: $second-color;
                             border-radius: 10px;
+                            font-size: 0.9rem;
                         }
                     }
                 }

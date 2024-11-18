@@ -18,6 +18,8 @@ import { PondDetail } from "../pages/private/member/PondDetail";
 import { PondInfo } from "../pages/private/member/PondInfo";
 import { PondManage } from "../pages/private/member/PondManage";
 import { PondWater } from "../pages/private/member/PondWater";
+import { AdminOrderRefundManage } from "../pages/private/admin/AdminOrderRefundManage";
+import { AdminOrderRefundDetail } from "../pages/private/admin/AdminOrderRefundDetail";
 import AuthWrapper from "./AuthWrapper";
 export const privateRoutes = [
   {
@@ -81,7 +83,7 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/myorder/detail",
+        path: "/dashboard/myorder/detail/:orderId",
         element: (
           <AuthWrapper allowedRoles={["USER"]}>
             <MyOrderDetail />
@@ -125,10 +127,28 @@ export const privateRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/admin/order/detail",
+        path: "/dashboard/admin/order/detail/:orderId",
         element: (
           <AuthWrapper allowedRoles={["ADMIN"]}>
             <AdminOrderDetail />
+          </AuthWrapper>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard/admin/refund",
+    element: (
+      <AuthWrapper allowedRoles={["ADMIN"]}>
+        <AdminOrderRefundManage />
+      </AuthWrapper>
+    ),
+    children: [
+      {
+        path: "/dashboard/admin/refund/detail/:refundId/:orderId",
+        element: (
+          <AuthWrapper allowedRoles={["ADMIN"]}>
+            <AdminOrderRefundDetail />
           </AuthWrapper>
         ),
       },

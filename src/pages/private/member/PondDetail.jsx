@@ -8,8 +8,12 @@ import "../../../styles/dashboard/ponddetail/ponddetail.css";
 // import dispatch
 import { useDispatch } from "react-redux";
 // import slices
-import { toggleDelPondModal, toggleUpdatePondModal } from "../../../redux/slices/modal/modal";
+import {
+  toggleDelPondModal,
+  toggleUpdatePondModal,
+} from "../../../redux/slices/modal/modal";
 // import service
+import { setPondInfo } from "../../../redux/slices/pond/pond";
 import * as PondService from "../../../service/pond/pondService";
 export const PondDetail = () => {
   // param
@@ -34,7 +38,8 @@ export const PondDetail = () => {
   const handleToggleUpdatePondModal = () => {
     dispatch(toggleUpdatePondModal());
   };
-  const handleToggleDelPondModal = () => {
+  const handleToggleDelPondModal = (pondInfo) => {
+    dispatch(setPondInfo(pondInfo));
     dispatch(toggleDelPondModal());
   };
   useEffect(() => {
@@ -48,21 +53,18 @@ export const PondDetail = () => {
     } else {
       setServerError(null);
     }
-
-
   }, [pondStatus, isFetching, isLoading, isError]);
   return (
     <div className="pond-detail-container">
-      
       {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ): isNotFoundPond ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <div className="loading">
+          <ClipLoader color="#000000" size={40} />
+        </div>
+      ) : isNotFoundPond ? (
         <>
           <div className="not-found">
             <h2>Pond is not found</h2>
@@ -80,7 +82,7 @@ export const PondDetail = () => {
               ></i>
               <i
                 className="bx bx-trash-alt"
-                onClick={handleToggleDelPondModal}
+                onClick={() => handleToggleDelPondModal(pondStatus)}
               ></i>
             </div>
           </div>

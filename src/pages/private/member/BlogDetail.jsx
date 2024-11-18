@@ -12,20 +12,8 @@ import {
   toggleUpdateBlogModal,
 } from "../../../redux/slices/modal/modal";
 // import service
+import { setBlogInfo } from "../../../redux/slices/blog/blog";
 import * as BlogService from "../../../service/blog/blogService";
-const stripHtmlTags = (html) => {
-  const allowedTags = ["strong", "em", "b", "i", "u", "br", "h2", "h3"];
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const elements = doc.body.querySelectorAll("*");
-
-  elements.forEach((el) => {
-    if (!allowedTags.includes(el.tagName.toLowerCase())) {
-      // Replace unwanted tags with their content
-      el.replaceWith(...el.childNodes);
-    }
-  });
-  return doc.body.innerHTML;
-};
 export const BlogDetail = () => {
   // state
   const [isLoadingPage, setIsLoadingPage] = useState(false);
@@ -38,7 +26,8 @@ export const BlogDetail = () => {
   const handleToggleUpdateBlogModal = () => {
     dispatch(toggleUpdateBlogModal());
   };
-  const handleToggleDelBlogModal = () => {
+  const handleToggleDelBlogModal = (blogInfo) => {
+    dispatch(setBlogInfo(blogInfo));
     dispatch(toggleDeleteBlogModal());
   };
   // query
@@ -69,18 +58,18 @@ export const BlogDetail = () => {
     } else {
       setServerError(null);
     }
-  }, [isFetching, isLoading, blog,isError]);
+  }, [isFetching, isLoading, blog, isError]);
   return (
     <div className="my-blog-detail-container">
-     {serverError ? (
-            <div className="error-page">
-              <p>{serverError}</p>
-            </div>
-          ) : isLoadingPage ? (
-            <div className="loading">
-              <ClipLoader color="#000000" size={40} />
-            </div>
-          ) : (
+      {serverError ? (
+        <div className="error-page">
+          <p>{serverError}</p>
+        </div>
+      ) : isLoadingPage ? (
+        <div className="loading">
+          <ClipLoader color="#000000" size={40} />
+        </div>
+      ) : (
         <>
           {isNotFoundBlog ? (
             <>
@@ -100,7 +89,7 @@ export const BlogDetail = () => {
                   ></i>
                   <i
                     className="bx bx-trash-alt"
-                    onClick={handleToggleDelBlogModal}
+                    onClick={() => handleToggleDelBlogModal(blog)}
                   ></i>
                 </div>
               </div>
@@ -119,25 +108,12 @@ export const BlogDetail = () => {
                   </div>
                   <img src={blog.image || ""} alt="" />
                   <div className="blog-detail-main">
-                    <div className="share">
-                      <strong>Share Article</strong>
-                      <div>
-                        <i className="bx bx-link-alt"></i>
-                        <i className="bx bxl-facebook-circle"></i>
-                        <i className="bx bxl-instagram-alt"></i>
-                      </div>
-                    </div>
-                    <div className="blog-detail-content">
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            blog &&
-                            stripHtmlTags(
-                              blog.content || "No content available"
-                            ),
-                        }}
-                      ></p>
-                    </div>
+                    <div
+                      className="blog-detail-content"
+                      dangerouslySetInnerHTML={{
+                        __html: blog.content || "No content available",
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>

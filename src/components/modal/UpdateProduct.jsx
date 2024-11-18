@@ -1,26 +1,6 @@
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  Alignment,
-  BlockQuote,
-  Bold,
-  ClassicEditor,
-  Essentials,
-  Font,
-  Heading,
-  Image,
-  ImageResize,
-  ImageStyle,
-  ImageToolbar,
-  Italic,
-  Link,
-  List,
-  Paragraph,
-  Table,
-  TableToolbar,
-} from "ckeditor5";
-import "ckeditor5/ckeditor5.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import FileResizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -32,6 +12,7 @@ import "../../styles/components/modal/modal.css";
 import { toggleUpdateProductModal } from "../../redux/slices/modal/modal";
 // import service
 import * as ProductService from "../../service/product/productService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const UpdateProduct = () => {
   // selector
@@ -60,7 +41,19 @@ export const UpdateProduct = () => {
     status: "",
   });
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [isValidNumber, setIsValidNumber] = useState(false);
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
+  const quillModules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image", "video"],
+        [{ align: [] }],
+        ["clean"],
+      ],
+    },
+  };
   useEffect(() => {
     if (isFetching || isLoading) {
       setIsLoadingPage(true);
@@ -108,6 +101,9 @@ export const UpdateProduct = () => {
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["update-product", productId],
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     mutationFn: (updateData) => {
       ProductService.updateProductService(productId, updateData);
     },
@@ -126,7 +122,7 @@ export const UpdateProduct = () => {
         location.reload();
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: ["productList"],
       });
     },
   });
@@ -143,36 +139,19 @@ export const UpdateProduct = () => {
   };
   const handleInputNumber = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
+
     setSubmitData({
       ...submitData,
       [name]: parseInt(value),
     });
-    setIsValidNumber(false);
   };
   const handleInputFloat = (e) => {
     const { name, value } = e.target;
-    if (isNaN(value)) {
-      setSubmitData({
-        ...submitData,
-        [name]: "",
-      });
-      setIsValidNumber(true);
-      return;
-    }
 
     setSubmitData({
       ...submitData,
       [name]: parseFloat(value),
     });
-    setIsValidNumber(false);
   };
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -207,7 +186,19 @@ export const UpdateProduct = () => {
   };
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     if (isValidName) {
       toast.error("Product name must at least 10 characters and not a number", {
         position: "top-right",
@@ -221,9 +212,8 @@ export const UpdateProduct = () => {
       });
       return;
     }
-    // number validation
-    if (isValidNumber) {
-      toast.error("Invalid number", {
+    if (isNaN(submitData.stock) || isNaN(submitData.unitprice)) {
+      toast.error("Stock and unit price must be a number", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -237,13 +227,13 @@ export const UpdateProduct = () => {
     }
     // empty validation
     if (
-      !submitData.name ||
-      !submitData.categoryId ||
-      !submitData.image ||
-      !submitData.stock ||
-      !submitData.unitprice ||
-      !submitData.description ||
-      !submitData.status
+      submitData.name === "" ||
+      submitData.categoryId === "" ||
+      submitData.image === "" ||
+      submitData.stock === "" ||
+      submitData.unitprice === "" ||
+      submitData.description === "" ||
+      submitData.status === ""
     ) {
       toast.error("All fields are required", {
         position: "top-right",
@@ -307,7 +297,7 @@ export const UpdateProduct = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="input-field-name">
                 <label htmlFor="name">Product Name</label>
                 <input
                   className="name"
@@ -321,7 +311,7 @@ export const UpdateProduct = () => {
               </div>
 
               <div className="input-two-fields">
-                <div className="form-group">
+                <div className="input-field">
                   <label htmlFor="unitprice">Price</label>
                   <input
                     type="text"
@@ -332,7 +322,7 @@ export const UpdateProduct = () => {
                     id="unitprice"
                   />
                 </div>
-                <div className="form-group">
+                <div className="input-field">
                   <label htmlFor="stock">Stock</label>
                   <input
                     type="text"
@@ -345,76 +335,20 @@ export const UpdateProduct = () => {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="input-field-des">
                 <label htmlFor="description">Description</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  config={{
-                    plugins: [
-                      Essentials,
-                      Bold,
-                      Italic,
-                      Paragraph,
-                      Heading,
-                      Link,
-                      List,
-                      BlockQuote,
-                      Alignment,
-                      Image,
-                      ImageToolbar,
-                      ImageStyle,
-                      ImageResize,
-                      Table,
-                      TableToolbar,
-                      Font,
-                    ],
-                    toolbar: [
-                      "heading",
-                      "|",
-                      "bold",
-                      "italic",
-                      "link",
-                      "bulletedList",
-                      "numberedList",
-                      "|",
-                      "blockQuote",
-                      "alignment",
-                      "fontSize",
-                      "|",
-                      "imageUpload",
-                      "insertTable",
-                      "|",
-                      "undo",
-                      "redo",
-                    ],
-                    image: {
-                      toolbar: [
-                        "imageTextAlternative",
-                        "imageStyle:full",
-                        "imageStyle:side",
-                      ],
-                      styles: ["full", "side"],
-                    },
-                    table: {
-                      contentToolbar: [
-                        "tableColumn",
-                        "tableRow",
-                        "mergeTableCells",
-                      ],
-                    },
-                  }}
-                  data={submitData.description}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setSubmitData({
-                      ...submitData,
-                      description: data,
-                    });
-                  }}
+                <ReactQuill
+                  theme="snow"
+                  defaultValue={submitData.description}
+                  onChange={(description) =>
+                    setSubmitData({ ...submitData, description })
+                  }
+                  modules={quillModules}
+                  placeholder="Write product description..."
                 />
               </div>
 
-              <div className="form-group">
+              <div className="input-field-cate">
                 <label htmlFor="categoryId">Category</label>
                 <select
                   className="cate"
@@ -429,14 +363,14 @@ export const UpdateProduct = () => {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="input-field-cate">
                 <label htmlFor="status">Status</label>
                 <select
                   className="cate"
                   onChange={handleOnChange}
                   name="status"
                   id="status"
-                  value={submitData.status ? "true" : "false"}
+                  defaultValue={submitData.status ? "true" : "false"}
                 >
                   <option value="">Status</option>
                   <option value="true">Active</option>
@@ -446,7 +380,7 @@ export const UpdateProduct = () => {
 
               <div className="submit">
                 <span onClick={handleToggleUpdateProductModal}>Cancel</span>
-                <button type="submit">Create Confirm</button>
+                <button type="submit">Update Confirm</button>
               </div>
             </form>
           </>

@@ -61,7 +61,7 @@ select option {
     font-family: "Roboto Mono", monospace;
     color: white;
     font-size: 30px;
-    width: 50%;
+    width: 70%;
     text-align: center;
     font-weight: 400;
   }
@@ -79,41 +79,41 @@ select option {
   }
   .blog-detail-container .blog-detail .blog-detail-main {
     display: flex;
-    padding: 0 80px;
+    padding: 40px 80px;
     -moz-column-gap: 120px;
          column-gap: 120px;
   }
-  .blog-detail-container .blog-detail .blog-detail-main .share {
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
-  }
-  .blog-detail-container .blog-detail .blog-detail-main .share strong {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 600;
-  }
-  .blog-detail-container .blog-detail .blog-detail-main .share div {
-    display: flex;
-    -moz-column-gap: 20px;
-         column-gap: 20px;
-  }
-  .blog-detail-container .blog-detail .blog-detail-main .share div i {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 22px;
-  }
   .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content {
     display: flex;
+    flex-direction: column;
+    color: white;
   }
-  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p {
-    line-height: 2.5;
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content img {
+    width: 100%;
+    height: 500px;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content a,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content u,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content h1,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content h2,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content strong,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content em,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p,
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content li {
     font-family: "Roboto Mono", monospace;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    padding: 0 50px;
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    line-height: 3rem;
   }
-  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content p i {
-    font-weight: 700;
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content strong {
+    font-size: 1.1rem;
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content a {
+    text-decoration: underline;
+    color: white;
+  }
+  .blog-detail-container .blog-detail .blog-detail-main .blog-detail-content iframe {
+    width: 100%;
+    height: 600px;
   }
 }/*# sourceMappingURL=blogdetail.css.map */

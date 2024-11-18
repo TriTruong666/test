@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import styles
@@ -14,11 +14,16 @@ import * as ProductService from "../../service/product/productService";
 export const DelProduct = () => {
   // selector
   const productId = useSelector((state) => state.product.productId.productId);
+  //use State
+  const [isPreventSubmit, setIsPreventSubmit] = useState(false);
   // mutation
   const queryCilent = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["del-product", productId],
     mutationFn: ProductService.deleteProductService,
+    onMutate: () => {
+      setIsPreventSubmit(true);
+    },
     onSuccess: () => {
       toast.success("Delete successfully", {
         position: "top-right",
@@ -32,9 +37,10 @@ export const DelProduct = () => {
       });
       setTimeout(() => {
         location.reload();
+        setIsPreventSubmit(false);
       }, 1500);
       queryCilent.invalidateQueries({
-        queryKey: ["delete-product"],
+        queryKey: ["productList"],
       });
     },
   });
@@ -46,6 +52,20 @@ export const DelProduct = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // validate duplicate submit
+    if (isPreventSubmit) {
+      toast.error("On going process, try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
     try {
       await mutation.mutateAsync(productId);
     } catch (error) {
@@ -57,7 +77,7 @@ export const DelProduct = () => {
       <ToastContainer />
       <div className="del-product-modal">
         <div className="del-product-header">
-          <strong>Delete Koi</strong>
+          <strong>Delete Product</strong>
           <i className="bx bx-x" onClick={handleToggleDelProductModal}></i>
         </div>
         <div className="del-product-main">

@@ -237,6 +237,33 @@ select option {
     font-size: 0.85rem;
     font-weight: 600;
   }
+  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header div:nth-child(1) strong {
+    font-size: 28px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header div:nth-child(1) p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header div:nth-child(1) a {
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 10px 40px;
+    color: black;
+    background: #BCAB6F;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
   .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header .shop-intro-item-list {
     display: flex;
     flex-direction: column;
@@ -281,20 +308,14 @@ select option {
     letter-spacing: normal !important;
     color: rgba(255, 255, 255, 0.7) !important;
   }
-  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header .shop-intro-item-list div .product-item button {
-    padding: 7px 30px;
-    color: black;
-    background: #BCAB6F;
-    border-radius: 10px;
-  }
-  .homepage-container .shop-intro .shop-intro-item:nth-child(2) {
-    margin-bottom: 80px;
-  }
-  .homepage-container .shop-intro .shop-intro-item:nth-child(2) .shop-intro-item-header div:nth-child(1) {
-    align-items: end;
-  }
-  .homepage-container .shop-intro .shop-intro-item:nth-child(2) .shop-intro-item-header div:nth-child(1) p {
-    text-align: end;
+  .homepage-container .shop-intro .shop-intro-item .shop-intro-item-header .shop-intro-item-list div .product-item a {
+    padding: 7px 30px !important;
+    color: black !important;
+    background: #BCAB6F !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    font-size: 0.85rem;
+    font-weight: 600;
   }
   .homepage-container .blog-intro {
     width: 100%;
@@ -404,5 +425,9 @@ select option {
     font-size: 0.8rem;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.7);
+  }
+  .homepage-container .contact-form {
+    display: flex;
+    background: #131313;
   }
 }/*# sourceMappingURL=homepage.css.map */

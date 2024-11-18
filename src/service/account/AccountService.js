@@ -25,7 +25,7 @@ export const getUserListAdmin = async () => {
     });
     return res.data.result;
   } catch (error) {
-    return err.response.data;
+    return error.response.data;
   }
 };
 export const getMyUserInfo = async () => {
@@ -40,7 +40,7 @@ export const getMyUserInfo = async () => {
     });
     return res.data.result;
   } catch (error) {
-    return err.response.data;
+    return error.response.data;
   }
 };
 export const verifyEmailSignup = async (userData) => {
@@ -53,7 +53,6 @@ export const verifyEmailSignup = async (userData) => {
     });
     return res.data;
   } catch (error) {
-    console.log(error);
     return error.response.data;
   }
 };
@@ -155,6 +154,7 @@ export const updateMyInfo = async (data) => {
         "Content-Type": "application/json",
       },
     });
+    localStorage.setItem("user", JSON.stringify(res.data.result));
     return res.data.result;
   } catch (error) {
     return error;
@@ -180,7 +180,7 @@ export const updatePassword = async (data) => {
   const token = localStorage.getItem("token");
   try {
     const api = "http://localhost:8080/users/update-password";
-    const res = await axios.post(api, data, {
+    const res = await axios.put(api, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -204,5 +204,36 @@ export const deleteAccount = async (userId) => {
     return res.data;
   } catch (error) {
     return error;
+  }
+};
+export const updateStatusAccount = async (userId, data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const api = `http://localhost:8080/users/${userId}`;
+    const res = await axios.put(api, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const createAccountAdmin = async (data) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const api = "http://localhost:8080/users/admin/create";
+    const res = await axios.post(api, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
   }
 };

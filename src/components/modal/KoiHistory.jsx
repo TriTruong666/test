@@ -20,6 +20,7 @@ export const KoiHistory = () => {
   const dispatch = useDispatch();
   // selector
   const koiId = useSelector((state) => state.koi.koiId.koiId);
+  const koiInfoNew = useSelector((state) => state.koi.koiInfo.koiInfo);
   // state
   const [isEmptyLog, setIsEmptyLog] = useState(false);
   const [koiLogList, setKoiLogList] = useState([]);
@@ -32,8 +33,8 @@ export const KoiHistory = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["koi-detail", koiId],
-    queryFn: () => KoiService.detailKoiService(koiId),
+    queryKey: ["koi-detail", koiInfoNew?.koiId],
+    queryFn: () => KoiService.detailKoiService(koiInfoNew?.koiId),
   });
   // handle func
   const handleToggleKoiHistoryModal = () => {

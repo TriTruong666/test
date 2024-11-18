@@ -31,3 +31,9 @@ Follow these steps to set up the project locally:
    ```bash
    git clone https://github.com/TriTruong666/Izumiya.git
    ```
+2. Navigate to the project directory:
+
+```bash
+cd test
+
+```
